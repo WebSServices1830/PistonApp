@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://co.edu.javeriana/" xmlns:tns="http://co.edu.javeriana/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="create" type="tns:create"/>
+
+  <xs:element name="createResponse" type="tns:createResponse"/>
+
+  <xs:element name="erase" type="tns:erase"/>
+
+  <xs:element name="eraseResponse" type="tns:eraseResponse"/>
+
+  <xs:element name="read_lista" type="tns:read_lista"/>
+
+  <xs:element name="read_listaResponse" type="tns:read_listaResponse"/>
+
+  <xs:element name="read_piloto" type="tns:read_piloto"/>
+
+  <xs:element name="read_pilotoResponse" type="tns:read_pilotoResponse"/>
+
+  <xs:element name="update" type="tns:update"/>
+
+  <xs:element name="updateResponse" type="tns:updateResponse"/>
+
+  <xs:complexType name="erase">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="eraseResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="update">
+    <xs:sequence>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="fecha_Nacimiento" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="foto" type="xs:string" minOccurs="0"/>
+      <xs:element name="id" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="create">
+    <xs:sequence>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="fecha_Nacimiento" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="foto" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="read_lista">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="read_listaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:piloto" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="piloto">
+    <xs:sequence>
+      <xs:element name="fecha_Nacimiento" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="foto" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="read_piloto">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="read_pilotoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:piloto" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

@@ -6,6 +6,7 @@ package co.javeriana.webservice;
  * and open the template in the editor.
  */
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bson.types.ObjectId;
@@ -20,6 +21,7 @@ public class Piloto {
     private int cant_podiosTotales;
     private int cant_puntosTotales;
     private int cant_granPremiosIngresado;
+    private List<ComentarioPiloto> comentarios;
     
     public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
 			int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado) {

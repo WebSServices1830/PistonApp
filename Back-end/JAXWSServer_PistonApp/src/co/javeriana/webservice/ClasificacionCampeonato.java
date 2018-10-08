@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 public class ClasificacionCampeonato {
 	
 	private ObjectId id;
-	private String puntaje;
+	private int puntaje;
 	private LocalTime tiempo;
 	private int posicion;
 	private ObjectId piloto;
@@ -18,7 +18,7 @@ public class ClasificacionCampeonato {
 	public ClasificacionCampeonato() {
 		super();
 	}
-	public ClasificacionCampeonato(String puntaje, LocalTime tiempo, int posicion, ObjectId piloto) {
+	public ClasificacionCampeonato(int puntaje, LocalTime tiempo, int posicion, ObjectId piloto) {
 		super();
 		this.id = new ObjectId();
 		this.puntaje = puntaje;
@@ -32,10 +32,10 @@ public class ClasificacionCampeonato {
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
-	public String getPuntaje() {
+	public int getPuntaje() {
 		return puntaje;
 	}
-	public void setPuntaje(String puntaje) {
+	public void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
 	}
 	public LocalTime getTiempo() {

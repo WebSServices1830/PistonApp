@@ -12,6 +12,9 @@ public class ComentarioPista {
 	
 	
 	
+	public ComentarioPista() {
+		super();
+	}
 	public ComentarioPista(String contenido, int calificacion, ObjectId pista, ObjectId usuario) {
 		super();
 		this.id = new ObjectId();

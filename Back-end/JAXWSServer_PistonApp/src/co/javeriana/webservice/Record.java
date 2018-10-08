@@ -15,6 +15,9 @@ public class Record {
 	
 	
 	
+	public Record() {
+		super();
+	}
 	public Record( LocalTime recordVuleta_tiempo, String recordVuelta_piloto, int recordVuelta_anio,
 			ObjectId record) {
 		super();

@@ -20,6 +20,9 @@ public class Pista {
 	
 	
 	
+	public Pista() {
+		super();
+	}
 	public Pista(String ciudad, String foto_ref, String nombreUltimoGanador, int numeroVueltas,
 			float distanciaCarreara_km, float longitudCircuito_km, ObjectId record, ObjectId granpremio,
 			List<ObjectId> comentarios) {

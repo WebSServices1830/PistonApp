@@ -17,6 +17,9 @@ public class Campeonato {
 	
 	
 	
+	public Campeonato() {
+		super();
+	}
 	public Campeonato(String nombre, Date fecha_inicio, Date fecha_final, List<ObjectId> gran_premios,
 			List<ObjectId> clasificaciones) {
 		super();

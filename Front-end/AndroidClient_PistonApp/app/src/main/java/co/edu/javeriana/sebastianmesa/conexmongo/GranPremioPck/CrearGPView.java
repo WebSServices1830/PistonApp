@@ -17,6 +17,7 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.math.BigInteger;
 import java.time.LocalTime;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -73,12 +74,17 @@ public class CrearGPView extends AppCompatActivity {
                 timeLap = LocalTime.of(2, 10, 10);
             }
 
+            String paraPista =  String.format("%024x", new BigInteger(1, pista.getText().toString().getBytes(/*YOUR_CHARSET?*/)));
+            String paraCampeonato =  String.format("%024x", new BigInteger(1, campeonato.getText().toString().getBytes(/*YOUR_CHARSET?*/)));
+
+            ObjectId idPista = new ObjectId(paraPista);
+            ObjectId idCampeonato = new ObjectId(paraCampeonato);
 
             request.addProperty("fecha", null);
             request.addProperty("cantVueltas", Integer.parseInt(cantVueltas.getText().toString()));
             request.addProperty("mejorVuelta", null);
-            request.addProperty("pista", null);
-            request.addProperty("campeonato", null);
+            request.addProperty("pista",  idPista);
+            request.addProperty("campeonato", idCampeonato);
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);

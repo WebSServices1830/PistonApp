@@ -15,11 +15,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".PilotoPck.IndexPilotoView" />
         <activity android:name=".PilotoPck.CrearPilotoView" />
@@ -45,7 +41,14 @@
         <activity android:name=".UsuarioPck.ActualizarUsuarioView" />
         <activity android:name=".UsuarioPck.VerUsuarioView" />
         <activity android:name=".UsuarioPck.EliminarUsuarioView" />
-        <activity android:name=".UsuarioPck.IndexUsuarioView"></activity>
+        <activity android:name=".UsuarioPck.IndexUsuarioView" />
+        <activity android:name=".Login.LoginActivityView">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

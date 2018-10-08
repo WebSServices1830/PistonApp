@@ -63,5 +63,16 @@
         android:layout_below="@id/accionesGP"
         android:text="Acciones Usuario" />
 
+    <Button
+        android:id="@+id/logOut"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:onClick="logout"
+        android:layout_below="@id/accionesUsuario"
+        android:text="Cerrar Sesión" />
+
 
 </RelativeLayout>

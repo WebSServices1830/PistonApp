@@ -12,6 +12,7 @@ import android.widget.TextView;
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.IndexGPView;
+import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 
@@ -47,6 +48,10 @@ public class MainActivity extends Activity {
 
     public void accionesUsuario (View view){
         startActivity(new Intent(getBaseContext(), IndexUsuarioView.class));
+    }
+
+    public void logout (View view){
+        startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 
 }

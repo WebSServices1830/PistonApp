@@ -6,7 +6,9 @@ import static com.mongodb.client.model.Updates.set;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -16,6 +18,7 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
@@ -56,49 +59,35 @@ public class CRUD_Usuario {
    		collection.insertOne(usuario);
    	}
    	
-   	@WebMethod
-   	public Usuario read(@WebParam(name = "id")String id){
-   		Usuario usuario = collection.find(eq("id", id)).first();
-   		return usuario;
-   	}
-   	
-   	@WebMethod
-   	public Usuario readByName(@WebParam(name = "id")String id){
-   		
-   		Usuario usuario = null;
-   		
-   		try {
-   		    MongoDatabase db = database;
-   		    MongoCollection < Document > collection = db.getCollection("usuarios");
-   		    MongoCursor < Document > cursor = collection.find().iterator();
-   		    try {
-   		        while (cursor.hasNext()) {
-   		            Document doc = cursor.next();
-   		            String name = doc.getString("nombreCompleto");
-   		            
-   		            if (name.equals(id)) {
-   		            	System.out.println("@info/: 'readByName'  ->  usuario: '" + name + "' encontrado.");
-   						return usuario = 
-   								new Usuario(
-   										doc.getString ("nombreUsuario"), 
-   										doc.getString   ("contra"), 
-   										doc.getInteger ("edad"), 
-   										doc.getString ("descripcion"), 
-   										doc.getString("foto"), 
-   										doc.getBoolean("admin"), 
-   										doc.getLong("bolsillo"));
-   					}
-   		        }
-   		    } finally {
-   		    	cursor.close();
-   		    }
-   		} catch (MongoException e) {
-   		    e.printStackTrace();
-   		}
-   		
-   		return null;
-   		
-   	}
+    @WebMethod
+	public Usuario read(@WebParam(name = "id")String id){
+		Usuario usuario = collection.find(eq("id", id)).first();
+		return usuario;
+	}
+	
+	@WebMethod
+	public Usuario readByName(@WebParam(name = "nombreUsuario")String nombreUsuario){
+		Usuario usuario = collection.find(eq("nombreUsuario", nombreUsuario)).first();
+		return usuario;
+	}
+	
+	@WebMethod
+	public List<Usuario> readAll() {
+		
+		final List<Usuario> usuarios = new ArrayList<>();
+		
+		Block<Usuario> saveBlock = new Block<Usuario>() {
+		    @Override
+		    public void apply(Usuario usuario) {
+		        usuarios.add(usuario);
+		    }
+		};
+		
+		collection.find().forEach(saveBlock);
+		
+		return usuarios;
+		
+	}
    	
    	@WebMethod
    	public void update(
@@ -178,39 +167,15 @@ public class CRUD_Usuario {
    	}
    	
    	@WebMethod
-   	public void delete(@WebParam(name = "id")String id){
-   		collection.deleteOne(eq("id", id));
-   	}
-   	
-   	@WebMethod
-   	public boolean deleteByName(@WebParam(name = "id")String id){
-   		try {
-   		    MongoDatabase db = database;
-   		    MongoCollection < Document > collection = db.getCollection("usuarios");
-   		    MongoCursor < Document > cursor = collection.find().iterator();
-   		    try {
-   		        while (cursor.hasNext()) {
-   		            Document doc = cursor.next();
-   		            String name  = doc.getString("nombreUsuario");
-   		            
-   		            if (name.equals(id)) {
-   		            	collection.deleteOne(eq("nombreUsuario", id));
-   		        		System.out.println("@info/: 'deleteByName'  ->  usuario: '" + id + "' eliminado.");
-   		        		return true;
-   						
-   					}
-   		        }
-   		        
-   		    } finally {
-   		    	cursor.close();
-   		    }
-   		} catch (MongoException e) {
-   		    e.printStackTrace();
-   		}
-   		
-   		return false;
-   		
-   	}
+	public void delete(@WebParam(name = "id")String id){
+		collection.deleteOne(eq("id", id));
+	}
+	
+	@WebMethod
+	public void deleteByName(@WebParam(name = "id")String nombreUsuario){
+		collection.deleteOne(eq("nombreUsuario",nombreUsuario));
+		
+	}
 
 
 }

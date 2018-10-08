@@ -13,8 +13,6 @@ public class ClasificacionCampeonato {
 	private ObjectId piloto;
 	
 	
-	
-	
 	public ClasificacionCampeonato() {
 		super();
 	}

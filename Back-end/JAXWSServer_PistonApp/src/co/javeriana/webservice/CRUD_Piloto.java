@@ -100,7 +100,6 @@ public class CRUD_Piloto {
 	
 	@WebMethod
 	public void piloto_update(
-			@WebParam(name = "id")String id,
 			@WebParam(name = "nombreCompleto")String nombreCompleto,
 			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
 			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
@@ -110,7 +109,7 @@ public class CRUD_Piloto {
 			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
 			){
 		collection.updateOne(
-				eq("id", id) , 
+				eq("nombreCompleto", nombreCompleto) , 
 				combine(
 						set("nombreCompleto",nombreCompleto), 
 						set("fecha_Nacimiento",fecha_Nacimiento), 

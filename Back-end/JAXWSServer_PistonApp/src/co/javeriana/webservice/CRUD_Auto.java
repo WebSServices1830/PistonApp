@@ -92,7 +92,6 @@ public class CRUD_Auto {
 	
 	@WebMethod
 	public void auto_update(
-			@WebParam(name = "id")String id,
 			@WebParam(name = "nombre")String nombre,
 			@WebParam(name = "pesoEnKg")double pesoEnKg,
 			@WebParam(name = "ruedas")String ruedas,
@@ -103,7 +102,7 @@ public class CRUD_Auto {
 			@WebParam(name = "motor_configuracion")String motor_configuracion,
 			@WebParam(name = "motor_turbo")boolean motor_turbo){
 		collection.updateOne(
-				eq("id", id) , 
+				eq("nombre", nombre) , 
 				combine(
 						set("nombre",nombre), 
 						set("pesoEnKg",pesoEnKg), 

@@ -111,4 +111,11 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 		collection.deleteOne(eq("fecha",fecha));
 		
 	}
+	
+	@WebMethod
+	public void granPremio_createClasificacion(@WebParam(name = "id")Date fecha){
+		collection.deleteOne(eq("fecha",fecha));
+		
+	}
+	
 }

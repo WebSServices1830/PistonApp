@@ -47,9 +47,13 @@ public class CRUD_Auto {
 			@WebParam(name = "pesoEnKg")double pesoEnKg,
 			@WebParam(name = "ruedas")String ruedas,
 			@WebParam(name = "combustible")String combustible,
-			@WebParam(name = "foto_ref")String foto_ref){
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "motor_referencia")String motor_referencia,
+			@WebParam(name = "motor_cilindraje")String motor_cilindraje,
+			@WebParam(name = "motor_configuracion")String motor_configuracion,
+			@WebParam(name = "motor_turbo")boolean motor_turbo){
 			
-		Auto auto = new Auto(nombre,pesoEnKg,ruedas,combustible,foto_ref);
+		Auto auto = new Auto(nombre,pesoEnKg,ruedas,combustible,foto_ref, new Motor(motor_referencia, motor_cilindraje, motor_configuracion, motor_turbo));
 		collection.insertOne(auto);
 	}
 	
@@ -60,39 +64,9 @@ public class CRUD_Auto {
 	}
 	
 	@WebMethod
-	public Auto readByName(@WebParam(name = "id")String id){
-		
-		Auto auto = null;
-		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("autos");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name = doc.getString("modelo");
-		            
-		            if (name.equals(id)) {
-		            	System.out.println("@info/: 'readByName'  ->  name: '" + name + "' encontrado.");
-						return auto = 
-								new Auto(
-										doc.getString ("nombre"), 
-										doc.getDouble ("pesoEnKg"), 
-										doc.getString ("ruedas"), 
-										doc.getString ("combustible"), 
-										doc.getString("foto_ref"));
-					}
-		        }
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-		return null;
-		
+	public Auto readByName(@WebParam(name = "nombre")String nombre){
+		Auto auto = collection.find(eq("nombre", nombre)).first();
+		return auto;
 	}
 	
 	@WebMethod

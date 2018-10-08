@@ -7,6 +7,7 @@ package co.javeriana.webservice;
  */
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bson.types.ObjectId;
@@ -21,7 +22,10 @@ public class Piloto {
     private int cant_podiosTotales;
     private int cant_puntosTotales;
     private int cant_granPremiosIngresado;
-    private List<ObjectId> comentarios;
+    
+    public Piloto() {
+    	
+    }
     
     public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
 			int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado) {

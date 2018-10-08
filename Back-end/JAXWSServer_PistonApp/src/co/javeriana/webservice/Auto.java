@@ -10,14 +10,20 @@ public class Auto {
 	private String ruedas;
 	private String combustible;
 	private String foto_ref;
+	private Motor motor;
 	
-	public Auto(String nombre, double pesoEnKg, String ruedas, String combustible, String foto_ref) {
+	public Auto() {
+		
+	}
+	
+	public Auto(String nombre, double pesoEnKg, String ruedas, String combustible, String foto_ref, Motor motor) {
 		this.id = new ObjectId();
 		this.nombre = nombre;
 		this.pesoEnKg = pesoEnKg;
 		this.ruedas = ruedas;
 		this.combustible = combustible;
 		this.foto_ref = foto_ref;
+		this.motor = motor;
 	}
 
 	public String getNombre() {
@@ -58,6 +64,22 @@ public class Auto {
 
 	public void setFoto_ref(String foto_ref) {
 		this.foto_ref = foto_ref;
+	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public Motor getMotor() {
+		return motor;
+	}
+
+	public void setMotor(Motor motor) {
+		this.motor = motor;
 	}
 	
 }

@@ -6,7 +6,9 @@ import static com.mongodb.client.model.Updates.set;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -16,6 +18,7 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
@@ -29,7 +32,7 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 @WebService(name="crud_escuderia")
 public class CRUD_Escuderia {
 	
-MongoClient mongoClient = MongoClients.create();
+	MongoClient mongoClient = ClienteMongo.getInstancia();
 	
 	// create codec registry for POJOs
 	CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
@@ -49,11 +52,11 @@ MongoClient mongoClient = MongoClients.create();
 			@WebParam(name = "jefeTecnico")String jefeTecnico,
 			@WebParam(name = "chasis")String chasis,
 			@WebParam(name = "cant_vecesEnPodio")int cant_vecesEnPodio,
-			@WebParam(name = "cant_titulosCampeonato")int cant_TitulosCampeonato,
-			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref){
+			@WebParam(name = "cant_TitulosCampeonato")int cant_TitulosCampeonato,
+			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref
+			){
 			
-		Escuderia escuderia = new Escuderia(nombre, lugarBase, jefeTecnico, jefeEquipo, chasis,
-				cant_vecesEnPodio, cant_TitulosCampeonato, fotoEscudo_ref);
+		Escuderia escuderia = new Escuderia(nombre,lugarBase,jefeEquipo,jefeTecnico,chasis,cant_vecesEnPodio,cant_TitulosCampeonato,fotoEscudo_ref);
 		collection.insertOne(escuderia);
 	}
 	
@@ -64,64 +67,52 @@ MongoClient mongoClient = MongoClients.create();
 	}
 	
 	@WebMethod
-	public Escuderia readByName(@WebParam(name = "id")String id){
+	public Escuderia readByName(@WebParam(name = "nombre")String nombre){
+		Escuderia escuderia = collection.find(eq("nombre", nombre)).first();
+		return escuderia;
+	}
+	
+	@WebMethod
+	public List<Escuderia> readAll() {
 		
-		Escuderia escuderia = null;
+		final List<Escuderia> escuderias = new ArrayList<>();
 		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("escuderias");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name = doc.getString("nombre");
-		            
-		            if (name.equals(id)) {
-		            	System.out.println("@info/: 'readByName'  ->  escuderia: '" + name + "' encontrado.");
-						return escuderia = 
-								new Escuderia(
-										doc.getString ("nombre"), 
-										doc.getString  ("lugarBase"), 
-										doc.getString ("jefeEquipo"), 
-										doc.getString ("jefeTecnico"), 
-										doc.getString("chasis"), 
-										doc.getInteger("cant_vecesEnPodio"), 
-										doc.getInteger("cant_titulosCampeonato"),
-										doc.getString("fotoEscudo_ref"));
-					}
-		        }
-		    } finally {
-		    	cursor.close();
+		Block<Escuderia> saveBlock = new Block<Escuderia>() {
+		    @Override
+		    public void apply(Escuderia escuderia) {
+		        escuderias.add(escuderia);
 		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
+		};
 		
-		return null;
+		collection.find().forEach(saveBlock);
+		
+		return escuderias;
 		
 	}
 	
 	@WebMethod
 	public void update(
 			@WebParam(name = "id")String id,
-			@WebParam(name = "nombreCompleto")String nombreCompleto,
-			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
-			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
-			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
-			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
+			@WebParam(name = "nombre")String nombre,
+			@WebParam(name = "lugarBase")String lugarBase,
+			@WebParam(name = "jefeEquipo")String jefeEquipo,
+			@WebParam(name = "jefeTecnico")String jefeTecnico,
+			@WebParam(name = "chasis")String chasis,
+			@WebParam(name = "cant_vecesEnPodio")int cant_vecesEnPodio,
+			@WebParam(name = "cant_TitulosCampeonato")int cant_TitulosCampeonato,
+			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref
 			){
 		collection.updateOne(
 				eq("id", id) , 
 				combine(
-						set("nombreCompleto",nombreCompleto), 
-						set("fecha_Nacimiento",fecha_Nacimiento), 
-						set("lugarNacimiento",lugarNacimiento),
-						set("foto_ref",foto_ref),
-						set("cant_podiosTotales",cant_podiosTotales),
-						set("cant_puntosTotales",cant_granPremiosIngresado)
+						set("nombre",nombre), 
+						set("lugarBase",lugarBase), 
+						set("jefeEquipo",jefeEquipo),
+						set("jefeTecnico",jefeTecnico),
+						set("chasis",chasis),
+						set("cant_vecesEnPodio",cant_vecesEnPodio),
+						set("cant_TitulosCampeonato",cant_TitulosCampeonato),
+						set("fotoEscudo_ref",fotoEscudo_ref)
 						) 
 				);
 	}
@@ -130,42 +121,44 @@ MongoClient mongoClient = MongoClients.create();
 	
 	@WebMethod
 	public void updateFromAndroid(
-			@WebParam(name = "nombreCompleto")String nombreCompleto,
-			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
-			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
-			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
-			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
+			@WebParam(name = "nombre")String nombre,
+			@WebParam(name = "lugarBase")String lugarBase,
+			@WebParam(name = "jefeEquipo")String jefeEquipo,
+			@WebParam(name = "jefeTecnico")String jefeTecnico,
+			@WebParam(name = "chasis")String chasis,
+			@WebParam(name = "cant_vecesEnPodio")int cant_vecesEnPodio,
+			@WebParam(name = "cant_TitulosCampeonato")int cant_TitulosCampeonato,
+			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref
 			){
 		
 		try {
 		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("pilotos");
+		    MongoCollection < Document > collection = db.getCollection("escuderias");
 		    MongoCursor < Document > cursor = collection.find().iterator();
 		    try {
 		        while (cursor.hasNext()) {
 		            Document doc = cursor.next();
-		            String name  = doc.getString("nombreCompleto");
-		            String place = doc.getString("lugarNacimiento");
+		            String name  = doc.getString("nombre");
 		            
-		            if (name.equals(nombreCompleto)) {
+		            if (name.equals(nombre)) {
 						
 						collection.updateOne(
-								eq("nombreCompleto", name) , 
+								eq("nombre", name) , 
 								combine(
-										set("nombreCompleto",nombreCompleto), 
-										set("fecha_Nacimiento",fecha_Nacimiento), 
-										set("lugarNacimiento",lugarNacimiento),
-										set("foto_ref",foto_ref),
-										set("cant_podiosTotales",cant_podiosTotales),
-										set("cant_puntosTotales",cant_granPremiosIngresado)
+										set("nombre",nombre), 
+										set("lugarBase",lugarBase), 
+										set("jefeEquipo",jefeEquipo),
+										set("jefeTecnico",jefeTecnico),
+										set("chasis",chasis),
+										set("cant_vecesEnPodio",cant_vecesEnPodio),
+										set("cant_TitulosCampeonato",cant_TitulosCampeonato),
+										set("fotoEscudo_ref",fotoEscudo_ref)
 										) 
 								);
 					}
 		        }
 		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  piloto: '" + nombreCompleto + "' actualizado.");
+		        System.out.println("@info/: 'updateFromAndroid'  ->  escuderia: '" + nombre + "' actualizado.");
 		        
 		    } finally {
 		    	cursor.close();
@@ -182,32 +175,8 @@ MongoClient mongoClient = MongoClients.create();
 	}
 	
 	@WebMethod
-	public boolean deleteByName(@WebParam(name = "id")String id){
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("pilotos");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name  = doc.getString("nombreCompleto");
-		            
-		            if (name.equals(id)) {
-		            	collection.deleteOne(eq("nombreCompleto", id));
-		        		System.out.println("@info/: 'deleteByName'  ->  piloto: '" + id + "' eliminado.");
-		        		return true;
-						
-					}
-		        }
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-		return false;
+	public void deleteByName(@WebParam(name = "id")String nombreCompleto){
+		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
 		
 	}
 

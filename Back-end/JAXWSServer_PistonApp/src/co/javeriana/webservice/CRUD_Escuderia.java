@@ -92,7 +92,6 @@ public class CRUD_Escuderia {
 	
 	@WebMethod
 	public void escuderia_update(
-			@WebParam(name = "id")String id,
 			@WebParam(name = "nombre")String nombre,
 			@WebParam(name = "lugarBase")String lugarBase,
 			@WebParam(name = "jefeEquipo")String jefeEquipo,
@@ -103,7 +102,7 @@ public class CRUD_Escuderia {
 			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref
 			){
 		collection.updateOne(
-				eq("id", id) , 
+				eq("nombre", nombre) , 
 				combine(
 						set("nombre",nombre), 
 						set("lugarBase",lugarBase), 

@@ -82,7 +82,6 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	
 	@WebMethod
 	public void granPremio_update(
-			@WebParam(name = "id")String id,
 			@WebParam(name = "fecha")Date fecha,
 			@WebParam(name = "cantVueltas")int cantVueltas,
 			@WebParam(name = "mejorVuelta")LocalTime mejorVuelta,
@@ -90,7 +89,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 			@WebParam(name = "campeonato")ObjectId campeonato
 			){
 		collection.updateOne(
-				eq("id", id) , 
+				eq("fecha", fecha) , 
 				combine(
 						set("fecha",fecha), 
 						set("cantVueltas",cantVueltas), 
@@ -113,9 +112,18 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	}
 	
 	@WebMethod
-	public void granPremio_createClasificacion(@WebParam(name = "id")Date fecha){
-		collection.deleteOne(eq("fecha",fecha));
-		
+	public void granPremio_addClasificacion(
+			@WebParam(name = "id")String id, 
+			@WebParam(name = "idClasificacion")ObjectId idClasificacion
+			){
+		GranPremio granPremio= granPremio_read(id);
+		granPremio.getClasificaciones().add(idClasificacion);
+		collection.updateOne(
+				eq("id", id) , 
+				combine(
+						set("clasificaciones",granPremio.getClasificaciones())
+						) 
+				);
 	}
 	
 }

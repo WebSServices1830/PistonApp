@@ -1,5 +1,6 @@
 package co.javeriana.webservice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -24,8 +25,7 @@ public class Pista {
 		super();
 	}
 	public Pista(String ciudad, String foto_ref, String nombreUltimoGanador, int numeroVueltas,
-			float distanciaCarreara_km, float longitudCircuito_km, ObjectId record, ObjectId granpremio,
-			List<ObjectId> comentarios) {
+			float distanciaCarreara_km, float longitudCircuito_km, ObjectId record, ObjectId granpremio) {
 		super();
 		this.id = new ObjectId();
 		this.ciudad = ciudad;
@@ -36,7 +36,7 @@ public class Pista {
 		this.longitudCircuito_km = longitudCircuito_km;
 		this.record = record;
 		this.granpremio = granpremio;
-		this.comentarios = comentarios;
+		this.comentarios = new ArrayList<ObjectId>();
 	}
 	public ObjectId getId() {
 		return id;

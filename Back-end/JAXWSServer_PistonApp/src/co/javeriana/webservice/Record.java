@@ -10,7 +10,7 @@ public class Record {
 	private LocalTime recordVuleta_tiempo;
 	private String recordVuelta_piloto;
 	private int recordVuelta_anio;
-	private ObjectId record;
+	private ObjectId pista;
 	
 	
 	
@@ -19,13 +19,13 @@ public class Record {
 		super();
 	}
 	public Record( LocalTime recordVuleta_tiempo, String recordVuelta_piloto, int recordVuelta_anio,
-			ObjectId record) {
+			ObjectId pista) {
 		super();
 		this.id = new ObjectId();
 		this.recordVuleta_tiempo = recordVuleta_tiempo;
 		this.recordVuelta_piloto = recordVuelta_piloto;
 		this.recordVuelta_anio = recordVuelta_anio;
-		this.record = record;
+		this.pista = pista;
 	}
 	public LocalTime getRecordVuleta_tiempo() {
 		return recordVuleta_tiempo;
@@ -45,11 +45,11 @@ public class Record {
 	public void setRecordVuelta_anio(int recordVuelta_anio) {
 		this.recordVuelta_anio = recordVuelta_anio;
 	}
-	public ObjectId getRecord() {
-		return record;
+	public ObjectId getPista() {
+		return pista;
 	}
-	public void setRecord(ObjectId record) {
-		this.record = record;
+	public void setPista(ObjectId pista) {
+		this.pista = pista;
 	}
 	
 	

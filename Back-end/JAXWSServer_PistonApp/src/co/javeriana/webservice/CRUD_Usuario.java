@@ -91,8 +91,6 @@ public class CRUD_Usuario {
    	
    	@WebMethod
    	public void usuario_update(
-   			
-   			@WebParam(name = "id")String id,
    			@WebParam(name = "nombreUsuario")String nombreUsuario,
    			@WebParam(name = "contra")String contra,
    			@WebParam(name = "edad")int edad,
@@ -102,7 +100,7 @@ public class CRUD_Usuario {
    			@WebParam(name = "bolsillo")long bolsillo
    			){
    		collection.updateOne(
-   				eq("id", id) , 
+   				eq("nombreUsuario", nombreUsuario) , 
    				combine(
    						set("nombreUsuario",nombreUsuario), 
    						set("contra",contra), 

@@ -6,6 +6,5 @@
 	<classpathentry kind="lib" path="MongoDB_jars/bson-3.8.2.jar"/>
 	<classpathentry kind="lib" path="MongoDB_jars/mongodb-driver-core-3.8.2.jar"/>
 	<classpathentry kind="lib" path="MongoDB_jars/mongodb-driver-sync-3.8.2.jar"/>
-	<classpathentry kind="lib" path="HttpServer_jar/http-20070405.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -54,7 +54,7 @@ public class CRUD_Piloto {
     MongoCollection<Piloto> collection = database.getCollection("pilotos", Piloto.class);
 	
     @WebMethod
-	public void create(
+	public void piloto_create(
 			@WebParam(name = "nombreCompleto")String nombreCompleto,
 			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
 			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
@@ -69,19 +69,19 @@ public class CRUD_Piloto {
 	}
 	
 	@WebMethod
-	public Piloto read(@WebParam(name = "id")String id){
+	public Piloto piloto_read(@WebParam(name = "id")String id){
 		Piloto piloto = collection.find(eq("id", id)).first();
 		return piloto;
 	}
 	
 	@WebMethod
-	public Piloto readByName(@WebParam(name = "nombreCompleto")String nombreCompleto){
+	public Piloto piloto_readByName(@WebParam(name = "nombreCompleto")String nombreCompleto){
 		Piloto piloto = collection.find(eq("nombreCompleto", nombreCompleto)).first();
 		return piloto;
 	}
 	
 	@WebMethod
-	public List<Piloto> readAll() {
+	public List<Piloto> piloto_readAll() {
 		
 		final List<Piloto> pilotos = new ArrayList<>();
 		
@@ -99,7 +99,7 @@ public class CRUD_Piloto {
 	}
 	
 	@WebMethod
-	public void update(
+	public void piloto_update(
 			@WebParam(name = "id")String id,
 			@WebParam(name = "nombreCompleto")String nombreCompleto,
 			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
@@ -122,63 +122,13 @@ public class CRUD_Piloto {
 				);
 	}
 	
-	
-	
 	@WebMethod
-	public void updateFromAndroid(
-			@WebParam(name = "nombreCompleto")String nombreCompleto,
-			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
-			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
-			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
-			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
-			){
-		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("pilotos");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name  = doc.getString("nombreCompleto");
-		            String place = doc.getString("lugarNacimiento");
-		            
-		            if (name.equals(nombreCompleto)) {
-						
-						collection.updateOne(
-								eq("nombreCompleto", name) , 
-								combine(
-										set("nombreCompleto",nombreCompleto), 
-										set("fecha_Nacimiento",fecha_Nacimiento), 
-										set("lugarNacimiento",lugarNacimiento),
-										set("foto_ref",foto_ref),
-										set("cant_podiosTotales",cant_podiosTotales),
-										set("cant_puntosTotales",cant_granPremiosIngresado)
-										) 
-								);
-					}
-		        }
-		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  piloto: '" + nombreCompleto + "' actualizado.");
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-	}
-	
-	@WebMethod
-	public void delete(@WebParam(name = "id")String id){
+	public void piloto_delete(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")String nombreCompleto){
+	public void piloto_deleteByName(@WebParam(name = "id")String nombreCompleto){
 		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
 		
 	}

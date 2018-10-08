@@ -45,7 +45,7 @@ public class CRUD_Auto {
     MongoCollection<Auto> collection = database.getCollection("autos", Auto.class);
 	
     @WebMethod
-	public void create(
+	public void auto_create(
 			@WebParam(name = "nombre")String nombre,
 			@WebParam(name = "pesoEnKg")double pesoEnKg,
 			@WebParam(name = "ruedas")String ruedas,
@@ -61,19 +61,19 @@ public class CRUD_Auto {
 	}
 	
     @WebMethod
-	public Auto read(@WebParam(name = "id")String id){
+	public Auto auto_read(@WebParam(name = "id")String id){
 		Auto auto = collection.find(eq("id", id)).first();
 		return auto;
 	}
 	
 	@WebMethod
-	public Auto readByName(@WebParam(name = "nombre")String nombre){
+	public Auto auto_readByName(@WebParam(name = "nombre")String nombre){
 		Auto auto= collection.find(eq("nombre", nombre)).first();
 		return auto;
 	}
 	
 	@WebMethod
-	public List<Auto> readAll() {
+	public List<Auto> auto_readAll() {
 		
 		final List<Auto> autos = new ArrayList<>();
 		
@@ -91,7 +91,7 @@ public class CRUD_Auto {
 	}
 	
 	@WebMethod
-	public void update(
+	public void auto_update(
 			@WebParam(name = "id")String id,
 			@WebParam(name = "nombre")String nombre,
 			@WebParam(name = "pesoEnKg")double pesoEnKg,
@@ -118,66 +118,13 @@ public class CRUD_Auto {
 				);
 	}
 	
-	
-	
 	@WebMethod
-	public void updateFromAndroid(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "pesoEnKg")double pesoEnKg,
-			@WebParam(name = "ruedas")String ruedas,
-			@WebParam(name = "combustible")String combustible,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "motor_referencia")String motor_referencia,
-			@WebParam(name = "motor_cilindraje")String motor_cilindraje,
-			@WebParam(name = "motor_configuracion")String motor_configuracion,
-			@WebParam(name = "motor_turbo")boolean motor_turbo){
-		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("autos");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name  = doc.getString("nombre");
-		            
-		            if (name.equals(nombre)) {
-						
-						collection.updateOne(
-								eq("nombre", nombre) , 
-								combine(
-										set("nombre",nombre), 
-										set("pesoEnKg",pesoEnKg), 
-										set("ruedas",ruedas),
-										set("combustible",combustible),
-										set("foto_ref",foto_ref),
-										set("motor_referencia",motor_referencia),
-										set("motor_cilindraje",motor_cilindraje),
-										set("motor_configuracion",motor_configuracion),
-										set("motor_turbo",motor_turbo)
-										) 
-								);
-					}
-		        }
-		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  auto: '" + nombre + "' actualizado.");
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-	}
-	
-	@WebMethod
-	public void delete(@WebParam(name = "id")String id){
+	public void auto_delete(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")String nombre){
+	public void auto_deleteByName(@WebParam(name = "id")String nombre){
 		collection.deleteOne(eq("nombre",nombre));
 	}
 

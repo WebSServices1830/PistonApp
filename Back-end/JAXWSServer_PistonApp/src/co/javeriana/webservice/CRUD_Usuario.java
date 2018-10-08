@@ -45,7 +45,7 @@ public class CRUD_Usuario {
     MongoCollection<Usuario> collection = database.getCollection("usuario", Usuario.class);
     
     @WebMethod
-   	public void create(
+   	public void usuario_create(
    			@WebParam(name = "nombreUsuario")String nombreUsuario,
    			@WebParam(name = "contra")String contra,
    			@WebParam(name = "edad")int edad,
@@ -60,19 +60,19 @@ public class CRUD_Usuario {
    	}
    	
     @WebMethod
-	public Usuario read(@WebParam(name = "id")String id){
+	public Usuario usuario_read(@WebParam(name = "id")String id){
 		Usuario usuario = collection.find(eq("id", id)).first();
 		return usuario;
 	}
 	
 	@WebMethod
-	public Usuario readByName(@WebParam(name = "nombreUsuario")String nombreUsuario){
+	public Usuario usuario_readByName(@WebParam(name = "nombreUsuario")String nombreUsuario){
 		Usuario usuario = collection.find(eq("nombreUsuario", nombreUsuario)).first();
 		return usuario;
 	}
 	
 	@WebMethod
-	public List<Usuario> readAll() {
+	public List<Usuario> usuario_readAll() {
 		
 		final List<Usuario> usuarios = new ArrayList<>();
 		
@@ -90,7 +90,7 @@ public class CRUD_Usuario {
 	}
    	
    	@WebMethod
-   	public void update(
+   	public void usuario_update(
    			
    			@WebParam(name = "id")String id,
    			@WebParam(name = "nombreUsuario")String nombreUsuario,
@@ -116,63 +116,13 @@ public class CRUD_Usuario {
    				);
    	}
    	
-   	
-   	
    	@WebMethod
-   	public void updateFromAndroid(
-   			@WebParam(name = "nombreUsuario")String nombreUsuario,
-   			@WebParam(name = "contra")String contra,
-   			@WebParam(name = "edad")int edad,
-   			@WebParam(name = "descripcion")String descripcion,
-   			@WebParam(name = "foto")String foto,
-   			@WebParam(name = "admin")boolean admin,
-   			@WebParam(name = "bolsillo")long bolsillo
-   			){
-   		
-   		try {
-   		    MongoDatabase db = database;
-   		    MongoCollection < Document > collection = db.getCollection("usuarios");
-   		    MongoCursor < Document > cursor = collection.find().iterator();
-   		    try {
-   		        while (cursor.hasNext()) {
-   		            Document doc = cursor.next();
-   		            String name  = doc.getString("nombreUsuario");
-   		            
-   		            if (name.equals(nombreUsuario)) {
-   						
-   						collection.updateOne(
-   								eq("nombreUsuario", name) , 
-   								combine(
-   										set("nombreUsuario",nombreUsuario), 
-   				   						set("contra",contra), 
-   				   						set("edad",edad),
-   				   						set("descripcion",descripcion),
-   				   						set("foto",foto),
-   				   						set("admin",admin),
-   				   						set("bolsillo", bolsillo)
-   										) 
-   								);
-   					}
-   		        }
-   		        
-   		        System.out.println("@info/: 'updateFromAndroid'  ->  piloto: '" + nombreUsuario + "' actualizado.");
-   		        
-   		    } finally {
-   		    	cursor.close();
-   		    }
-   		} catch (MongoException e) {
-   		    e.printStackTrace();
-   		}
-   		
-   	}
-   	
-   	@WebMethod
-	public void delete(@WebParam(name = "id")String id){
+	public void usuario_delete(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")String nombreUsuario){
+	public void usuario_deleteByName(@WebParam(name = "id")String nombreUsuario){
 		collection.deleteOne(eq("nombreUsuario",nombreUsuario));
 		
 	}

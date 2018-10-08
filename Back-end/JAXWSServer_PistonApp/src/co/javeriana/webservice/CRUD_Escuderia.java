@@ -45,7 +45,7 @@ public class CRUD_Escuderia {
     MongoCollection<Escuderia> collection = database.getCollection("escuderias", Escuderia.class);
 	
     @WebMethod
-	public void create(
+	public void escuderia_create(
 			@WebParam(name = "nombre")String nombre,
 			@WebParam(name = "lugarBase")String lugarBase,
 			@WebParam(name = "jefeEquipo")String jefeEquipo,
@@ -61,19 +61,19 @@ public class CRUD_Escuderia {
 	}
 	
 	@WebMethod
-	public Escuderia read(@WebParam(name = "id")String id){
+	public Escuderia escuderia_read(@WebParam(name = "id")String id){
 		Escuderia escuderia = collection.find(eq("id", id)).first();
 		return escuderia;
 	}
 	
 	@WebMethod
-	public Escuderia readByName(@WebParam(name = "nombre")String nombre){
+	public Escuderia escuderia_readByName(@WebParam(name = "nombre")String nombre){
 		Escuderia escuderia = collection.find(eq("nombre", nombre)).first();
 		return escuderia;
 	}
 	
 	@WebMethod
-	public List<Escuderia> readAll() {
+	public List<Escuderia> escuderia_readAll() {
 		
 		final List<Escuderia> escuderias = new ArrayList<>();
 		
@@ -91,7 +91,7 @@ public class CRUD_Escuderia {
 	}
 	
 	@WebMethod
-	public void update(
+	public void escuderia_update(
 			@WebParam(name = "id")String id,
 			@WebParam(name = "nombre")String nombre,
 			@WebParam(name = "lugarBase")String lugarBase,
@@ -117,66 +117,14 @@ public class CRUD_Escuderia {
 				);
 	}
 	
-	
-	
 	@WebMethod
-	public void updateFromAndroid(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "lugarBase")String lugarBase,
-			@WebParam(name = "jefeEquipo")String jefeEquipo,
-			@WebParam(name = "jefeTecnico")String jefeTecnico,
-			@WebParam(name = "chasis")String chasis,
-			@WebParam(name = "cant_vecesEnPodio")int cant_vecesEnPodio,
-			@WebParam(name = "cant_TitulosCampeonato")int cant_TitulosCampeonato,
-			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref
-			){
-		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("escuderias");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name  = doc.getString("nombre");
-		            
-		            if (name.equals(nombre)) {
-						
-						collection.updateOne(
-								eq("nombre", name) , 
-								combine(
-										set("nombre",nombre), 
-										set("lugarBase",lugarBase), 
-										set("jefeEquipo",jefeEquipo),
-										set("jefeTecnico",jefeTecnico),
-										set("chasis",chasis),
-										set("cant_vecesEnPodio",cant_vecesEnPodio),
-										set("cant_TitulosCampeonato",cant_TitulosCampeonato),
-										set("fotoEscudo_ref",fotoEscudo_ref)
-										) 
-								);
-					}
-		        }
-		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  escuderia: '" + nombre + "' actualizado.");
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-	}
-	
-	@WebMethod
-	public void delete(@WebParam(name = "id")String id){
+	public void escuderia_delete(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")String nombreCompleto){
-		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
+	public void escuderia_deleteByName(@WebParam(name = "nombre")String nombre){
+		collection.deleteOne(eq("nombre",nombre));
 		
 	}
 

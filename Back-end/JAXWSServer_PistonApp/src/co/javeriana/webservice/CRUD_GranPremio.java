@@ -43,7 +43,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     MongoCollection<GranPremio> collection = database.getCollection("grandespremios", GranPremio.class);
 	
     @WebMethod
-	public void create(
+	public void granPremio_create(
 			@WebParam(name = "fecha")Date fecha,
 			@WebParam(name = "cantVueltas")int cantVueltas,
 			@WebParam(name = "mejorVuelta")LocalTime mejorVuelta,
@@ -56,14 +56,14 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	}
 	
 	@WebMethod
-	public GranPremio read(@WebParam(name = "id")String id){
+	public GranPremio granPremio_read(@WebParam(name = "id")String id){
 		GranPremio granPremio = collection.find(eq("id", id)).first();
 		return granPremio;
 	}
 
 	
 	@WebMethod
-	public List<GranPremio> readAll() {
+	public List<GranPremio> granPremio_readAll() {
 		
 		final List<GranPremio> grandesPremios = new ArrayList<>();
 		
@@ -81,7 +81,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	}
 	
 	@WebMethod
-	public void update(
+	public void granPremio_update(
 			@WebParam(name = "id")String id,
 			@WebParam(name = "fecha")Date fecha,
 			@WebParam(name = "cantVueltas")int cantVueltas,
@@ -101,59 +101,13 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 				);
 	}
 	
-	
-	
 	@WebMethod
-	public void updateFromAndroid(
-			@WebParam(name = "fecha")Date fecha,
-			@WebParam(name = "cantVueltas")int cantVueltas,
-			@WebParam(name = "mejorVuelta")LocalTime mejorVuelta,
-			@WebParam(name = "pista")ObjectId pista,
-			@WebParam(name = "campeonato")ObjectId campeonato
-			){
-		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("grandesPremios");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            Date date  = doc.getDate("fecha");
-		            
-		            if (date.equals(fecha)) {
-						
-						collection.updateOne(
-								eq("fecha", fecha) , 
-								combine(
-										set("fecha",fecha), 
-										set("cantVueltas",cantVueltas), 
-										set("mejorVuelta",mejorVuelta),
-										set("pista",pista),
-										set("campeonato",campeonato)
-										) 
-								);
-					}
-		        }
-		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  gran premio: '" + fecha + "' actualizado.");
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-	}
-	
-	@WebMethod
-	public void delete(@WebParam(name = "id")String id){
+	public void granPremio_delete(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")Date fecha){
+	public void granPremio_deleteByName(@WebParam(name = "id")Date fecha){
 		collection.deleteOne(eq("fecha",fecha));
 		
 	}

@@ -10,6 +10,10 @@ public class ComentarioPiloto {
 	private ObjectId usuario;
 	private ObjectId piloto;
 	
+	public ComentarioPiloto(){
+		
+	}
+	
 	public ComentarioPiloto(String contenido, int calificacion, Usuario usuario, Piloto piloto) {
 		this.id = new ObjectId();
 		this.contenido = contenido;

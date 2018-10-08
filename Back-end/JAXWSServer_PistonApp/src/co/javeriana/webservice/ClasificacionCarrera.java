@@ -13,8 +13,9 @@ public class ClasificacionCarrera {
 	private int posicion; 
 	private ObjectId competidor;
 	
-	
-	
+	public ClasificacionCarrera(){
+		
+	}
 	
 	public ClasificacionCarrera(int puntaje, LocalTime tiempo, int posicion, ObjectId competidor) {
 		super();

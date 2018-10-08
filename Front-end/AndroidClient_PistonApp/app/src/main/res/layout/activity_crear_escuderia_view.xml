@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PilotoPck.CrearPilotoView">
+    tools:context=".EscuderiaPck.CrearEscuderiaView">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,63 +13,70 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/nomPiloto"
+                android:id="@+id/nomEscuderia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre Piloto"
+                android:hint="Nombre Escuderia"
                 />
             <EditText
-                android:id="@+id/fechaPiloto"
+                android:id="@+id/nomBase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nomPiloto"
-                android:hint="Fecha: Por ahora se enviará null"
+                android:layout_below="@+id/nomEscuderia"
+                android:hint="Ubicación escuderia"
                 />
             <EditText
-                android:id="@+id/lugarNacimientoPiloto"
+                android:id="@+id/nomJEquipo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fechaPiloto"
-                android:hint="Lugar de nacimiento"
+                android:layout_below="@+id/nomBase"
+                android:hint="Nombre jefe de equipo"
                 />
             <EditText
-                android:id="@+id/fotoRefPiloto"
+                android:id="@+id/nomJTecnico"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lugarNacimientoPiloto"
-                android:hint="Ref foto piloto"
+                android:layout_below="@+id/nomJEquipo"
+                android:hint="Nombre jefe técnico"
                 />
             <EditText
-                android:id="@+id/podiosTotales"
+                android:id="@+id/nomChasis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fotoRefPiloto"
+                android:layout_below="@+id/nomJTecnico"
+                android:hint="Nombre de chasis"
+                />
+            <EditText
+                android:id="@+id/numPodios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nomChasis"
                 android:hint="Cantidad podios"
                 />
             <EditText
-                android:id="@+id/puntosTotales"
+                android:id="@+id/numTitulos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/podiosTotales"
-                android:hint="Cantidad puntos"
+                android:layout_below="@+id/numPodios"
+                android:hint="Cantidad titulos"
                 />
             <EditText
-                android:id="@+id/gpTotales"
+                android:id="@+id/refImagen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/puntosTotales"
-                android:hint="Cantidad Gran Premios"
+                android:layout_below="@+id/numTitulos"
+                android:hint="Referencia imagen"
                 />
 
             <Button
-                android:id="@+id/agregarPiloto"
+                android:id="@+id/agregarEscuderia"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
-                android:layout_below="@+id/gpTotales"
-                android:text="Agregar Piloto" />
+                android:layout_below="@+id/refImagen"
+                android:text="Agregar Escuderia" />
 
         </RelativeLayout>
 

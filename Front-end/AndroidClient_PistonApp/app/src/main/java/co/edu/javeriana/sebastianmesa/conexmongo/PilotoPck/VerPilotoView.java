@@ -1,4 +1,4 @@
-package co.edu.javeriana.sebastianmesa.conexmongo;
+package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +23,10 @@ import java.util.Locale;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.R;
+
 public class VerPilotoView extends AppCompatActivity {
+
 
     private EditText campoId;
     private Button consultaBtn;
@@ -116,13 +119,13 @@ public class VerPilotoView extends AppCompatActivity {
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
             final String URL="http://10.0.2.2:8081/WS/crud_piloto?wsdl";
-            final String METHOD_NAME = "readByName";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/readByName";
+            final String METHOD_NAME = "piloto_readByName";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/piloto_readByName";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             campoId = (EditText) findViewById(R.id.idPiloto);
-            request.addProperty("id", campoId.getText().toString());
+            request.addProperty("nombreCompleto", campoId.getText().toString());
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);

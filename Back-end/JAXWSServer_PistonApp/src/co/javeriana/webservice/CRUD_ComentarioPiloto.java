@@ -8,7 +8,6 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -28,8 +27,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
-@WebService(name="crud_clasificacioncampeonato")
-public class CRUD_ClasificacionCampeonato {
+@WebService(name="crud_comentariopiloto")
+public class CRUD_ComentarioPiloto {
 
 MongoClient mongoClient = ClienteMongo.getInstancia();
 	
@@ -41,36 +40,36 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     MongoDatabase database = mongoClient.getDatabase("PistonAppDB").withCodecRegistry(pojoCodecRegistry);
     
     // get a handle to the "people" collection
-    MongoCollection<ClasificacionCampeonato> collection = database.getCollection("clasificacioncampeonato", ClasificacionCampeonato.class);
+    MongoCollection<ComentarioPiloto> collection = database.getCollection("comentariopiloto", ComentarioPiloto.class);
 	
     @WebMethod
-	public void create_clasificacioncampeonato(
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
+	public void comentariopiloto_create(
+			@WebParam(name = "contenido")String contenido,
+			@WebParam(name = "calificacion")int calificacion,
+			@WebParam(name = "usuario")ObjectId usuario,
 			@WebParam(name = "piloto")ObjectId piloto
 			){
 			
-		ClasificacionCampeonato clasificacion = new ClasificacionCampeonato(puntaje,tiempo,posicion,piloto);
-		collection.insertOne(clasificacion);
+		ComentarioPiloto comentario = new ComentarioPiloto(contenido,calificacion,usuario,piloto);
+		collection.insertOne(comentario);
 	}
 	
 	@WebMethod
-	public ClasificacionCampeonato read_clasificacioncampeonato(@WebParam(name = "id")String id){
-		ClasificacionCampeonato clasificacion = collection.find(eq("id", id)).first();
-		return clasificacion;
+	public ComentarioPiloto comentariopiloto_read(@WebParam(name = "id")String id){
+		ComentarioPiloto comentario = collection.find(eq("id", id)).first();
+		return comentario;
 	}
 
 	
 	@WebMethod
-	public List<ClasificacionCampeonato> readAll_clasificacionescampeonato() {
+	public List<ComentarioPiloto> comentariopiloto_readAll() {
 		
-		final List<ClasificacionCampeonato> clasificaciones = new ArrayList<>();
+		final List<ComentarioPiloto> comentarios = new ArrayList<>();
 		
-		Block<ClasificacionCampeonato> saveBlock = new Block<ClasificacionCampeonato>() {
+		Block<ComentarioPiloto> saveBlock = new Block<ComentarioPiloto>() {
 		    @Override
-		    public void apply(ClasificacionCampeonato clasificacion) {
-		        clasificaciones.add(clasificacion);
+		    public void apply(ComentarioPiloto comentario) {
+		        comentarios.add(comentario);
 		    }
 
 			
@@ -78,24 +77,24 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 		
 		collection.find().forEach(saveBlock);
 		
-		return clasificaciones;
+		return comentarios;
 		
 	}
 	
 	@WebMethod
-	public void update_clasificacioncampeonato(
+	public void comentariopiloto_update(
 			@WebParam(name = "id")String id,
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
+			@WebParam(name = "contenido")String contenido,
+			@WebParam(name = "calificacion")int calificacion,
+			@WebParam(name = "usuario")ObjectId usuario,
 			@WebParam(name = "piloto")ObjectId piloto
 			){
 		collection.updateOne(
 				eq("id", id) , 
 				combine(
-						set("puntaje",puntaje), 
-						set("tiempo",tiempo), 
-						set("posicion",posicion),
+						set("contenido",contenido), 
+						set("calificacion",calificacion), 
+						set("usuario",usuario),
 						set("piloto",piloto)
 						) 
 				);
@@ -104,37 +103,37 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	
 	
 	@WebMethod
-	public void clasificacioncampeonato_updateFromAndroid(
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
+	public void comentariopiloto_updateFromAndroid(
+			@WebParam(name = "contenido")String contenido,
+			@WebParam(name = "calificacion")int calificacion,
+			@WebParam(name = "usuario")ObjectId usuario,
 			@WebParam(name = "piloto")ObjectId piloto
 			){
 		
 		try {
 		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("clasificacioncampeonato");
+		    MongoCollection < Document > collection = db.getCollection("comentariopiloto");
 		    MongoCursor < Document > cursor = collection.find().iterator();
 		    try {
 		        while (cursor.hasNext()) {
 		            Document doc = cursor.next();
-		            ObjectId p  = doc.getObjectId("piloto");
+		            ObjectId p  = doc.getObjectId("usuario");
 		            
-		            if (p.equals(piloto)) {
+		            if (p.equals(usuario)) {
 						
 						collection.updateOne(
-								eq("piloto", piloto) , 
+								eq("usuario", usuario) , 
 								combine(
-										set("puntaje",puntaje), 
-										set("tiempo",tiempo), 
-										set("posicion",posicion),
+										set("contenido",contenido), 
+										set("calificacion",calificacion), 
+										set("usuario",usuario),
 										set("piloto",piloto)
 										) 
 								);
 					}
 		        }
 		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  ClasificacionCampeonato: '" + piloto + "' actualizado.");
+		        System.out.println("@info/: 'updateFromAndroid'  ->  Comentario a piloto: '" + usuario+"--->"+ piloto + "' actualizado.");
 		        
 		    } finally {
 		    	cursor.close();
@@ -151,10 +150,9 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")ObjectId piloto){
-		collection.deleteOne(eq("piloto",piloto));
+	public void deleteByName(@WebParam(name = "id")ObjectId id){
+		collection.deleteOne(eq("id",id));
 		
 	}
-	
 	
 }

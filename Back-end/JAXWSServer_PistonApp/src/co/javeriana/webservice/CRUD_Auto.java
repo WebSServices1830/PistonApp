@@ -123,7 +123,7 @@ public class CRUD_Auto {
 	}
 	
 	@WebMethod
-	public void auto_deleteByName(@WebParam(name = "id")String nombre){
+	public void auto_deleteByName(@WebParam(name = "nombre")String nombre){
 		collection.deleteOne(eq("nombre",nombre));
 	}
 

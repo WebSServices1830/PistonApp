@@ -1,6 +1,5 @@
-package co.edu.javeriana.sebastianmesa.conexmongo;
+package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,63 +18,67 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-public class CrearPilotoView extends Activity {
+import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
-    private EditText nombre, fecha, lugar, foto, podios, puntos, gp;
-    private Button agregarP, consultaP, accionesPiloto;
+public class CrearEscuderiaView extends AppCompatActivity {
+
+    private EditText nombre, lugarBase, jefeEquipo, jefeTecnico, chasis, fotoEscudo_ref, cant_vecesEnPodio, cant_TitulosCampeonato;
+    private Button agregarP;
     private String resultado="";
-    private CrearPilotoView.WebMet_AgregarPiloto wm_agregarPiloto = null;
+    private WebMet_AgregarEscuderia wm_agregarPiloto = null;
     private TextView campo = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_piloto_view);
+        setContentView(R.layout.activity_crear_escuderia_view);
 
-        agregarP =(Button) findViewById(R.id.agregarPiloto);
+        agregarP =(Button) findViewById(R.id.agregarEscuderia);
         agregarP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                wm_agregarPiloto = new CrearPilotoView.WebMet_AgregarPiloto();
+                wm_agregarPiloto = new WebMet_AgregarEscuderia();
                 wm_agregarPiloto.execute();
             }
         });
 
     }
 
-    private class WebMet_AgregarPiloto extends AsyncTask<Void, Void, Boolean> {
+    private class WebMet_AgregarEscuderia extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_piloto?wsdl";
-            final String METHOD_NAME = "create";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/create";
+            final String URL="http://10.0.2.2:8081/WS/crud_escuderia?wsdl";
+            final String METHOD_NAME = "escuderia_create";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/escuderia_create";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-            //request.addProperty("Hola", nro1.getText().toString());
-            //request.addProperty("nro2", nro2.getText().toString());
 
             XMLGregorianCalendar fecha= null;
 
-            nombre = (EditText) findViewById(R.id.nomPiloto);
-            lugar = (EditText) findViewById(R.id.lugarNacimientoPiloto);
-            foto = (EditText) findViewById(R.id.fotoRefPiloto);
-            podios   = (EditText) findViewById(R.id.podiosTotales);
-            puntos = (EditText) findViewById(R.id.puntosTotales);
-            gp = (EditText) findViewById(R.id.gpTotales);
+
+            nombre = (EditText) findViewById(R.id.nomEscuderia);
+            lugarBase = (EditText) findViewById(R.id.nomBase);
+            jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
+            jefeTecnico   = (EditText) findViewById(R.id.nomJTecnico);
+            chasis = (EditText) findViewById(R.id.nomChasis);
+            fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
+            cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
+            cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
 
 
-            request.addProperty("nombreCompleto", nombre.getText().toString());
-            request.addProperty("fecha_Nacimiento", null);
-            request.addProperty("lugarNacimiento", lugar.getText().toString());
-            request.addProperty("foto_ref", foto.getText().toString());
-            request.addProperty("cant_podiosTotales", Integer.parseInt(podios.getText().toString()));
-            request.addProperty("cant_puntosTotales", Integer.parseInt(puntos.getText().toString()));
-            request.addProperty("cant_granPremiosIngresado", Integer.parseInt(gp.getText().toString()));
+            request.addProperty("nombre", nombre.getText().toString());
+            request.addProperty("lugarBase", lugarBase.getText().toString());
+            request.addProperty("jefeEquipo", jefeEquipo.getText().toString());
+            request.addProperty("jefeTecnico", jefeTecnico.getText().toString());
+            request.addProperty("chasis", chasis.getText().toString());
+            request.addProperty("cant_vecesEnPodio", Integer.parseInt(cant_vecesEnPodio.getText().toString()));
+            request.addProperty("cant_TitulosCampeonato", Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
+            request.addProperty("fotoEscudo_ref", fotoEscudo_ref.getText().toString());
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -109,7 +112,7 @@ public class CrearPilotoView extends Activity {
 
                 //campo.setText(resultado);
 
-                Toast.makeText(getApplicationContext(), 	"Piloto Creado", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), 	"Escuderia Creada", Toast.LENGTH_LONG).show();
             }
         }
 

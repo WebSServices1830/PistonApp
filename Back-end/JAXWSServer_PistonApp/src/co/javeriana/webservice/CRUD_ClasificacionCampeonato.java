@@ -104,39 +104,37 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	
 	
 	@WebMethod
-	public void updateFromAndroid(
-			@WebParam(name = "fecha")Date fecha,
-			@WebParam(name = "cantVueltas")int cantVueltas,
-			@WebParam(name = "mejorVuelta")LocalTime mejorVuelta,
-			@WebParam(name = "pista")ObjectId pista,
-			@WebParam(name = "campeonato")ObjectId campeonato
+	public void clasificacioncampeonato_updateFromAndroid(
+			@WebParam(name = "puntaje")int puntaje,
+			@WebParam(name = "tiempo")LocalTime tiempo,
+			@WebParam(name = "posicion")int posicion,
+			@WebParam(name = "piloto")ObjectId piloto
 			){
 		
 		try {
 		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("grandesPremios");
+		    MongoCollection < Document > collection = db.getCollection("clasificacioncampeonato");
 		    MongoCursor < Document > cursor = collection.find().iterator();
 		    try {
 		        while (cursor.hasNext()) {
 		            Document doc = cursor.next();
-		            Date date  = doc.getDate("fecha");
+		            ObjectId p  = doc.getObjectId("piloto");
 		            
-		            if (date.equals(fecha)) {
+		            if (p.equals(piloto)) {
 						
 						collection.updateOne(
-								eq("fecha", fecha) , 
+								eq("piloto", piloto) , 
 								combine(
-										set("fecha",fecha), 
-										set("cantVueltas",cantVueltas), 
-										set("mejorVuelta",mejorVuelta),
-										set("pista",pista),
-										set("campeonato",campeonato)
+										set("puntaje",puntaje), 
+										set("tiempo",tiempo), 
+										set("posicion",posicion),
+										set("piloto",piloto)
 										) 
 								);
 					}
 		        }
 		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  gran premio: '" + fecha + "' actualizado.");
+		        System.out.println("@info/: 'updateFromAndroid'  ->  ClasificacionCampeonato: '" + piloto + "' actualizado.");
 		        
 		    } finally {
 		    	cursor.close();
@@ -153,8 +151,8 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")Date fecha){
-		collection.deleteOne(eq("fecha",fecha));
+	public void deleteByName(@WebParam(name = "id")ObjectId piloto){
+		collection.deleteOne(eq("piloto",piloto));
 		
 	}
 	

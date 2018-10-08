@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
+import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.IndexGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 
 public class MainActivity extends Activity {
     private EditText nombre, edad, equipo;
@@ -37,6 +39,14 @@ public class MainActivity extends Activity {
 
     public void accionesAuto (View view){
         startActivity(new Intent(getBaseContext(), IndexAutoView.class));
+    }
+
+    public void accionesGP (View view){
+        startActivity(new Intent(getBaseContext(), IndexGPView.class));
+    }
+
+    public void accionesUsuario (View view){
+        startActivity(new Intent(getBaseContext(), IndexUsuarioView.class));
     }
 
 }

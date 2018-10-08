@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UsuarioPck.VerUsuarioView">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/nomUusario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Digita nombre piloto"
+                />
+
+            <Button
+                android:id="@+id/verUsuario"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/nomUusario"
+                android:text="Ver piloto" />
+
+            <TextView
+                android:id="@+id/respuestaConsulta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textSize="16dp"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:layout_below="@+id/verUsuario"/>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

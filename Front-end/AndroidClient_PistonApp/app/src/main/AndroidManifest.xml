@@ -35,7 +35,17 @@
         <activity android:name=".AutoPck.CrearAutoView" />
         <activity android:name=".AutoPck.ActualizarAutoView" />
         <activity android:name=".AutoPck.VerAutoView" />
-        <activity android:name=".AutoPck.EliminarAutoView"></activity>
+        <activity android:name=".AutoPck.EliminarAutoView" />
+        <activity android:name=".GranPremioPck.IndexGPView" />
+        <activity android:name=".GranPremioPck.ActualizarGPView" />
+        <activity android:name=".GranPremioPck.CrearGPView" />
+        <activity android:name=".GranPremioPck.EliminarGPView" />
+        <activity android:name=".GranPremioPck.VerGPView" />
+        <activity android:name=".UsuarioPck.CrearUsuarioView" />
+        <activity android:name=".UsuarioPck.ActualizarUsuarioView" />
+        <activity android:name=".UsuarioPck.VerUsuarioView" />
+        <activity android:name=".UsuarioPck.EliminarUsuarioView" />
+        <activity android:name=".UsuarioPck.IndexUsuarioView"></activity>
     </application>
 
 </manifest>

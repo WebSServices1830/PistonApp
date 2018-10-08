@@ -120,7 +120,7 @@ public class CRUD_Usuario {
 	}
 	
 	@WebMethod
-	public void usuario_deleteByName(@WebParam(name = "id")String nombreUsuario){
+	public void usuario_deleteByName(@WebParam(name = "nombreUsuario")String nombreUsuario){
 		collection.deleteOne(eq("nombreUsuario",nombreUsuario));
 		
 	}

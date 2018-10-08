@@ -1,6 +1,7 @@
 package co.javeriana.webservice;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,9 +10,7 @@ import org.bson.types.ObjectId;
 
 public class GranPremio {
 	
-	
 	private ObjectId id;
-	
 	private Date fecha;
 	private int cantVueltas;
 	private LocalTime mejorVuelta;
@@ -24,7 +23,7 @@ public class GranPremio {
 	}
 	
 	public GranPremio( Date fecha, int cantVueltas, LocalTime mejorVuelta, ObjectId pista,
-			ObjectId campeonato, List<ObjectId> clasificaciones) {
+			ObjectId campeonato) {
 		super();
 		this.id = new ObjectId();
 		this.fecha = fecha;
@@ -32,7 +31,7 @@ public class GranPremio {
 		this.mejorVuelta = mejorVuelta;
 		this.pista = pista;
 		this.campeonato = campeonato;
-		this.clasificaciones = clasificaciones;
+		this.clasificaciones = new ArrayList<ObjectId>();
 	}
 	public ObjectId getId() {
 		return id;

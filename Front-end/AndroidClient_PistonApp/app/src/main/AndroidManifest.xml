@@ -30,7 +30,12 @@
         <activity android:name=".EscuderiaPck.ActualizarEscuderiaView" />
         <activity android:name=".EscuderiaPck.CrearEscuderiaView" />
         <activity android:name=".EscuderiaPck.EliminarEscuderiaView" />
-        <activity android:name=".EscuderiaPck.VerEscuderiaView"></activity>
+        <activity android:name=".EscuderiaPck.VerEscuderiaView" />
+        <activity android:name=".AutoPck.IndexAutoView" />
+        <activity android:name=".AutoPck.CrearAutoView" />
+        <activity android:name=".AutoPck.ActualizarAutoView" />
+        <activity android:name=".AutoPck.VerAutoView" />
+        <activity android:name=".AutoPck.EliminarAutoView"></activity>
     </application>
 
 </manifest>

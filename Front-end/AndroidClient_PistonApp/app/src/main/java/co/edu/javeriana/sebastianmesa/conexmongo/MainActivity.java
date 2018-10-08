@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
 
@@ -34,5 +35,8 @@ public class MainActivity extends Activity {
         startActivity(new Intent(getBaseContext(), IndexEscuderiaView.class));
     }
 
+    public void accionesAuto (View view){
+        startActivity(new Intent(getBaseContext(), IndexAutoView.class));
+    }
 
 }

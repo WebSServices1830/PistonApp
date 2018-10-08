@@ -34,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:enabled="false"
+        android:enabled="true"
+        android:onClick="accionesAuto"
         android:layout_below="@id/accionesEscuderia"
         android:text="Acciones Auto" />
 

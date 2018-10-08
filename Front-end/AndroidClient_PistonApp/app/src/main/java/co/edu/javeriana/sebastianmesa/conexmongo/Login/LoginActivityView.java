@@ -135,7 +135,7 @@ public class LoginActivityView extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(LoginActivityView.this,
                     R.style.AppTheme_Dark_Dialog);
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Authenticating...");
+            progressDialog.setMessage("Autenticando...");
             progressDialog.show();
 
             _emailText = (EditText) findViewById(R.id.input_email);
@@ -289,6 +289,7 @@ public class LoginActivityView extends AppCompatActivity {
         @Override
         protected void onPostExecute(final Boolean success) {
             if(success==false){
+                startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
             }
             else{

@@ -1,5 +1,6 @@
 package co.javeriana.webservice;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,20 +16,17 @@ public class Campeonato {
 	private List<ObjectId> clasificaciones;
 	
 	
-	
-	
 	public Campeonato() {
 		super();
 	}
-	public Campeonato(String nombre, Date fecha_inicio, Date fecha_final, List<ObjectId> gran_premios,
-			List<ObjectId> clasificaciones) {
+	public Campeonato(String nombre, Date fecha_inicio, Date fecha_final) {
 		super();
 		this.id= new ObjectId();
 		this.nombre = nombre;
 		this.fecha_inicio = fecha_inicio;
 		this.fecha_final = fecha_final;
-		this.gran_premios = gran_premios;
-		this.clasificaciones = clasificaciones;
+		this.gran_premios = new ArrayList<ObjectId>();
+		this.clasificaciones = new ArrayList<ObjectId>();
 	}
 	public ObjectId getId() {
 		return id;

@@ -1,7 +1,13 @@
+
+
+
 package co.javeriana.webservice;
+
+import org.bson.types.ObjectId;
 
 public class Usuario {
 	
+	private ObjectId id;
 	private String nombreUsuario;
 	private String contra;
 	private int edad;
@@ -13,15 +19,16 @@ public class Usuario {
 	
 	
 	
-	public Usuario(String nombreUsuario, String contra, int edad, String descripcion, String foto, boolean admin) {
+	public Usuario(String nombreUsuario, String contra, int edad, String descripcion, String foto, boolean admin, long bolsillo) {
 		super();
+		this.id = new ObjectId();
 		this.nombreUsuario = nombreUsuario;
 		this.contra = contra;
 		this.edad = edad;
 		this.descripcion = descripcion;
 		this.foto = foto;
 		this.admin = admin;
-		this.bolsillo = 0;
+		this.bolsillo = bolsillo;
 	}
 	public String getNombreUsuario() {
 		return nombreUsuario;

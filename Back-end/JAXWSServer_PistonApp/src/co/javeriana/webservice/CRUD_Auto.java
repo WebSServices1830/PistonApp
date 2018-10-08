@@ -6,7 +6,9 @@ import static com.mongodb.client.model.Updates.set;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -16,6 +18,7 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
@@ -57,7 +60,7 @@ public class CRUD_Auto {
 		collection.insertOne(auto);
 	}
 	
-	@WebMethod
+    @WebMethod
 	public Auto read(@WebParam(name = "id")String id){
 		Auto auto = collection.find(eq("id", id)).first();
 		return auto;
@@ -65,8 +68,26 @@ public class CRUD_Auto {
 	
 	@WebMethod
 	public Auto readByName(@WebParam(name = "nombre")String nombre){
-		Auto auto = collection.find(eq("nombre", nombre)).first();
+		Auto auto= collection.find(eq("nombre", nombre)).first();
 		return auto;
+	}
+	
+	@WebMethod
+	public List<Auto> readAll() {
+		
+		final List<Auto> autos = new ArrayList<>();
+		
+		Block<Auto> saveBlock = new Block<Auto>() {
+		    @Override
+		    public void apply(Auto auto) {
+		        autos.add(auto);
+		    }
+		};
+		
+		collection.find().forEach(saveBlock);
+		
+		return autos;
+		
 	}
 	
 	@WebMethod
@@ -76,7 +97,11 @@ public class CRUD_Auto {
 			@WebParam(name = "pesoEnKg")double pesoEnKg,
 			@WebParam(name = "ruedas")String ruedas,
 			@WebParam(name = "combustible")String combustible,
-			@WebParam(name = "foto_ref")String foto_ref){
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "motor_referencia")String motor_referencia,
+			@WebParam(name = "motor_cilindraje")String motor_cilindraje,
+			@WebParam(name = "motor_configuracion")String motor_configuracion,
+			@WebParam(name = "motor_turbo")boolean motor_turbo){
 		collection.updateOne(
 				eq("id", id) , 
 				combine(
@@ -84,7 +109,11 @@ public class CRUD_Auto {
 						set("pesoEnKg",pesoEnKg), 
 						set("ruedas",ruedas),
 						set("combustible",combustible),
-						set("foto_ref",foto_ref)
+						set("foto_ref",foto_ref),
+						set("motor_referencia",motor_referencia),
+						set("motor_cilindraje",motor_cilindraje),
+						set("motor_configuracion",motor_configuracion),
+						set("motor_turbo",motor_turbo)
 						) 
 				);
 	}
@@ -97,7 +126,11 @@ public class CRUD_Auto {
 			@WebParam(name = "pesoEnKg")double pesoEnKg,
 			@WebParam(name = "ruedas")String ruedas,
 			@WebParam(name = "combustible")String combustible,
-			@WebParam(name = "foto_ref")String foto_ref){
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "motor_referencia")String motor_referencia,
+			@WebParam(name = "motor_cilindraje")String motor_cilindraje,
+			@WebParam(name = "motor_configuracion")String motor_configuracion,
+			@WebParam(name = "motor_turbo")boolean motor_turbo){
 		
 		try {
 		    MongoDatabase db = database;
@@ -117,7 +150,11 @@ public class CRUD_Auto {
 										set("pesoEnKg",pesoEnKg), 
 										set("ruedas",ruedas),
 										set("combustible",combustible),
-										set("foto_ref",foto_ref)
+										set("foto_ref",foto_ref),
+										set("motor_referencia",motor_referencia),
+										set("motor_cilindraje",motor_cilindraje),
+										set("motor_configuracion",motor_configuracion),
+										set("motor_turbo",motor_turbo)
 										) 
 								);
 					}
@@ -140,33 +177,8 @@ public class CRUD_Auto {
 	}
 	
 	@WebMethod
-	public boolean deleteByName(@WebParam(name = "id")String id){
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("autos");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name  = doc.getString("nombre");
-		            
-		            if (name.equals(id)) {
-		            	collection.deleteOne(eq("nombre", id));
-		        		System.out.println("@info/: 'deleteByName'  ->  auto: '" + id + "' eliminado.");
-		        		return true;
-						
-					}
-		        }
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-		return false;
-		
+	public void deleteByName(@WebParam(name = "id")String nombre){
+		collection.deleteOne(eq("nombre",nombre));
 	}
 
 }

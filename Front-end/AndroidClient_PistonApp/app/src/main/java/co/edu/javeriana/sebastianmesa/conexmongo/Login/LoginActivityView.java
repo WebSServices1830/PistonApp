@@ -3,12 +3,14 @@ package co.edu.javeriana.sebastianmesa.conexmongo.Login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,8 @@ public class LoginActivityView extends AppCompatActivity {
         private int edad;
         private boolean admin;
         private long bolsillo;
+
+        private LinearLayout ll;
 
         public String getNombreUsuario() {
             return nombreUsuario;
@@ -99,6 +103,8 @@ public class LoginActivityView extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login_view);
             ButterKnife.bind(this);
+
+            findViewById(R.id.fondo).setBackground(ContextCompat.getDrawable(this,R.drawable.gradiente_back2));
 
             _loginButton = (Button) findViewById(R.id.btn_login);
             _signupLink = (TextView) findViewById(R.id.link_signup);

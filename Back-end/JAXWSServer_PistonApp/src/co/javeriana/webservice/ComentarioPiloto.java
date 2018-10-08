@@ -14,10 +14,12 @@ public class ComentarioPiloto {
 		
 	}
 	
-	public ComentarioPiloto(String contenido, int calificacion, Usuario usuario, Piloto piloto) {
+	public ComentarioPiloto(String contenido, int calificacion, ObjectId usuario, ObjectId piloto) {
 		this.id = new ObjectId();
 		this.contenido = contenido;
 		this.calificacion = calificacion;
+		this.usuario= usuario;
+		this.piloto= piloto;
 	}
 
 	public String getContenido() {

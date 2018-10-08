@@ -118,8 +118,8 @@ public class CRUD_Auto {
 	}
 	
 	@WebMethod
-	public void auto_delete(@WebParam(name = "id")String id){
-		collection.deleteOne(eq("id", id));
+	public void auto_delete(@WebParam(name = "nombre")String nombre){
+		collection.deleteOne(eq("nombre", nombre));
 	}
 	
 	@WebMethod

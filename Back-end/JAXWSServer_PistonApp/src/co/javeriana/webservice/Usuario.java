@@ -16,6 +16,10 @@ public class Usuario {
 	private boolean admin;
 	private long bolsillo;
 	
+	public Usuario(){
+		
+	}
+	
 	public Usuario(String nombreUsuario, String contra, int edad, String descripcion, String foto, boolean admin, long bolsillo) {
 		this.id = new ObjectId();
 		this.nombreUsuario = nombreUsuario;

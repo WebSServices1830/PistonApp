@@ -19,9 +19,9 @@ public class GranPremio {
 	private ObjectId campeonato;
 	private List<ObjectId> clasificaciones;
 	
-	
-	
-	
+	public GranPremio(){
+		
+	}
 	
 	public GranPremio( Date fecha, int cantVueltas, LocalTime mejorVuelta, ObjectId pista,
 			ObjectId campeonato, List<ObjectId> clasificaciones) {

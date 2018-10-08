@@ -1,5 +1,6 @@
 package co.javeriana.webservice;
 
+
 public class Motor {
 	private String referencia;
 	private String cilindraje;
@@ -7,6 +8,7 @@ public class Motor {
 	private boolean turbo;
 	
 	public Motor() {
+		
 	}
 	
 	public Motor(String referencia, String cilindraje, String configuracion, boolean turbo) {

@@ -19,6 +19,10 @@ public class Escuderia {
 	private List<ObjectId> autos;
 	private List<ObjectId> pilotos;
 	
+	public Escuderia(){
+		
+	}
+	
 	public Escuderia(String nombre, String lugarBase, String jefeTecnico, String jefeEquipo, String chasis,
 			int cant_vecesEnPodio, int cant_TitulosCampeonato, String fotoEscudo_ref) {
 		this.id = new ObjectId();

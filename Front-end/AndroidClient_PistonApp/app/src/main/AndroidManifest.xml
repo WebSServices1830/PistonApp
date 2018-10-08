@@ -21,11 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IndexView" />
-        <activity android:name=".CrearPilotoView" />
-        <activity android:name=".VerPilotoView" />
-        <activity android:name=".ActualizarPilotoView" />
-        <activity android:name=".EliminarPilotoView"></activity>
+        <activity android:name=".PilotoPck.IndexPilotoView" />
+        <activity android:name=".PilotoPck.CrearPilotoView" />
+        <activity android:name=".PilotoPck.VerPilotoView" />
+        <activity android:name=".PilotoPck.ActualizarPilotoView" />
+        <activity android:name=".PilotoPck.EliminarPilotoView" />
+        <activity android:name=".EscuderiaPck.IndexEscuderiaView" />
+        <activity android:name=".EscuderiaPck.ActualizarEscuderiaView" />
+        <activity android:name=".EscuderiaPck.CrearEscuderiaView" />
+        <activity android:name=".EscuderiaPck.EliminarEscuderiaView" />
+        <activity android:name=".EscuderiaPck.VerEscuderiaView"></activity>
     </application>
 
 </manifest>

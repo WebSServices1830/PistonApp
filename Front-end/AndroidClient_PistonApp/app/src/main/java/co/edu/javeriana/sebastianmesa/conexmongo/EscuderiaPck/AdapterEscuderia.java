@@ -1,4 +1,4 @@
-package co.edu.javeriana.sebastianmesa.conexmongo;
+package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +17,17 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.CartaMenu;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.ActualizarPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.CrearPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.EliminarPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.VerPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.R;
+
 /**
  * Created by Ravi Tamada on 18/05/16.
  */
-public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHolder> {
+public class AdapterEscuderia extends RecyclerView.Adapter<AdapterEscuderia.MyViewHolder> {
 
     private Context mContext;
     private List<CartaMenu> cartaMenuList;
@@ -42,7 +49,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     }
 
 
-    public AlbumsAdapter(Context mContext, List<CartaMenu> cartaMenuList) {
+    public AdapterEscuderia(Context mContext, List<CartaMenu> cartaMenuList) {
         this.mContext = mContext;
         this.cartaMenuList = cartaMenuList;
     }
@@ -76,19 +83,19 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
             public void onClick(View v) {
                 //Toast.makeText(mContext, "Seleccion "+position, Toast.LENGTH_LONG).show();
                 if (position == 0){
-                    Intent intent = new Intent(mContext, CrearPilotoView.class);
+                    Intent intent = new Intent(mContext, CrearEscuderiaView.class);
                     mContext.startActivity(intent);
                 }
                 if (position == 1){
-                    Intent intent = new Intent(mContext, VerPilotoView.class);
+                    Intent intent = new Intent(mContext, VerEscuderiaView.class);
                     mContext.startActivity(intent);
                 }
                 if (position == 2){
-                    Intent intent = new Intent(mContext, ActualizarPilotoView.class);
+                    Intent intent = new Intent(mContext, ActualizarEscuderiaView.class);
                     mContext.startActivity(intent);
                 }
                 if (position == 3){
-                    Intent intent = new Intent(mContext, EliminarPilotoView.class);
+                    Intent intent = new Intent(mContext, EliminarEscuderiaView.class);
                     mContext.startActivity(intent);
                 }
 

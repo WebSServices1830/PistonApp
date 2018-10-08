@@ -1,15 +1,14 @@
-package co.edu.javeriana.sebastianmesa.conexmongo;
+package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,25 +22,21 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexView extends AppCompatActivity {
+import co.edu.javeriana.sebastianmesa.conexmongo.CartaMenu;
+import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
+public class IndexEscuderiaView extends AppCompatActivity {
 
     //Static Context
     public static Context context;
     public View theview;
     private Toolbar mTopToolbar;
     private RecyclerView recyclerView;
-    private AlbumsAdapter adapter;
+    private AdapterEscuderia adapterEscuderias;
     private List<CartaMenu> cartaMenuList;
     private TextView campoDeSubtitulo;
     private ImageView fondo;
@@ -50,7 +45,7 @@ public class IndexView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getBaseContext();
-        setContentView(R.layout.activity_index_view);
+        setContentView(R.layout.activity_index_escuderia_view);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Set the status bar to dark-semi-transparentish
@@ -97,13 +92,13 @@ public class IndexView extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         cartaMenuList = new ArrayList<>();
-        adapter = new AlbumsAdapter(this, cartaMenuList);
+        adapterEscuderias = new AdapterEscuderia(this, cartaMenuList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.addItemDecoration(new IndexEscuderiaView.GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapterEscuderias);
 
         prepareAlbums();
 
@@ -187,25 +182,25 @@ public class IndexView extends AppCompatActivity {
      */
     private void prepareAlbums() {
         int[] covers = new int[]{
-                R.drawable.ic_f1,
-                R.drawable.ic_f1,
-                R.drawable.ic_f1,
-                R.drawable.ic_f1};
+                R.drawable.ic_escuderias,
+                R.drawable.ic_escuderias,
+                R.drawable.ic_escuderias,
+                R.drawable.ic_escuderias};
 
-        CartaMenu a = new CartaMenu("Crear Piloto", "Crea un nuevo piloto", covers[0]);
+        CartaMenu a = new CartaMenu("Crear Escuderia", "Crea una nueva escuderia", covers[0]);
         cartaMenuList.add(a);
 
-        a = new CartaMenu("Ver Piloto", "Mira los pilotos actuales", covers[1]);
+        a = new CartaMenu("Ver Escuderia", "Mira una escuderia", covers[1]);
         cartaMenuList.add(a);
 
-        a = new CartaMenu("Actualizar Piloto", "Actualiza la información de un piloto", covers[2]);
+        a = new CartaMenu("Actualizar Escuderia", "Actualiza la información de una Escuderia", covers[2]);
         cartaMenuList.add(a);
 
-        a = new CartaMenu("Eliminar Piloto", "Elimina un piloto del sistema", covers[3]);
+        a = new CartaMenu("Eliminar Escuderia", "Elimina una Escuderia sistema", covers[3]);
         cartaMenuList.add(a);
 
 
-        adapter.notifyDataSetChanged();
+        adapterEscuderias.notifyDataSetChanged();
     }
 
     /**
@@ -253,7 +248,5 @@ public class IndexView extends AppCompatActivity {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
-
-
 
 }

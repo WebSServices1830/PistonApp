@@ -16,26 +16,39 @@
         android:text="Acciones Piloto" />
 
     <Button
-        android:id="@+id/accionesPistas"
+        android:id="@+id/accionesEscuderia"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:enabled="false"
+        android:enabled="true"
+        android:onClick="accionesEscuderia"
         android:layout_below="@id/accionesPiloto"
-        android:text="Acciones Carreras" />
+        android:text="Acciones Escuderiaa" />
 
     <Button
-        android:id="@+id/accionesCampeonato"
+        android:id="@+id/accionesAuto"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:enabled="false"
-        android:layout_below="@id/accionesPistas"
-        android:text="Acciones Gran Premio" />
+        android:layout_below="@id/accionesEscuderia"
+        android:text="Acciones Auto" />
+
+    <Button
+        android:id="@+id/accionesUsuario"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:enabled="false"
+        android:layout_below="@id/accionesAuto"
+        android:text="Acciones Usuario" />
+
 
 
 

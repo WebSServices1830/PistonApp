@@ -1,26 +1,16 @@
 package co.edu.javeriana.sebastianmesa.conexmongo;
 
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import javax.xml.datatype.XMLGregorianCalendar;
+import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
 
 public class MainActivity extends Activity {
     private EditText nombre, edad, equipo;
@@ -37,9 +27,12 @@ public class MainActivity extends Activity {
     }
 
     public void accionesPiloto (View view){
-        startActivity(new Intent(getBaseContext(), IndexView.class));
+        startActivity(new Intent(getBaseContext(), IndexPilotoView.class));
     }
 
+    public void accionesEscuderia (View view){
+        startActivity(new Intent(getBaseContext(), IndexEscuderiaView.class));
+    }
 
 
 }

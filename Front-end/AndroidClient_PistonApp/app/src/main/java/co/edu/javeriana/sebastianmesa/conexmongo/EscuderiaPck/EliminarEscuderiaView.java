@@ -1,4 +1,4 @@
-package co.edu.javeriana.sebastianmesa.conexmongo;
+package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -16,19 +16,18 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-public class EliminarPilotoView extends AppCompatActivity {
+import co.edu.javeriana.sebastianmesa.conexmongo.R;
+
+public class EliminarEscuderiaView extends AppCompatActivity {
 
     private EditText campoId;
     private Button consultaBtn;
     private String Nombre, lugar, foto;
     private Date fecha;
     private int podios, puntos, premios;
-    private EliminarPilotoView.WebMet_EliminarPiloto wm_agregarPiloto = null;
+    private WebMet_EliminarEscuderia wm_agregarPiloto = null;
     private TextView campoRespuesta = null;
     private boolean completado = false;
 
@@ -36,23 +35,23 @@ public class EliminarPilotoView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_eliminar_piloto_view);
+        setContentView(R.layout.activity_eliminar_escuderia_view);
 
         completado = false;
 
-        consultaBtn =(Button) findViewById(R.id.agregarPiloto);
+        consultaBtn =(Button) findViewById(R.id.btnEliminarEscuderia);
         consultaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                wm_agregarPiloto = new EliminarPilotoView.WebMet_EliminarPiloto();
+                wm_agregarPiloto = new WebMet_EliminarEscuderia();
                 wm_agregarPiloto.execute();
             }
         });
 
     }
 
-    private class WebMet_EliminarPiloto extends AsyncTask<Void, Void, Boolean> {
+    private class WebMet_EliminarEscuderia extends AsyncTask<Void, Void, Boolean> {
 
 
 
@@ -61,14 +60,14 @@ public class EliminarPilotoView extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_piloto?wsdl";
-            final String METHOD_NAME = "deleteByName";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/deleteByName";
+            final String URL="http://10.0.2.2:8081/WS/crud_escuderia?wsdl";
+            final String METHOD_NAME = "escuderia_deleteByName";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/escuderia_deleteByName";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            campoId = (EditText) findViewById(R.id.idPiloto);
-            request.addProperty("id", campoId.getText().toString());
+            campoId = (EditText) findViewById(R.id.nombreEscuderia);
+            request.addProperty("nombre", campoId.getText().toString());
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -82,20 +81,6 @@ public class EliminarPilotoView extends AppCompatActivity {
 
                 ht.call(SOAP_ACTION, envelope);
                 SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-
-                boolean resp = new Boolean(response.toString());
-
-                if ( resp ) {
-
-                    completado = true;
-                    campoRespuesta.setText("Piloto encontrado");
-                    //Toast.makeText(getApplicationContext(), "Piloto NO eliminado", Toast.LENGTH_LONG).show();
-
-                }else{
-                    campoRespuesta.setText("No encontrado");
-                    //Toast.makeText(getApplicationContext(), "Piloto eliminado", Toast.LENGTH_LONG).show();
-                }
-
 
             }
             catch (Exception e)

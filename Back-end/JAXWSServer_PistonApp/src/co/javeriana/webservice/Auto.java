@@ -1,79 +1,59 @@
 package co.javeriana.webservice;
 
 public class Auto {
-	private String foto;
-	private String chasis;
-	private String electronica;
-	private String neumaticos;
-	private String frenos;
-	private String defensas;
-	private String modelo;
+	private String nombre;
+	private double pesoEnKg;
+	private String ruedas;
+	private String combustible;
+	private String foto_ref;
 	
-	public Auto(String foto, String chasis, String electronica, String neumaticos, String frenos, String defensas, String modelo) {
+	public Auto(String nombre, double pesoEnKg, String ruedas, String combustible, String foto_ref) {
 		super();
-		this.foto = foto;
-		this.chasis = chasis;
-		this.electronica = electronica;
-		this.neumaticos = neumaticos;
-		this.frenos = frenos;
-		this.defensas = defensas;
-		this.modelo= modelo;
+		this.nombre = nombre;
+		this.pesoEnKg = pesoEnKg;
+		this.ruedas = ruedas;
+		this.combustible = combustible;
+		this.foto_ref = foto_ref;
 	}
 
-	public String getFoto() {
-		return foto;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setFoto(String foto) {
-		this.foto = foto;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getChasis() {
-		return chasis;
+	public double getPesoEnKg() {
+		return pesoEnKg;
 	}
 
-	public void setChasis(String chasis) {
-		this.chasis = chasis;
+	public void setPesoEnKg(double pesoEnKg) {
+		this.pesoEnKg = pesoEnKg;
 	}
 
-	public String getElectronica() {
-		return electronica;
+	public String getRuedas() {
+		return ruedas;
 	}
 
-	public void setElecrtonica(String electronica) {
-		this.electronica = electronica;
+	public void setRuedas(String ruedas) {
+		this.ruedas = ruedas;
 	}
 
-	public String getNeumaticos() {
-		return neumaticos;
+	public String getCombustible() {
+		return combustible;
 	}
 
-	public void setNeumaticos(String neumaticos) {
-		this.neumaticos = neumaticos;
+	public void setCombustible(String combustible) {
+		this.combustible = combustible;
 	}
 
-	public String getFrenos() {
-		return frenos;
+	public String getFoto_ref() {
+		return foto_ref;
 	}
 
-	public void setFrenos(String frenos) {
-		this.frenos = frenos;
-	}
-
-	public String getDefensas() {
-		return defensas;
-	}
-
-	public void setDefensas(String defensas) {
-		this.defensas = defensas;
-	}
-
-	public String getModelo() {
-		return modelo;
-	}
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
+	public void setFoto_ref(String foto_ref) {
+		this.foto_ref = foto_ref;
 	}
 	
 }

@@ -10,6 +10,7 @@ import java.util.Date;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebService;
 
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -25,9 +26,10 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 
+@WebService(name="crud_auto")
 public class CRUD_Auto {
 	
-MongoClient mongoClient = MongoClients.create();
+	MongoClient mongoClient = MongoClients.create();
 	
 	// create codec registry for POJOs
 	CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
@@ -44,15 +46,13 @@ MongoClient mongoClient = MongoClients.create();
 	
     @WebMethod
 	public void create(
-			@WebParam(name = "foto")String foto,
-			@WebParam(name = "chasis")String chasis,
-			@WebParam(name = "electronica")String electronica,
-			@WebParam(name = "neumaticos")String neumaticos,
-			@WebParam(name = "frenos")String frenos,
-			@WebParam(name = "defensas")String defensas,
-			@WebParam(name = "modelo")String modelo){
+			@WebParam(name = "nombre")String nombre,
+			@WebParam(name = "pesoEnKg")double pesoEnKg,
+			@WebParam(name = "ruedas")String ruedas,
+			@WebParam(name = "combustible")String combustible,
+			@WebParam(name = "foto_ref")String foto_ref){
 			
-		Auto auto = new Auto(foto,chasis,electronica,neumaticos,frenos,defensas,modelo);
+		Auto auto = new Auto(nombre,pesoEnKg,ruedas,combustible,foto_ref);
 		collection.insertOne(auto);
 	}
 	
@@ -63,7 +63,7 @@ MongoClient mongoClient = MongoClients.create();
 	}
 	
 	@WebMethod
-	public Auto readByModel(@WebParam(name = "id")String id){
+	public Auto readByName(@WebParam(name = "id")String id){
 		
 		Auto auto = null;
 		
@@ -74,19 +74,17 @@ MongoClient mongoClient = MongoClients.create();
 		    try {
 		        while (cursor.hasNext()) {
 		            Document doc = cursor.next();
-		            String model = doc.getString("modelo");
+		            String name = doc.getString("modelo");
 		            
-		            if (model.equals(id)) {
-		            	System.out.println("@info/: 'readByModel'  ->  model: '" + model + "' encontrado.");
+		            if (name.equals(id)) {
+		            	System.out.println("@info/: 'readByName'  ->  name: '" + name + "' encontrado.");
 						return auto = 
 								new Auto(
-										doc.getString ("foto"), 
-										doc.getString ("chasis"), 
-										doc.getString ("electronica"), 
-										doc.getString ("neumaticos"), 
-										doc.getString("frenos"), 
-										doc.getString("defensas"), 
-										doc.getString("modelo"));
+										doc.getString ("nombre"), 
+										doc.getDouble ("pesoEnKg"), 
+										doc.getString ("ruedas"), 
+										doc.getString ("combustible"), 
+										doc.getString("foto_ref"));
 					}
 		        }
 		    } finally {
@@ -103,24 +101,19 @@ MongoClient mongoClient = MongoClients.create();
 	@WebMethod
 	public void update(
 			@WebParam(name = "id")String id,
-			@WebParam(name = "foto")String foto,
-			@WebParam(name = "chasis")String chasis,
-			@WebParam(name = "electronica")String electronica,
-			@WebParam(name = "neumaticos")String neumaticos,
-			@WebParam(name = "frenos")String frenos,
-			@WebParam(name = "defensas")String defensas,
-			@WebParam(name = "modelo")String modelo
-			){
+			@WebParam(name = "nombre")String nombre,
+			@WebParam(name = "pesoEnKg")double pesoEnKg,
+			@WebParam(name = "ruedas")String ruedas,
+			@WebParam(name = "combustible")String combustible,
+			@WebParam(name = "foto_ref")String foto_ref){
 		collection.updateOne(
 				eq("id", id) , 
 				combine(
-						set("foto",foto), 
-						set("chasis",chasis), 
-						set("electronica",electronica),
-						set("neumaticos",neumaticos),
-						set("frenos",frenos),
-						set("defensas",defensas),
-						set("modelo",modelo)
+						set("nombre",nombre), 
+						set("pesoEnKg",pesoEnKg), 
+						set("ruedas",ruedas),
+						set("combustible",combustible),
+						set("foto_ref",foto_ref)
 						) 
 				);
 	}
@@ -129,13 +122,11 @@ MongoClient mongoClient = MongoClients.create();
 	
 	@WebMethod
 	public void updateFromAndroid(
-			@WebParam(name = "foto")String foto,
-			@WebParam(name = "chasis")String chasis,
-			@WebParam(name = "electronica")String electronica,
-			@WebParam(name = "neumaticos")String neumaticos,
-			@WebParam(name = "frenos")String frenos,
-			@WebParam(name = "defensas")String defensas,
-			@WebParam(name = "modelo")String modelo){
+			@WebParam(name = "nombre")String nombre,
+			@WebParam(name = "pesoEnKg")double pesoEnKg,
+			@WebParam(name = "ruedas")String ruedas,
+			@WebParam(name = "combustible")String combustible,
+			@WebParam(name = "foto_ref")String foto_ref){
 		
 		try {
 		    MongoDatabase db = database;
@@ -144,26 +135,24 @@ MongoClient mongoClient = MongoClients.create();
 		    try {
 		        while (cursor.hasNext()) {
 		            Document doc = cursor.next();
-		            String model  = doc.getString("modelo");
+		            String name  = doc.getString("nombre");
 		            
-		            if (model.equals(modelo)) {
+		            if (name.equals(nombre)) {
 						
 						collection.updateOne(
-								eq("modelo", model) , 
+								eq("nombre", nombre) , 
 								combine(
-										set("foto",foto), 
-										set("chasis",chasis), 
-										set("electronica",electronica),
-										set("neumaticos",neumaticos),
-										set("frenos",frenos),
-										set("defensas",defensas),
-										set("modelo",modelo)
+										set("nombre",nombre), 
+										set("pesoEnKg",pesoEnKg), 
+										set("ruedas",ruedas),
+										set("combustible",combustible),
+										set("foto_ref",foto_ref)
 										) 
 								);
 					}
 		        }
 		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  auto: '" + modelo + "' actualizado.");
+		        System.out.println("@info/: 'updateFromAndroid'  ->  auto: '" + nombre + "' actualizado.");
 		        
 		    } finally {
 		    	cursor.close();
@@ -180,7 +169,7 @@ MongoClient mongoClient = MongoClients.create();
 	}
 	
 	@WebMethod
-	public boolean deleteByModel(@WebParam(name = "id")String id){
+	public boolean deleteByName(@WebParam(name = "id")String id){
 		try {
 		    MongoDatabase db = database;
 		    MongoCollection < Document > collection = db.getCollection("autos");
@@ -188,11 +177,11 @@ MongoClient mongoClient = MongoClients.create();
 		    try {
 		        while (cursor.hasNext()) {
 		            Document doc = cursor.next();
-		            String model  = doc.getString("modelo");
+		            String name  = doc.getString("nombre");
 		            
-		            if (model.equals(id)) {
-		            	collection.deleteOne(eq("modelo", id));
-		        		System.out.println("@info/: 'deleteByModel'  ->  auto: '" + id + "' eliminado.");
+		            if (name.equals(id)) {
+		            	collection.deleteOne(eq("nombre", id));
+		        		System.out.println("@info/: 'deleteByName'  ->  auto: '" + id + "' eliminado.");
 		        		return true;
 						
 					}

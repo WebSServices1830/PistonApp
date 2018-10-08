@@ -41,7 +41,7 @@ import static com.mongodb.client.model.Filters.eq;
 @WebService(name="crud_piloto")
 public class CRUD_Piloto {
 	
-	MongoClient mongoClient = MongoClients.create();
+	MongoClient mongoClient = ClienteMongo.getInstancia();
 	
 	// create codec registry for POJOs
 	CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
@@ -52,9 +52,6 @@ public class CRUD_Piloto {
     
     // get a handle to the "people" collection
     MongoCollection<Piloto> collection = database.getCollection("pilotos", Piloto.class);
-    
-    // Create a gridFSBucket with a custom bucket name "files"
-    GridFSBucket gridFSFilesBucket = GridFSBuckets.create(database, "files");
 	
     @WebMethod
 	public void create(
@@ -78,40 +75,26 @@ public class CRUD_Piloto {
 	}
 	
 	@WebMethod
-	public Piloto readByName(@WebParam(name = "id")String id){
+	public Piloto readByName(@WebParam(name = "nombreCompleto")String nombreCompleto){
+		Piloto piloto = collection.find(eq("nombreCompleto", nombreCompleto)).first();
+		return piloto;
+	}
+	
+	@WebMethod
+	public List<Piloto> readAll() {
 		
-		Piloto piloto = null;
+		final List<Piloto> pilotos = new ArrayList<>();
 		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("pilotos");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name = doc.getString("nombreCompleto");
-		            
-		            if (name.equals(id)) {
-		            	System.out.println("@info/: 'readByName'  ->  piloto: '" + name + "' encontrado.");
-						return piloto = 
-								new Piloto(
-										doc.getString ("nombreCompleto"), 
-										doc.getDate   ("fecha_Nacimiento"), 
-										doc.getString ("lugarNacimiento"), 
-										doc.getString ("foto_ref"), 
-										doc.getInteger("cant_podiosTotales"), 
-										doc.getInteger("cant_puntosTotales"), 
-										doc.getInteger("cant_granPremiosIngresado"));
-					}
-		        }
-		    } finally {
-		    	cursor.close();
+		Block<Piloto> saveBlock = new Block<Piloto>() {
+		    @Override
+		    public void apply(Piloto piloto) {
+		        pilotos.add(piloto);
 		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
+		};
 		
-		return null;
+		collection.find().forEach(saveBlock);
+		
+		return pilotos;
 		
 	}
 	
@@ -195,32 +178,8 @@ public class CRUD_Piloto {
 	}
 	
 	@WebMethod
-	public boolean deleteByName(@WebParam(name = "id")String id){
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("pilotos");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            String name  = doc.getString("nombreCompleto");
-		            
-		            if (name.equals(id)) {
-		            	collection.deleteOne(eq("nombreCompleto", id));
-		        		System.out.println("@info/: 'deleteByName'  ->  piloto: '" + id + "' eliminado.");
-		        		return true;
-						
-					}
-		        }
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-		return false;
+	public void deleteByName(@WebParam(name = "id")String nombreCompleto){
+		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
 		
 	}
 

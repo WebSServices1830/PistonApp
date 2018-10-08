@@ -1,6 +1,10 @@
 package co.javeriana.webservice;
 
+import org.bson.types.ObjectId;
+
 public class Auto {
+	
+	private ObjectId id;
 	private String nombre;
 	private double pesoEnKg;
 	private String ruedas;
@@ -8,7 +12,7 @@ public class Auto {
 	private String foto_ref;
 	
 	public Auto(String nombre, double pesoEnKg, String ruedas, String combustible, String foto_ref) {
-		super();
+		this.id = new ObjectId();
 		this.nombre = nombre;
 		this.pesoEnKg = pesoEnKg;
 		this.ruedas = ruedas;

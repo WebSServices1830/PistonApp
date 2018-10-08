@@ -29,7 +29,7 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 @WebService(name="crud_usuario")
 public class CRUD_Usuario {
 	
-	MongoClient mongoClient = MongoClients.create();
+	MongoClient mongoClient = ClienteMongo.getInstancia();
 	
 	// create codec registry for POJOs
 	CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
@@ -41,8 +41,6 @@ public class CRUD_Usuario {
     // get a handle to the "people" collection
     MongoCollection<Usuario> collection = database.getCollection("usuario", Usuario.class);
     
-    // Create a gridFSBucket with a custom bucket name "files"
-    GridFSBucket gridFSFilesBucket = GridFSBuckets.create(database, "files");
     @WebMethod
    	public void create(
    			@WebParam(name = "nombreUsuario")String nombreUsuario,

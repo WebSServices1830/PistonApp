@@ -21,7 +21,7 @@ public class Piloto {
     private int cant_podiosTotales;
     private int cant_puntosTotales;
     private int cant_granPremiosIngresado;
-    private List<ComentarioPiloto> comentarios;
+    private List<ObjectId> comentarios;
     
     public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
 			int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado) {

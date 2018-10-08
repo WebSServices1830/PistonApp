@@ -1,44 +1,50 @@
 package co.javeriana.webservice;
 
-public class ComentarioPiloto {
+import org.bson.types.ObjectId;
 
+public class ComentarioPiloto {
+	
+	private ObjectId id;
 	private String contenido;
 	private int calificacion;
-	private Usuario usuario;
-	private Piloto piloto;
-	
-	
-	
+	private ObjectId usuario;
+	private ObjectId piloto;
 	
 	public ComentarioPiloto(String contenido, int calificacion, Usuario usuario, Piloto piloto) {
-		super();
+		this.id = new ObjectId();
 		this.contenido = contenido;
 		this.calificacion = calificacion;
-		this.usuario = usuario;
-		this.piloto = piloto;
 	}
+
 	public String getContenido() {
 		return contenido;
 	}
+
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
+
 	public int getCalificacion() {
 		return calificacion;
 	}
+
 	public void setCalificacion(int calificacion) {
 		this.calificacion = calificacion;
 	}
-	public Usuario getUsuario() {
+
+	public ObjectId getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(Usuario usuario) {
+
+	public void setUsuario(ObjectId usuario) {
 		this.usuario = usuario;
 	}
-	public Piloto getPiloto() {
+
+	public ObjectId getPiloto() {
 		return piloto;
 	}
-	public void setPiloto(Piloto piloto) {
+
+	public void setPiloto(ObjectId piloto) {
 		this.piloto = piloto;
 	}
 	

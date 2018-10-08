@@ -40,9 +40,6 @@ MongoClient mongoClient = MongoClients.create();
     
     // get a handle to the "people" collection
     MongoCollection<Escuderia> collection = database.getCollection("escuderias", Escuderia.class);
-    
-    // Create a gridFSBucket with a custom bucket name "files"
-    GridFSBucket gridFSFilesBucket = GridFSBuckets.create(database, "files");
 	
     @WebMethod
 	public void create(
@@ -84,13 +81,14 @@ MongoClient mongoClient = MongoClients.create();
 		            	System.out.println("@info/: 'readByName'  ->  escuderia: '" + name + "' encontrado.");
 						return escuderia = 
 								new Escuderia(
-										doc.getString ("nombreCompleto"), 
-										doc.getString  ("fecha_Nacimiento"), 
-										doc.getString ("lugarNacimiento"), 
-										doc.getString ("foto_ref"), 
-										doc.getInteger("cant_podiosTotales"), 
-										doc.getInteger("cant_puntosTotales"), 
-										doc.getInteger("cant_granPremiosIngresado"));
+										doc.getString ("nombre"), 
+										doc.getString  ("lugarBase"), 
+										doc.getString ("jefeEquipo"), 
+										doc.getString ("jefeTecnico"), 
+										doc.getString("chasis"), 
+										doc.getInteger("cant_vecesEnPodio"), 
+										doc.getInteger("cant_titulosCampeonato"),
+										doc.getString("fotoEscudo_ref"));
 					}
 		        }
 		    } finally {

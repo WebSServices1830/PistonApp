@@ -3,8 +3,11 @@ package co.javeriana.webservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 public class Escuderia {
 	
+	private ObjectId id;
 	private String nombre;
 	private String lugarBase;
 	private String jefeTecnico;
@@ -13,12 +16,12 @@ public class Escuderia {
 	private int cant_vecesEnPodio;
 	private int cant_TitulosCampeonato;
 	private String fotoEscudo_ref;
-	private List<Auto> autos;
-	private List<Piloto> pilotos;
+	private List<ObjectId> autos;
+	private List<ObjectId> pilotos;
 	
 	public Escuderia(String nombre, String lugarBase, String jefeTecnico, String jefeEquipo, String chasis,
 			int cant_vecesEnPodio, int cant_TitulosCampeonato, String fotoEscudo_ref) {
-		super();
+		this.id = new ObjectId();
 		this.nombre = nombre;
 		this.lugarBase = lugarBase;
 		this.jefeTecnico = jefeTecnico;
@@ -27,8 +30,8 @@ public class Escuderia {
 		this.cant_vecesEnPodio = cant_vecesEnPodio;
 		this.cant_TitulosCampeonato = cant_TitulosCampeonato;
 		this.fotoEscudo_ref= fotoEscudo_ref;
-		this.autos = new ArrayList<Auto>();
-		this.pilotos = new ArrayList<Piloto>();
+		this.autos = new ArrayList<ObjectId>();
+		this.pilotos = new ArrayList<ObjectId>();
 	}
 
 	public String getNombre() {
@@ -87,22 +90,6 @@ public class Escuderia {
 		this.cant_TitulosCampeonato = cant_TitulosCampeonato;
 	}
 
-	public List<Auto> getAutos() {
-		return autos;
-	}
-
-	public void setAutos(List<Auto> autos) {
-		this.autos = autos;
-	}
-
-	public List<Piloto> getPilotos() {
-		return pilotos;
-	}
-
-	public void setPilotos(List<Piloto> pilotos) {
-		this.pilotos = pilotos;
-	}
-
 	public String getFotoEscudo_ref() {
 		return fotoEscudo_ref;
 	}
@@ -110,5 +97,30 @@ public class Escuderia {
 	public void setFotoEscudo_ref(String fotoEscudo_ref) {
 		this.fotoEscudo_ref = fotoEscudo_ref;
 	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public List<ObjectId> getAutos() {
+		return autos;
+	}
+
+	public void setAutos(List<ObjectId> autos) {
+		this.autos = autos;
+	}
+
+	public List<ObjectId> getPilotos() {
+		return pilotos;
+	}
+
+	public void setPilotos(List<ObjectId> pilotos) {
+		this.pilotos = pilotos;
+	}
+	
 	
 }

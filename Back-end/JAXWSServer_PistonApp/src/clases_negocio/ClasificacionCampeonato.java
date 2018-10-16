@@ -1,29 +1,28 @@
-package co.javeriana.webservice;
+package clases_negocio;
 
 import java.time.LocalTime;
-import java.util.List;
 
 import org.bson.types.ObjectId;
 
-public class ClasificacionCarrera {
-
+public class ClasificacionCampeonato {
+	
 	private ObjectId id;
 	private int puntaje;
 	private LocalTime tiempo;
-	private int posicion; 
-	private ObjectId competidor;
+	private int posicion;
+	private ObjectId piloto;
 	
-	public ClasificacionCarrera(){
-		
+	
+	public ClasificacionCampeonato() {
+		super();
 	}
-	
-	public ClasificacionCarrera(int puntaje, LocalTime tiempo, int posicion, ObjectId competidor) {
+	public ClasificacionCampeonato(int puntaje, LocalTime tiempo, int posicion, ObjectId piloto) {
 		super();
 		this.id = new ObjectId();
 		this.puntaje = puntaje;
 		this.tiempo = tiempo;
 		this.posicion = posicion;
-		this.competidor = competidor;
+		this.piloto = piloto;
 	}
 	public ObjectId getId() {
 		return id;
@@ -49,12 +48,13 @@ public class ClasificacionCarrera {
 	public void setPosicion(int posicion) {
 		this.posicion = posicion;
 	}
-	public ObjectId getCompetidor() {
-		return competidor;
+	public ObjectId getPiloto() {
+		return piloto;
 	}
-	public void setCompetidor(ObjectId competidor) {
-		this.competidor = competidor;
+	public void setPiloto(ObjectId piloto) {
+		this.piloto = piloto;
 	}
+	
 	
 	
 }

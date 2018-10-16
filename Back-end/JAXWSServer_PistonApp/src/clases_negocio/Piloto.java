@@ -1,4 +1,4 @@
-package co.javeriana.webservice;
+package clases_negocio;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

@@ -1,4 +1,4 @@
-package co.javeriana.webservice;
+package clases_negocio;
 
 import java.time.LocalTime;
 

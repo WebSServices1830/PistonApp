@@ -1,4 +1,4 @@
-package co.javeriana.webservice;
+package clases_mongoDB;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;

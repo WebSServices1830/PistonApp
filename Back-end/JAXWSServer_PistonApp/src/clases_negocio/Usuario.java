@@ -1,7 +1,9 @@
 
 
 
-package co.javeriana.webservice;
+package clases_negocio;
+
+import java.util.GregorianCalendar;
 
 import org.bson.types.ObjectId;
 
@@ -10,26 +12,25 @@ public class Usuario {
 	private ObjectId id;
 	private String nombreUsuario;
 	private String contra;
-	private int edad;
-	private String descripcion;
-	private String foto;
+	private GregorianCalendar fechaNacimiento;
+	private String urlFoto;
 	private boolean admin;
 	private long bolsillo;
 	
 	public Usuario(){
 		
 	}
-	
-	public Usuario(String nombreUsuario, String contra, int edad, String descripcion, String foto, boolean admin, long bolsillo) {
+	public Usuario(String nombreUsuario, String contra, GregorianCalendar fechaNacimiento, String urlFoto, boolean admin) {
 		this.id = new ObjectId();
 		this.nombreUsuario = nombreUsuario;
 		this.contra = contra;
-		this.edad = edad;
-		this.descripcion = descripcion;
-		this.foto = foto;
+		this.fechaNacimiento = fechaNacimiento;
+		this.urlFoto = urlFoto;
 		this.admin = admin;
-		this.bolsillo = bolsillo;
+		this.bolsillo = 0;
 	}
+	
+	
 	public String getNombreUsuario() {
 		return nombreUsuario;
 	}
@@ -42,24 +43,14 @@ public class Usuario {
 	public void setContra(String contra) {
 		this.contra = contra;
 	}
-	public int getEdad() {
-		return edad;
+	public String getUrlFoto() {
+		return urlFoto;
 	}
-	public void setEdad(int edad) {
-		this.edad = edad;
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
-	public String getDescripcion() {
-		return descripcion;
-	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	public String getFoto() {
-		return foto;
-	}
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
+
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -72,5 +63,22 @@ public class Usuario {
 	public void setBolsillo(long bolsillo) {
 		this.bolsillo = bolsillo;
 	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
+	public GregorianCalendar getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(GregorianCalendar fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	
 
 }

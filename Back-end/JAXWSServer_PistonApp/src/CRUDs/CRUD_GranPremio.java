@@ -1,4 +1,4 @@
-package co.javeriana.webservice;
+package CRUDs;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
@@ -27,6 +27,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+
+import clases_mongoDB.ClienteMongo;
+import clases_negocio.GranPremio;
 
 @WebService(name="crud_granpremio")
 public class CRUD_GranPremio {

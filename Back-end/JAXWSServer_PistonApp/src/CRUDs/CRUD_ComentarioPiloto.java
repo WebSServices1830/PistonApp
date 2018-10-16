@@ -1,4 +1,4 @@
-package co.javeriana.webservice;
+package CRUDs;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
@@ -26,6 +26,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+
+import clases_mongoDB.ClienteMongo;
+import clases_negocio.ComentarioPiloto;
 
 @WebService(name="crud_comentariopiloto")
 public class CRUD_ComentarioPiloto {

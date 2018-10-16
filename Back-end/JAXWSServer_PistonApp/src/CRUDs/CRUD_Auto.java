@@ -1,4 +1,4 @@
-package co.javeriana.webservice;
+package CRUDs;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
@@ -28,6 +28,10 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
+
+import clases_mongoDB.ClienteMongo;
+import clases_negocio.Auto;
+import clases_negocio.Motor;
 
 @WebService(name="crud_auto")
 public class CRUD_Auto {

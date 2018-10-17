@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 
 public class Campeonato {
 	
+	private String id_str;
 	private ObjectId id;
 	private String nombre;
 	private Date fecha_inicio;
@@ -27,6 +28,13 @@ public class Campeonato {
 		this.fecha_final = fecha_final;
 		this.gran_premios = new ArrayList<ObjectId>();
 		this.clasificaciones = new ArrayList<ObjectId>();
+		this.id_str= this.id.toString();
+	}
+	public String getId_str() {
+		return id_str;
+	}
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
 	}
 	public ObjectId getId() {
 		return id;

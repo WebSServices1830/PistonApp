@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 
 public class Record {
 
+	private String id_str;
 	private ObjectId id;
 	private LocalTime recordVuleta_tiempo;
 	private String recordVuelta_piloto;
@@ -26,6 +27,19 @@ public class Record {
 		this.recordVuelta_piloto = recordVuelta_piloto;
 		this.recordVuelta_anio = recordVuelta_anio;
 		this.pista = pista;
+		this.id_str= this.id.toString();
+	}
+	public String getId_str() {
+		return id_str;
+	}
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
+	}
+	public ObjectId getId() {
+		return id;
+	}
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 	public LocalTime getRecordVuleta_tiempo() {
 		return recordVuleta_tiempo;

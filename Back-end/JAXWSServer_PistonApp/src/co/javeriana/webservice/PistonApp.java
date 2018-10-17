@@ -30,7 +30,6 @@ public class PistonApp {
 		if(usuario.getContra().equals(contrasenia)) {
 			return true;
 		}
-		
 		return false;
 	}
 

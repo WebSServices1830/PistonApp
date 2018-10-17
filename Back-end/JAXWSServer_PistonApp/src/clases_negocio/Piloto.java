@@ -14,6 +14,7 @@ import org.bson.types.ObjectId;
 
 public class Piloto {
 	
+	private String id_str;
     private ObjectId id;
     private String nombreCompleto;
     private Date fecha_Nacimiento;
@@ -37,6 +38,7 @@ public class Piloto {
 		this.cant_podiosTotales = cant_podiosTotales;
 		this.cant_puntosTotales = cant_puntosTotales;
 		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
+		this.id_str= this.id.toString();
 	}
 
 	public ObjectId getId() {
@@ -101,6 +103,14 @@ public class Piloto {
 
 	public void setCant_granPremiosIngresado(int cant_granPremiosIngresado) {
 		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
+	}
+
+	public String getId_str() {
+		return id_str;
+	}
+
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
 	}
     
 }

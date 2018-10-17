@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 
 public class ComentarioPiloto {
 	
+	private String id_str;
 	private ObjectId id;
 	private String contenido;
 	private int calificacion;
@@ -20,6 +21,23 @@ public class ComentarioPiloto {
 		this.calificacion = calificacion;
 		this.usuario= usuario;
 		this.piloto= piloto;
+		this.id_str= this.id.toString();
+	}
+
+	public String getId_str() {
+		return id_str;
+	}
+
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
+	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 
 	public String getContenido() {

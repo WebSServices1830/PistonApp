@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 public class ClasificacionCarrera {
 
+	private String id_str;
 	private ObjectId id;
 	private int puntaje;
 	private LocalTime tiempo;
@@ -24,7 +25,16 @@ public class ClasificacionCarrera {
 		this.tiempo = tiempo;
 		this.posicion = posicion;
 		this.competidor = competidor;
+		this.id_str= this.id.toString();
 	}
+	public String getId_str() {
+		return id_str;
+	}
+
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
+	}
+
 	public ObjectId getId() {
 		return id;
 	}

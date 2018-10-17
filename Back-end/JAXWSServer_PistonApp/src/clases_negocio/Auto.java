@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 
 public class Auto {
 	
+	private String id_str;
 	private ObjectId id;
 	private String nombre;
 	private double pesoEnKg;
@@ -24,6 +25,7 @@ public class Auto {
 		this.combustible = combustible;
 		this.foto_ref = foto_ref;
 		this.motor = motor;
+		this.id_str= this.id.toString();
 	}
 
 	public String getNombre() {
@@ -80,6 +82,14 @@ public class Auto {
 
 	public void setMotor(Motor motor) {
 		this.motor = motor;
+	}
+
+	public String getId_str() {
+		return id_str;
+	}
+
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
 	}
 	
 }

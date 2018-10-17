@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 
 public class Usuario {
 	
+	private String id_str;
 	private ObjectId id;
 	private String nombreUsuario;
 	private String contra;
@@ -28,9 +29,16 @@ public class Usuario {
 		this.urlFoto = urlFoto;
 		this.admin = admin;
 		this.bolsillo = 0;
+		this.id_str= this.id.toString();
 	}
 	
 	
+	public String getId_str() {
+		return id_str;
+	}
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
+	}
 	public String getNombreUsuario() {
 		return nombreUsuario;
 	}

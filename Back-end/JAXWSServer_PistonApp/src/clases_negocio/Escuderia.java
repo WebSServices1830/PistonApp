@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 public class Escuderia {
 	
+	private String id_str;
 	private ObjectId id;
 	private String nombre;
 	private String lugarBase;
@@ -36,6 +37,7 @@ public class Escuderia {
 		this.fotoEscudo_ref= fotoEscudo_ref;
 		this.autos = new ArrayList<ObjectId>();
 		this.pilotos = new ArrayList<ObjectId>();
+		this.id_str= this.id.toString();
 	}
 
 	public String getNombre() {
@@ -124,6 +126,14 @@ public class Escuderia {
 
 	public void setPilotos(List<ObjectId> pilotos) {
 		this.pilotos = pilotos;
+	}
+
+	public String getId_str() {
+		return id_str;
+	}
+
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
 	}
 	
 	

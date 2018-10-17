@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 public class Pista {
 	
+	private String id_str;
 	private ObjectId id;
 	private String ciudad;
 	private String foto_ref;
@@ -37,6 +38,13 @@ public class Pista {
 		this.record = record;
 		this.granpremio = granpremio;
 		this.comentarios = new ArrayList<ObjectId>();
+		this.id_str= this.id.toString();
+	}
+	public String getId_str() {
+		return id_str;
+	}
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
 	}
 	public ObjectId getId() {
 		return id;

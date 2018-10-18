@@ -1,5 +1,7 @@
 package co.javeriana.webservice;
 
+import java.util.Date;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -18,7 +20,13 @@ public class Autenticacion {
 	CRUD_Usuario manejadorUsuario = new CRUD_Usuario();
 	
 	@WebMethod
-	public void registrarUsuario(@WebParam(name = "usuario") Usuario usuario) {
+	public void registrarUsuario(
+			@WebParam(name = "nombreUsuario") String nombreUsuario,
+			@WebParam(name = "constrasenia") String contrasenia,
+			@WebParam(name = "fechaNacimiento") Date fechaNacimiento,
+			@WebParam(name = "urlFoto") String urlFoto,
+			@WebParam(name = "admin") boolean admin) {
+		Usuario usuario = new Usuario(nombreUsuario, contrasenia, fechaNacimiento, urlFoto, admin);
 		manejadorUsuario.usuario_create(usuario);
 	}
 	

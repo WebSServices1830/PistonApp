@@ -12,12 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
@@ -55,34 +57,31 @@ public class CrearUsuarioView extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_usuario?wsdl";
-            final String METHOD_NAME = "usuario_create";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/usuario_create";
+            final String URL="http://10.0.2.2:8080/WS/autenticacion?wsdl";
+            final String METHOD_NAME = "registrarUsuario";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/registrarUsuario";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             nombreUsuario = (EditText) findViewById(R.id.nomUsuario);
             contra = (EditText) findViewById(R.id.passUsuario);
-            edad = (EditText) findViewById(R.id.edadUsuario);
-            descripcion = (EditText) findViewById(R.id.descUsuario);
             foto = (EditText) findViewById(R.id.fotoUsuario);
-            bolsillo = (EditText) findViewById(R.id.bolsilloUsuario);
-
 
             admin = (CheckBox) findViewById(R.id.adminUsuario);
 
 
             request.addProperty("nombreUsuario", nombreUsuario.getText().toString());
-            request.addProperty("contra", contra.getText().toString());
-            request.addProperty("edad", Integer.parseInt( edad.getText().toString()) );
-            request.addProperty("descripcion", descripcion.getText().toString());
+            request.addProperty("contrasenia", contra.getText().toString());
+            request.addProperty("fechaNacimiento", new Date());
             request.addProperty("foto", foto.getText().toString());
             request.addProperty("admin", admin.isSelected());
-            request.addProperty("bolsillo", Long.parseLong( bolsillo.getText().toString()) );
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
+
+            //Para que se puedan enviar Date
+            new MarshalDate().register(envelope);
 
             HttpTransportSE ht = new HttpTransportSE(URL);
             try {

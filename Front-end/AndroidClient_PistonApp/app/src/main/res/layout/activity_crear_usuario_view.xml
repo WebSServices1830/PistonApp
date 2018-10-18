@@ -6,7 +6,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -16,60 +18,41 @@
                 android:id="@+id/nomUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre Usuario"
-                />
+                android:hint="Nombre Usuario" />
+
             <EditText
                 android:id="@+id/passUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nomUsuario"
                 android:hint="Digita contraseña usuario"
-                android:inputType="textPassword"
-                />
-            <EditText
-                android:id="@+id/edadUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/passUsuario"
-                android:hint="Edad Usuario"
-                />
-            <EditText
-                android:id="@+id/descUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edadUsuario"
-                android:hint="Descripción usuario"
-                />
+                android:inputType="textPassword" />
+
             <EditText
                 android:id="@+id/fotoUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/descUsuario"
-                android:hint="Foto usuario"
-                />
+                android:layout_below="@+id/passUsuario"
+                android:hint="Foto usuario" />
+
             <CheckBox
                 android:id="@+id/adminUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/fotoUsuario"
-                android:text="Es admin?"
-                />
-            <EditText
-                android:id="@+id/bolsilloUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/adminUsuario"
-                android:hint="Bolsillo usuario"
-                />
+                android:text="Es admin?" />
 
             <Button
                 android:id="@+id/agregarUsuario"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/adminUsuario"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="110dp"
+                android:layout_marginLeft="110dp"
                 android:layout_marginTop="24dp"
-                android:layout_below="@+id/bolsilloUsuario"
                 android:text="Agregar Usuario" />
 
         </RelativeLayout>

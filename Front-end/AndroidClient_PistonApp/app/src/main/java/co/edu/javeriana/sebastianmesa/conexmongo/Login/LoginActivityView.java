@@ -230,7 +230,8 @@ public class LoginActivityView extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_usuario?wsdl";
+            //final String URL="http://10.0.2.2:8081/WS/autenticacion?wsdl";
+            final String URL="http://localhost:8081/WS/autenticacion?wsdl";
             final String METHOD_NAME = "usuario_readByName";
             final String SOAP_ACTION = "http://webservice.javeriana.co/usuario_readByName";
 

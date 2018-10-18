@@ -1,9 +1,6 @@
-
-
-
 package clases_negocio;
 
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import org.bson.types.ObjectId;
 
@@ -13,7 +10,7 @@ public class Usuario {
 	private ObjectId id;
 	private String nombreUsuario;
 	private String contra;
-	private GregorianCalendar fechaNacimiento;
+	private Date fechaNacimiento;
 	private String urlFoto;
 	private boolean admin;
 	private long bolsillo;
@@ -21,7 +18,7 @@ public class Usuario {
 	public Usuario(){
 		
 	}
-	public Usuario(String nombreUsuario, String contra, GregorianCalendar fechaNacimiento, String urlFoto, boolean admin) {
+	public Usuario(String nombreUsuario, String contra, Date fechaNacimiento, String urlFoto, boolean admin) {
 		this.id = new ObjectId();
 		this.nombreUsuario = nombreUsuario;
 		this.contra = contra;
@@ -80,11 +77,11 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public GregorianCalendar getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(GregorianCalendar fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	

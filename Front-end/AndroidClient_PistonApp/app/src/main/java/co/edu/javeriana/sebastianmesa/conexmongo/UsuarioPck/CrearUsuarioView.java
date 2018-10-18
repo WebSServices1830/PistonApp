@@ -27,6 +27,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.hash.HashCode;
+import com.google.common.hash.Hashing;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
@@ -36,6 +39,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -136,10 +140,12 @@ public class CrearUsuarioView extends AppCompatActivity {
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            Calendar fechaNacimiento = new GregorianCalendar();
-            fechaNacimiento.set(anio,mes,dia);
-
             Log.i("Fecha:",calendario.getTime().toString());
+
+            String contrasenia = contra.getText().toString();
+            final HashCode hashCode = Hashing.sha256().hashString(contrasenia, Charset.defaultCharset());
+
+            Log.i("Password:",hashCode.toString());
 
 
             request.addProperty("nombreUsuario", nombreUsuario.getText().toString());

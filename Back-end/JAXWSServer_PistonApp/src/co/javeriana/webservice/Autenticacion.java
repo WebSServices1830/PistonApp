@@ -18,7 +18,7 @@ public class Autenticacion {
 	@WebMethod
 	public void registrarUsuario(
 			@WebParam(name = "nombreUsuario") String nombreUsuario,
-			@WebParam(name = "constrasenia") String contrasenia,
+			@WebParam(name = "contrasenia") String contrasenia,
 			@WebParam(name = "fechaNacimiento") Date fechaNacimiento,
 			@WebParam(name = "urlFoto") String urlFoto,
 			@WebParam(name = "admin") boolean admin) {

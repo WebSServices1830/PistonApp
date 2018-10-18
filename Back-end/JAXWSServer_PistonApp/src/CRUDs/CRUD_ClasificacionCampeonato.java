@@ -8,13 +8,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -30,8 +24,8 @@ import com.mongodb.client.MongoDatabase;
 
 import clases_mongoDB.ClienteMongo;
 import clases_negocio.ClasificacionCampeonato;
+import clases_negocio.Usuario;
 
-@WebService(name="crud_clasificacioncampeonato")
 public class CRUD_ClasificacionCampeonato {
 
 MongoClient mongoClient = ClienteMongo.getInstancia();
@@ -46,117 +40,45 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     // get a handle to the "people" collection
     MongoCollection<ClasificacionCampeonato> collection = database.getCollection("clasificacioncampeonato", ClasificacionCampeonato.class);
 	
-    @WebMethod
-	public void create_clasificacioncampeonato(
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
-			@WebParam(name = "piloto")ObjectId piloto
-			){
-			
-		ClasificacionCampeonato clasificacion = new ClasificacionCampeonato(puntaje,tiempo,posicion,piloto);
-		collection.insertOne(clasificacion);
-	}
+    public void clasificacionCampeonato_create(ClasificacionCampeonato clasificacionCampeonato) {
+    	collection.insertOne(clasificacionCampeonato);
+    }
+    
+    public ClasificacionCampeonato clasificacionCampeonato_get(String id) {
+    	ClasificacionCampeonato clasificacionCampeonato = collection.find(eq("id", id)).first();
+    	return clasificacionCampeonato;
+    }
 	
-	@WebMethod
-	public ClasificacionCampeonato read_clasificacioncampeonato(@WebParam(name = "id")String id){
-		ClasificacionCampeonato clasificacion = collection.find(eq("id", id)).first();
-		return clasificacion;
-	}
-
-	
-	@WebMethod
-	public List<ClasificacionCampeonato> readAll_clasificacionescampeonato() {
+	public List<ClasificacionCampeonato> clasificacionCampeonato_getAll() {
 		
-		final List<ClasificacionCampeonato> clasificaciones = new ArrayList<>();
+		final List<ClasificacionCampeonato> clasificacionesCampeonato = new ArrayList<>();
 		
 		Block<ClasificacionCampeonato> saveBlock = new Block<ClasificacionCampeonato>() {
 		    @Override
-		    public void apply(ClasificacionCampeonato clasificacion) {
-		        clasificaciones.add(clasificacion);
+		    public void apply(ClasificacionCampeonato clasificacionCampeonato) {
+		        clasificacionesCampeonato.add(clasificacionCampeonato);
 		    }
-
-			
 		};
 		
 		collection.find().forEach(saveBlock);
 		
-		return clasificaciones;
+		return clasificacionesCampeonato;
 		
 	}
-	
-	@WebMethod
-	public void update_clasificacioncampeonato(
-			@WebParam(name = "id")String id,
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
-			@WebParam(name = "piloto")ObjectId piloto
-			){
-		collection.updateOne(
-				eq("id", id) , 
-				combine(
-						set("puntaje",puntaje), 
-						set("tiempo",tiempo), 
-						set("posicion",posicion),
-						set("piloto",piloto)
-						) 
-				);
-	}
-	
-	
-	
-	@WebMethod
-	public void clasificacioncampeonato_updateFromAndroid(
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
-			@WebParam(name = "piloto")ObjectId piloto
-			){
-		
-		try {
-		    MongoDatabase db = database;
-		    MongoCollection < Document > collection = db.getCollection("clasificacioncampeonato");
-		    MongoCursor < Document > cursor = collection.find().iterator();
-		    try {
-		        while (cursor.hasNext()) {
-		            Document doc = cursor.next();
-		            ObjectId p  = doc.getObjectId("piloto");
-		            
-		            if (p.equals(piloto)) {
-						
-						collection.updateOne(
-								eq("piloto", piloto) , 
-								combine(
-										set("puntaje",puntaje), 
-										set("tiempo",tiempo), 
-										set("posicion",posicion),
-										set("piloto",piloto)
-										) 
-								);
-					}
-		        }
-		        
-		        System.out.println("@info/: 'updateFromAndroid'  ->  ClasificacionCampeonato: '" + piloto + "' actualizado.");
-		        
-		    } finally {
-		    	cursor.close();
-		    }
-		} catch (MongoException e) {
-		    e.printStackTrace();
-		}
-		
-	}
-	
-	@WebMethod
-	public void delete(@WebParam(name = "id")String id){
+   	
+   	public void clasificacionCampeonato_update(ClasificacionCampeonato clasificacionCampeonato){
+   		collection.updateOne(
+   				eq("id", clasificacionCampeonato.getId()) , 
+   				combine(
+   						set("puntaje",clasificacionCampeonato.getPuntaje()), 
+   						set("tiempo",clasificacionCampeonato.getTiempo()), 
+   						set("posicion",clasificacionCampeonato.getPosicion())
+   						)
+   				);
+   	}
+   	
+	public void clasificacionCampeonato_delete(String id){
 		collection.deleteOne(eq("id", id));
-	}
-	
-	@WebMethod
-	public void deleteByName(@WebParam(name = "id")ObjectId piloto){
-		collection.deleteOne(eq("piloto",piloto));
-		
 	}
 	
 	

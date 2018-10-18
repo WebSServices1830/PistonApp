@@ -12,8 +12,8 @@ import CRUDs.CRUD_Usuario;
 
 import clases_negocio.Usuario;
 
-@WebService(name="pistonApp")
-public class PistonApp {
+@WebService(name="autenticacion")
+public class Autenticacion {
 	
 	CRUD_Usuario manejadorUsuario = new CRUD_Usuario();
 	

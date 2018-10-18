@@ -6,10 +6,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-import CRUDs.CRUD_Auto;
-import CRUDs.CRUD_Escuderia;
-import CRUDs.CRUD_GranPremio;
-import CRUDs.CRUD_Piloto;
 import CRUDs.CRUD_Usuario;
 
 import clases_negocio.Usuario;

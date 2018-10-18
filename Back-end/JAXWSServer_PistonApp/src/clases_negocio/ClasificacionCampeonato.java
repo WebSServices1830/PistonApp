@@ -1,6 +1,7 @@
 package clases_negocio;
 
 import java.time.LocalTime;
+import java.util.Date;
 
 import org.bson.types.ObjectId;
 
@@ -9,15 +10,15 @@ public class ClasificacionCampeonato {
 	private String id_str;
 	private ObjectId id;
 	private int puntaje;
-	private LocalTime tiempo;
+	private Date tiempo;
 	private int posicion;
-	private ObjectId piloto;
+	private String piloto;
 	
 	
 	public ClasificacionCampeonato() {
 		super();
 	}
-	public ClasificacionCampeonato(int puntaje, LocalTime tiempo, int posicion, ObjectId piloto) {
+	public ClasificacionCampeonato(int puntaje, Date tiempo, int posicion, String piloto) {
 		super();
 		this.id = new ObjectId();
 		this.puntaje = puntaje;
@@ -44,10 +45,10 @@ public class ClasificacionCampeonato {
 	public void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
 	}
-	public LocalTime getTiempo() {
+	public Date getTiempo() {
 		return tiempo;
 	}
-	public void setTiempo(LocalTime tiempo) {
+	public void setTiempo(Date tiempo) {
 		this.tiempo = tiempo;
 	}
 	public int getPosicion() {
@@ -56,10 +57,10 @@ public class ClasificacionCampeonato {
 	public void setPosicion(int posicion) {
 		this.posicion = posicion;
 	}
-	public ObjectId getPiloto() {
+	public String getPiloto() {
 		return piloto;
 	}
-	public void setPiloto(ObjectId piloto) {
+	public void setPiloto(String piloto) {
 		this.piloto = piloto;
 	}
 	

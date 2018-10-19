@@ -26,7 +26,6 @@ import com.mongodb.client.MongoDatabase;
 import clases_mongoDB.ClienteMongo;
 import clases_negocio.Campeonato;
 
-@WebService(name="crud_campeonato")
 public class CRUD_Campeonato {
 	
 	MongoClient mongoClient = ClienteMongo.getInstancia();
@@ -41,29 +40,25 @@ public class CRUD_Campeonato {
     // get a handle to the "people" collection
     MongoCollection<Campeonato> collection = database.getCollection("campeonatos", Campeonato.class);
 	
-    @WebMethod
 	public void campeonato_create(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "fecha_inicio")Date fecha_inicio,
-			@WebParam(name = "fecha_final")Date fecha_final){
+			String nombre,
+			Date fecha_inicio,
+			Date fecha_final){
 			
 		Campeonato campeonato = new Campeonato(nombre,fecha_inicio,fecha_final);
 		collection.insertOne(campeonato);
 	}
 	
-    @WebMethod
-	public Campeonato campeonato_read(@WebParam(name = "id")String id){
+	public Campeonato campeonato_read(String id){
 		Campeonato campeonato = collection.find(eq("id", id)).first();
 		return campeonato;
 	}
 	
-	@WebMethod
-	public Campeonato campeonato_readByName(@WebParam(name = "nombre")String nombre){
+	public Campeonato campeonato_readByName(String nombre){
 		Campeonato campeonato= collection.find(eq("nombre", nombre)).first();
 		return campeonato;
 	}
 	
-	@WebMethod
 	public List<Campeonato> campeonato_readAll() {
 		
 		final List<Campeonato> campeonatos = new ArrayList<>();
@@ -81,11 +76,10 @@ public class CRUD_Campeonato {
 		
 	}
 	
-	@WebMethod
 	public void campeonato_update(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "fecha_inicio")Date fecha_inicio,
-			@WebParam(name = "fecha_final")Date fecha_final){
+			String nombre,
+			Date fecha_inicio,
+			Date fecha_final){
 		collection.updateOne(
 				eq("nombre", nombre) , 
 				combine(
@@ -96,13 +90,11 @@ public class CRUD_Campeonato {
 				);
 	}
 	
-	@WebMethod
-	public void campeonato_delete(@WebParam(name = "id")String id){
+	public void campeonato_delete(String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
-	@WebMethod
-	public void campeonato_deleteByName(@WebParam(name = "id")String nombre){
+	public void campeonato_deleteByName(String nombre){
 		collection.deleteOne(eq("nombre",nombre));
 	}
 

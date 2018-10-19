@@ -86,16 +86,25 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 		
 	}
 	
-	@WebMethod
+	public void pista_update_calificacion(String pista, float calificacion){
+		collection.updateOne(
+				eq("id_str", pista) , 
+				combine(
+						set("calificacion",calificacion)
+						) 
+				);
+	}
+	
+	
 	public void pista_update(
-			@WebParam(name = "ciudad")String ciudad,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "nombreUltimoGanador")String nombreUltimoGanador,
-			@WebParam(name = "numeroVueltas")int numeroVueltas,
-			@WebParam(name = "distanciaCarreara_km")float distanciaCarreara_km,
-			@WebParam(name = "longitudCircuito_km")float longitudCircuito_km,
-			@WebParam(name = "record")ObjectId record,
-			@WebParam(name = "granpremio")ObjectId granpremio){
+			String ciudad,
+			String foto_ref,
+			String nombreUltimoGanador,
+			int numeroVueltas,
+			float distanciaCarreara_km,
+			float longitudCircuito_km,
+			ObjectId record,
+			ObjectId granpremio){
 		collection.updateOne(
 				eq("ciudad", ciudad) , 
 				combine(

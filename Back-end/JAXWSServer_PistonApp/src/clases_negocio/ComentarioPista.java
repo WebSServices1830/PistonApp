@@ -7,16 +7,16 @@ public class ComentarioPista {
 	private String id_str;
 	private ObjectId id;
 	private String contenido;
-	private int calificacion;
-	private ObjectId pista;
-	private ObjectId usuario;
+	private float calificacion;
+	private String pista;
+	private String usuario;
 	
 	
 	
 	public ComentarioPista() {
 		super();
 	}
-	public ComentarioPista(String contenido, int calificacion, ObjectId pista, ObjectId usuario) {
+	public ComentarioPista(String contenido, float calificacion, String pista, String usuario) {
 		super();
 		this.id = new ObjectId();
 		this.contenido = contenido;
@@ -43,22 +43,22 @@ public class ComentarioPista {
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
-	public int getCalificacion() {
+	public float getCalificacion() {
 		return calificacion;
 	}
-	public void setCalificacion(int calificacion) {
+	public void setCalificacion(float calificacion) {
 		this.calificacion = calificacion;
 	}
-	public ObjectId getPista() {
+	public String getPista() {
 		return pista;
 	}
-	public void setPista(ObjectId pista) {
+	public void setPista(String pista) {
 		this.pista = pista;
 	}
-	public ObjectId getUsuario() {
+	public String getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(ObjectId usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 	

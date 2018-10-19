@@ -23,6 +23,7 @@ public class Piloto {
     private int cant_podiosTotales;
     private int cant_puntosTotales;
     private int cant_granPremiosIngresado;
+    private float calificacion;
     
     public Piloto() {
     	
@@ -39,6 +40,17 @@ public class Piloto {
 		this.cant_puntosTotales = cant_puntosTotales;
 		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
 		this.id_str= this.id.toString();
+		this.calificacion=0;
+	}
+
+    
+    
+	public float getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(float calificacion) {
+		this.calificacion = calificacion;
 	}
 
 	public ObjectId getId() {

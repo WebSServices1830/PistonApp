@@ -1,6 +1,7 @@
 package clases_negocio;
 
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -10,20 +11,18 @@ public class ClasificacionCarrera {
 	private String id_str;
 	private ObjectId id;
 	private int puntaje;
-	private LocalTime tiempo;
-	private int posicion; 
-	private ObjectId competidor;
+	private Date tiempo;
+	private String competidor;
 	
 	public ClasificacionCarrera(){
 		
 	}
 	
-	public ClasificacionCarrera(int puntaje, LocalTime tiempo, int posicion, ObjectId competidor) {
+	public ClasificacionCarrera(int puntaje, Date tiempo, String competidor) {
 		super();
 		this.id = new ObjectId();
 		this.puntaje = puntaje;
 		this.tiempo = tiempo;
-		this.posicion = posicion;
 		this.competidor = competidor;
 		this.id_str= this.id.toString();
 	}
@@ -47,22 +46,16 @@ public class ClasificacionCarrera {
 	public void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
 	}
-	public LocalTime getTiempo() {
+	public Date getTiempo() {
 		return tiempo;
 	}
-	public void setTiempo(LocalTime tiempo) {
+	public void setTiempo(Date tiempo) {
 		this.tiempo = tiempo;
 	}
-	public int getPosicion() {
-		return posicion;
-	}
-	public void setPosicion(int posicion) {
-		this.posicion = posicion;
-	}
-	public ObjectId getCompetidor() {
+	public String getCompetidor() {
 		return competidor;
 	}
-	public void setCompetidor(ObjectId competidor) {
+	public void setCompetidor(String competidor) {
 		this.competidor = competidor;
 	}
 	

@@ -16,6 +16,7 @@ public class InformacionCampeonato {
 	
 	CRUD_ClasificacionCampeonato manejadorClasificacion_Campeonato = new CRUD_ClasificacionCampeonato();
 	CRUD_GranPremio manejadorGranPremio = new CRUD_GranPremio();
+	
 	@WebMethod
 	public List<ClasificacionCampeonato> verClasificacionesCampeonato() {
 		return manejadorClasificacion_Campeonato.clasificacionCampeonato_getAll();

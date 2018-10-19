@@ -48,6 +48,11 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     	ClasificacionCampeonato clasificacionCampeonato = collection.find(eq("id", id)).first();
     	return clasificacionCampeonato;
     }
+    
+    public ClasificacionCampeonato clasificacionCampeonato_getByPiloto(String piloto) {
+    	ClasificacionCampeonato clasificacionCampeonato = collection.find(eq("piloto", piloto)).first();
+    	return clasificacionCampeonato;
+    }
 	
 	public List<ClasificacionCampeonato> clasificacionCampeonato_getAll() {
 		
@@ -71,7 +76,6 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
    				eq("id", clasificacionCampeonato.getId()) , 
    				combine(
    						set("puntaje",clasificacionCampeonato.getPuntaje()), 
-   						set("tiempo",clasificacionCampeonato.getTiempo()), 
    						set("posicion",clasificacionCampeonato.getPosicion())
    						)
    				);

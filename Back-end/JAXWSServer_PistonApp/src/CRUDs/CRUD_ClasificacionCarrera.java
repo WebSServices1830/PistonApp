@@ -26,6 +26,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import clases_mongoDB.ClienteMongo;
+import clases_negocio.ClasificacionCampeonato;
 import clases_negocio.ClasificacionCarrera;
 
 @WebService(name="crud_clasificacioncarrera")
@@ -43,32 +44,16 @@ public class CRUD_ClasificacionCarrera {
     // get a handle to the "people" collection
     MongoCollection<ClasificacionCarrera> collection = database.getCollection("clasificacionescarrera", ClasificacionCarrera.class);
 	
-    @WebMethod
-	public void clasificacioncarrera_create(
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
-			@WebParam(name = "competidor")ObjectId competidor
-			){
-			
-		ClasificacionCarrera clasificacionCarrera= new ClasificacionCarrera(puntaje,tiempo,posicion,competidor);
-		collection.insertOne(clasificacionCarrera);
-	}
+    public void clasificacionCarrera_create(ClasificacionCarrera clasificacionCarrera) {
+    	collection.insertOne(clasificacionCarrera);
+    }
+    
+    public ClasificacionCarrera clasificacionCarrera_get(String id) {
+    	ClasificacionCarrera clasificacionCarrera = collection.find(eq("id", id)).first();
+    	return clasificacionCarrera;
+    }
 	
-	@WebMethod
-	public ClasificacionCarrera clasificacioncarrera_read(@WebParam(name = "id")String id){
-		ClasificacionCarrera clasificacionCarrera = collection.find(eq("id", id)).first();
-		return clasificacionCarrera;
-	}
-	
-	@WebMethod
-	public ClasificacionCarrera clasificacioncarrera_readByCompetidor(@WebParam(name = "competidor")ObjectId competidor){
-		ClasificacionCarrera clasificacionCarrera = collection.find(eq("competidor", competidor)).first();
-		return clasificacionCarrera;
-	}
-	
-	@WebMethod
-	public List<ClasificacionCarrera> clasificacioncarrera_readAll() {
+	public List<ClasificacionCarrera> clasificacionCarrera_getAll() {
 		
 		final List<ClasificacionCarrera> clasificacionesCarrera = new ArrayList<>();
 		
@@ -84,34 +69,19 @@ public class CRUD_ClasificacionCarrera {
 		return clasificacionesCarrera;
 		
 	}
-	
-	@WebMethod
-	public void clasificacioncarrera_update(
-			@WebParam(name = "puntaje")int puntaje,
-			@WebParam(name = "tiempo")LocalTime tiempo,
-			@WebParam(name = "posicion")int posicion,
-			@WebParam(name = "competidor")ObjectId competidor
-			){
-		collection.updateOne(
-				eq("competidor", competidor) , 
-				combine(
-						set("puntaje",puntaje), 
-						set("tiempo",tiempo), 
-						set("posicion",posicion),
-						set("competidor",competidor)
-						) 
-				);
-	}
-	
-	@WebMethod
-	public void clasificacioncarrera_delete(@WebParam(name = "id")String id){
+   	
+   	public void clasificacionCarrera_update(ClasificacionCarrera clasificacionCarrera){
+   		collection.updateOne(
+   				eq("id", clasificacionCarrera.getId()) , 
+   				combine(
+   						set("puntaje",clasificacionCarrera.getPuntaje()), 
+   						set("tiempo",clasificacionCarrera.getTiempo())
+   						)
+   				);
+   	}
+   	
+	public void clasificacionCarrera_delete(String id){
 		collection.deleteOne(eq("id", id));
-	}
-	
-	@WebMethod
-	public void clasificacioncarrera_deleteByCompetidor(@WebParam(name = "competidor")ObjectId competidor){
-		collection.deleteOne(eq("competidor",competidor));
-		
 	}
 
 }

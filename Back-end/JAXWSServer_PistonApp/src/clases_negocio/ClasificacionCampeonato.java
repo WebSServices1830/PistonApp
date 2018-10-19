@@ -10,7 +10,6 @@ public class ClasificacionCampeonato {
 	private String id_str;
 	private ObjectId id;
 	private int puntaje;
-	private Date tiempo;
 	private int posicion;
 	private String piloto;
 	
@@ -18,11 +17,10 @@ public class ClasificacionCampeonato {
 	public ClasificacionCampeonato() {
 		super();
 	}
-	public ClasificacionCampeonato(int puntaje, Date tiempo, int posicion, String piloto) {
+	public ClasificacionCampeonato(int puntaje, int posicion, String piloto) {
 		super();
 		this.id = new ObjectId();
 		this.puntaje = puntaje;
-		this.tiempo = tiempo;
 		this.posicion = posicion;
 		this.piloto = piloto;
 		this.id_str= this.id.toString();
@@ -44,12 +42,6 @@ public class ClasificacionCampeonato {
 	}
 	public void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
-	}
-	public Date getTiempo() {
-		return tiempo;
-	}
-	public void setTiempo(Date tiempo) {
-		this.tiempo = tiempo;
 	}
 	public int getPosicion() {
 		return posicion;

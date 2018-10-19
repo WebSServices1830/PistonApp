@@ -8,6 +8,9 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -80,6 +83,20 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 		collection.find().forEach(saveBlock);
 		
 		return grandesPremios;
+		
+	}
+	
+	@WebMethod
+	public List<GranPremio> grandesPremios_X_Fecha(){
+		List<GranPremio> lista = this.granPremio_readAll();
+	
+		Collections.sort(lista, new Comparator<GranPremio>() {
+			  public int compare(GranPremio o1, GranPremio o2) {
+			      return o1.getFecha().compareTo(o2.getFecha());
+			  }
+			});
+		
+		return lista;
 		
 	}
 	

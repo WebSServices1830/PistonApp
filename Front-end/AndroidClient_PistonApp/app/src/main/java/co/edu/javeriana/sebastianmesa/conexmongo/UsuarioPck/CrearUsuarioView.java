@@ -27,9 +27,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.common.hash.HashCode;
-import com.google.common.hash.Hashing;
-
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
@@ -39,7 +36,10 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -143,16 +143,27 @@ public class CrearUsuarioView extends AppCompatActivity {
             Log.i("Fecha:",calendario.getTime().toString());
 
             String contrasenia = contra.getText().toString();
-            final HashCode hashCode = Hashing.sha256().hashString(contrasenia, Charset.defaultCharset());
 
-            Log.i("Password:",hashCode.toString());
+            try {
+                String contra_hash = computeHash(contrasenia);
+                Log.i("Password:", contra_hash);
+
+                request.addProperty("nombreUsuario", nombreUsuario.getText().toString());
+                request.addProperty("contrasenia", contra_hash);
+                request.addProperty("fechaNacimiento", calendario.getTime());
+                request.addProperty("foto", foto.getText().toString());
+                request.addProperty("admin", admin.isChecked());
+
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
 
-            request.addProperty("nombreUsuario", nombreUsuario.getText().toString());
-            request.addProperty("contrasenia", contra.getText().toString());
-            request.addProperty("fechaNacimiento", calendario.getTime());
-            request.addProperty("foto", foto.getText().toString());
-            request.addProperty("admin", admin.isChecked());
+
+
+
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -301,5 +312,18 @@ public class CrearUsuarioView extends AppCompatActivity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST);
         }
+    }
+
+    public String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.reset();
+
+        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < byteData.length; i++){
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
     }
 }

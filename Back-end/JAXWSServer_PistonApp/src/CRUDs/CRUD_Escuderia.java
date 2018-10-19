@@ -30,9 +30,9 @@ import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 
 import clases_mongoDB.ClienteMongo;
+import clases_negocio.Auto;
 import clases_negocio.Escuderia;
 
-@WebService(name="crud_escuderia")
 public class CRUD_Escuderia {
 	
 	MongoClient mongoClient = ClienteMongo.getInstancia();
@@ -46,37 +46,31 @@ public class CRUD_Escuderia {
     
     // get a handle to the "people" collection
     MongoCollection<Escuderia> collection = database.getCollection("escuderias", Escuderia.class);
+    
+    public void escuderia_create(Escuderia escuderia) {
+    	collection.insertOne(escuderia);
+    }
+    
+    public Escuderia escuderia_get(String id) {
+    	Escuderia escuderia = collection.find(eq("id", id)).first();
+    	return escuderia;
+    }
+   	
+    public Escuderia escuderia_getByName(String nombre) {
+    	Escuderia escuderia = collection.find(eq("nombre", nombre)).first();
+    	return escuderia;
+    }
+    
+    public boolean existeEscuderia(String nombre) {
+    	Escuderia escuderia = escuderia_getByName(nombre);
+    	if(escuderia == null) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
 	
-    @WebMethod
-	public void escuderia_create(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "lugarBase")String lugarBase,
-			@WebParam(name = "jefeEquipo")String jefeEquipo,
-			@WebParam(name = "jefeTecnico")String jefeTecnico,
-			@WebParam(name = "chasis")String chasis,
-			@WebParam(name = "cant_vecesEnPodio")int cant_vecesEnPodio,
-			@WebParam(name = "cant_TitulosCampeonato")int cant_TitulosCampeonato,
-			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref
-			){
-			
-		Escuderia escuderia = new Escuderia(nombre,lugarBase,jefeEquipo,jefeTecnico,chasis,cant_vecesEnPodio,cant_TitulosCampeonato,fotoEscudo_ref);
-		collection.insertOne(escuderia);
-	}
-	
-	@WebMethod
-	public Escuderia escuderia_read(@WebParam(name = "id")String id){
-		Escuderia escuderia = collection.find(eq("id", id)).first();
-		return escuderia;
-	}
-	
-	@WebMethod
-	public Escuderia escuderia_readByName(@WebParam(name = "nombre")String nombre){
-		Escuderia escuderia = collection.find(eq("nombre", nombre)).first();
-		return escuderia;
-	}
-	
-	@WebMethod
-	public List<Escuderia> escuderia_readAll() {
+	public List<Escuderia> escuderia_getAll() {
 		
 		final List<Escuderia> escuderias = new ArrayList<>();
 		
@@ -92,40 +86,30 @@ public class CRUD_Escuderia {
 		return escuderias;
 		
 	}
-	
-	@WebMethod
-	public void escuderia_update(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "lugarBase")String lugarBase,
-			@WebParam(name = "jefeEquipo")String jefeEquipo,
-			@WebParam(name = "jefeTecnico")String jefeTecnico,
-			@WebParam(name = "chasis")String chasis,
-			@WebParam(name = "cant_vecesEnPodio")int cant_vecesEnPodio,
-			@WebParam(name = "cant_TitulosCampeonato")int cant_TitulosCampeonato,
-			@WebParam(name = "fotoEscudo_ref")String fotoEscudo_ref
-			){
-		collection.updateOne(
-				eq("nombre", nombre) , 
-				combine(
-						set("nombre",nombre), 
-						set("lugarBase",lugarBase), 
-						set("jefeEquipo",jefeEquipo),
-						set("jefeTecnico",jefeTecnico),
-						set("chasis",chasis),
-						set("cant_vecesEnPodio",cant_vecesEnPodio),
-						set("cant_TitulosCampeonato",cant_TitulosCampeonato),
-						set("fotoEscudo_ref",fotoEscudo_ref)
-						) 
-				);
-	}
-	
-	@WebMethod
-	public void escuderia_delete(@WebParam(name = "id")String id){
+
+   	public void escuderia_update(Escuderia escuderia){
+   		collection.updateOne(
+   				eq("id", escuderia.getId()) , 
+   				combine(
+   						set("nombre",escuderia.getNombre()), 
+						set("lugarBase",escuderia.getLugarBase()), 
+						set("jefeEquipo",escuderia.getJefeEquipo()),
+						set("jefeTecnico",escuderia.getJefeTecnico()),
+						set("chasis",escuderia.getChasis()),
+						set("cant_vecesEnPodio",escuderia.getCant_vecesEnPodio()),
+						set("cant_TitulosCampeonato",escuderia.getCant_TitulosCampeonato()),
+						set("fotoEscudo_ref",escuderia.getFotoEscudo_ref()),
+						set("autos",escuderia.getAutos()),
+						set("pilotos",escuderia.getPilotos())
+   						)
+   				);
+   	}
+   	
+	public void escuderia_delete(String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
-	@WebMethod
-	public void escuderia_deleteByName(@WebParam(name = "nombre")String nombre){
+	public void escuderia_deleteByName(String nombre){
 		collection.deleteOne(eq("nombre",nombre));
 		
 	}

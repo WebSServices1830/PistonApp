@@ -6,6 +6,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+import CRUDs.CRUD_Campeonato;
 import CRUDs.CRUD_ClasificacionCampeonato;
 import CRUDs.CRUD_GranPremio;
 import clases_negocio.ClasificacionCampeonato;
@@ -14,8 +15,9 @@ import clases_negocio.GranPremio;
 @WebService(name="infoCampeonato")
 public class InformacionCampeonato {
 	
-	CRUD_ClasificacionCampeonato manejadorClasificacion_Campeonato = new CRUD_ClasificacionCampeonato();
+	CRUD_Campeonato manejadorCampeonato = new CRUD_Campeonato();
 	CRUD_GranPremio manejadorGranPremio = new CRUD_GranPremio();
+	CRUD_ClasificacionCampeonato manejadorClasificacion_Campeonato = new CRUD_ClasificacionCampeonato();
 	
 	@WebMethod
 	public void inicializarCampeonato() {

@@ -16,25 +16,40 @@ public class Autenticacion {
 	CRUD_Usuario manejadorUsuario = new CRUD_Usuario();
 	
 	@WebMethod
-	public void registrarUsuario(
+	public boolean registrarUsuario(
 			@WebParam(name = "nombreUsuario") String nombreUsuario,
 			@WebParam(name = "contrasenia") String contrasenia,
 			@WebParam(name = "fechaNacimiento") Date fechaNacimiento,
 			@WebParam(name = "urlFoto") String urlFoto,
 			@WebParam(name = "admin") boolean admin) {
-		Usuario usuario = new Usuario(nombreUsuario, contrasenia, fechaNacimiento, urlFoto, admin);
-		manejadorUsuario.usuario_create(usuario);
+		
+		boolean yaExisteUsuario = manejadorUsuario.existeUsuario(nombreUsuario);
+		
+		if(!yaExisteUsuario) {
+			Usuario usuario = new Usuario(nombreUsuario, contrasenia, fechaNacimiento, urlFoto, admin);
+			manejadorUsuario.usuario_create(usuario);
+			return true;
+		}
+		
+		return false;
+		
 	}
 	
 	@WebMethod
 	public boolean validarLogin(
 			@WebParam(name = "nombreUsuario") String nombreUsuario,
-			@WebParam(name = "contrasenia")String contrasenia) {
+			@WebParam(name = "contrasenia") String contrasenia) {
+		
 		Usuario usuario = manejadorUsuario.usuario_getByName(nombreUsuario);
-		if(usuario.getContra().equals(contrasenia)) {
-			return true;
+		
+		if(usuario != null) {
+			if(usuario.getContra().equals(contrasenia)) {
+				return true;
+			}
 		}
+		
 		return false;
+		
 	}
 
 }

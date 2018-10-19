@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -29,25 +28,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.bson.types.ObjectId;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
@@ -56,14 +49,14 @@ public class CrearUsuarioView extends AppCompatActivity {
 
     private Activity activityContext = this;
 
-    private EditText nombreUsuario, contra, fechaNacimiento;
+    private EditText et_nombreUsuario, et_contra, et_fechaNacimiento;
     private ImageButton btn_calendario, btn_seleccionarImagen, btn_tomarFoto;
     private ImageView previewFoto;
-    private CheckBox admin;
-    private Button agregarP, consultaP, accionesPiloto;
+    private CheckBox checkBox_admin;
+    private Button btn_agregarUsuario;
 
     private String resultado="";
-    private WebMet_AgregarUsuario wm_agregarPiloto = null;
+    private WebMet_AgregarUsuario wm_agregarUsuario = null;
     private TextView campo = null;
 
     private final static int STORAGE_PERMISSION = 1;
@@ -89,22 +82,24 @@ public class CrearUsuarioView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_usuario_view);
 
-        nombreUsuario = (EditText) findViewById(R.id.nomUsuario);
-        contra = (EditText) findViewById(R.id.passUsuario);
-        fechaNacimiento = findViewById(R.id.editText_fechaNacimiento);
+        et_nombreUsuario = findViewById(R.id.nomUsuario);
+        et_contra = findViewById(R.id.passUsuario);
+        et_fechaNacimiento = findViewById(R.id.editText_fechaNacimiento);
         btn_calendario = findViewById(R.id.imageButton_calendario);
-        admin = (CheckBox) findViewById(R.id.adminUsuario);
+        checkBox_admin = findViewById(R.id.adminUsuario);
         btn_seleccionarImagen = findViewById(R.id.imageButton_seleccionarImagen);
         btn_tomarFoto = findViewById(R.id.imageButton_tomarFoto);
         previewFoto = findViewById(R.id.imageView_fotoPerfil);
 
-        agregarP =(Button) findViewById(R.id.agregarUsuario);
-        agregarP.setOnClickListener(new View.OnClickListener() {
+        btn_agregarUsuario = findViewById(R.id.agregarUsuario);
+        btn_agregarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                wm_agregarPiloto = new WebMet_AgregarUsuario();
-                wm_agregarPiloto.execute();
+                if(camposValidos()){
+                    wm_agregarUsuario = new WebMet_AgregarUsuario();
+                    wm_agregarUsuario.execute();
+                }
             }
         });
 
@@ -133,6 +128,32 @@ public class CrearUsuarioView extends AppCompatActivity {
 
     }
 
+    private boolean camposValidos(){
+
+        boolean sonValidos = true;
+
+        String nombreUsuario = et_nombreUsuario.getText().toString();
+        String contra = et_contra.getText().toString();
+        String fechaNacimiento = et_fechaNacimiento.getText().toString();
+
+        if( nombreUsuario.isEmpty()){
+            et_nombreUsuario.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if( contra.isEmpty() ){
+            et_contra.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if( fechaNacimiento.isEmpty() ){
+            et_fechaNacimiento.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        return sonValidos;
+    }
+
     private class WebMet_AgregarUsuario extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -148,16 +169,18 @@ public class CrearUsuarioView extends AppCompatActivity {
             Drawable fotoPerfil = previewFoto.getDrawable();
 
             String urlFoto = null;
-            try {
-                urlFoto = FileUpload.saveImageIntoMongoDB(fotoPerfil,nombreUsuario.getText().toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.i("Error: ",e.getMessage());
+            if(fotoPerfil == null){
+                urlFoto = "";
+            }else{
+                try {
+                    urlFoto = FileUpload.saveImageIntoMongoDB(fotoPerfil, et_nombreUsuario.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.i("Error: ",e.getMessage());
+                }
             }
 
-            Log.i("Fecha:",calendario.getTime().toString());
-
-            String contrasenia = contra.getText().toString();
+            String contrasenia = et_contra.getText().toString();
 
             String contra_hash = null;
             try {
@@ -173,11 +196,11 @@ public class CrearUsuarioView extends AppCompatActivity {
             }
 
             if(contra_hash != null && urlFoto != null){
-                request.addProperty("nombreUsuario", nombreUsuario.getText().toString());
+                request.addProperty("nombreUsuario", et_nombreUsuario.getText().toString());
                 request.addProperty("contrasenia", contra_hash);
                 request.addProperty("fechaNacimiento", calendario.getTime());
                 request.addProperty("urlFoto", urlFoto);
-                request.addProperty("admin", admin.isChecked());
+                request.addProperty("admin", checkBox_admin.isChecked());
             }else{
                 return false;
             }
@@ -191,7 +214,16 @@ public class CrearUsuarioView extends AppCompatActivity {
             HttpTransportSE ht = new HttpTransportSE(URL);
             try {
                 ht.call(SOAP_ACTION, envelope);
-                SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
+
+                Object response = envelope.getResponse();
+
+                if(response != null){
+                    boolean usuarioCreado = Boolean.parseBoolean(response.toString());
+
+                    if(usuarioCreado){
+                        return true;
+                    }
+                }
                 //resultado=response.toString();
                 //Log.i("Resultado: ",resultado);
             }
@@ -199,16 +231,15 @@ public class CrearUsuarioView extends AppCompatActivity {
             {
                 Log.i("Error: ",e.getMessage());
                 e.printStackTrace();
-                return false;
             }
 
-            return true;
+            return false;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
             }
             else{
 
@@ -242,7 +273,7 @@ public class CrearUsuarioView extends AppCompatActivity {
                 //Formateo el mes obtenido: antepone el 0 si son menores de 10
                 String mesFormateado = (mesActual < 10)? CERO + String.valueOf(mesActual):String.valueOf(mesActual);
                 //Muestro la fecha con el formato deseado
-                fechaNacimiento.setText(diaFormateado + BARRA + mesFormateado + BARRA + year);
+                et_fechaNacimiento.setText(diaFormateado + BARRA + mesFormateado + BARRA + year);
 
 
             }

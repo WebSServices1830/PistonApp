@@ -19,11 +19,14 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import butterknife.ButterKnife;
 import co.edu.javeriana.sebastianmesa.conexmongo.MainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
-import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
 
 public class LoginActivityView extends AppCompatActivity {
 
@@ -32,70 +35,10 @@ public class LoginActivityView extends AppCompatActivity {
 
         private TextView _signupLink, _emailText, _passwordText;
         private Button _loginButton;
-        private WebMet_ConsultarUsuario wm_agregarPiloto = null;
+        private WebMet_ValidarLogin wm_agregarPiloto = null;
 
-        private String nombreUsuario, contra, descripcion,foto;
-        private int edad;
-        private boolean admin;
-        private long bolsillo;
 
         private LinearLayout ll;
-
-        public String getNombreUsuario() {
-            return nombreUsuario;
-        }
-
-        public void setNombreUsuario(String nombreUsuario) {
-            this.nombreUsuario = nombreUsuario;
-        }
-
-        public String getContra() {
-            return contra;
-        }
-
-        public void setContra(String contra) {
-            this.contra = contra;
-        }
-
-        public String getDescripcion() {
-            return descripcion;
-        }
-
-        public void setDescripcion(String descripcion) {
-            this.descripcion = descripcion;
-        }
-
-        public String getFoto() {
-            return foto;
-        }
-
-        public void setFoto(String foto) {
-            this.foto = foto;
-        }
-
-        public int getEdad() {
-            return edad;
-        }
-
-        public void setEdad(int edad) {
-            this.edad = edad;
-        }
-
-        public boolean isAdmin() {
-            return admin;
-        }
-
-        public void setAdmin(boolean admin) {
-            this.admin = admin;
-        }
-
-        public long getBolsillo() {
-            return bolsillo;
-        }
-
-        public void setBolsillo(long bolsillo) {
-            this.bolsillo = bolsillo;
-        }
 
 
         @Override
@@ -150,7 +93,7 @@ public class LoginActivityView extends AppCompatActivity {
             String email = _emailText.getText().toString();
             String password = _passwordText.getText().toString();
 
-            wm_agregarPiloto = new WebMet_ConsultarUsuario();
+            wm_agregarPiloto = new WebMet_ValidarLogin();
             wm_agregarPiloto.execute();
 
 
@@ -221,7 +164,7 @@ public class LoginActivityView extends AppCompatActivity {
             return valid;
         }
 
-    private class WebMet_ConsultarUsuario extends AsyncTask<Void, Void, Boolean>  {
+    private class WebMet_ValidarLogin extends AsyncTask<Void, Void, Boolean>  {
 
 
 
@@ -230,17 +173,34 @@ public class LoginActivityView extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            //final String URL="http://10.0.2.2:8081/WS/autenticacion?wsdl";
-            final String URL="http://localhost:8081/WS/autenticacion?wsdl";
-            final String METHOD_NAME = "usuario_readByName";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/usuario_readByName";
+            final String URL="http://10.0.2.2:8080/WS/autenticacion?wsdl";
+            final String METHOD_NAME = "validarLogin";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/validarLogin";
 
             String user = _emailText.getText().toString();
             String password = _passwordText.getText().toString();
 
+            String contra_hash = null;
+            try {
+                contra_hash = computeHash(password);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+                Log.i("Error: ",e.getMessage());
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                Log.i("Error: ",e.getMessage());
+            }
+
+            if(contra_hash == null){
+                return false;
+            }
+
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
             request.addProperty("nombreUsuario", user);
+            request.addProperty("contrasenia", contra_hash);
+
+            Log.i("Login", contra_hash);
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -253,11 +213,13 @@ public class LoginActivityView extends AppCompatActivity {
                 //campoRespuesta.setText("");
 
                 ht.call(SOAP_ACTION, envelope);
-                SoapObject response = (SoapObject)envelope.getResponse();
+                Object response = envelope.getResponse();
 
                 if (response != null) {
+                    String loginValido_string = response.toString();
+                    boolean loginValido = Boolean.parseBoolean(loginValido_string);
 
-
+                    /*
                     setNombreUsuario(response.getPrimitivePropertyAsString("nombreUsuario"));
                     setContra(response.getPrimitivePropertyAsString("contra"));
                     setEdad( Integer.parseInt(response.getPrimitivePropertyAsString("edad")));
@@ -265,18 +227,18 @@ public class LoginActivityView extends AppCompatActivity {
                     setFoto(response.getPrimitivePropertyAsString("foto"));
                     setAdmin(Boolean.parseBoolean (response.getPrimitivePropertyAsString("admin")));
                     setBolsillo(Long.parseLong (response.getPrimitivePropertyAsString("bolsillo")));
+                    */
 
-                    if(getNombreUsuario().equals(user) && getContra().equals(password)){
+                    Log.i("Login", ""+loginValido);
+
+                    if(loginValido){
                         startActivity(new Intent(getBaseContext(), MainActivity.class));
+                        return true;
 
-                        Log.i("ACK-ACK", user + "-" + password);
-                        Log.i("ACK-ACK", getNombreUsuario() + "-" + getContra());
-
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Revise su usuario/contraseña", Toast.LENGTH_SHORT).show();
                     }
 
-                }else{
-                    Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 }
 
 
@@ -287,17 +249,17 @@ public class LoginActivityView extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 e.printStackTrace();
-                return false;
+
             }
 
-            return true;
+            return false;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             if(success==false){
                 startActivity(new Intent(getBaseContext(), LoginActivityView.class));
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_SHORT).show();
             }
             else{
 
@@ -327,6 +289,19 @@ public class LoginActivityView extends AppCompatActivity {
             startActivity(new Intent(getBaseContext(), LoginActivityView.class));
             Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.reset();
+
+        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < byteData.length; i++){
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
     }
 
 }

@@ -53,8 +53,17 @@ public class CRUD_Usuario {
     }
    	
     public Usuario usuario_getByName(String nombreUsuario) {
-    	Usuario usuario = collection.find(eq("nombreUsuario",nombreUsuario)).first();
+    	Usuario usuario = collection.find(eq("nombreUsuario", nombreUsuario)).first();
     	return usuario;
+    }
+    
+    public boolean existeUsuario(String nombreUsuario) {
+    	Usuario usuario = usuario_getByName(nombreUsuario);
+    	if(usuario == null) {
+    		return false;
+    	}
+    	
+    	return true;
     }
 	
 	public List<Usuario> usuario_getAll() {

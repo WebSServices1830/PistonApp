@@ -18,6 +18,7 @@ public class Pista {
 	private ObjectId record;
 	private ObjectId granpremio;
 	private List<ObjectId> comentarios;
+	private float calificacion;
 	
 	
 	
@@ -39,6 +40,16 @@ public class Pista {
 		this.granpremio = granpremio;
 		this.comentarios = new ArrayList<ObjectId>();
 		this.id_str= this.id.toString();
+		this.calificacion=0;
+	}
+
+	
+	
+	public float getCalificacion() {
+		return calificacion;
+	}
+	public void setCalificacion(float calificacion) {
+		this.calificacion = calificacion;
 	}
 	public String getId_str() {
 		return id_str;

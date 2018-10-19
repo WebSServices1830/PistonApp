@@ -6,7 +6,6 @@ import static com.mongodb.client.model.Updates.set;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +48,8 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	public void comentariopiloto_create(
 			@WebParam(name = "contenido")String contenido,
 			@WebParam(name = "calificacion")int calificacion,
-			@WebParam(name = "usuario")ObjectId usuario,
-			@WebParam(name = "piloto")ObjectId piloto
+			@WebParam(name = "usuario")String usuario,
+			@WebParam(name = "piloto")String piloto
 			){
 			
 		ComentarioPiloto comentario = new ComentarioPiloto(contenido,calificacion,usuario,piloto);
@@ -63,8 +62,26 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 		return comentario;
 	}
 
+		public List<ComentarioPiloto> comentariopiloto_read_Especific_Pilot(String piloto) {
+		
+		final List<ComentarioPiloto> comentarios = new ArrayList<>();
+		
+		Block<ComentarioPiloto> saveBlock = new Block<ComentarioPiloto>() {
+		    @Override
+		    public void apply(ComentarioPiloto comentario) {
+		        comentarios.add(comentario);
+		    }
+
+			
+		};
+		
+		collection.find(eq("piloto",piloto)).forEach(saveBlock);
+		
+		return comentarios;
+		
+	}
 	
-	@WebMethod
+	
 	public List<ComentarioPiloto> comentariopiloto_readAll() {
 		
 		final List<ComentarioPiloto> comentarios = new ArrayList<>();
@@ -89,8 +106,8 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 			@WebParam(name = "id")String id,
 			@WebParam(name = "contenido")String contenido,
 			@WebParam(name = "calificacion")int calificacion,
-			@WebParam(name = "usuario")ObjectId usuario,
-			@WebParam(name = "piloto")ObjectId piloto
+			@WebParam(name = "usuario")String usuario,
+			@WebParam(name = "piloto")String piloto
 			){
 		collection.updateOne(
 				eq("id", id) , 
@@ -109,8 +126,8 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	public void comentariopiloto_updateFromAndroid(
 			@WebParam(name = "contenido")String contenido,
 			@WebParam(name = "calificacion")int calificacion,
-			@WebParam(name = "usuario")ObjectId usuario,
-			@WebParam(name = "piloto")ObjectId piloto
+			@WebParam(name = "usuario")String usuario,
+			@WebParam(name = "piloto")String piloto
 			){
 		
 		try {
@@ -153,7 +170,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	}
 	
 	@WebMethod
-	public void deleteByName(@WebParam(name = "id")ObjectId id){
+	public void deleteByName(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id",id));
 		
 	}

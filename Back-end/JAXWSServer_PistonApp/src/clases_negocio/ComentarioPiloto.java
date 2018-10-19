@@ -8,14 +8,14 @@ public class ComentarioPiloto {
 	private ObjectId id;
 	private String contenido;
 	private int calificacion;
-	private ObjectId usuario;
-	private ObjectId piloto;
+	private String usuario;
+	private String piloto;
 	
 	public ComentarioPiloto(){
 		
 	}
 	
-	public ComentarioPiloto(String contenido, int calificacion, ObjectId usuario, ObjectId piloto) {
+	public ComentarioPiloto(String contenido, int calificacion, String usuario, String piloto) {
 		this.id = new ObjectId();
 		this.contenido = contenido;
 		this.calificacion = calificacion;
@@ -56,19 +56,19 @@ public class ComentarioPiloto {
 		this.calificacion = calificacion;
 	}
 
-	public ObjectId getUsuario() {
+	public String getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(ObjectId usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 
-	public ObjectId getPiloto() {
+	public String getPiloto() {
 		return piloto;
 	}
 
-	public void setPiloto(ObjectId piloto) {
+	public void setPiloto(String piloto) {
 		this.piloto = piloto;
 	}
 	

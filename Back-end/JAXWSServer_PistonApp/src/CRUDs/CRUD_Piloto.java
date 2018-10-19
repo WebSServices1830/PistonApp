@@ -102,6 +102,21 @@ public class CRUD_Piloto {
 		
 	}
 	
+
+	
+	public void piloto_update_calificacion(
+			String id_str,
+			float calificacion
+			){
+		collection.updateOne(
+				eq("id_str", id_str) , 
+				combine(
+						set("calificacion",calificacion)
+						) 
+				);
+	}
+	
+	
 	@WebMethod
 	public void piloto_update(
 			@WebParam(name = "nombreCompleto")String nombreCompleto,

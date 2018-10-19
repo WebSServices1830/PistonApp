@@ -31,17 +31,10 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/fotoUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/passUsuario"
-                android:hint="Foto usuario" />
-
-            <EditText
                 android:id="@+id/editText_fechaNacimiento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fotoUsuario"
+                android:layout_below="@+id/passUsuario"
                 android:ems="10"
                 android:enabled="false"
                 android:hint="Fecha de nacimiento"
@@ -51,7 +44,7 @@
                 android:id="@+id/imageButton_calendario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fotoUsuario"
+                android:layout_below="@+id/passUsuario"
                 android:layout_toRightOf="@+id/editText_fechaNacimiento"
                 app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
@@ -61,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editText_fechaNacimiento"
                 android:checked="true"
-                android:text="Es usuario administrador?" />
+                android:text="¿Es usuario administrador?" />
 
             <ImageView
                 android:id="@+id/imageView_fotoPerfil"

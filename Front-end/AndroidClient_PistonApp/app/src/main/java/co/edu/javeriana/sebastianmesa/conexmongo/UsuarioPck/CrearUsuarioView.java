@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -27,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.bson.types.ObjectId;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
@@ -34,7 +37,9 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -44,13 +49,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearUsuarioView extends AppCompatActivity {
 
     private Activity activityContext = this;
 
-    private EditText nombreUsuario, contra, foto, fechaNacimiento;
+    private EditText nombreUsuario, contra, fechaNacimiento;
     private ImageButton btn_calendario, btn_seleccionarImagen, btn_tomarFoto;
     private ImageView previewFoto;
     private CheckBox admin;
@@ -85,7 +91,6 @@ public class CrearUsuarioView extends AppCompatActivity {
 
         nombreUsuario = (EditText) findViewById(R.id.nomUsuario);
         contra = (EditText) findViewById(R.id.passUsuario);
-        foto = (EditText) findViewById(R.id.fotoUsuario);
         fechaNacimiento = findViewById(R.id.editText_fechaNacimiento);
         btn_calendario = findViewById(R.id.imageButton_calendario);
         admin = (CheckBox) findViewById(R.id.adminUsuario);
@@ -140,31 +145,42 @@ public class CrearUsuarioView extends AppCompatActivity {
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
+            Drawable fotoPerfil = previewFoto.getDrawable();
+
+            String urlFoto = null;
+            try {
+                urlFoto = FileUpload.saveImageIntoMongoDB(fotoPerfil,nombreUsuario.getText().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.i("Error: ",e.getMessage());
+            }
+
             Log.i("Fecha:",calendario.getTime().toString());
 
             String contrasenia = contra.getText().toString();
 
+            String contra_hash = null;
             try {
-                String contra_hash = computeHash(contrasenia);
+                contra_hash = computeHash(contrasenia);
                 Log.i("Password:", contra_hash);
-
-                request.addProperty("nombreUsuario", nombreUsuario.getText().toString());
-                request.addProperty("contrasenia", contra_hash);
-                request.addProperty("fechaNacimiento", calendario.getTime());
-                request.addProperty("foto", foto.getText().toString());
-                request.addProperty("admin", admin.isChecked());
 
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
+                Log.i("Error: ",e.getMessage());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
+                Log.i("Error: ",e.getMessage());
             }
 
-
-
-
-
-
+            if(contra_hash != null && urlFoto != null){
+                request.addProperty("nombreUsuario", nombreUsuario.getText().toString());
+                request.addProperty("contrasenia", contra_hash);
+                request.addProperty("fechaNacimiento", calendario.getTime());
+                request.addProperty("urlFoto", urlFoto);
+                request.addProperty("admin", admin.isChecked());
+            }else{
+                return false;
+            }
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
@@ -201,6 +217,7 @@ public class CrearUsuarioView extends AppCompatActivity {
                 //campo.setText(resultado);
 
                 Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
 

@@ -65,7 +65,7 @@ dependencies {
     implementation 'com.google.code.ksoap2-android:ksoap2-android:3.6.2'
 
     //MongoDB
-    implementation 'org.mongodb:mongodb-driver:3.4.2'
+    implementation 'org.mongodb:mongodb-driver-sync:3.8.2'
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'

@@ -101,7 +101,9 @@ public class CRUD_Piloto {
 		return pilotos;
 		
 	}
-	@WebMethod
+	
+
+	
 	public void piloto_update_calificacion(
 			String id_str,
 			float calificacion

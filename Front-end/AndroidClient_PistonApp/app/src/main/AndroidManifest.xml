@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".PilotoPck.IndexPilotoView" />
         <activity android:name=".PilotoPck.CrearPilotoView" />
         <activity android:name=".PilotoPck.VerPilotoView" />
@@ -49,6 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CampeonatoPck.VerCampeonatoActivity"></activity>
     </application>
 
 </manifest>

@@ -35,7 +35,7 @@ public class LoginActivityView extends AppCompatActivity {
 
         private TextView _signupLink, _emailText, _passwordText;
         private Button _loginButton;
-        private WebMet_ValidarLogin wm_agregarPiloto = null;
+        private WebMet_ValidarLogin wm_validarLogin = null;
 
 
         private LinearLayout ll;
@@ -93,8 +93,8 @@ public class LoginActivityView extends AppCompatActivity {
             String email = _emailText.getText().toString();
             String password = _passwordText.getText().toString();
 
-            wm_agregarPiloto = new WebMet_ValidarLogin();
-            wm_agregarPiloto.execute();
+            wm_validarLogin = new WebMet_ValidarLogin();
+            wm_validarLogin.execute();
 
 
             new android.os.Handler().postDelayed(

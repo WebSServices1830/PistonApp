@@ -56,7 +56,7 @@ public class CrearUsuarioView extends AppCompatActivity {
     private Button btn_agregarUsuario;
 
     private String resultado="";
-    private WebMet_AgregarUsuario wm_agregarUsuario = null;
+    private WebMet_RegistrarUsuario wm_registrarUsuario = null;
     private TextView campo = null;
 
     private final static int STORAGE_PERMISSION = 1;
@@ -97,8 +97,8 @@ public class CrearUsuarioView extends AppCompatActivity {
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 if(camposValidos()){
-                    wm_agregarUsuario = new WebMet_AgregarUsuario();
-                    wm_agregarUsuario.execute();
+                    wm_registrarUsuario = new WebMet_RegistrarUsuario();
+                    wm_registrarUsuario.execute();
                 }
             }
         });
@@ -154,7 +154,7 @@ public class CrearUsuarioView extends AppCompatActivity {
         return sonValidos;
     }
 
-    private class WebMet_AgregarUsuario extends AsyncTask<Void, Void, Boolean> {
+    private class WebMet_RegistrarUsuario extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.

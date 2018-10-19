@@ -53,8 +53,8 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 			@WebParam(name = "fecha")Date fecha,
 			@WebParam(name = "cantVueltas")int cantVueltas,
 			@WebParam(name = "mejorVuelta")LocalTime mejorVuelta,
-			@WebParam(name = "pista")ObjectId pista,
-			@WebParam(name = "campeonato")ObjectId campeonato
+			@WebParam(name = "pista")String pista,
+			@WebParam(name = "campeonato")String campeonato
 			){
 			
 		GranPremio granPremio = new GranPremio(fecha,cantVueltas,mejorVuelta,pista,campeonato);
@@ -134,7 +134,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	@WebMethod
 	public void granPremio_addClasificacion(
 			@WebParam(name = "id")String id, 
-			@WebParam(name = "idClasificacion")ObjectId idClasificacion
+			@WebParam(name = "idClasificacion")String idClasificacion
 			){
 		GranPremio granPremio= granPremio_read(id);
 		granPremio.getClasificaciones().add(idClasificacion);

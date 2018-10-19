@@ -15,16 +15,16 @@ public class GranPremio {
 	private Date fecha;
 	private int cantVueltas;
 	private LocalTime mejorVuelta;
-	private ObjectId pista;
-	private ObjectId campeonato;
-	private List<ObjectId> clasificaciones;
+	private String pista;
+	private String campeonato;
+	private List<String> clasificaciones;
 	
 	public GranPremio(){
 		
 	}
 	
-	public GranPremio( Date fecha, int cantVueltas, LocalTime mejorVuelta, ObjectId pista,
-			ObjectId campeonato) {
+	public GranPremio( Date fecha, int cantVueltas, LocalTime mejorVuelta, String pista,
+			String campeonato) {
 		super();
 		this.id = new ObjectId();
 		this.fecha = fecha;
@@ -32,7 +32,7 @@ public class GranPremio {
 		this.mejorVuelta = mejorVuelta;
 		this.pista = pista;
 		this.campeonato = campeonato;
-		this.clasificaciones = new ArrayList<ObjectId>();
+		this.clasificaciones = new ArrayList<String>();
 		this.id_str= this.id.toString();
 	}
 	public String getId_str() {
@@ -67,24 +67,29 @@ public class GranPremio {
 	public void setMejorVuelta(LocalTime mejorVuelta) {
 		this.mejorVuelta = mejorVuelta;
 	}
-	public ObjectId getPista() {
+
+	public String getPista() {
 		return pista;
 	}
-	public void setPista(ObjectId pista) {
+
+	public void setPista(String pista) {
 		this.pista = pista;
 	}
-	public ObjectId getCampeonato() {
+
+	public String getCampeonato() {
 		return campeonato;
 	}
-	public void setCampeonato(ObjectId campeonato) {
+
+	public void setCampeonato(String campeonato) {
 		this.campeonato = campeonato;
 	}
-	public List<ObjectId> getClasificaciones() {
+
+	public List<String> getClasificaciones() {
 		return clasificaciones;
 	}
-	public void setClasificaciones(List<ObjectId> clasificaciones) {
+
+	public void setClasificaciones(List<String> clasificaciones) {
 		this.clasificaciones = clasificaciones;
 	}
-	
 	
 }

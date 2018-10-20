@@ -14,35 +14,33 @@ public class GranPremio {
 	private ObjectId id;
 	private Date fecha;
 	private int cantVueltas;
-	private LocalTime mejorVuelta;
+	private Date mejorVuelta;
 	private String pista;
-	private String campeonato;
-	private List<String> clasificaciones;
+	private String id_campeonato;
+	private List<String> id_clasificaciones;
 	
 	public GranPremio(){
 		
 	}
 	
-	public GranPremio( Date fecha, int cantVueltas, LocalTime mejorVuelta, String pista,
-			String campeonato) {
+	public GranPremio( Date fecha, int cantVueltas, Date mejorVuelta, String pista,
+			String id_campeonato) {
 		super();
 		this.id = new ObjectId();
 		this.fecha = fecha;
 		this.cantVueltas = cantVueltas;
 		this.mejorVuelta = mejorVuelta;
 		this.pista = pista;
-		this.campeonato = campeonato;
-		this.clasificaciones = new ArrayList<String>();
+		this.id_campeonato = id_campeonato;
+		this.id_clasificaciones = new ArrayList<String>();
 		this.id_str= this.id.toString();
 	}
 	public String getId_str() {
 		return id_str;
 	}
-
 	public void setId_str(String id_str) {
 		this.id_str = id_str;
 	}
-
 	public ObjectId getId() {
 		return id;
 	}
@@ -61,35 +59,33 @@ public class GranPremio {
 	public void setCantVueltas(int cantVueltas) {
 		this.cantVueltas = cantVueltas;
 	}
-	public LocalTime getMejorVuelta() {
+	public Date getMejorVuelta() {
 		return mejorVuelta;
 	}
-	public void setMejorVuelta(LocalTime mejorVuelta) {
+	public void setMejorVuelta(Date mejorVuelta) {
 		this.mejorVuelta = mejorVuelta;
 	}
-
 	public String getPista() {
 		return pista;
 	}
-
 	public void setPista(String pista) {
 		this.pista = pista;
 	}
 
-	public String getCampeonato() {
-		return campeonato;
+	public String getId_campeonato() {
+		return id_campeonato;
 	}
 
-	public void setCampeonato(String campeonato) {
-		this.campeonato = campeonato;
+	public void setId_campeonato(String id_campeonato) {
+		this.id_campeonato = id_campeonato;
 	}
 
-	public List<String> getClasificaciones() {
-		return clasificaciones;
+	public List<String> getId_clasificaciones() {
+		return id_clasificaciones;
 	}
 
-	public void setClasificaciones(List<String> clasificaciones) {
-		this.clasificaciones = clasificaciones;
+	public void setId_clasificaciones(List<String> id_clasificaciones) {
+		this.id_clasificaciones = id_clasificaciones;
 	}
 	
 }

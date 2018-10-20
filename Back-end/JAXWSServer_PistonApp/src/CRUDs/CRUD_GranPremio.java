@@ -47,16 +47,17 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     // get a handle to the "people" collection
     MongoCollection<GranPremio> collection = database.getCollection("grandespremios", GranPremio.class);
 	
-	public void granPremio_create(
+	public GranPremio granPremio_create(
 			Date fecha,
 			int cantVueltas,
-			LocalTime mejorVuelta,
+			Date mejorVuelta,
 			String pista,
 			String campeonato
 			){
 			
 		GranPremio granPremio = new GranPremio(fecha,cantVueltas,mejorVuelta,pista,campeonato);
 		collection.insertOne(granPremio);
+		return granPremio;
 	}
 	
 	public GranPremio granPremio_read(@WebParam(name = "id")String id){
@@ -127,11 +128,11 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 			String idClasificacion
 			){
 		GranPremio granPremio= granPremio_read(id);
-		granPremio.getClasificaciones().add(idClasificacion);
+		granPremio.getId_clasificaciones().add(idClasificacion);
 		collection.updateOne(
 				eq("id", id) , 
 				combine(
-						set("clasificaciones",granPremio.getClasificaciones())
+						set("clasificaciones",granPremio.getId_clasificaciones())
 						) 
 				);
 	}

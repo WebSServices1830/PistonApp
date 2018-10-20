@@ -12,38 +12,29 @@ public class Pista {
 	private String ciudad;
 	private String foto_ref;
 	private String nombreUltimoGanador;
-	private int numeroVueltas;
-	private float distanciaCarreara_km;
+	private float distanciaCarrera_km;
 	private float longitudCircuito_km;
-	private ObjectId record;
-	private ObjectId granpremio;
-	private List<ObjectId> comentarios;
+	private Record record;
+	private List<String> comentarios;
 	private float calificacion;
-	
-	
-	
 	
 	public Pista() {
 		super();
 	}
-	public Pista(String ciudad, String foto_ref, String nombreUltimoGanador, int numeroVueltas,
-			float distanciaCarreara_km, float longitudCircuito_km, ObjectId record, ObjectId granpremio) {
+	public Pista(String ciudad, String foto_ref, String nombreUltimoGanador,
+			float distanciaCarrera_km, float longitudCircuito_km, Record record) {
 		super();
 		this.id = new ObjectId();
 		this.ciudad = ciudad;
 		this.foto_ref = foto_ref;
 		this.nombreUltimoGanador = nombreUltimoGanador;
-		this.numeroVueltas = numeroVueltas;
-		this.distanciaCarreara_km = distanciaCarreara_km;
+		this.distanciaCarrera_km = distanciaCarrera_km;
 		this.longitudCircuito_km = longitudCircuito_km;
 		this.record = record;
-		this.granpremio = granpremio;
-		this.comentarios = new ArrayList<ObjectId>();
+		this.comentarios = new ArrayList<String>();
 		this.id_str= this.id.toString();
 		this.calificacion=0;
 	}
-
-	
 	
 	public float getCalificacion() {
 		return calificacion;
@@ -81,17 +72,11 @@ public class Pista {
 	public void setNombreUltimoGanador(String nombreUltimoGanador) {
 		this.nombreUltimoGanador = nombreUltimoGanador;
 	}
-	public int getNumeroVueltas() {
-		return numeroVueltas;
+	public float getDistanciaCarrera_km() {
+		return distanciaCarrera_km;
 	}
-	public void setNumeroVueltas(int numeroVueltas) {
-		this.numeroVueltas = numeroVueltas;
-	}
-	public float getDistanciaCarreara_km() {
-		return distanciaCarreara_km;
-	}
-	public void setDistanciaCarreara_km(float distanciaCarreara_km) {
-		this.distanciaCarreara_km = distanciaCarreara_km;
+	public void setDistanciaCarrera_km(float distanciaCarreara_km) {
+		this.distanciaCarrera_km = distanciaCarreara_km;
 	}
 	public float getLongitudCircuito_km() {
 		return longitudCircuito_km;
@@ -99,25 +84,17 @@ public class Pista {
 	public void setLongitudCircuito_km(float longitudCircuito_km) {
 		this.longitudCircuito_km = longitudCircuito_km;
 	}
-	public ObjectId getRecord() {
+	public Record getRecord() {
 		return record;
 	}
-	public void setRecord(ObjectId record) {
+	public void setRecord(Record record) {
 		this.record = record;
 	}
-	public ObjectId getGranpremio() {
-		return granpremio;
-	}
-	public void setGranpremio(ObjectId granpremio) {
-		this.granpremio = granpremio;
-	}
-	public List<ObjectId> getComentarios() {
+	public List<String> getComentarios() {
 		return comentarios;
 	}
-	public void setComentarios(List<ObjectId> comentarios) {
+	public void setComentarios(List<String> comentarios) {
 		this.comentarios = comentarios;
 	}
-	
-	
 	
 }

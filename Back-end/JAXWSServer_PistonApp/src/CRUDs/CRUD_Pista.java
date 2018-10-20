@@ -25,11 +25,11 @@ import com.mongodb.client.MongoDatabase;
 
 import clases_mongoDB.ClienteMongo;
 import clases_negocio.Pista;
+import clases_negocio.Record;
 
-@WebService(name="crud_pista")
 public class CRUD_Pista {
 	
-MongoClient mongoClient = ClienteMongo.getInstancia();
+	MongoClient mongoClient = ClienteMongo.getInstancia();
 	
 	// create codec registry for POJOs
 	CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
@@ -41,34 +41,30 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     // get a handle to the "people" collection
     MongoCollection<Pista> collection = database.getCollection("pistas", Pista.class);
 	
-    @WebMethod
-	public void pista_create(
-			@WebParam(name = "ciudad")String ciudad,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "nombreUltimoGanador")String nombreUltimoGanador,
-			@WebParam(name = "numeroVueltas")int numeroVueltas,
-			@WebParam(name = "distanciaCarreara_km")float distanciaCarreara_km,
-			@WebParam(name = "longitudCircuito_km")float longitudCircuito_km,
-			@WebParam(name = "record")ObjectId record,
-			@WebParam(name = "granpremio")ObjectId granpremio){
+	public Pista pista_create(
+			String ciudad,
+			String foto_ref,
+			String nombreUltimoGanador,
+			float distanciaCarrera_km,
+			float longitudCircuito_km,
+			Record record){
 			
-		Pista pista = new Pista(ciudad,foto_ref,nombreUltimoGanador,numeroVueltas,distanciaCarreara_km,longitudCircuito_km,record,granpremio);
+		Pista pista = new Pista(ciudad,foto_ref,nombreUltimoGanador,distanciaCarrera_km,longitudCircuito_km,record);
 		collection.insertOne(pista);
+		
+		return pista;
 	}
 	
-    @WebMethod
-	public Pista pista_read(@WebParam(name = "id")String id){
+	public Pista pista_read(String id){
 		Pista pista = collection.find(eq("id", id)).first();
 		return pista;
 	}
 	
-	@WebMethod
-	public Pista pista_readByCiudad(@WebParam(name = "ciudad")String ciudad){
+	public Pista pista_readByCiudad(String ciudad){
 		Pista pista= collection.find(eq("ciudad", ciudad)).first();
 		return pista;
 	}
 	
-	@WebMethod
 	public List<Pista> pista_readAll() {
 		
 		final List<Pista> pistas = new ArrayList<>();
@@ -86,37 +82,30 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 		
 	}
 	
-	@WebMethod
 	public void pista_update(
-			@WebParam(name = "ciudad")String ciudad,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "nombreUltimoGanador")String nombreUltimoGanador,
-			@WebParam(name = "numeroVueltas")int numeroVueltas,
-			@WebParam(name = "distanciaCarreara_km")float distanciaCarreara_km,
-			@WebParam(name = "longitudCircuito_km")float longitudCircuito_km,
-			@WebParam(name = "record")ObjectId record,
-			@WebParam(name = "granpremio")ObjectId granpremio){
+			String ciudad,
+			String foto_ref,
+			String nombreUltimoGanador,
+			float distanciaCarrera_km,
+			float longitudCircuito_km,
+			String record){
 		collection.updateOne(
 				eq("ciudad", ciudad) , 
 				combine(
 						set("ciudad",ciudad), 
 						set("foto_ref",foto_ref), 
 						set("nombreUltimoGanador",nombreUltimoGanador),
-						set("numeroVueltas",numeroVueltas),
-						set("distanciaCarreara_km",distanciaCarreara_km), 
+						set("distanciaCarrera_km",distanciaCarrera_km), 
 						set("longitudCircuito_km",longitudCircuito_km), 
-						set("record",record),
-						set("granpremio",granpremio)
+						set("record",record)
 						) 
 				);
 	}
 	
-	@WebMethod
 	public void pista_delete(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
-	@WebMethod
 	public void pista_deleteByCiudad(@WebParam(name = "ciudad")String ciudad){
 		collection.deleteOne(eq("ciudad",ciudad));
 	}

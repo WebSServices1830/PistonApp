@@ -287,7 +287,7 @@ public class LoginActivityView extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             startActivity(new Intent(getBaseContext(), LoginActivityView.class));
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
         }
     }
 

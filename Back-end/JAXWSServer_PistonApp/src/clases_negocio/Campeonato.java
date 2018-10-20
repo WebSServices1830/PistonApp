@@ -13,8 +13,8 @@ public class Campeonato {
 	private String nombre;
 	private Date fecha_inicio;
 	private Date fecha_final;
-	private List<ObjectId> gran_premios;
-	private List<ObjectId> clasificaciones;
+	private List<String> gran_premios;
+	private List<String> clasificaciones;
 	
 	
 	public Campeonato() {
@@ -26,8 +26,8 @@ public class Campeonato {
 		this.nombre = nombre;
 		this.fecha_inicio = fecha_inicio;
 		this.fecha_final = fecha_final;
-		this.gran_premios = new ArrayList<ObjectId>();
-		this.clasificaciones = new ArrayList<ObjectId>();
+		this.gran_premios = new ArrayList<String>();
+		this.clasificaciones = new ArrayList<String>();
 		this.id_str= this.id.toString();
 	}
 	public String getId_str() {
@@ -60,19 +60,17 @@ public class Campeonato {
 	public void setFecha_final(Date fecha_final) {
 		this.fecha_final = fecha_final;
 	}
-	public List<ObjectId> getGran_premios() {
+	public List<String> getGran_premios() {
 		return gran_premios;
 	}
-	public void setGran_premios(List<ObjectId> gran_premios) {
+	public void setGran_premios(List<String> gran_premios) {
 		this.gran_premios = gran_premios;
 	}
-	public List<ObjectId> getClasificaciones() {
+	public List<String> getClasificaciones() {
 		return clasificaciones;
 	}
-	public void setClasificaciones(List<ObjectId> clasificaciones) {
+	public void setClasificaciones(List<String> clasificaciones) {
 		this.clasificaciones = clasificaciones;
 	}
-	
-	
 	
 }

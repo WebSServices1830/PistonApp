@@ -40,13 +40,15 @@ public class CRUD_Campeonato {
     // get a handle to the "people" collection
     MongoCollection<Campeonato> collection = database.getCollection("campeonatos", Campeonato.class);
 	
-	public void campeonato_create(
+	public Campeonato campeonato_create(
 			String nombre,
 			Date fecha_inicio,
 			Date fecha_final){
 			
 		Campeonato campeonato = new Campeonato(nombre,fecha_inicio,fecha_final);
 		collection.insertOne(campeonato);
+		
+		return campeonato;
 	}
 	
 	public Campeonato campeonato_read(String id){

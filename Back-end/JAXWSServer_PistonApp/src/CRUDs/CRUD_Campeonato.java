@@ -25,6 +25,7 @@ import com.mongodb.client.MongoDatabase;
 
 import clases_mongoDB.ClienteMongo;
 import clases_negocio.Campeonato;
+import clases_negocio.GranPremio;
 
 public class CRUD_Campeonato {
 	
@@ -98,6 +99,21 @@ public class CRUD_Campeonato {
 	
 	public void campeonato_deleteByName(String nombre){
 		collection.deleteOne(eq("nombre",nombre));
+	}
+	
+	public void campeonato_addGranPremio(
+			String id_campeonato,
+			String id_granPremio) {
+		
+		Campeonato campeonato = campeonato_read(id_campeonato);
+		campeonato.getGran_premios().add(id_granPremio);
+		
+		collection.updateOne(
+				eq("id", id_campeonato) , 
+				combine(
+						set("gran_premios",campeonato.getGran_premios())
+						) 
+				);
 	}
 
 }

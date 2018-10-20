@@ -13,11 +13,13 @@ import CRUDs.CRUD_Auto;
 import CRUDs.CRUD_ClasificacionCampeonato;
 import CRUDs.CRUD_ClasificacionCarrera;
 import CRUDs.CRUD_Escuderia;
+import CRUDs.CRUD_Piloto;
 import clases_negocio.Auto;
 import clases_negocio.ClasificacionCampeonato;
 import clases_negocio.ClasificacionCarrera;
 import clases_negocio.Escuderia;
 import clases_negocio.Motor;
+import clases_negocio.Piloto;
 
 @WebService(name="admin")
 public class Administrador {
@@ -26,6 +28,7 @@ public class Administrador {
 	CRUD_ClasificacionCarrera manejadorClasificacion_Carrera = new CRUD_ClasificacionCarrera();
 	CRUD_Auto manejadorAuto = new CRUD_Auto();
 	CRUD_Escuderia manejadorEscuderia= new CRUD_Escuderia();
+	CRUD_Piloto manejadorPiloto= new CRUD_Piloto();
 	
 	@WebMethod
 	public void registrarClasificacionCampeonato(
@@ -166,6 +169,45 @@ public class Administrador {
 	@WebMethod
 	public void eliminarEscuderia(@WebParam(name = "id") String id) {
 		manejadorEscuderia.escuderia_delete(id);
+	} 	
+	
+	@WebMethod
+	public void registrarPiloto(
+			@WebParam(name = "nombreCompleto")String nombreCompleto,
+			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
+			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
+			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
+			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado) {
+		Piloto piloto= new Piloto(nombreCompleto, fecha_Nacimiento, lugarNacimiento, foto_ref, cant_podiosTotales, cant_puntosTotales, cant_granPremiosIngresado);
+		manejadorPiloto.piloto_create(piloto);
+	}
+	
+	@WebMethod
+	public void actualizarPiloto(
+			@WebParam(name = "id") String id,
+			@WebParam(name = "nombreCompleto")String nombreCompleto,
+			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
+			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
+			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
+			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado){ 
+		Piloto piloto= manejadorPiloto.piloto_get(id);
+		piloto.setNombreCompleto(nombreCompleto);
+		piloto.setFecha_Nacimiento(fecha_Nacimiento);
+		piloto.setLugarNacimiento(lugarNacimiento);
+		piloto.setFoto_ref(foto_ref);
+		piloto.setCant_podiosTotales(cant_podiosTotales);
+		piloto.setCant_puntosTotales(cant_puntosTotales);
+		piloto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
+		manejadorPiloto.piloto_update(piloto);
+	}
+	
+	@WebMethod
+	public void eliminarPiloto(@WebParam(name = "id") String id) {
+		manejadorPiloto.piloto_delete(id);
 	} 	
 
 }

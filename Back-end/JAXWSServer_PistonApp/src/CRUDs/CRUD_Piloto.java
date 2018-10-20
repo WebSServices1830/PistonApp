@@ -22,6 +22,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
 import clases_mongoDB.ClienteMongo;
+import clases_negocio.Auto;
 import clases_negocio.Piloto;
 
 import org.bson.codecs.configuration.CodecRegistry;
@@ -42,7 +43,6 @@ import java.nio.file.Files;
 import java.nio.charset.StandardCharsets;
 import static com.mongodb.client.model.Filters.eq;
 
-@WebService(name="crud_piloto")
 public class CRUD_Piloto {
 	
 	MongoClient mongoClient = ClienteMongo.getInstancia();
@@ -57,35 +57,30 @@ public class CRUD_Piloto {
     // get a handle to the "people" collection
     MongoCollection<Piloto> collection = database.getCollection("pilotos", Piloto.class);
 	
-    @WebMethod
-	public void piloto_create(
-			@WebParam(name = "nombreCompleto")String nombreCompleto,
-			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
-			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
-			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
-			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
-			){
-			
-		Piloto piloto = new Piloto(nombreCompleto,fecha_Nacimiento,lugarNacimiento,foto_ref,cant_podiosTotales,cant_puntosTotales,cant_granPremiosIngresado);
-		collection.insertOne(piloto);
-	}
+    public void piloto_create(Piloto piloto) {
+    	collection.insertOne(piloto);
+    }
+    
+    public Piloto piloto_get(String id) {
+    	Piloto piloto = collection.find(eq("id", id)).first();
+    	return piloto;
+    }
+   	
+    public Piloto piloto_getByName(String nombreCompleto) {
+    	Piloto piloto = collection.find(eq("nombreCompleto", nombreCompleto)).first();
+    	return piloto;
+    }
+    
+    public boolean existePiloto(String nombreCompleto) {
+    	Piloto piloto = piloto_getByName(nombreCompleto);
+    	if(piloto == null) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
 	
-	@WebMethod
-	public Piloto piloto_read(@WebParam(name = "id")String id){
-		Piloto piloto = collection.find(eq("id", id)).first();
-		return piloto;
-	}
-	
-	@WebMethod
-	public Piloto piloto_readByName(@WebParam(name = "nombreCompleto")String nombreCompleto){
-		Piloto piloto = collection.find(eq("nombreCompleto", nombreCompleto)).first();
-		return piloto;
-	}
-	
-	@WebMethod
-	public List<Piloto> piloto_readAll() {
+	public List<Piloto> piloto_getAll() {
 		
 		final List<Piloto> pilotos = new ArrayList<>();
 		
@@ -101,52 +96,27 @@ public class CRUD_Piloto {
 		return pilotos;
 		
 	}
-	
 
-	
-	public void piloto_update_calificacion(
-			String id_str,
-			float calificacion
-			){
-		collection.updateOne(
-				eq("id_str", id_str) , 
-				combine(
-						set("calificacion",calificacion)
-						) 
-				);
-	}
-	
-	
-	@WebMethod
-	public void piloto_update(
-			@WebParam(name = "nombreCompleto")String nombreCompleto,
-			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
-			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
-			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
-			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
-			){
-		collection.updateOne(
-				eq("nombreCompleto", nombreCompleto) , 
-				combine(
-						set("nombreCompleto",nombreCompleto), 
-						set("fecha_Nacimiento",fecha_Nacimiento), 
-						set("lugarNacimiento",lugarNacimiento),
-						set("foto_ref",foto_ref),
-						set("cant_podiosTotales",cant_podiosTotales),
-						set("cant_puntosTotales",cant_granPremiosIngresado)
-						) 
-				);
-	}
-	
-	@WebMethod
-	public void piloto_delete(@WebParam(name = "id")String id){
+   	public void piloto_update(Piloto piloto){
+   		collection.updateOne(
+   				eq("id", piloto.getId()) , 
+   				combine(
+   						set("nombreCompleto",piloto.getNombreCompleto()), 
+   						set("fecha_Nacimiento",piloto.getFecha_Nacimiento()), 
+   						set("lugarNacimiento",piloto.getLugarNacimiento()),
+   						set("foto_ref",piloto.getFoto_ref()),
+   						set("cant_podiosTotales",piloto.getCant_podiosTotales()),
+   						set("cant_puntosTotales", piloto.getCant_puntosTotales()),
+   						set("cant_granPremiosIngresado", piloto.getCant_granPremiosIngresado())
+   						)
+   				);
+   	}
+   	
+	public void piloto_delete(String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
-	@WebMethod
-	public void piloto_deleteByName(@WebParam(name = "id")String nombreCompleto){
+	public void piloto_deleteByName(String nombreCompleto){
 		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
 		
 	}

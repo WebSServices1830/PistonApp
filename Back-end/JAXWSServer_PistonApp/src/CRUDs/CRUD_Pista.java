@@ -82,6 +82,16 @@ public class CRUD_Pista {
 		
 	}
 	
+	public void pista_update_calificacion(String pista, float calificacion){
+		collection.updateOne(
+				eq("id_str", pista) , 
+				combine(
+						set("calificacion",calificacion)
+						) 
+				);
+	}
+	
+	
 	public void pista_update(
 			String ciudad,
 			String foto_ref,

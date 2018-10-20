@@ -32,8 +32,8 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 import clases_mongoDB.ClienteMongo;
 import clases_negocio.Auto;
 import clases_negocio.Motor;
+import clases_negocio.Usuario;
 
-@WebService(name="crud_auto")
 public class CRUD_Auto {
 	
 	MongoClient mongoClient = ClienteMongo.getInstancia();
@@ -48,36 +48,30 @@ public class CRUD_Auto {
     // get a handle to the "people" collection
     MongoCollection<Auto> collection = database.getCollection("autos", Auto.class);
 	
-    @WebMethod
-	public void auto_create(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "pesoEnKg")double pesoEnKg,
-			@WebParam(name = "ruedas")String ruedas,
-			@WebParam(name = "combustible")String combustible,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "motor_referencia")String motor_referencia,
-			@WebParam(name = "motor_cilindraje")String motor_cilindraje,
-			@WebParam(name = "motor_configuracion")String motor_configuracion,
-			@WebParam(name = "motor_turbo")boolean motor_turbo){
-			
-		Auto auto = new Auto(nombre,pesoEnKg,ruedas,combustible,foto_ref, new Motor(motor_referencia, motor_cilindraje, motor_configuracion, motor_turbo));
-		collection.insertOne(auto);
-	}
+    public void auto_create(Auto auto) {
+    	collection.insertOne(auto);
+    }
+    
+    public Auto auto_get(String id) {
+    	Auto auto = collection.find(eq("id", id)).first();
+    	return auto;
+    }
+   	
+    public Auto auto_getByName(String nombre) {
+    	Auto auto = collection.find(eq("nombre", nombre)).first();
+    	return auto;
+    }
+    
+    public boolean existeAuto(String nombre) {
+    	Auto auto = auto_getByName(nombre);
+    	if(auto == null) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
 	
-    @WebMethod
-	public Auto auto_read(@WebParam(name = "id")String id){
-		Auto auto = collection.find(eq("id", id)).first();
-		return auto;
-	}
-	
-	@WebMethod
-	public Auto auto_readByName(@WebParam(name = "nombre")String nombre){
-		Auto auto= collection.find(eq("nombre", nombre)).first();
-		return auto;
-	}
-	
-	@WebMethod
-	public List<Auto> auto_readAll() {
+	public List<Auto> auto_getAll() {
 		
 		final List<Auto> autos = new ArrayList<>();
 		
@@ -93,42 +87,28 @@ public class CRUD_Auto {
 		return autos;
 		
 	}
-	
-	@WebMethod
-	public void auto_update(
-			@WebParam(name = "nombre")String nombre,
-			@WebParam(name = "pesoEnKg")double pesoEnKg,
-			@WebParam(name = "ruedas")String ruedas,
-			@WebParam(name = "combustible")String combustible,
-			@WebParam(name = "foto_ref")String foto_ref,
-			@WebParam(name = "motor_referencia")String motor_referencia,
-			@WebParam(name = "motor_cilindraje")String motor_cilindraje,
-			@WebParam(name = "motor_configuracion")String motor_configuracion,
-			@WebParam(name = "motor_turbo")boolean motor_turbo){
-		collection.updateOne(
-				eq("nombre", nombre) , 
-				combine(
-						set("nombre",nombre), 
-						set("pesoEnKg",pesoEnKg), 
-						set("ruedas",ruedas),
-						set("combustible",combustible),
-						set("foto_ref",foto_ref),
-						set("motor_referencia",motor_referencia),
-						set("motor_cilindraje",motor_cilindraje),
-						set("motor_configuracion",motor_configuracion),
-						set("motor_turbo",motor_turbo)
-						) 
-				);
-	}
-	
-	@WebMethod
-	public void auto_delete(@WebParam(name = "id")String id){
+
+   	public void auto_update(Auto auto){
+   		collection.updateOne(
+   				eq("id", auto.getId()) , 
+   				combine(
+   						set("nombre",auto.getNombre()), 
+   						set("pesoEnKg",auto.getPesoEnKg()), 
+   						set("ruedas",auto.getRuedas()),
+   						set("combustible",auto.getCombustible()),
+   						set("foto_ref",auto.getFoto_ref()),
+   						set("motor", auto.getMotor())
+   						)
+   				);
+   	}
+   	
+	public void auto_delete(String id){
 		collection.deleteOne(eq("id", id));
 	}
 	
-	@WebMethod
-	public void auto_deleteByName(@WebParam(name = "nombre")String nombre){
+	public void auto_deleteByName(String nombre){
 		collection.deleteOne(eq("nombre",nombre));
+		
 	}
 
 }

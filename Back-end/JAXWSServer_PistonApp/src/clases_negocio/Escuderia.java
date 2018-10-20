@@ -17,8 +17,8 @@ public class Escuderia {
 	private int cant_vecesEnPodio;
 	private int cant_TitulosCampeonato;
 	private String fotoEscudo_ref;
-	private List<ObjectId> autos;
-	private List<ObjectId> pilotos;
+	private List<String> autos;
+	private List<String> pilotos;
 	
 	public Escuderia(){
 		
@@ -35,8 +35,8 @@ public class Escuderia {
 		this.cant_vecesEnPodio = cant_vecesEnPodio;
 		this.cant_TitulosCampeonato = cant_TitulosCampeonato;
 		this.fotoEscudo_ref= fotoEscudo_ref;
-		this.autos = new ArrayList<ObjectId>();
-		this.pilotos = new ArrayList<ObjectId>();
+		this.autos = new ArrayList<String>();
+		this.pilotos = new ArrayList<String>();
 		this.id_str= this.id.toString();
 	}
 
@@ -112,19 +112,19 @@ public class Escuderia {
 		this.id = id;
 	}
 
-	public List<ObjectId> getAutos() {
+	public List<String> getAutos() {
 		return autos;
 	}
 
-	public void setAutos(List<ObjectId> autos) {
+	public void setAutos(List<String> autos) {
 		this.autos = autos;
 	}
 
-	public List<ObjectId> getPilotos() {
+	public List<String> getPilotos() {
 		return pilotos;
 	}
 
-	public void setPilotos(List<ObjectId> pilotos) {
+	public void setPilotos(List<String> pilotos) {
 		this.pilotos = pilotos;
 	}
 

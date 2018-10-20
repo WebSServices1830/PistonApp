@@ -3,6 +3,7 @@ package co.edu.javeriana.sebastianmesa.conexmongo.Login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.UserManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.twitter.sdk.android.core.models.User;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
@@ -29,6 +32,7 @@ import java.util.GregorianCalendar;
 
 import butterknife.ButterKnife;
 import co.edu.javeriana.sebastianmesa.conexmongo.MainActivity;
+import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
@@ -41,9 +45,6 @@ public class LoginActivityView extends AppCompatActivity {
         private TextView _signupLink, _emailText, _passwordText;
         private Button _loginButton;
         private WebMet_ValidarLogin wm_validarLogin = null;
-
-        Usuario usuario = null;
-
 
         private LinearLayout ll;
 
@@ -231,32 +232,17 @@ public class LoginActivityView extends AppCompatActivity {
                     boolean admin = Boolean.getBoolean(response.getPrimitivePropertyAsString("admin"));
                     double bolsillo = Double.parseDouble(response.getPrimitivePropertyAsString("bolsillo"));
 
-                    usuario = new Usuario();
+                    ManagerUsuario.usuario = new Usuario();
 
-                    usuario.setNombreUsuario(nombreUsuario);
-                    usuario.setContra(contrasenia);
-                    usuario.setFechaNacimiento(fechaNacimiento);
-                    usuario.setUrlFoto(urlFoto);
-                    usuario.setAdmin(admin);
-                    usuario.setBolsillo(bolsillo);
-
-                    Log.i("usuario",usuario.getNombreUsuario());
-                    Log.i("usuario",fechaNacimiento.toString());
-
-                    /*
-                    setNombreUsuario(response.getPrimitivePropertyAsString("nombreUsuario"));
-                    setContra(response.getPrimitivePropertyAsString("contra"));
-                    setEdad( Integer.parseInt(response.getPrimitivePropertyAsString("edad")));
-                    setDescripcion(response.getPrimitivePropertyAsString("descripcion"));
-                    setFoto(response.getPrimitivePropertyAsString("foto"));
-                    setAdmin(Boolean.parseBoolean (response.getPrimitivePropertyAsString("admin")));
-                    setBolsillo(Long.parseLong (response.getPrimitivePropertyAsString("bolsillo")));
-                    */
+                    ManagerUsuario.usuario.setNombreUsuario(nombreUsuario);
+                    ManagerUsuario.usuario.setContra(contrasenia);
+                    ManagerUsuario.usuario.setFechaNacimiento(fechaNacimiento);
+                    ManagerUsuario.usuario.setUrlFoto(urlFoto);
+                    ManagerUsuario.usuario.setAdmin(admin);
+                    ManagerUsuario.usuario.setBolsillo(bolsillo);
 
                     startActivity(new Intent(getBaseContext(), MainActivity.class));
                     return true;
-
-
                 }
 
 

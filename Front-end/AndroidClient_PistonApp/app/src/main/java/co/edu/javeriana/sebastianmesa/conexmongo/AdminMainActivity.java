@@ -16,7 +16,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 
-public class MainActivity extends Activity {
+public class AdminMainActivity extends Activity {
     private EditText nombre, edad, equipo;
     private Button agregarP, consultaP, accionesPiloto;
     private String resultado="";
@@ -26,7 +26,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
     }
 

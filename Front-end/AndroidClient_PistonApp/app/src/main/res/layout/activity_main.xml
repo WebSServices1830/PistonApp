@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".AdminMainActivity" >
 
 
     <Button
@@ -73,6 +73,15 @@
         android:layout_marginTop="134dp"
         android:onClick="logout"
         android:text="Cerrar Sesión" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logOut"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="17dp"
+        android:text="Cargar datos iniciales" />
 
 
 </RelativeLayout>

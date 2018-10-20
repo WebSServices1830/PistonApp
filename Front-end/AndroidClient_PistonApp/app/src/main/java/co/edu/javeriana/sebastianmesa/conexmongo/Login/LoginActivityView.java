@@ -3,7 +3,6 @@ package co.edu.javeriana.sebastianmesa.conexmongo.Login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.UserManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,10 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.twitter.sdk.android.core.models.User;
-
 import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
@@ -28,13 +24,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import butterknife.ButterKnife;
-import co.edu.javeriana.sebastianmesa.conexmongo.MainActivity;
+import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
+import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
 
 public class LoginActivityView extends AppCompatActivity {
@@ -122,7 +118,7 @@ public class LoginActivityView extends AppCompatActivity {
             if (requestCode == REQUEST_SIGNUP) {
                 if (resultCode == RESULT_OK) {
 
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
                     this.finish();
                 }
             }
@@ -130,7 +126,7 @@ public class LoginActivityView extends AppCompatActivity {
 
         @Override
         public void onBackPressed() {
-            // disable going back to the MainActivity
+            // disable going back to the AdminMainActivity
             moveTaskToBack(true);
         }
 
@@ -241,7 +237,12 @@ public class LoginActivityView extends AppCompatActivity {
                     ManagerUsuario.usuario.setAdmin(admin);
                     ManagerUsuario.usuario.setBolsillo(bolsillo);
 
-                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    if(ManagerUsuario.usuario.isAdmin()){
+                        startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
+                    }else{
+                        startActivity(new Intent(getBaseContext(), UserMenuActivity.class));
+                    }
+
                     return true;
                 }
 

@@ -12,11 +12,8 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
+import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
-import co.edu.javeriana.sebastianmesa.conexmongo.MainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class VerCampeonatoActivity extends AppCompatActivity {
@@ -80,7 +77,7 @@ public class VerCampeonatoActivity extends AppCompatActivity {
                     Log.i("Login", ""+loginValido);
 
                     if(loginValido){
-                        startActivity(new Intent(getBaseContext(), MainActivity.class));
+                        startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
                         return true;
 
                     }else{

@@ -14,12 +14,15 @@ import CRUDs.CRUD_ClasificacionCampeonato;
 import CRUDs.CRUD_ClasificacionCarrera;
 import CRUDs.CRUD_Escuderia;
 import CRUDs.CRUD_Piloto;
+import CRUDs.CRUD_Pista;
 import clases_negocio.Auto;
 import clases_negocio.ClasificacionCampeonato;
 import clases_negocio.ClasificacionCarrera;
 import clases_negocio.Escuderia;
 import clases_negocio.Motor;
 import clases_negocio.Piloto;
+import clases_negocio.Pista;
+import clases_negocio.Record;
 
 @WebService(name="admin")
 public class Administrador {
@@ -29,6 +32,7 @@ public class Administrador {
 	CRUD_Auto manejadorAuto = new CRUD_Auto();
 	CRUD_Escuderia manejadorEscuderia= new CRUD_Escuderia();
 	CRUD_Piloto manejadorPiloto= new CRUD_Piloto();
+	CRUD_Pista manejadorPista= new CRUD_Pista();
 	
 	@WebMethod
 	public void registrarClasificacionCampeonato(
@@ -209,5 +213,51 @@ public class Administrador {
 	public void eliminarPiloto(@WebParam(name = "id") String id) {
 		manejadorPiloto.piloto_delete(id);
 	} 	
+	
+	@WebMethod
+	public void registrarPista(
+			@WebParam(name = "ciudad")String ciudad,
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "nombreUltimoGanador")String nombreUltimoGanador,
+			@WebParam(name = "distanciaCarrera_km")float distanciaCarrera_km,
+			@WebParam(name = "longitudCircuito_km")float longitudCircuito_km,
+			@WebParam(name = "recordVuelta_tiempo")Date recordVuelta_tiempo,
+			@WebParam(name = "recordVuelta_piloto")String recordVuelta_piloto,
+			@WebParam(name = "recordVuelta_anio")int recordVuelta_anio,
+			@WebParam(name = "comentarios")List<String> comentarios,
+			@WebParam(name = "calificacion")float calificacion) {
+		Record record= new Record(recordVuelta_tiempo, recordVuelta_piloto, recordVuelta_anio);
+		Pista pista= new Pista(ciudad, foto_ref, nombreUltimoGanador, distanciaCarrera_km, longitudCircuito_km, record);
+		manejadorPista.pista_create(pista);
+	}
+	
+	@WebMethod
+	public void actualizarPista(
+			@WebParam(name = "id") String id,
+			@WebParam(name = "ciudad")String ciudad,
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "nombreUltimoGanador")String nombreUltimoGanador,
+			@WebParam(name = "distanciaCarrera_km")float distanciaCarrera_km,
+			@WebParam(name = "longitudCircuito_km")float longitudCircuito_km,
+			@WebParam(name = "recordVuelta_tiempo")Date recordVuelta_tiempo,
+			@WebParam(name = "recordVuelta_piloto")String recordVuelta_piloto,
+			@WebParam(name = "recordVuelta_anio")int recordVuelta_anio,
+			@WebParam(name = "comentarios")List<String> comentarios){ 
+		Pista pista= manejadorPista.pista_get(id);
+		pista.setCiudad(ciudad);
+		pista.setFoto_ref(foto_ref);
+		pista.setNombreUltimoGanador(nombreUltimoGanador);
+		pista.setDistanciaCarrera_km(distanciaCarrera_km);
+		pista.setLongitudCircuito_km(longitudCircuito_km);
+		Record record= new Record(recordVuelta_tiempo, recordVuelta_piloto, recordVuelta_anio);
+		pista.setRecord(record);
+		pista.setComentarios(comentarios);
+		manejadorPista.pista_update(pista);
+	}
+	
+	@WebMethod
+	public void eliminarPista(@WebParam(name = "id") String id) {
+		manejadorPista.pista_delete(id);
+	}
 
 }

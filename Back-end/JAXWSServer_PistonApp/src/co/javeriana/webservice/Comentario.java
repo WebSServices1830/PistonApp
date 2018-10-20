@@ -76,7 +76,7 @@ public class Comentario {
 		
 	}
 	public List <Pista>obtenerPrimerasCincoPistas() {
-		List<Pista> todos = manejadorPista.pista_readAll();
+		List<Pista> todos = manejadorPista.pista_getAll();
 		Collections.sort(todos, new Comparator<Pista>() {
 
 		    public int compare(Pista p1, Pista p2) {

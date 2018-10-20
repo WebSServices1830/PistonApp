@@ -9,14 +9,21 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+import CRUDs.CRUD_Auto;
 import CRUDs.CRUD_Campeonato;
 import CRUDs.CRUD_ClasificacionCampeonato;
+import CRUDs.CRUD_Escuderia;
 import CRUDs.CRUD_GranPremio;
+import CRUDs.CRUD_Piloto;
 import CRUDs.CRUD_Pista;
+import CRUDs.CRUD_Usuario;
 import clases_mongoDB.ManejadorImagenes;
+import clases_negocio.Auto;
 import clases_negocio.Campeonato;
 import clases_negocio.ClasificacionCampeonato;
+import clases_negocio.Escuderia;
 import clases_negocio.GranPremio;
+import clases_negocio.Piloto;
 import clases_negocio.Pista;
 import clases_negocio.Record;
 
@@ -26,6 +33,9 @@ public class InformacionCampeonato {
 	CRUD_Campeonato manejadorCampeonato = new CRUD_Campeonato();
 	CRUD_GranPremio manejadorGranPremio = new CRUD_GranPremio();
 	CRUD_Pista manejadorPista = new CRUD_Pista();
+	CRUD_Piloto manejadorPiloto = new CRUD_Piloto();
+	CRUD_Escuderia manejadorEscuderia = new CRUD_Escuderia();
+	CRUD_Auto manejadorAuto = new CRUD_Auto();
 	CRUD_ClasificacionCampeonato manejadorClasificacion_Campeonato = new CRUD_ClasificacionCampeonato();
 	
 	@WebMethod
@@ -79,6 +89,26 @@ public class InformacionCampeonato {
 	@WebMethod
 	public List<GranPremio> carrerasOrdenadoPorFecha(){
 		return manejadorGranPremio.grandesPremios_X_Fecha();
+	}
+	
+	@WebMethod
+	public Escuderia verEscuderia(String id){
+		return manejadorEscuderia.escuderia_get(id);
+	}
+	
+	@WebMethod
+	public Piloto verPiloto(String id){
+		return manejadorPiloto.piloto_get(id);
+	}
+	
+	@WebMethod
+	public Pista verPista(String id){
+		return manejadorPista.pista_get(id);
+	}
+	
+	@WebMethod
+	public Auto verAuto(String id){
+		return manejadorAuto.auto_get(id);
 	}
 	
 }

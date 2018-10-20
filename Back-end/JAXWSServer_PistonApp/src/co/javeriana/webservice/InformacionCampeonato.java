@@ -97,7 +97,7 @@ public class InformacionCampeonato {
 				Record record_2 = new Record(recordVuelta_2.getTime(),"Pedro de la Rosa",2005);
 				String fotoRef_2 = null;
 				try {
-					fotoRef_2 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/BahrainGrandPrix.png", "Bahrain");
+					fotoRef_2 = ManejadorImagenes.saveImageIntoMongoDB("fotos/BahrainGrandPrix.png", "Bahrain");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -129,7 +129,7 @@ public class InformacionCampeonato {
 				Record record_3 = new Record(recordVuelta_3.getTime(),"Michael Schumacher",2004);
 				String fotoRef_3 = null;
 				try {
-					fotoRef_3 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/ShangaiGrandPrix.png", "Shangai");
+					fotoRef_3 = ManejadorImagenes.saveImageIntoMongoDB("fotos/ShangaiGrandPrix.png", "Shangai");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -161,7 +161,7 @@ public class InformacionCampeonato {
 				Record record_4 = new Record(recordVuelta_4.getTime(),"Sebastian Vettel",2017);
 				String fotoRef_4 = null;
 				try {
-					fotoRef_4 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/AzerbaijanGrandPrix.png", "Azerbaijan");
+					fotoRef_4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/AzerbaijanGrandPrix.png", "Azerbaijan");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -193,7 +193,7 @@ public class InformacionCampeonato {
 				Record record_5 = new Record(recordVuelta_5.getTime(),"Daniel Ricciardo",2018);
 				String fotoRef_5 = null;
 				try {
-					fotoRef_5 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/EspanaGrandPremio.png", "Barcelona");
+					fotoRef_5 = ManejadorImagenes.saveImageIntoMongoDB("fotos/EspanaGrandPremio.png", "Barcelona");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -225,7 +225,7 @@ public class InformacionCampeonato {
 				Record record_6 = new Record(recordVuelta_6.getTime(),"Max Verstappen",2018);
 				String fotoRef_6 = null;
 				try {
-					fotoRef_6 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/MontecarloGrandPrix.png", "Monaco");
+					fotoRef_6 = ManejadorImagenes.saveImageIntoMongoDB("fotos/MontecarloGrandPrix.png", "Monaco");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -257,7 +257,7 @@ public class InformacionCampeonato {
 				Record record_7 = new Record(recordVuelta_7.getTime(),"Rubens Barrichello",2004);
 				String fotoRef_7 = null;
 				try {
-					fotoRef_7 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/CanadaGrandPrix.png", "Canada");
+					fotoRef_7 = ManejadorImagenes.saveImageIntoMongoDB("fotos/CanadaGrandPrix.png", "Canada");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -289,7 +289,7 @@ public class InformacionCampeonato {
 				Record record_8 = new Record(recordVuelta_8.getTime(),"Valtteri Bottas",2018);
 				String fotoRef_8 = null;
 				try {
-					fotoRef_8 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/FranceGrandPrix.png", "France");
+					fotoRef_8 = ManejadorImagenes.saveImageIntoMongoDB("fotos/FranceGrandPrix.png", "France");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -321,7 +321,7 @@ public class InformacionCampeonato {
 				Record record_9 = new Record(recordVuelta_9.getTime(),"Kimi Räikkönen",2018);
 				String fotoRef_9 = null;
 				try {
-					fotoRef_9 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/AustriaGrandPrix.png", "Austria");
+					fotoRef_9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/AustriaGrandPrix.png", "Austria");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -353,7 +353,7 @@ public class InformacionCampeonato {
 				Record record_10 = new Record(recordVuelta_10.getTime(),"Lewis Hamilton",2017);
 				String fotoRef_10 = null;
 				try {
-					fotoRef_10 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/GranBretaniaGrandPremio.png", "Gran Bretania");
+					fotoRef_10 = ManejadorImagenes.saveImageIntoMongoDB("fotos/GranBretaniaGrandPrix.png", "Gran Bretania");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -385,7 +385,7 @@ public class InformacionCampeonato {
 				Record record_11 = new Record(recordVuelta_11.getTime(),"Kimi Räikkönen",2004);
 				String fotoRef_11 = null;
 				try {
-					fotoRef_11 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/GermanyGrandPrix.png", "Germany");
+					fotoRef_11 = ManejadorImagenes.saveImageIntoMongoDB("fotos/GermanyGrandPrix.png", "Germany");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -417,7 +417,7 @@ public class InformacionCampeonato {
 				Record record_12 = new Record(recordVuelta_12.getTime(),"Michael Schumacher",2004);
 				String fotoRef_12 = null;
 				try {
-					fotoRef_12 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/HungaryGrandPrix.png", "Hungary");
+					fotoRef_12 = ManejadorImagenes.saveImageIntoMongoDB("fotos/HungaryGrandPrix.png", "Hungary");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -448,7 +448,7 @@ public class InformacionCampeonato {
 				Record record_13 = new Record(recordVuelta_13.getTime(),"Valtteri Bottas",2018);
 				String fotoRef_13 = null;
 				try {
-					fotoRef_13 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/BelgianGrandPrix.png", "Belgian");
+					fotoRef_13 = ManejadorImagenes.saveImageIntoMongoDB("fotos/BelgianGrandPrix.png", "Belgian");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -480,7 +480,7 @@ public class InformacionCampeonato {
 				Record record_14 = new Record(recordVuelta_14.getTime(),"Rubens Barrichello",2004);
 				String fotoRef_14 = null;
 				try {
-					fotoRef_14 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/ItalyGrandPrix.png", "Italy");
+					fotoRef_14 = ManejadorImagenes.saveImageIntoMongoDB("fotos/ItalyGrandPrix.png", "Italy");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -511,7 +511,7 @@ public class InformacionCampeonato {
 				Record record_15 = new Record(recordVuelta_15.getTime(),"Kevin Magnussen",2018);
 				String fotoRef_15 = null;
 				try {
-					fotoRef_15 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/SingaporeGrandPrix.png", "Singapore");
+					fotoRef_15 = ManejadorImagenes.saveImageIntoMongoDB("fotos/SingaporeGrandPrix.png", "Singapore");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -542,7 +542,7 @@ public class InformacionCampeonato {
 				Record record_16 = new Record(recordVuelta_16.getTime(),"Valtteri Bottas",2018);
 				String fotoRef_16 = null;
 				try {
-					fotoRef_16 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/RussiaGrandPrix.png", "Russia");
+					fotoRef_16 = ManejadorImagenes.saveImageIntoMongoDB("fotos/RussiaGrandPrix.png", "Russia");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -555,7 +555,7 @@ public class InformacionCampeonato {
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 
-//GRAN PREMIO 17
+				//GRAN PREMIO 17
 				
 				GregorianCalendar fechaGranPremio_17 = new GregorianCalendar(2018,9,07);
 				
@@ -574,7 +574,7 @@ public class InformacionCampeonato {
 				Record record_17 = new Record(recordVuelta_17.getTime(),"Kimi Räikkönen",2005);
 				String fotoRef_17 = null;
 				try {
-					fotoRef_17 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/JapanGrandPrix.png", "Japan");
+					fotoRef_17 = ManejadorImagenes.saveImageIntoMongoDB("fotos/JapanGrandPrix.png", "Japan");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

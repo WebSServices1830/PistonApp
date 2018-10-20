@@ -65,7 +65,7 @@ public class InformacionCampeonato {
 		Record record_1 = new Record(recordVuelta_1.getTime(),"Michael Schumacher",2004);
 		String fotoRef_1 = null;
 		try {
-			fotoRef_1 = ManejadorImagenes.saveImageIntoMongoDB("/fotos/australiaGrandPrix.png", "Melbourne");
+			fotoRef_1 = ManejadorImagenes.saveImageIntoMongoDB("fotos/australiaGrandPrix.png", "Melbourne");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

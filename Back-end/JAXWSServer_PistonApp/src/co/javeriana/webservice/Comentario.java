@@ -1,5 +1,8 @@
 package co.javeriana.webservice;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -13,6 +16,9 @@ import CRUDs.CRUD_Piloto;
 import CRUDs.CRUD_Pista;
 import clases_negocio.ComentarioPiloto;
 import clases_negocio.ComentarioPista;
+import clases_negocio.GranPremio;
+import clases_negocio.Piloto;
+import clases_negocio.Pista;
 
 @WebService(name="comentario")
 public class Comentario {
@@ -54,6 +60,31 @@ public class Comentario {
 				ncalificacion=ncalificacion+comentarioPista.getCalificacion();
 		}
 		manejadorPista.pista_update_calificacion(idPista,(ncalificacion/comentarios.size()));
+		
+	}
+	@WebMethod
+	public List <Piloto>obtenerPrimerosCincoPilotos() {
+		List<Piloto> todos = manejadorPiloto.piloto_readAll();
+		Collections.sort(todos, new Comparator<Piloto>() {
+
+		    public int compare(Piloto p1, Piloto p2) {
+		         return (int) ((int) p1.getCalificacion()-p2.getCalificacion());
+		    }
+		});
+		List<Piloto> mejores = todos.subList(0, 4);
+		return mejores;
+		
+	}
+	public List <Pista>obtenerPrimerasCincoPistas() {
+		List<Pista> todos = manejadorPista.pista_readAll();
+		Collections.sort(todos, new Comparator<Pista>() {
+
+		    public int compare(Pista p1, Pista p2) {
+		         return (int) ((int) p1.getCalificacion()-p2.getCalificacion());
+		    }
+		});
+		List<Pista> mejores = todos.subList(0, 4);
+		return mejores;
 		
 	}
 

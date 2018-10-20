@@ -120,5 +120,14 @@ public class CRUD_Piloto {
 		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
 		
 	}
+	
+	public void piloto_update_calificacion(String id, float calificacion){
+   		collection.updateOne(
+   				eq("id", id) , 
+   				combine(
+   						set("calificacion",calificacion)
+   						)
+   				);
+   	}
 
 }

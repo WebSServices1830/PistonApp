@@ -64,7 +64,7 @@ public class Comentario {
 	}
 	@WebMethod
 	public List <Piloto>obtenerPrimerosCincoPilotos() {
-		List<Piloto> todos = manejadorPiloto.piloto_readAll();
+		List<Piloto> todos = manejadorPiloto.piloto_getAll();
 		Collections.sort(todos, new Comparator<Piloto>() {
 
 		    public int compare(Piloto p1, Piloto p2) {

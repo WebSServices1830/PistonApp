@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
@@ -22,9 +23,13 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.ButterKnife;
 import co.edu.javeriana.sebastianmesa.conexmongo.MainActivity;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
 
@@ -36,6 +41,8 @@ public class LoginActivityView extends AppCompatActivity {
         private TextView _signupLink, _emailText, _passwordText;
         private Button _loginButton;
         private WebMet_ValidarLogin wm_validarLogin = null;
+
+        Usuario usuario = null;
 
 
         private LinearLayout ll;
@@ -213,11 +220,28 @@ public class LoginActivityView extends AppCompatActivity {
                 //campoRespuesta.setText("");
 
                 ht.call(SOAP_ACTION, envelope);
-                Object response = envelope.getResponse();
+                SoapObject response = (SoapObject) envelope.getResponse();
 
                 if (response != null) {
-                    String loginValido_string = response.toString();
-                    boolean loginValido = Boolean.parseBoolean(loginValido_string);
+
+                    String nombreUsuario = response.getPrimitivePropertyAsString("nombreUsuario");
+                    String contrasenia = response.getPrimitivePropertyAsString("contra");
+                    Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(response.getPrimitivePropertyAsString("fechaNacimiento"));
+                    String urlFoto = response.getPrimitivePropertyAsString("urlFoto");
+                    boolean admin = Boolean.getBoolean(response.getPrimitivePropertyAsString("admin"));
+                    double bolsillo = Double.parseDouble(response.getPrimitivePropertyAsString("bolsillo"));
+
+                    usuario = new Usuario();
+
+                    usuario.setNombreUsuario(nombreUsuario);
+                    usuario.setContra(contrasenia);
+                    usuario.setFechaNacimiento(fechaNacimiento);
+                    usuario.setUrlFoto(urlFoto);
+                    usuario.setAdmin(admin);
+                    usuario.setBolsillo(bolsillo);
+
+                    Log.i("usuario",usuario.getNombreUsuario());
+                    Log.i("usuario",fechaNacimiento.toString());
 
                     /*
                     setNombreUsuario(response.getPrimitivePropertyAsString("nombreUsuario"));
@@ -229,15 +253,9 @@ public class LoginActivityView extends AppCompatActivity {
                     setBolsillo(Long.parseLong (response.getPrimitivePropertyAsString("bolsillo")));
                     */
 
-                    Log.i("Login", ""+loginValido);
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    return true;
 
-                    if(loginValido){
-                        startActivity(new Intent(getBaseContext(), MainActivity.class));
-                        return true;
-
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Revise su usuario/contraseña", Toast.LENGTH_SHORT).show();
-                    }
 
                 }
 

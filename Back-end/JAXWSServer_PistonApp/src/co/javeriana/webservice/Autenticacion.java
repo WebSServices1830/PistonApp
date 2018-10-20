@@ -36,7 +36,7 @@ public class Autenticacion {
 	}
 	
 	@WebMethod
-	public boolean validarLogin(
+	public Usuario validarLogin(
 			@WebParam(name = "nombreUsuario") String nombreUsuario,
 			@WebParam(name = "contrasenia") String contrasenia) {
 		
@@ -44,11 +44,11 @@ public class Autenticacion {
 		
 		if(usuario != null) {
 			if(usuario.getContra().equals(contrasenia)) {
-				return true;
+				return usuario;
 			}
 		}
 		
-		return false;
+		return null;
 		
 	}
 

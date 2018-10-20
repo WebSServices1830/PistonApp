@@ -1,4 +1,4 @@
-package clases_negocio;
+package co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio;
 
 import java.util.Date;
 

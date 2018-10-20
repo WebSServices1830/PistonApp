@@ -41,6 +41,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
@@ -195,10 +196,12 @@ public class CrearUsuarioView extends AppCompatActivity {
                 Log.i("Error: ",e.getMessage());
             }
 
+            GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
+
             if(contra_hash != null && urlFoto != null){
                 request.addProperty("nombreUsuario", et_nombreUsuario.getText().toString());
                 request.addProperty("contrasenia", contra_hash);
-                request.addProperty("fechaNacimiento", calendario.getTime());
+                request.addProperty("fechaNacimiento", fechaNacimiento.getTime());
                 request.addProperty("urlFoto", urlFoto);
                 request.addProperty("admin", checkBox_admin.isChecked());
             }else{

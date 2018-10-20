@@ -62,7 +62,7 @@ public class CRUD_Piloto {
     }
     
     public Piloto piloto_get(String id) {
-    	Piloto piloto = collection.find(eq("id", id)).first();
+    	Piloto piloto = collection.find(eq("id_str", id)).first();
     	return piloto;
     }
    	
@@ -113,7 +113,7 @@ public class CRUD_Piloto {
    	}
    	
 	public void piloto_delete(String id){
-		collection.deleteOne(eq("id", id));
+		collection.deleteOne(eq("id_str", id));
 	}
 	
 	public void piloto_deleteByName(String nombreCompleto){
@@ -123,7 +123,7 @@ public class CRUD_Piloto {
 	
 	public void piloto_update_calificacion(String id, float calificacion){
    		collection.updateOne(
-   				eq("id", id) , 
+   				eq("id_str", id) , 
    				combine(
    						set("calificacion",calificacion)
    						)

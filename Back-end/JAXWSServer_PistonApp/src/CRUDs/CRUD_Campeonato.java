@@ -53,7 +53,7 @@ public class CRUD_Campeonato {
 	}
 	
 	public Campeonato campeonato_read(String id){
-		Campeonato campeonato = collection.find(eq("id", id)).first();
+		Campeonato campeonato = collection.find(eq("id_str", id)).first();
 		return campeonato;
 	}
 	
@@ -109,7 +109,7 @@ public class CRUD_Campeonato {
 		campeonato.getGran_premios().add(id_granPremio);
 		
 		collection.updateOne(
-				eq("id", id_campeonato) , 
+				eq("id_str", id_campeonato) , 
 				combine(
 						set("gran_premios",campeonato.getGran_premios())
 						) 

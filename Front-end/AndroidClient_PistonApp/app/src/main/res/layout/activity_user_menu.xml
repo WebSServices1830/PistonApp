@@ -7,7 +7,7 @@
     tools:context=".UserMenuActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_cargarDatos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

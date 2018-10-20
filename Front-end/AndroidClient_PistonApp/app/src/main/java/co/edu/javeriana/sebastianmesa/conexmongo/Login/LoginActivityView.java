@@ -170,8 +170,6 @@ public class LoginActivityView extends AppCompatActivity {
 
     private class WebMet_ValidarLogin extends AsyncTask<Void, Void, Boolean>  {
 
-
-
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.

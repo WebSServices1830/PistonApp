@@ -711,7 +711,127 @@ public class InformacionCampeonato {
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 		
-				
+				//PILOTO 1
+				GregorianCalendar fechaNacimiento_1 = new GregorianCalendar(1985,0,07);
+				String fotoRefP1 = null;
+				try {
+					fotoRefP1 = ManejadorImagenes.saveImageIntoMongoDB("fotos/LewisHamilton.jpg", "Lewis Hamilton");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto1= new Piloto("Lewis Hamilton",fechaNacimiento_1.getTime(),"Stevenage, England",fotoRefP1,131,2941,225);
+	
+				//PILOTO 2
+				GregorianCalendar fechaNacimiento_2 = new GregorianCalendar(1987,06,03);
+				String fotoRefP2 = null;
+				try {
+					fotoRefP2 = ManejadorImagenes.saveImageIntoMongoDB("fotos/sebastian.jpg", "Sebatian Vettel");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto2= new Piloto("Sebastian Vettel",fechaNacimiento_2.getTime(),"Heppenheim, Germany",fotoRefP2,109,2689,216);
+	
+				//PILOTO 3
+				GregorianCalendar fechaNacimiento_3 = new GregorianCalendar(1989,07,28);
+				String fotoRefP3 = null;
+				try {
+					fotoRefP3 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Valtteri Bottas.jpg", "Valtteri Bottas");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto3= new Piloto("Valtteri Bottas",fechaNacimiento_3.getTime(),"Nastola, Finland",fotoRefP3,30,923,115);
+	
+				//PILOTO 4
+				GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979,9,17);
+				String fotoRefP4 = null;
+				try {
+					fotoRefP4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kimi Räikkönen.jpg", "Kimi Räikkönen");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto4= new Piloto("Kimi Räikkönen",fechaNacimiento_4.getTime(),"Espoo, Finland",fotoRefP4,100,1761,290);
+	
+				//PILOTO 5
+				GregorianCalendar fechaNacimiento_5 = new GregorianCalendar(1997,8,30);
+				String fotoRefP5 = null;
+				try {
+					fotoRefP5 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Max Verstappen.jpg", "Max Verstappen");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto5= new Piloto("Max Verstappen",fechaNacimiento_5.getTime(),"Hasselt, Belgium",fotoRefP5,18,594,77);
+	
+	
+				//PILOTO 6
+				GregorianCalendar fechaNacimiento_6 = new GregorianCalendar(1989,6,01);
+				String fotoRefP6 = null;
+				try {
+					fotoRefP6 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Daniel Ricciardo.jpg", "Daniel Ricciardo");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto6= new Piloto("Daniel Ricciardo",fechaNacimiento_6.getTime(),"Perth, Australia",fotoRefP6,29,962,146);
+	
+				//PILOTO 7
+				GregorianCalendar fechaNacimiento_7 = new GregorianCalendar(1990,0,26);
+				String fotoRefP7 = null;
+				try {
+					fotoRefP7 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sergio Perez.jpg", "Sergio Perez");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto7= new Piloto("Sergio Perez",fechaNacimiento_7.getTime(),"Guadalajara, Mexico",fotoRefP7,8,520,153);
+	
+	
+				//PILOTO 8
+				GregorianCalendar fechaNacimiento_8 = new GregorianCalendar(1992,9,5);
+				String fotoRefP8 = null;
+				try {
+					fotoRefP8 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kevin Magnussen.jpg", "Kevin Magnussen");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto8= new Piloto("Kevin Magnussen",fechaNacimiento_8.getTime(),"Roskilde, Denmark",fotoRefP8,1,134,78);
+	
+	
+				//PILOTO 9
+				GregorianCalendar fechaNacimiento_9 = new GregorianCalendar(1987,7,19);
+				String fotoRefP9 = null;
+				try {
+					fotoRefP9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Nico Hulkenberg.jpg", "Nico Hulkenberg");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto9= new Piloto("Nico Hulkenberg",fechaNacimiento_9.getTime(),"Emmerich am Rhein, Germany",fotoRefP9,0,458,154);
+	
+	
+				//PILOTO 10
+				GregorianCalendar fechaNacimiento_10 = new GregorianCalendar(1981,6,29);
+				String fotoRefP10 = null;
+				try {
+					fotoRefP10 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Fernando Alonso.jpg", "Fernando Alonso");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Piloto piloto10= new Piloto("Fernando Alonso",fechaNacimiento_10.getTime(),"Oviedo, Spain",fotoRefP10,97,1899,310);
+	
+	
+
+
+
+
+	
+	
 	}
 	
 	@WebMethod

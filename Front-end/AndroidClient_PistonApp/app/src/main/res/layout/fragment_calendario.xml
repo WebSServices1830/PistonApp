@@ -6,8 +6,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Calendario"
         android:gravity="center"
+        android:text="Calendario"
         android:textSize="22dp" />
+
+    <Button
+        android:id="@+id/button_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Test Gran Premios" />
 
 </FrameLayout>

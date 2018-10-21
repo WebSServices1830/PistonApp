@@ -38,11 +38,11 @@ public class VerCampeonatoActivity extends AppCompatActivity {
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
             final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
-            final String METHOD_NAME = "carrerasOrdenadoPorFecha";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/carrerasOrdenadoPorFecha";
+            final String METHOD_NAME = "granPremiosOrdenadoPorFecha";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/granPremiosOrdenadoPorFecha";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-            
+
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
 
@@ -52,7 +52,10 @@ public class VerCampeonatoActivity extends AppCompatActivity {
 
                 KvmSerializable ks = (KvmSerializable)envelope.bodyIn;
                 for(int i = 0; i < ks.getPropertyCount(); ++i){
-                    String granPremio = ks.getProperty(i).toString();
+                    SoapObject granPremio = (SoapObject) ks.getProperty(i);
+
+                    String id_string = granPremio.getPropertyAsString("id_str");
+                    Log.i("Gran premio",id_string);
                 }
             }
             catch (Exception e)

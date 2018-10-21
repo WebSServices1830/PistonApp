@@ -38,7 +38,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     // get a handle to the "people" collection
     MongoCollection<Apuesta> collection = database.getCollection("apuestas", Apuesta.class);
     
-    public Apuesta apuesta_create(String usuario, String piloto, String granpremio, long monto) {
+    public Apuesta apuesta_create(String usuario, String piloto, String granpremio, double monto) {
     	return new Apuesta(usuario,  piloto,  granpremio,  monto);
     }
 	

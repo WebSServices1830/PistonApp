@@ -8,19 +8,19 @@ public class Apuesta {
 	private String usuario;
 	private String piloto;
 	private String granpremio;
-	private long monto;
+	private double monto;
 	
 	
 	
 	
-	public Apuesta(String usuario, String piloto, String granpremio, long monto) {
+	public Apuesta(String usuario, String piloto, String granpremio, double monto2) {
 		super();
 		this.id= new ObjectId();
 		this.str_id = id.toString();
 		this.usuario = usuario;
 		this.piloto = piloto;
 		this.granpremio = granpremio;
-		this.monto = monto;
+		this.monto = monto2;
 	}
 	public String getStr_id() {
 		return str_id;
@@ -52,10 +52,10 @@ public class Apuesta {
 	public void setGranpremio(String granpremio) {
 		this.granpremio = granpremio;
 	}
-	public long getMonto() {
+	public double getMonto() {
 		return monto;
 	}
-	public void setMonto(long monto) {
+	public void setMonto(double monto) {
 		this.monto = monto;
 	}
 	

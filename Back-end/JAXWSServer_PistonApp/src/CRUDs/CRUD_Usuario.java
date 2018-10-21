@@ -96,6 +96,17 @@ public class CRUD_Usuario {
    						)
    				);
    	}
+  
+
+   	public void usuario_update_bolsillo(String usuario, double valor){
+   		collection.updateOne(
+   				eq("id_str", usuario) , 
+   				combine(
+  
+   						set("bolsillo", valor)
+   						)
+   				);
+   	}
    	
 	public void usuario_delete(String id){
 		collection.deleteOne(eq("id", id));

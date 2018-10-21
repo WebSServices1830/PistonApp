@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
@@ -41,52 +42,18 @@ public class VerCampeonatoActivity extends AppCompatActivity {
             final String SOAP_ACTION = "http://webservice.javeriana.co/carrerasOrdenadoPorFecha";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            /*
-            request.addProperty("nombreUsuario", user);
-            request.addProperty("contrasenia", contra_hash);
-            */
-
-
+            
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
 
             HttpTransportSE ht = new HttpTransportSE(URL);
             try {
-
-                //campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                //campoRespuesta.setText("");
-
                 ht.call(SOAP_ACTION, envelope);
-                Object response = envelope.getResponse();
 
-                if (response != null) {
-                    String loginValido_string = response.toString();
-                    boolean loginValido = Boolean.parseBoolean(loginValido_string);
-
-                    /*
-                    setNombreUsuario(response.getPrimitivePropertyAsString("nombreUsuario"));
-                    setContra(response.getPrimitivePropertyAsString("contra"));
-                    setEdad( Integer.parseInt(response.getPrimitivePropertyAsString("edad")));
-                    setDescripcion(response.getPrimitivePropertyAsString("descripcion"));
-                    setFoto(response.getPrimitivePropertyAsString("foto"));
-                    setAdmin(Boolean.parseBoolean (response.getPrimitivePropertyAsString("admin")));
-                    setBolsillo(Long.parseLong (response.getPrimitivePropertyAsString("bolsillo")));
-                    */
-
-                    Log.i("Login", ""+loginValido);
-
-                    if(loginValido){
-                        startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
-                        return true;
-
-                    }else{
-                        Toast.makeText(getApplicationContext(), "Revise su usuario/contraseña", Toast.LENGTH_SHORT).show();
-                    }
-
+                KvmSerializable ks = (KvmSerializable)envelope.bodyIn;
+                for(int i = 0; i < ks.getPropertyCount(); ++i){
+                    String granPremio = ks.getProperty(i).toString();
                 }
-
-
             }
             catch (Exception e)
             {

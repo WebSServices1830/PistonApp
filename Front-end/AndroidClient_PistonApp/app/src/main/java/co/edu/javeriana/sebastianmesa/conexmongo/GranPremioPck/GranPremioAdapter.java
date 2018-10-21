@@ -1,6 +1,7 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -18,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.GranPremio;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
@@ -57,9 +60,9 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
         return convertView;
     }
 
-    private class WebMet_verPista extends AsyncTask<String, Void, Void> {
+    private class WebMet_verPista extends AsyncTask<Void, Void, Boolean> {
         @Override
-        protected Void doInBackground(String... params) {
+        protected Boolean doInBackground(Void... voids) {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
@@ -83,17 +86,22 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
                 if (response != null) {
                     ciudad = response.getPrimitivePropertyAsString("ciudad");
                     granPremioPista.setText(ciudad);
+                    return true;
                 }
             } catch (Exception e) {
-                Log.i("Error: ", e.getMessage());
+                Log.i("Error", e.getMessage());
                 e.printStackTrace();
             }
-            return null;
+            return false;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            Log.i("Ciudad2",ciudad);
+        protected void onPostExecute(Boolean success) {
+            if(success==false){
+                Toast.makeText(getContext(),"Error", Toast.LENGTH_SHORT).show();
+            }
+            else{
+            }
         }
     }
 

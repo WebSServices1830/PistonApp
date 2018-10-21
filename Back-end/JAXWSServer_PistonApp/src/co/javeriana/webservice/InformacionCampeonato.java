@@ -58,9 +58,9 @@ public class InformacionCampeonato {
 		
 		//PISTA 1
 		GregorianCalendar recordVuelta_1 = new GregorianCalendar();
-		recordVuelta_1.set(Calendar.HOUR, 1);
-		recordVuelta_1.set(Calendar.MINUTE, 24);
-		recordVuelta_1.set(Calendar.SECOND, 0);
+	
+		recordVuelta_1.set(Calendar.MINUTE, 1);
+		recordVuelta_1.set(Calendar.SECOND, 24);
 		recordVuelta_1.set(Calendar.MILLISECOND, 125);
 		Record record_1 = new Record(recordVuelta_1.getTime(),"Michael Schumacher",2004);
 		String fotoRef_1 = null;
@@ -90,9 +90,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 2
 				GregorianCalendar recordVuelta_2 = new GregorianCalendar();
-				recordVuelta_2.set(Calendar.HOUR, 1);
-				recordVuelta_2.set(Calendar.MINUTE, 31);
-				recordVuelta_2.set(Calendar.SECOND, 0);
+
+				recordVuelta_2.set(Calendar.MINUTE, 1);
+				recordVuelta_2.set(Calendar.SECOND, 31);
 				recordVuelta_2.set(Calendar.MILLISECOND, 447);
 				Record record_2 = new Record(recordVuelta_2.getTime(),"Pedro de la Rosa",2005);
 				String fotoRef_2 = null;
@@ -122,9 +122,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 3
 				GregorianCalendar recordVuelta_3 = new GregorianCalendar();
-				recordVuelta_3.set(Calendar.HOUR, 1);
-				recordVuelta_3.set(Calendar.MINUTE, 32);
-				recordVuelta_3.set(Calendar.SECOND, 0);
+			
+				recordVuelta_3.set(Calendar.MINUTE, 1);
+				recordVuelta_3.set(Calendar.SECOND, 32);
 				recordVuelta_3.set(Calendar.MILLISECOND, 238);
 				Record record_3 = new Record(recordVuelta_3.getTime(),"Michael Schumacher",2004);
 				String fotoRef_3 = null;
@@ -154,9 +154,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 4
 				GregorianCalendar recordVuelta_4 = new GregorianCalendar();
-				recordVuelta_4.set(Calendar.HOUR, 1);
-				recordVuelta_4.set(Calendar.MINUTE, 43);
-				recordVuelta_4.set(Calendar.SECOND, 0);
+		
+				recordVuelta_4.set(Calendar.MINUTE, 1);
+				recordVuelta_4.set(Calendar.SECOND, 43);
 				recordVuelta_4.set(Calendar.MILLISECOND, 441);
 				Record record_4 = new Record(recordVuelta_4.getTime(),"Sebastian Vettel",2017);
 				String fotoRef_4 = null;
@@ -186,9 +186,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 5
 				GregorianCalendar recordVuelta_5 = new GregorianCalendar();
-				recordVuelta_5.set(Calendar.HOUR, 1);
-				recordVuelta_5.set(Calendar.MINUTE, 18);
-				recordVuelta_5.set(Calendar.SECOND, 0);
+
+				recordVuelta_5.set(Calendar.MINUTE, 1);
+				recordVuelta_5.set(Calendar.SECOND, 18);
 				recordVuelta_5.set(Calendar.MILLISECOND, 441);
 				Record record_5 = new Record(recordVuelta_5.getTime(),"Daniel Ricciardo",2018);
 				String fotoRef_5 = null;
@@ -218,9 +218,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 6
 				GregorianCalendar recordVuelta_6 = new GregorianCalendar();
-				recordVuelta_6.set(Calendar.HOUR, 1);
-				recordVuelta_6.set(Calendar.MINUTE, 14);
-				recordVuelta_6.set(Calendar.SECOND, 0);
+	
+				recordVuelta_6.set(Calendar.MINUTE, 1);
+				recordVuelta_6.set(Calendar.SECOND, 14);
 				recordVuelta_6.set(Calendar.MILLISECOND, 260);
 				Record record_6 = new Record(recordVuelta_6.getTime(),"Max Verstappen",2018);
 				String fotoRef_6 = null;
@@ -248,11 +248,11 @@ public class InformacionCampeonato {
 				mejorVuelta_7.set(Calendar.SECOND,31);
 				mejorVuelta_7.set(Calendar.MILLISECOND,377);
 				
-				//PISTA 2
+				//PISTA 7
 				GregorianCalendar recordVuelta_7 = new GregorianCalendar();
-				recordVuelta_7.set(Calendar.HOUR, 1);
-				recordVuelta_7.set(Calendar.MINUTE, 13);
-				recordVuelta_7.set(Calendar.SECOND, 0);
+		
+				recordVuelta_7.set(Calendar.MINUTE, 1);
+				recordVuelta_7.set(Calendar.SECOND, 13);
 				recordVuelta_7.set(Calendar.MILLISECOND, 622);
 				Record record_7 = new Record(recordVuelta_7.getTime(),"Rubens Barrichello",2004);
 				String fotoRef_7 = null;
@@ -282,9 +282,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 8
 				GregorianCalendar recordVuelta_8 = new GregorianCalendar();
-				recordVuelta_8.set(Calendar.HOUR, 1);
-				recordVuelta_8.set(Calendar.MINUTE, 334);
-				recordVuelta_8.set(Calendar.SECOND, 0);
+		
+				recordVuelta_8.set(Calendar.MINUTE, 1);
+				recordVuelta_8.set(Calendar.SECOND, 334);
 				recordVuelta_8.set(Calendar.MILLISECOND, 225);
 				Record record_8 = new Record(recordVuelta_8.getTime(),"Valtteri Bottas",2018);
 				String fotoRef_8 = null;
@@ -314,9 +314,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 9
 				GregorianCalendar recordVuelta_9 = new GregorianCalendar();
-				recordVuelta_9.set(Calendar.HOUR, 1);
-				recordVuelta_9.set(Calendar.MINUTE, 06);
-				recordVuelta_9.set(Calendar.SECOND, 0);
+
+				recordVuelta_9.set(Calendar.MINUTE, 1);
+				recordVuelta_9.set(Calendar.SECOND, 06);
 				recordVuelta_9.set(Calendar.MILLISECOND, 957);
 				Record record_9 = new Record(recordVuelta_9.getTime(),"Kimi Räikkönen",2018);
 				String fotoRef_9 = null;
@@ -346,9 +346,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 10
 				GregorianCalendar recordVuelta_10 = new GregorianCalendar();
-				recordVuelta_10.set(Calendar.HOUR, 1);
-				recordVuelta_10.set(Calendar.MINUTE, 30);
-				recordVuelta_10.set(Calendar.SECOND, 0);
+		
+				recordVuelta_10.set(Calendar.MINUTE, 1);
+				recordVuelta_10.set(Calendar.SECOND, 30);
 				recordVuelta_10.set(Calendar.MILLISECOND, 621);
 				Record record_10 = new Record(recordVuelta_10.getTime(),"Lewis Hamilton",2017);
 				String fotoRef_10 = null;
@@ -376,11 +376,11 @@ public class InformacionCampeonato {
 				mejorVuelta_11.set(Calendar.SECOND,29);
 				mejorVuelta_11.set(Calendar.MILLISECOND,845);
 				
-				//PISTA 6
+				//PISTA 11
 				GregorianCalendar recordVuelta_11 = new GregorianCalendar();
-				recordVuelta_11.set(Calendar.HOUR, 1);
-				recordVuelta_11.set(Calendar.MINUTE, 13);
-				recordVuelta_11.set(Calendar.SECOND, 0);
+			
+				recordVuelta_11.set(Calendar.MINUTE, 1);
+				recordVuelta_11.set(Calendar.SECOND, 13);
 				recordVuelta_11.set(Calendar.MILLISECOND, 780);
 				Record record_11 = new Record(recordVuelta_11.getTime(),"Kimi Räikkönen",2004);
 				String fotoRef_11 = null;
@@ -410,9 +410,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 12
 				GregorianCalendar recordVuelta_12 = new GregorianCalendar();
-				recordVuelta_12.set(Calendar.HOUR, 1);
-				recordVuelta_12.set(Calendar.MINUTE, 19);
-				recordVuelta_12.set(Calendar.SECOND, 0);
+		
+				recordVuelta_12.set(Calendar.MINUTE, 1);
+				recordVuelta_12.set(Calendar.SECOND, 19);
 				recordVuelta_12.set(Calendar.MILLISECOND, 071);
 				Record record_12 = new Record(recordVuelta_12.getTime(),"Michael Schumacher",2004);
 				String fotoRef_12 = null;
@@ -441,9 +441,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 13
 				GregorianCalendar recordVuelta_13 = new GregorianCalendar();
-				recordVuelta_13.set(Calendar.HOUR, 1);
-				recordVuelta_13.set(Calendar.MINUTE, 46);
-				recordVuelta_13.set(Calendar.SECOND, 0);
+
+				recordVuelta_13.set(Calendar.MINUTE, 1);
+				recordVuelta_13.set(Calendar.SECOND, 46);
 				recordVuelta_13.set(Calendar.MILLISECOND, 286);
 				Record record_13 = new Record(recordVuelta_13.getTime(),"Valtteri Bottas",2018);
 				String fotoRef_13 = null;
@@ -473,9 +473,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 14
 				GregorianCalendar recordVuelta_14 = new GregorianCalendar();
-				recordVuelta_14.set(Calendar.HOUR, 1);
-				recordVuelta_14.set(Calendar.MINUTE, 21);
-				recordVuelta_14.set(Calendar.SECOND, 0);
+			
+				recordVuelta_14.set(Calendar.MINUTE, 1);
+				recordVuelta_14.set(Calendar.SECOND, 21);
 				recordVuelta_14.set(Calendar.MILLISECOND, 046);
 				Record record_14 = new Record(recordVuelta_14.getTime(),"Rubens Barrichello",2004);
 				String fotoRef_14 = null;
@@ -504,9 +504,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 15
 				GregorianCalendar recordVuelta_15 = new GregorianCalendar();
-				recordVuelta_15.set(Calendar.HOUR, 1);
-				recordVuelta_15.set(Calendar.MINUTE, 41);
-				recordVuelta_15.set(Calendar.SECOND, 0);
+	
+				recordVuelta_15.set(Calendar.MINUTE, 1);
+				recordVuelta_15.set(Calendar.SECOND, 41);
 				recordVuelta_15.set(Calendar.MILLISECOND, 905);
 				Record record_15 = new Record(recordVuelta_15.getTime(),"Kevin Magnussen",2018);
 				String fotoRef_15 = null;
@@ -535,9 +535,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 16
 				GregorianCalendar recordVuelta_16 = new GregorianCalendar();
-				recordVuelta_16.set(Calendar.HOUR, 1);
-				recordVuelta_16.set(Calendar.MINUTE, 35);
-				recordVuelta_16.set(Calendar.SECOND, 0);
+	
+				recordVuelta_16.set(Calendar.MINUTE, 1);
+				recordVuelta_16.set(Calendar.SECOND, 35);
 				recordVuelta_16.set(Calendar.MILLISECOND, 861);
 				Record record_16 = new Record(recordVuelta_16.getTime(),"Valtteri Bottas",2018);
 				String fotoRef_16 = null;
@@ -567,9 +567,9 @@ public class InformacionCampeonato {
 				
 				//PISTA 17
 				GregorianCalendar recordVuelta_17 = new GregorianCalendar();
-				recordVuelta_17.set(Calendar.HOUR, 1);
-				recordVuelta_17.set(Calendar.MINUTE,31);
-				recordVuelta_17.set(Calendar.SECOND, 0);
+	
+				recordVuelta_17.set(Calendar.MINUTE,1);
+				recordVuelta_17.set(Calendar.SECOND, 31);
 				recordVuelta_17.set(Calendar.MILLISECOND, 540);
 				Record record_17 = new Record(recordVuelta_17.getTime(),"Kimi Räikkönen",2005);
 				String fotoRef_17 = null;
@@ -586,7 +586,132 @@ public class InformacionCampeonato {
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_17.getTime(), 53, mejorVuelta_17.getTime(), pista.getId_str(), campeonato.getId_str());
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
+				//GRAN PREMIO 18
+				
+				GregorianCalendar fechaGranPremio_18 = new GregorianCalendar(2018,9,21);
+				
+				GregorianCalendar mejorVuelta_18 = new GregorianCalendar();
+				mejorVuelta_18.set(Calendar.HOUR,0);
+				mejorVuelta_18.set(Calendar.MINUTE,0);
+				mejorVuelta_18.set(Calendar.SECOND,0);
+				mejorVuelta_18.set(Calendar.MILLISECOND,0);
+				
+				//PISTA 18
+				GregorianCalendar recordVuelta_18 = new GregorianCalendar();
+				recordVuelta_18.set(Calendar.MINUTE,1);
+				recordVuelta_18.set(Calendar.SECOND, 37);
+				recordVuelta_18.set(Calendar.MILLISECOND, 766);
+				Record record_18 = new Record(recordVuelta_18.getTime(),"Sebastian Vettel",2017);
+				String fotoRef_18 = null;
+				try {
+					fotoRef_18 = ManejadorImagenes.saveImageIntoMongoDB("fotos/UnitedStatesGrandPrix.png", "United States");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(fotoRef_18 != null) {
+					Pista pista = manejadorPista.pista_create("Austin", fotoRef_18, "Lewis Hamilton", (float)308.405, (float)5.513, record_18);
+					
+					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_18.getTime(), 56, mejorVuelta_18.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
+				}
+		
 
+//GRAN PREMIO 19
+				
+				GregorianCalendar fechaGranPremio_19 = new GregorianCalendar(2018,9,28);
+				
+				GregorianCalendar mejorVuelta_19 = new GregorianCalendar();
+				mejorVuelta_19.set(Calendar.HOUR,0);
+				mejorVuelta_19.set(Calendar.MINUTE,0);
+				mejorVuelta_19.set(Calendar.SECOND,0);
+				mejorVuelta_19.set(Calendar.MILLISECOND,0);
+				
+				//PISTA 19
+				GregorianCalendar recordVuelta_19 = new GregorianCalendar();
+				recordVuelta_19.set(Calendar.MINUTE,1);
+				recordVuelta_19.set(Calendar.SECOND, 18);
+				recordVuelta_19.set(Calendar.MILLISECOND, 785);
+				Record record_19 = new Record(recordVuelta_19.getTime(),"Sebastian Vettel",2017);
+				String fotoRef_19 = null;
+				try {
+					fotoRef_19 = ManejadorImagenes.saveImageIntoMongoDB("fotos/MexicoGrandPrix.png", "Mexico");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(fotoRef_19 != null) {
+					Pista pista = manejadorPista.pista_create("Ciudad de México", fotoRef_19, "Max Verstappen", (float)305.354, (float)4.304, record_19);
+					
+					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_19.getTime(), 71, mejorVuelta_19.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
+				}
+		
+//GRAN PREMIO 20
+				
+				GregorianCalendar fechaGranPremio_20 = new GregorianCalendar(2018,10,11);
+				
+				GregorianCalendar mejorVuelta_20 = new GregorianCalendar();
+				mejorVuelta_20.set(Calendar.HOUR,0);
+				mejorVuelta_20.set(Calendar.MINUTE,0);
+				mejorVuelta_20.set(Calendar.SECOND,0);
+				mejorVuelta_20.set(Calendar.MILLISECOND,0);
+				
+				//PISTA 20
+				GregorianCalendar recordVuelta_20 = new GregorianCalendar();
+				recordVuelta_20.set(Calendar.MINUTE,1);
+				recordVuelta_20.set(Calendar.SECOND, 11);
+				recordVuelta_20.set(Calendar.MILLISECOND, 044);
+				Record record_20 = new Record(recordVuelta_20.getTime(),"Max Verstappen",2017);
+				String fotoRef_20 = null;
+				try {
+					fotoRef_20 = ManejadorImagenes.saveImageIntoMongoDB("fotos/BrasilGrandPrix.png", "Brasil");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(fotoRef_20 != null) {
+					Pista pista = manejadorPista.pista_create("Sao Paulo", fotoRef_20, "Max Verstappen", (float)305.909, (float)4.309, record_20);
+					
+					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_20.getTime(), 71, mejorVuelta_20.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
+				}
+		
+//GRAN PREMIO 21
+				
+				GregorianCalendar fechaGranPremio_21 = new GregorianCalendar(2018,10,25);
+				
+				GregorianCalendar mejorVuelta_21 = new GregorianCalendar();
+				mejorVuelta_21.set(Calendar.HOUR,0);
+				mejorVuelta_21.set(Calendar.MINUTE,0);
+				mejorVuelta_21.set(Calendar.SECOND,0);
+				mejorVuelta_21.set(Calendar.MILLISECOND,0);
+				
+				//PISTA 21
+				GregorianCalendar recordVuelta_21 = new GregorianCalendar();
+				recordVuelta_21.set(Calendar.MINUTE,1);
+				recordVuelta_21.set(Calendar.SECOND, 40);
+				recordVuelta_21.set(Calendar.MILLISECOND, 279);
+				Record record_21 = new Record(recordVuelta_21.getTime(),"Sebastian Vettel",2009);
+				String fotoRef_21 = null;
+				try {
+					fotoRef_21 = ManejadorImagenes.saveImageIntoMongoDB("fotos/ArabGrandPrix.png", "UNITED ARAB EMIRATES");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(fotoRef_21 != null) {
+					Pista pista = manejadorPista.pista_create("Abu Dabi", fotoRef_21, "Valtteri Bottas", (float)305.355, (float)5.554, record_21);
+					
+					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_21.getTime(), 55, mejorVuelta_21.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
+				}
+		
+				
 	}
 	
 	@WebMethod

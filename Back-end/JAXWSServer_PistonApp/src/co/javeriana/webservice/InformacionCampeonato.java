@@ -1,6 +1,7 @@
 package co.javeriana.webservice;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -721,7 +722,8 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto1= new Piloto("Lewis Hamilton",fechaNacimiento_1.getTime(),"Stevenage, England",fotoRefP1,131,2941,225);
-	
+				manejadorPiloto.piloto_create(piloto1);
+				
 				//PILOTO 2
 				GregorianCalendar fechaNacimiento_2 = new GregorianCalendar(1987,06,03);
 				String fotoRefP2 = null;
@@ -732,7 +734,7 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto2= new Piloto("Sebastian Vettel",fechaNacimiento_2.getTime(),"Heppenheim, Germany",fotoRefP2,109,2689,216);
-	
+				manejadorPiloto.piloto_create(piloto2);
 				//PILOTO 3
 				GregorianCalendar fechaNacimiento_3 = new GregorianCalendar(1989,07,28);
 				String fotoRefP3 = null;
@@ -743,7 +745,7 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto3= new Piloto("Valtteri Bottas",fechaNacimiento_3.getTime(),"Nastola, Finland",fotoRefP3,30,923,115);
-	
+				manejadorPiloto.piloto_create(piloto3);
 				//PILOTO 4
 				GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979,9,17);
 				String fotoRefP4 = null;
@@ -754,7 +756,7 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto4= new Piloto("Kimi Räikkönen",fechaNacimiento_4.getTime(),"Espoo, Finland",fotoRefP4,100,1761,290);
-	
+				manejadorPiloto.piloto_create(piloto4);
 				//PILOTO 5
 				GregorianCalendar fechaNacimiento_5 = new GregorianCalendar(1997,8,30);
 				String fotoRefP5 = null;
@@ -765,7 +767,7 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto5= new Piloto("Max Verstappen",fechaNacimiento_5.getTime(),"Hasselt, Belgium",fotoRefP5,18,594,77);
-	
+				manejadorPiloto.piloto_create(piloto5);
 	
 				//PILOTO 6
 				GregorianCalendar fechaNacimiento_6 = new GregorianCalendar(1989,6,01);
@@ -777,7 +779,7 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto6= new Piloto("Daniel Ricciardo",fechaNacimiento_6.getTime(),"Perth, Australia",fotoRefP6,29,962,146);
-	
+				manejadorPiloto.piloto_create(piloto6);
 				//PILOTO 7
 				GregorianCalendar fechaNacimiento_7 = new GregorianCalendar(1990,0,26);
 				String fotoRefP7 = null;
@@ -789,7 +791,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto7= new Piloto("Sergio Perez",fechaNacimiento_7.getTime(),"Guadalajara, Mexico",fotoRefP7,8,520,153);
 	
-	
+				manejadorPiloto.piloto_create(piloto7);
 				//PILOTO 8
 				GregorianCalendar fechaNacimiento_8 = new GregorianCalendar(1992,9,5);
 				String fotoRefP8 = null;
@@ -800,7 +802,7 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto8= new Piloto("Kevin Magnussen",fechaNacimiento_8.getTime(),"Roskilde, Denmark",fotoRefP8,1,134,78);
-	
+				manejadorPiloto.piloto_create(piloto8);
 	
 				//PILOTO 9
 				GregorianCalendar fechaNacimiento_9 = new GregorianCalendar(1987,7,19);
@@ -812,7 +814,7 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto9= new Piloto("Nico Hulkenberg",fechaNacimiento_9.getTime(),"Emmerich am Rhein, Germany",fotoRefP9,0,458,154);
-	
+				manejadorPiloto.piloto_create(piloto9);
 	
 				//PILOTO 10
 				GregorianCalendar fechaNacimiento_10 = new GregorianCalendar(1981,6,29);
@@ -824,14 +826,153 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Piloto piloto10= new Piloto("Fernando Alonso",fechaNacimiento_10.getTime(),"Oviedo, Spain",fotoRefP10,97,1899,310);
-	
-	
+				manejadorPiloto.piloto_create(piloto10);
+				//Escuderia 1
+				
+				String fotoRefEsc1 = null;
+				try {
+					fotoRefEsc1 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Mercedes.jpg", "Mercedes");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia1= new Escuderia("Mercedes", "Brackley, United Kingdom", "James Allison", "Toto Wolff", "W09", 90, 4, fotoRefEsc1);
+				List<String> pilotosMercedes = new ArrayList<String>();
+				pilotosMercedes.add(piloto1.getId_str());		
+				pilotosMercedes.add(piloto3.getId_str());
+				escuderia1.setPilotos(pilotosMercedes);
+				manejadorEscuderia.escuderia_create(escuderia1);
+				//Escuderia 2
+				
+				String fotoRefEsc2 = null;
+				try {
+					fotoRefEsc2 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Ferrari.jpg", "Ferrari");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia2= new Escuderia("Ferrari", "Maranello, Italy", "Mattia Binotto", "Maurizio Arrivabene", "SF71H", 215, 16, fotoRefEsc2);
+				List<String> pilotosFerrari = new ArrayList<String>();
+				pilotosFerrari.add(piloto2.getId_str());		
+				pilotosFerrari.add(piloto4.getId_str());
+				escuderia2.setPilotos(pilotosFerrari);
+				manejadorEscuderia.escuderia_create(escuderia2);
+				//Escuderia 3
+				
+				String fotoRefEsc3 = null;
+				try {
+					fotoRefEsc3 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Red Bull.jpg", "Red Bull");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia3= new Escuderia("Red Bull", "Milton Keynes, United Kingdom", "Pierre Waché", "Christian Horner", "RB14", 59, 4, fotoRefEsc3);
+				List<String> pilotosRed_Bull = new ArrayList<String>();
+				pilotosRed_Bull.add(piloto5.getId_str());		
+				pilotosRed_Bull.add(piloto6.getId_str());
+				escuderia3.setPilotos(pilotosRed_Bull);
+				manejadorEscuderia.escuderia_create(escuderia3);
+				//Escuderia 4
+				
+				String fotoRefEsc4 = null;
+				try {
+					fotoRefEsc4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Renault.jpg", "Renault");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia4= new Escuderia("Renault", "Enstone, United Kingdom", "Bob Bell", "Cyril Abiteboul", "R.S.18", 20, 2, fotoRefEsc4);
+				List<String> pilotosRenault = new ArrayList<String>();
+				pilotosRenault.add(piloto9.getId_str());		
+				escuderia4.setPilotos(pilotosRenault);
+				manejadorEscuderia.escuderia_create(escuderia4);
+				//Escuderia 5
+				
+				String fotoRefEsc5 = null;
+				try {
+					fotoRefEsc5 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Haas.jpg", "Haas");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia5= new Escuderia("Haas", "Kannapolis, United States", "Rob Taylor", "Guenther Steiner", "VF-18", 0, 0, fotoRefEsc5);
+				List<String> pilotosHaas = new ArrayList<String>();
+				pilotosRenault.add(piloto8.getId_str());
+				escuderia5.setPilotos(pilotosHaas);
 
-
-
-
-	
-	
+				manejadorEscuderia.escuderia_create(escuderia5);
+				//Escuderia 6
+				
+				String fotoRefEsc6 = null;
+				try {
+					fotoRefEsc6 = ManejadorImagenes.saveImageIntoMongoDB("fotos/McLaren.jpg", "McLaren");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia6= new Escuderia("McLaren", "Woking, United Kingdom", "Matt Morris", "Zak Brown", "MCL33", 155, 8, fotoRefEsc6);
+				List<String> pilotosMcLaren = new ArrayList<String>();
+				pilotosMcLaren.add(piloto10.getId_str());		
+				
+				escuderia6.setPilotos(pilotosMcLaren);
+				manejadorEscuderia.escuderia_create(escuderia6);
+				//Escuderia 7
+				
+				String fotoRefEsc7 = null;
+				try {
+					fotoRefEsc7 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Force India.jpg", "Force India");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia7= new Escuderia("Force India", "Silverstone, United Kingdom", "Andrew Green", "Otmar Szafnauer", "VJM11", 0, 0, fotoRefEsc7);
+				List<String> pilotosForce_India = new ArrayList<String>();
+				pilotosForce_India.add(piloto7.getId_str());		
+			
+				escuderia7.setPilotos(pilotosForce_India);
+				manejadorEscuderia.escuderia_create(escuderia7);
+				//Escuderia 8
+				
+				String fotoRefEsc8 = null;
+				try {
+					fotoRefEsc8 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Toro Rosso.jpg", "Toro Rosso");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia8= new Escuderia("Toro Rosso", "Faenza, Italy", "James Key", "Franz Tost", "STR13", 1, 0, fotoRefEsc8);
+				List<String> pilotosToro_Rosso = new ArrayList<String>();
+				escuderia8.setPilotos(pilotosToro_Rosso);
+				manejadorEscuderia.escuderia_create(escuderia8);
+				
+				//Escuderia 9
+				
+				String fotoRefEsc9 = null;
+				try {
+					fotoRefEsc9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sauber.jpg", "Sauber");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia9= new Escuderia("Alfa Romeo Sauber F1 Team", "Hinwil, Switzerland", "Simone Resta", "Frédéric Vasseur", "C37", 1, 0, fotoRefEsc9);
+				List<String> pilotosSauber = new ArrayList<String>();
+		
+				escuderia9.setPilotos(pilotosSauber);
+				manejadorEscuderia.escuderia_create(escuderia9);
+				//Escuderia 10
+				
+				String fotoRefEsc10 = null;
+				try {
+					fotoRefEsc10 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Williams.jpg", "Williams");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia10= new Escuderia("Williams Martini Racing", "Grove, United Kingdom", "Paddy Lowe", "Frank Williams", "FW41", 129, 9, fotoRefEsc10);
+				List<String> pilotosWilliams = new ArrayList<String>();
+				escuderia10.setPilotos(pilotosWilliams);
+				manejadorEscuderia.escuderia_create(escuderia10);
+				
 	}
 	
 	@WebMethod

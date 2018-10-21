@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <ScrollView
@@ -67,14 +68,29 @@
                     android:hint="Pass"/>
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatButton
+            <!--<android.support.v7.widget.AppCompatButton-->
+                <!--android:id="@+id/btn_login"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="24dp"-->
+                <!--android:layout_marginBottom="24dp"-->
+                <!--android:padding="12dp"-->
+                <!--android:text="Login"/>-->
+
+            <info.hoang8f.widget.FButton
                 android:id="@+id/btn_login"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                fbutton:buttonColor="@color/color_concrete"
+                fbutton:shadowColor="@color/black"
+                android:text="Login"
+                android:gravity="center"
+                fbutton:shadowEnabled="true"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
-                android:padding="12dp"
-                android:text="Login"/>
+                fbutton:shadowHeight="5dp"
+                fbutton:cornerRadius="5dp"
+            />
 
             <TextView android:id="@+id/link_signup"
                 android:layout_width="fill_parent"

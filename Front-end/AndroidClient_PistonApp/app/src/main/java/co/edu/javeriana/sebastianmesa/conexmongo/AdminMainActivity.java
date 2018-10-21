@@ -5,7 +5,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +25,8 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
@@ -30,12 +36,19 @@ import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.EstadisticasPilotosFragment;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.IndexFragment;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.MasFragment;
 
-public class AdminMainActivity extends Activity {
+import co.edu.javeriana.sebastianmesa.conexmongo.helper.BottomNavigationBehavior;
+
+public class AdminMainActivity extends AppCompatActivity {
     private EditText nombre, edad, equipo;
     private Button agregarP, consultaP, accionesPiloto;
     private String resultado="";
     private TextView campo = null;
+    private ActionBar toolbar;
 
     private WebMet_InicializarCampeonato wm_inicializarCampeonato = null;
 
@@ -43,6 +56,19 @@ public class AdminMainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = getSupportActionBar();
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // attaching bottom sheet behaviour - hide / show on scroll
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
+
+        // load the store fragment by default
+        toolbar.setTitle("Index");
+        loadFragment(new IndexFragment());
 
     }
 
@@ -124,5 +150,46 @@ public class AdminMainActivity extends Activity {
             Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
         }
     }
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.navigation_index:
+                    toolbar.setTitle("Index");
+                    fragment = new IndexFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.navigation_calendario:
+                    toolbar.setTitle("Calendario");
+                    fragment = new CalendarioFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.navigation_estadisticas:
+                    toolbar.setTitle("Estadisticas");
+                    fragment = new EstadisticasPilotosFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.navigation_mas:
+                    toolbar.setTitle("Más");
+                    fragment = new MasFragment();
+                    loadFragment(fragment);
+                    return true;
+            }
+
+            return false;
+        }
+    };
 
 }

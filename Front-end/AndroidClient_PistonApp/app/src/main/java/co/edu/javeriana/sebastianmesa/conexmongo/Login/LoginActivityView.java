@@ -52,7 +52,7 @@ public class LoginActivityView extends AppCompatActivity {
             setContentView(R.layout.activity_login_view);
             ButterKnife.bind(this);
 
-            findViewById(R.id.fondo).setBackground(ContextCompat.getDrawable(this,R.drawable.gradiente_back2));
+            findViewById(R.id.fondo).setBackground(ContextCompat.getDrawable(this,R.drawable.ic_fondo));
 
             _loginButton = (Button) findViewById(R.id.btn_login);
             _signupLink = (TextView) findViewById(R.id.link_signup);

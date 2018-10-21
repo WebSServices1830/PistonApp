@@ -112,5 +112,6 @@
     <string name="sobreNosotros">Hispano Artcomer\n\n
                         ¿Hay una forma de mejorar los habitos alimenticios?\n
                         Nosotros creemos que si, y esta app te ayudará a conseguirlo</string>
+    <string name="title_activity_gran_premio_adapter">GranPremioAdapter</string>
 
 </resources>

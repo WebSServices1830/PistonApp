@@ -49,7 +49,9 @@ public class CRUD_Pista {
 			float distanciaCarrera_km,
 			float longitudCircuito_km,
 			Record record) {
-    	return new Pista(ciudad,foto_ref,nombreUltimoGanador,distanciaCarrera_km,longitudCircuito_km,record);
+    	Pista pista = new Pista(ciudad,foto_ref,nombreUltimoGanador,distanciaCarrera_km,longitudCircuito_km,record);
+    	collection.insertOne(pista);
+    	return pista;
     }
 	
     public void pista_create(Pista pista) {
@@ -57,7 +59,7 @@ public class CRUD_Pista {
     }
     
     public Pista pista_get(String id) {
-    	Pista pista = collection.find(eq("id", id)).first();
+    	Pista pista = collection.find(eq("id_str", id)).first();
     	return pista;
     }
    	

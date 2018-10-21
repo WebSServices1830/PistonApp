@@ -48,7 +48,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".CampeonatoPck.VerCampeonatoActivity" />
-        <activity android:name=".UserMenuActivity"></activity>
+        <activity android:name=".UserMenuActivity" />
+        <activity
+            android:name=".GranPremioPck.GranPremioAdapter"
+            android:label="@string/title_activity_gran_premio_adapter"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

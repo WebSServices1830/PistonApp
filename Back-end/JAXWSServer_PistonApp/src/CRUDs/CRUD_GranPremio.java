@@ -116,8 +116,8 @@ public List<GranPremio> granPremio_readAll_X_campeonato(String id_campeonato) {
 			Date fecha,
 			int cantVueltas,
 			LocalTime mejorVuelta,
-			ObjectId pista,
-			ObjectId campeonato
+			String pista,
+			String campeonato
 			){
 		collection.updateOne(
 				eq("fecha", fecha) , 

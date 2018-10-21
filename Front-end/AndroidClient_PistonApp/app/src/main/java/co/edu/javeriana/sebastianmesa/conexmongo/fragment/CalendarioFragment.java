@@ -76,6 +76,8 @@ public class CalendarioFragment extends Fragment {
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
+            request.addProperty("id_campeonato","5bcc07b9faafbb5c8cf932ed");
+
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
 
@@ -90,6 +92,8 @@ public class CalendarioFragment extends Fragment {
                     String id_string = granPremio.getPropertyAsString("id_str");
                     Log.i("Gran premio",id_string);
                 }
+
+                return true;
             }
             catch (Exception e)
             {
@@ -104,7 +108,6 @@ public class CalendarioFragment extends Fragment {
         @Override
         protected void onPostExecute(final Boolean success) {
             if(success==false){
-                startActivity(new Intent(getActivity(), LoginActivityView.class));
                 Toast.makeText(getActivity(),"Error", Toast.LENGTH_SHORT).show();
             }
             else{

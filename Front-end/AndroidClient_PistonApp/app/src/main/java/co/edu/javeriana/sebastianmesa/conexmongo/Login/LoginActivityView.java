@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
@@ -221,7 +222,7 @@ public class LoginActivityView extends AppCompatActivity {
 
                     String nombreUsuario = response.getPrimitivePropertyAsString("nombreUsuario");
                     String contrasenia = response.getPrimitivePropertyAsString("contra");
-                    Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(response.getPrimitivePropertyAsString("fechaNacimiento"));
+                    Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(response.getPrimitivePropertyAsString("fechaNacimiento"));
                     String urlFoto = response.getPrimitivePropertyAsString("urlFoto");
                     boolean admin = Boolean.getBoolean(response.getPrimitivePropertyAsString("admin"));
                     double bolsillo = Double.parseDouble(response.getPrimitivePropertyAsString("bolsillo"));

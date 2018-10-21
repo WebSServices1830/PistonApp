@@ -61,7 +61,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 	}
 	
 	public GranPremio granPremio_read(@WebParam(name = "id")String id){
-		GranPremio granPremio = collection.find(eq("id", id)).first();
+		GranPremio granPremio = collection.find(eq("id_str", id)).first();
 		return granPremio;
 	}
 	
@@ -82,8 +82,25 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
 		
 	}
 	
-	public List<GranPremio> grandesPremios_X_Fecha(){
-		List<GranPremio> lista = this.granPremio_readAll();
+public List<GranPremio> granPremio_readAll_X_campeonato(String id_campeonato) {
+		
+		final List<GranPremio> grandesPremios = new ArrayList<>();
+		
+		Block<GranPremio> saveBlock = new Block<GranPremio>() {
+		    @Override
+		    public void apply(GranPremio granPremio) {
+		        grandesPremios.add(granPremio);
+		    }
+		};
+		
+		collection.find(eq("id_campeonato",id_campeonato)).forEach(saveBlock);
+		
+		return grandesPremios;
+		
+	}
+	
+	public List<GranPremio> grandesPremios_X_Fecha(String id_campeonato){
+		List<GranPremio> lista = this.granPremio_readAll_X_campeonato(id_campeonato);
 	
 		Collections.sort(lista, new Comparator<GranPremio>() {
 			  public int compare(GranPremio o1, GranPremio o2) {

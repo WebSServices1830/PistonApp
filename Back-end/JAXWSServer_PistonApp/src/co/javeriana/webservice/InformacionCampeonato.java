@@ -840,27 +840,27 @@ public class InformacionCampeonato {
 	}
 	
 	@WebMethod
-	public List<GranPremio> carrerasOrdenadoPorFecha(){
-		return manejadorGranPremio.grandesPremios_X_Fecha();
+	public List<GranPremio> granPremiosOrdenadoPorFecha(@WebParam(name = "id_campeonato")String id_campeonato){
+		return manejadorGranPremio.grandesPremios_X_Fecha(id_campeonato);
 	}
 	
 	@WebMethod
-	public Escuderia verEscuderia(String id){
+	public Escuderia verEscuderia(@WebParam(name = "id")String id){
 		return manejadorEscuderia.escuderia_get(id);
 	}
 	
 	@WebMethod
-	public Piloto verPiloto(String id){
+	public Piloto verPiloto(@WebParam(name = "id")String id){
 		return manejadorPiloto.piloto_get(id);
 	}
 	
 	@WebMethod
-	public Pista verPista(String id){
+	public Pista verPista(@WebParam(name = "id")String id){
 		return manejadorPista.pista_get(id);
 	}
 	
 	@WebMethod
-	public Auto verAuto(String id){
+	public Auto verAuto(@WebParam(name = "id")String id){
 		return manejadorAuto.auto_get(id);
 	}
 	

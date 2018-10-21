@@ -2,9 +2,16 @@ package co.edu.javeriana.sebastianmesa.conexmongo;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,10 +22,16 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.EstadisticasPilotosFragment;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.IndexFragment;
+import co.edu.javeriana.sebastianmesa.conexmongo.fragment.MasFragment;
+import co.edu.javeriana.sebastianmesa.conexmongo.helper.BottomNavigationBehavior;
 
 public class UserMenuActivity extends AppCompatActivity {
 
     Button button_cargarDatos;
+    private ActionBar toolbar;
 
     private WebMet_InicializarCampeonato wm_inicializarCampeonato = null;
 
@@ -27,14 +40,20 @@ public class UserMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_menu);
 
-        button_cargarDatos = findViewById(R.id.button_cargarDatos);
-        button_cargarDatos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wm_inicializarCampeonato = new WebMet_InicializarCampeonato();
-                wm_inicializarCampeonato.execute();
-            }
-        });
+        toolbar = getSupportActionBar();
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // attaching bottom sheet behaviour - hide / show on scroll
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
+
+        // load the store fragment by default
+        //toolbar.setTitle("Index");
+        loadFragment(new IndexFragment());
+
+
     }
 
     private class WebMet_InicializarCampeonato extends AsyncTask<Void, Void, Boolean> {
@@ -85,5 +104,63 @@ public class UserMenuActivity extends AppCompatActivity {
             startActivity(new Intent(getBaseContext(), LoginActivityView.class));
             Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void logoutFragmento (View view){
+        startActivity(new Intent(getBaseContext(), LoginActivityView.class));
+    }
+
+    public void cargarDatosFragmento (View view){
+
+        button_cargarDatos = findViewById(R.id.button_cargarDatos);
+        button_cargarDatos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wm_inicializarCampeonato = new WebMet_InicializarCampeonato();
+                wm_inicializarCampeonato.execute();
+            }
+        });
+
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            switch (item.getItemId()) {
+                case R.id.navigation_index:
+                    //toolbar.setTitle("Index");
+                    fragment = new IndexFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.navigation_calendario:
+                    //toolbar.setTitle("Calendario");
+                    fragment = new CalendarioFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.navigation_estadisticas:
+                    //toolbar.setTitle("Estadisticas");
+                    fragment = new EstadisticasPilotosFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.navigation_mas:
+                    //toolbar.setTitle("Más");
+                    fragment = new MasFragment();
+                    loadFragment(fragment);
+                    return true;
+            }
+
+            return false;
+        }
+    };
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

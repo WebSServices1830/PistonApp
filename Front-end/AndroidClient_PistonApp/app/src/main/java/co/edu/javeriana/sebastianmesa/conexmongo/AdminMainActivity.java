@@ -28,6 +28,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.Apuestas.BetActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
@@ -204,6 +205,10 @@ public class AdminMainActivity extends AppCompatActivity {
 
     public void verPilotos(View view){
         startActivity(new Intent(getBaseContext(), BuscarPilotosView.class));
+    }
+
+    public void hacerApuesta(View view){
+        startActivity(new Intent(getBaseContext(), BetActivity.class));
     }
 
 }

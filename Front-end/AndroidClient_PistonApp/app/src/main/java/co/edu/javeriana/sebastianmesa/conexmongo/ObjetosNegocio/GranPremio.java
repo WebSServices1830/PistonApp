@@ -87,4 +87,9 @@ public class GranPremio implements Serializable {
         this.id_clasificaciones = id_clasificaciones;
     }
 
+    @Override
+    public String toString() {
+        return this.fecha.toString();
+    }
+
 }

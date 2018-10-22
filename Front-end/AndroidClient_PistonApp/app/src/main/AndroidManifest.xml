@@ -54,11 +54,14 @@
             android:label="@string/title_activity_gran_premio_adapter"
             android:theme="@style/AppTheme" />
         <activity android:name=".EstadisticasPck.EstPorPiloto" />
-        <activity android:name=".PilotoPck.VerPilotoView"></activity>
+        <activity android:name=".PilotoPck.VerPilotoView" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".Apuestas.BetActivity" />
+        <activity android:name=".Apuestas.ConfirmBetActivity"></activity>
     </application>
 
 </manifest>

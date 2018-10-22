@@ -31,6 +31,7 @@ import android.support.v4.app.FragmentManager;
 import co.edu.javeriana.sebastianmesa.conexmongo.Apuestas.BetActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
+import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorEscuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.IndexGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
@@ -201,6 +202,10 @@ public class AdminMainActivity extends AppCompatActivity {
 
     public void verTablaPilotos(View view){
         startActivity(new Intent(getBaseContext(), EstPorPiloto.class));
+    }
+
+    public void verTablaConstructores(View view){
+        startActivity(new Intent(getBaseContext(), EstPorEscuderia.class));
     }
 
     public void verPilotos(View view){

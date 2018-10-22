@@ -1777,6 +1777,11 @@ public class InformacionCampeonato {
 	}
 	
 	@WebMethod
+	public List<Escuderia> verTodasLasEscuderias(){
+		return manejadorEscuderia.escuderia_getAll();
+	}
+	
+	@WebMethod
 	public Pista verPista(@WebParam(name = "id")String id){
 		return manejadorPista.pista_get(id);
 	}

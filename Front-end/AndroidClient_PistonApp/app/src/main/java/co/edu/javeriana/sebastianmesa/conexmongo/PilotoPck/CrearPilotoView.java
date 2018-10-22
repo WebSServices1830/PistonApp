@@ -16,8 +16,12 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearPilotoView extends Activity {
@@ -52,15 +56,16 @@ public class CrearPilotoView extends Activity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_piloto?wsdl";
-            final String METHOD_NAME = "piloto_create";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/piloto_create";
+            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
+            final String METHOD_NAME = "agregarPiloto";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/agregarPiloto";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
             //request.addProperty("Hola", nro1.getText().toString());
             //request.addProperty("nro2", nro2.getText().toString());
 
             XMLGregorianCalendar fecha= null;
+
 
             nombre = (EditText) findViewById(R.id.nomPiloto);
             lugar = (EditText) findViewById(R.id.lugarNacimientoPiloto);
@@ -69,9 +74,11 @@ public class CrearPilotoView extends Activity {
             puntos = (EditText) findViewById(R.id.puntosTotales);
             gp = (EditText) findViewById(R.id.gpTotales);
 
+            Date today = new Date();
+
 
             request.addProperty("nombreCompleto", nombre.getText().toString());
-            request.addProperty("fecha_Nacimiento", null);
+            request.addProperty("fecha_Nacimiento", today);
             request.addProperty("lugarNacimiento", lugar.getText().toString());
             request.addProperty("foto_ref", foto.getText().toString());
             request.addProperty("cant_podiosTotales", Integer.parseInt(podios.getText().toString()));

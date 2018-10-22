@@ -3,6 +3,7 @@ package co.javeriana.webservice;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -1409,6 +1410,21 @@ public class InformacionCampeonato {
 	@WebMethod
 	public Campeonato verCampeonato(@WebParam(name = "nombre")String nombre){
 		return manejadorCampeonato.campeonato_readByName(nombre);
+	}
+	
+	@WebMethod
+	public void agregarPiloto(
+			@WebParam(name = "nombreCompleto")String nombreCompleto,
+			@WebParam(name = "fecha_Nacimiento")Date fecha_Nacimiento,
+			@WebParam(name = "lugarNacimiento")String lugarNacimiento,
+			@WebParam(name = "foto_ref")String foto_ref,
+			@WebParam(name = "cant_podiosTotales")int cant_podiosTotales,
+			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
+			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
+			){
+		
+		Piloto piloto = new Piloto(nombreCompleto, fecha_Nacimiento, lugarNacimiento, foto_ref, cant_podiosTotales, cant_puntosTotales, cant_granPremiosIngresado);
+		manejadorPiloto.piloto_create(piloto);
 	}
 	
 	

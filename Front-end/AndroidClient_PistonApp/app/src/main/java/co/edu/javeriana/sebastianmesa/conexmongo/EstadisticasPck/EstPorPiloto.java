@@ -25,8 +25,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
@@ -172,13 +175,23 @@ public class EstPorPiloto extends AppCompatActivity {
                                 datos[i][j] = "equipo";
                                 break;
                             case 3:
-                                datos[i][j] = "0";
+                                Random rand = new Random();
+                                int  n = rand.nextInt(199) + 101;
+                                datos[i][j] = Integer.toString(n);
                                 break;
 
                         }
                     }
 
                 }
+
+                Arrays.sort(datos, new Comparator() {
+                    public int compare(Object o1, Object o2) {
+                        String[] elt1 = (String[])o2;
+                        String[] elt2 = (String[])o1;
+                        return elt1[3].compareTo(elt2[3]);
+                    }
+                });
 
                 tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
                 Toast.makeText(getBaseContext(),"Bien. Tam: " + listaPilotos.size(), Toast.LENGTH_SHORT).show();

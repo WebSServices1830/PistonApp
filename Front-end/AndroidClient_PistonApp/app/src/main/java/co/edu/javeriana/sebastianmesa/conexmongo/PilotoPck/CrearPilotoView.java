@@ -18,6 +18,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -74,11 +75,11 @@ public class CrearPilotoView extends Activity {
             puntos = (EditText) findViewById(R.id.puntosTotales);
             gp = (EditText) findViewById(R.id.gpTotales);
 
-            Date today = new Date();
-
+            GregorianCalendar fechaNacimiento = new GregorianCalendar();
+            fechaNacimiento.getTime();
 
             request.addProperty("nombreCompleto", nombre.getText().toString());
-            request.addProperty("fecha_Nacimiento", today);
+            request.addProperty("fecha_Nacimiento", null);
             request.addProperty("lugarNacimiento", lugar.getText().toString());
             request.addProperty("foto_ref", foto.getText().toString());
             request.addProperty("cant_podiosTotales", Integer.parseInt(podios.getText().toString()));

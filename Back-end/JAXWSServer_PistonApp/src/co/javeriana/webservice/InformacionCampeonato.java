@@ -1801,8 +1801,16 @@ public class InformacionCampeonato {
 			@WebParam(name = "cant_puntosTotales")int cant_puntosTotales,
 			@WebParam(name = "cant_granPremiosIngresado")int cant_granPremiosIngresado
 			){
+		GregorianCalendar fechaNacimiento = new GregorianCalendar(1995,10,10);
+		String fotoRef = null;
+		try {
+			fotoRef = ManejadorImagenes.saveImageIntoMongoDB("fotos/F1Logo.png", "F1 user");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		Piloto piloto = new Piloto(nombreCompleto, fecha_Nacimiento, lugarNacimiento, foto_ref, cant_podiosTotales, cant_puntosTotales, cant_granPremiosIngresado);
+		Piloto piloto = new Piloto(nombreCompleto, fechaNacimiento.getTime(), lugarNacimiento, fotoRef, cant_podiosTotales, cant_puntosTotales, cant_granPremiosIngresado);
 		manejadorPiloto.piloto_create(piloto);
 	}
 	

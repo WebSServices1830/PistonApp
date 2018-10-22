@@ -1126,6 +1126,11 @@ public class InformacionCampeonato {
 	}
 	
 	@WebMethod
+	public List<Piloto> verPilotosPorNombre(@WebParam(name = "textoBusquedaNombre")String textoBusquedaNombre){
+		return manejadorPiloto.piloto_getAllBySearchParameter(textoBusquedaNombre);
+	}
+	
+	@WebMethod
 	public Pista verPista(@WebParam(name = "id")String id){
 		return manejadorPista.pista_get(id);
 	}

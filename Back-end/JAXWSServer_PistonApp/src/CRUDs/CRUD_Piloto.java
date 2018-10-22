@@ -94,7 +94,22 @@ public class CRUD_Piloto {
 		collection.find().forEach(saveBlock);
 		
 		return pilotos;
+	}
+	
+	public List<Piloto> piloto_getAllBySearchParameter(String parametroBusquedaNombre) {
 		
+		final List<Piloto> pilotos = new ArrayList<>();
+		
+		Block<Piloto> saveBlock = new Block<Piloto>() {
+		    @Override
+		    public void apply(Piloto piloto) {
+		        pilotos.add(piloto);
+		    }
+		};
+		
+		collection.find(regex("nombreCompleto", "^.*" + parametroBusquedaNombre + ".*$")).forEach(saveBlock);
+		
+		return pilotos;
 	}
 
    	public void piloto_update(Piloto piloto){

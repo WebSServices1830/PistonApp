@@ -21,6 +21,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.EstadisticasPilotosFragment;
@@ -163,4 +164,9 @@ public class UserMenuActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    public void verTablaPilotos(View view){
+        startActivity(new Intent(getBaseContext(), EstPorPiloto.class));
+    }
+
 }

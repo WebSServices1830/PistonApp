@@ -74,4 +74,8 @@ dependencies {
 
     //Btn Plano
     implementation 'info.hoang8f:fbutton:1.0.5'
+
+    //Table lib
+    implementation 'com.evrencoskun.library:tableview:0.8.8'
+    implementation 'de.codecrafters.tableview:tableview:2.8.0'
 }

@@ -2,6 +2,7 @@ package co.edu.javeriana.sebastianmesa.conexmongo.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,27 +37,25 @@ public class EstadisticasPilotosFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        final View v = inflater.inflate(R.layout.fragment_estadisticas, container, false);
-
-        mImageView = (ImageView) v.findViewById(R.id.pilotoImg);
-        mImageView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Toast.makeText(getContext(), "Cilcked..",Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        final View v = inflater.inflate(R.layout.fragment_estadisticas, container, false);
+//
+//        mImageView = (ImageView) v.findViewById(R.id.pilotoImg);
+//        mImageView.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                Toast.makeText(getContext(), "Cilcked..",Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         return inflater.inflate(R.layout.fragment_estadisticas, container, false);
     }
 
-    public void verTabla(View view){
-        Toast.makeText(getContext(), "Cilcked..",Toast.LENGTH_SHORT).show();
-    }
 }

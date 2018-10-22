@@ -11,6 +11,7 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import CRUDs.CRUD_Auto;
+import CRUDs.CRUD_Motor;
 import CRUDs.CRUD_Campeonato;
 import CRUDs.CRUD_ClasificacionCampeonato;
 import CRUDs.CRUD_Escuderia;

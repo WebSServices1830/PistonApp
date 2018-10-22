@@ -595,10 +595,10 @@ public class InformacionCampeonato {
 				GregorianCalendar fechaGranPremio_18 = new GregorianCalendar(2018,9,21);
 				
 				GregorianCalendar mejorVuelta_18 = new GregorianCalendar();
-				mejorVuelta_18.set(Calendar.HOUR,0);
-				mejorVuelta_18.set(Calendar.MINUTE,0);
-				mejorVuelta_18.set(Calendar.SECOND,0);
-				mejorVuelta_18.set(Calendar.MILLISECOND,0);
+				mejorVuelta_18.set(Calendar.HOUR,1);
+				mejorVuelta_18.set(Calendar.MINUTE,34);
+				mejorVuelta_18.set(Calendar.SECOND,18);
+				mejorVuelta_18.set(Calendar.MILLISECOND,643);
 				
 				//PISTA 18
 				GregorianCalendar recordVuelta_18 = new GregorianCalendar();
@@ -615,7 +615,7 @@ public class InformacionCampeonato {
 				}
 				
 				if(fotoRef_18 != null) {
-					Pista pista = manejadorPista.pista_create("Austin", fotoRef_18, "Lewis Hamilton", (float)308.405, (float)5.513, record_18);
+					Pista pista = manejadorPista.pista_create("Austin", fotoRef_18, "Kimi Räikkönen", (float)308.405, (float)5.513, record_18);
 					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_18.getTime(), 56, mejorVuelta_18.getTime(), pista.getId_str(), campeonato.getId_str());
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());

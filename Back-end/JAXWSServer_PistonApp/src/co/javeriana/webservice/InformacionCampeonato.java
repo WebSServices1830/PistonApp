@@ -957,7 +957,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto20= new Piloto("Sergey Sirotkin",fechaNacimiento_20.getTime(),"Moscow, Russia",fotoRefP20,0,1,18);
 				manejadorPiloto.piloto_create(piloto20);
-<<<<<<< HEAD
+
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto9.getNombreCompleto()).getId_str()));
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto10.getNombreCompleto()).getId_str()));
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto11.getNombreCompleto()).getId_str()));
@@ -970,7 +970,7 @@ public class InformacionCampeonato {
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto18.getNombreCompleto()).getId_str()));
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto19.getNombreCompleto()).getId_str()));
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto20.getNombreCompleto()).getId_str()));
-=======
+
 
 				//MOTOR 1
 				
@@ -1143,7 +1143,7 @@ public class InformacionCampeonato {
 				Auto auto10= new Auto("Toro Rosso",742,"OZ Racing","Repsol",fotoRefAuto10,motor10);
 				manejadorAuto.auto_create(auto10);
 
->>>>>>> c2c78af0eaf4ca5956ed7f6f99517e114d0eee06
+
 				//Escuderia 1
 				
 				String fotoRefEsc1 = null;

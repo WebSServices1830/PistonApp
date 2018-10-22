@@ -131,6 +131,19 @@ public List<GranPremio> granPremio_readAll_X_campeonato(String id_campeonato) {
 				);
 	}
 	
+	public void granPremio_update_clasificaciones(
+			Date fecha,
+			List<String> id_clasificaciones
+			){
+		collection.updateOne(
+				eq("fecha", fecha) , 
+				combine(
+						set("id_clasificaciones",id_clasificaciones)
+						) 
+				);
+	}
+	
+	
 	public void granPremio_delete(@WebParam(name = "id")String id){
 		collection.deleteOne(eq("id", id));
 	}

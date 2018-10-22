@@ -92,32 +92,9 @@ public class VerPilotoView extends AppCompatActivity {
 
                     String id_str = driver.getPropertyAsString("id_str");
                     String nombreCompleto = driver.getPrimitivePropertyAsString("nombreCompleto");
-                    
 
                     Piloto piloto = new Piloto();
 
-                }
-                SoapObject response = (SoapObject)envelope.getResponse();
-
-                if (response != null) {
-
-                    String string = "January 2, 2010";
-                    DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-                    //Date date = format.parse(string);
-
-                    setNombre(response.getPrimitivePropertyAsString("nombreCompleto"));
-                    //setFecha( format.parse(response.getPrimitivePropertyAsString("fecha_Nacimiento")));
-                    setLugar(response.getPrimitivePropertyAsString("lugarNacimiento"));
-                    //setFoto(response.getPrimitivePropertyAsString("foto_ref"));
-                    setPodios( Integer.parseInt (response.getPrimitivePropertyAsString("cant_podiosTotales")));
-                    setPuntos(Integer.parseInt (response.getPrimitivePropertyAsString("cant_puntosTotales")));
-                    setPremios(Integer.parseInt (response.getPrimitivePropertyAsString("cant_granPremiosIngresado")));
-
-                    //campoRespuesta.setText(responseCode);
-
-                }else{
-                    campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                    campoRespuesta.setText("Piloto no encontrado");
                 }
 
 

@@ -1,16 +1,15 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class PilotoAdapter extends ArrayAdapter<Piloto> {

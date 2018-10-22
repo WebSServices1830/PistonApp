@@ -107,7 +107,7 @@ public class CRUD_Piloto {
 		    }
 		};
 		
-		collection.find(regex("nombreCompleto", "^.*" + parametroBusquedaNombre + ".*$")).forEach(saveBlock);
+		collection.find(regex("nombreCompleto", "(?i)(^.*" + parametroBusquedaNombre + ".*$)")).forEach(saveBlock);
 		
 		return pilotos;
 	}

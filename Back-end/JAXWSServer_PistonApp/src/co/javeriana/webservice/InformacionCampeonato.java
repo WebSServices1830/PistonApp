@@ -1154,10 +1154,15 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia1= new Escuderia("Mercedes", "Brackley, United Kingdom", "James Allison", "Toto Wolff", "W09", 90, 4, fotoRefEsc1);
+				//Agrega pilotos escuderia 1
 				List<String> pilotosMercedes = new ArrayList<String>();
 				pilotosMercedes.add(piloto1.getId_str());		
 				pilotosMercedes.add(piloto3.getId_str());
 				escuderia1.setPilotos(pilotosMercedes);
+				//Agrega autos escuderia 1
+				List<String> autosMercedes = new ArrayList<String>();
+				autosMercedes.add(auto2.getId_str());		
+				escuderia1.setAutos(autosMercedes);
 				manejadorEscuderia.escuderia_create(escuderia1);
 				//Escuderia 2
 				
@@ -1169,11 +1174,17 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia2= new Escuderia("Ferrari", "Maranello, Italy", "Mattia Binotto", "Maurizio Arrivabene", "SF71H", 215, 16, fotoRefEsc2);
+				//Agrega pilotos escuderia 2
 				List<String> pilotosFerrari = new ArrayList<String>();
 				pilotosFerrari.add(piloto2.getId_str());		
 				pilotosFerrari.add(piloto4.getId_str());
 				escuderia2.setPilotos(pilotosFerrari);
+				//Agrega autos escuderia 2
+				List<String> autosFerrari = new ArrayList<String>();
+				autosFerrari.add(auto1.getId_str());		
+				escuderia2.setAutos(autosFerrari);
 				manejadorEscuderia.escuderia_create(escuderia2);
+				
 				//Escuderia 3
 				
 				String fotoRefEsc3 = null;
@@ -1184,10 +1195,16 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia3= new Escuderia("Red Bull", "Milton Keynes, United Kingdom", "Pierre Waché", "Christian Horner", "RB14", 59, 4, fotoRefEsc3);
+				//Agrega pilotos escuderia 3
 				List<String> pilotosRed_Bull = new ArrayList<String>();
 				pilotosRed_Bull.add(piloto5.getId_str());		
 				pilotosRed_Bull.add(piloto6.getId_str());
 				escuderia3.setPilotos(pilotosRed_Bull);
+				//Agrega autos escuderia 3
+				List<String> autosRed_Bull = new ArrayList<String>();
+				autosRed_Bull.add(auto3.getId_str());		
+				escuderia3.setAutos(autosRed_Bull);
+		
 				manejadorEscuderia.escuderia_create(escuderia3);
 				//Escuderia 4
 				
@@ -1199,10 +1216,17 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia4= new Escuderia("Renault", "Enstone, United Kingdom", "Bob Bell", "Cyril Abiteboul", "R.S.18", 20, 2, fotoRefEsc4);
+				//Agrega pilotos escuderia 4
 				List<String> pilotosRenault = new ArrayList<String>();
 				pilotosRenault.add(piloto9.getId_str());	
 				pilotosRenault.add(piloto12.getId_str());
 				escuderia4.setPilotos(pilotosRenault);
+				//Agrega autos escuderia 4
+				List<String> autosRenault = new ArrayList<String>();
+				autosRenault.add(auto4.getId_str());		
+				escuderia4.setAutos(autosRenault);
+		
+
 				manejadorEscuderia.escuderia_create(escuderia4);
 				//Escuderia 5
 				
@@ -1214,10 +1238,16 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia5= new Escuderia("Haas", "Kannapolis, United States", "Rob Taylor", "Guenther Steiner", "VF-18", 0, 0, fotoRefEsc5);
+				//Agrega pilotos escuderia 5
 				List<String> pilotosHaas = new ArrayList<String>();
 				pilotosHaas.add(piloto8.getId_str());
 				pilotosHaas.add(piloto13.getId_str());
 				escuderia5.setPilotos(pilotosHaas);
+				//Agrega autos escuderia 5
+				List<String> autosHaas = new ArrayList<String>();
+				autosHaas.add(auto8.getId_str());		
+				escuderia5.setAutos(autosHaas);
+		
 
 				manejadorEscuderia.escuderia_create(escuderia5);
 				//Escuderia 6
@@ -1229,11 +1259,18 @@ public class InformacionCampeonato {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				//Agrega pilotos escuderia 6
 				Escuderia escuderia6= new Escuderia("McLaren", "Woking, United Kingdom", "Matt Morris", "Zak Brown", "MCL33", 155, 8, fotoRefEsc6);
 				List<String> pilotosMcLaren = new ArrayList<String>();
 				pilotosMcLaren.add(piloto10.getId_str());		
 				pilotosMcLaren.add(piloto16.getId_str());
 				escuderia6.setPilotos(pilotosMcLaren);
+				//Agrega autos escuderia 6
+				List<String> autosMcLaren = new ArrayList<String>();
+				autosMcLaren.add(auto6.getId_str());		
+				escuderia6.setAutos(autosMcLaren);
+		
+
 				manejadorEscuderia.escuderia_create(escuderia6);
 				//Escuderia 7
 				
@@ -1245,10 +1282,17 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia7= new Escuderia("Force India", "Silverstone, United Kingdom", "Andrew Green", "Otmar Szafnauer", "VJM11", 0, 0, fotoRefEsc7);
+				//Agrega pilotos escuderia 7
 				List<String> pilotosForce_India = new ArrayList<String>();
 				pilotosForce_India.add(piloto7.getId_str());		
 				pilotosForce_India.add(piloto11.getId_str());
 				escuderia7.setPilotos(pilotosForce_India);
+				//Agrega autos escuderia 7
+				List<String> autosForce_India = new ArrayList<String>();
+				autosForce_India.add(auto5.getId_str());		
+				escuderia7.setAutos(autosForce_India);
+		
+
 				manejadorEscuderia.escuderia_create(escuderia7);
 				//Escuderia 8
 				
@@ -1260,10 +1304,16 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia8= new Escuderia("Toro Rosso", "Faenza, Italy", "James Key", "Franz Tost", "STR13", 1, 0, fotoRefEsc8);
+				//Agrega pilotos escuderia 8
 				List<String> pilotosToro_Rosso = new ArrayList<String>();
 				pilotosToro_Rosso.add(piloto14.getId_str());
 				pilotosToro_Rosso.add(piloto19.getId_str());
 				escuderia8.setPilotos(pilotosToro_Rosso);
+				//Agrega autos escuderia 8
+				List<String> autosToro_Rosso = new ArrayList<String>();
+				autosToro_Rosso.add(auto10.getId_str());		
+				escuderia8.setAutos(autosToro_Rosso);
+
 				manejadorEscuderia.escuderia_create(escuderia8);
 				
 				//Escuderia 9
@@ -1276,11 +1326,18 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia9= new Escuderia("Alfa Romeo Sauber F1 Team", "Hinwil, Switzerland", "Simone Resta", "Frédéric Vasseur", "C37", 1, 0, fotoRefEsc9);
+				//Agrega pilotos escuderia 9
 				List<String> pilotosSauber = new ArrayList<String>();
 				pilotosSauber.add(piloto15.getId_str());
 				pilotosSauber.add(piloto18.getId_str());
 		
 				escuderia9.setPilotos(pilotosSauber);
+				//Agrega autos escuderia 9
+				List<String> autosSauber = new ArrayList<String>();
+				autosSauber.add(auto7.getId_str());		
+				escuderia8.setAutos(autosSauber);
+		
+
 				manejadorEscuderia.escuderia_create(escuderia9);
 				//Escuderia 10
 				
@@ -1292,10 +1349,17 @@ public class InformacionCampeonato {
 					e.printStackTrace();
 				}
 				Escuderia escuderia10= new Escuderia("Williams Martini Racing", "Grove, United Kingdom", "Paddy Lowe", "Frank Williams", "FW41", 129, 9, fotoRefEsc10);
+				//Agrega pilotos escuderia 10
 				List<String> pilotosWilliams = new ArrayList<String>();
 				pilotosWilliams.add(piloto17.getId_str());
 				pilotosWilliams.add(piloto20.getId_str());
 				escuderia10.setPilotos(pilotosWilliams);
+				//Agrega autos escuderia 10
+				List<String> autosWilliams = new ArrayList<String>();
+				autosWilliams.add(auto4.getId_str());		
+				escuderia8.setAutos(autosWilliams);
+		
+
 				manejadorEscuderia.escuderia_create(escuderia10);
 				
 	}
@@ -1321,6 +1385,11 @@ public class InformacionCampeonato {
 	}
 	
 	@WebMethod
+	public List<Piloto> verPilotosPorNombre(@WebParam(name = "textoBusquedaNombre")String textoBusquedaNombre){
+		return manejadorPiloto.piloto_getAllBySearchParameter(textoBusquedaNombre);
+	}
+	
+	@WebMethod
 	public Pista verPista(@WebParam(name = "id")String id){
 		return manejadorPista.pista_get(id);
 	}
@@ -1329,5 +1398,11 @@ public class InformacionCampeonato {
 	public Auto verAuto(@WebParam(name = "id")String id){
 		return manejadorAuto.auto_get(id);
 	}
+	
+	@WebMethod
+	public Campeonato verCampeonato(@WebParam(name = "nombre")String nombre){
+		return manejadorCampeonato.campeonato_readByName(nombre);
+	}
+	
 	
 }

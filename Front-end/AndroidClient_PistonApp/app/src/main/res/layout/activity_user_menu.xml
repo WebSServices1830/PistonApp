@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminMainActivity" >
+    tools:context=".UserMenuActivity" >
 
     <!--<LinearLayout-->
         <!--android:orientation="vertical"-->
@@ -99,11 +99,24 @@
 
     <!--</LinearLayout>-->
 
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Bienvenido Usuario"/>
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -116,6 +129,7 @@
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:menu="@menu/navigation" />
+
 
 </android.support.design.widget.CoordinatorLayout>
 

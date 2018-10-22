@@ -14,6 +14,7 @@ import CRUDs.CRUD_Auto;
 import CRUDs.CRUD_Motor;
 import CRUDs.CRUD_Campeonato;
 import CRUDs.CRUD_ClasificacionCampeonato;
+import CRUDs.CRUD_ClasificacionCarrera;
 import CRUDs.CRUD_Escuderia;
 import CRUDs.CRUD_GranPremio;
 import CRUDs.CRUD_Piloto;
@@ -23,6 +24,7 @@ import clases_mongoDB.ManejadorImagenes;
 import clases_negocio.Auto;
 import clases_negocio.Campeonato;
 import clases_negocio.ClasificacionCampeonato;
+import clases_negocio.ClasificacionCarrera;
 import clases_negocio.Escuderia;
 import clases_negocio.GranPremio;
 import clases_negocio.Piloto;
@@ -41,6 +43,7 @@ public class InformacionCampeonato {
 	CRUD_Auto manejadorAuto = new CRUD_Auto();
 	CRUD_Motor manejadorMotor = new CRUD_Motor();
 	CRUD_ClasificacionCampeonato manejadorClasificacion_Campeonato = new CRUD_ClasificacionCampeonato();
+	CRUD_ClasificacionCarrera manejadorClasificacion_Carrera = new CRUD_ClasificacionCarrera();
 	
 	@WebMethod
 	public void inicializarCampeonato() {

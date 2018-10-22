@@ -29,17 +29,14 @@ import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class VerPilotoView extends AppCompatActivity {
 
+    private ListView listView_pilotos;
     private List<Piloto> listaPilotos = new ArrayList<>();
     private PilotoAdapter pilotoAdapter;
 
     private EditText campo_nombrePiloto;
     private Button consultaBtn;
-    private String Nombre, lugar, foto;
-    private Date fecha;
-    private int podios, puntos, premios;
+
     private WebMet_VerPilotosPorNombre wm_verPilotosPorNombre = null;
-    private TextView campoRespuesta = null;
-    private ListView listView_pilotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +48,7 @@ public class VerPilotoView extends AppCompatActivity {
         listView_pilotos = findViewById(R.id.listView_pilotos);
 
         pilotoAdapter = new PilotoAdapter(this, listaPilotos);
+        listView_pilotos.setAdapter(pilotoAdapter);
 
         listView_pilotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -63,6 +61,9 @@ public class VerPilotoView extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
+                listaPilotos.clear();
+                pilotoAdapter.notifyDataSetChanged();
+
                 wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
                 wm_verPilotosPorNombre.execute();
             }
@@ -94,8 +95,6 @@ public class VerPilotoView extends AppCompatActivity {
 
             HttpTransportSE ht = new HttpTransportSE(URL);
             try {
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                campoRespuesta.setText("");
 
                 ht.call(SOAP_ACTION, envelope);
 
@@ -113,6 +112,8 @@ public class VerPilotoView extends AppCompatActivity {
                     int cant_granPremiosIngresado = Integer.parseInt( driver.getPrimitivePropertyAsString("cant_granPremiosIngresado") );
                     float calificacion = Float.parseFloat( driver.getPrimitivePropertyAsString("calificacion") );
 
+                    Log.i("Driver",nombreCompleto);
+
                     Piloto piloto = new Piloto();
                     piloto.setId_str(id_str);
                     piloto.setNombreCompleto(nombreCompleto);
@@ -127,16 +128,16 @@ public class VerPilotoView extends AppCompatActivity {
                     publishProgress(piloto);
                 }
 
+                return true;
 
             }
             catch (Exception e)
             {
                 Log.i("Error: ",e.getMessage());
                 e.printStackTrace();
-                return false;
             }
 
-            return true;
+            return false;
         }
 
         @Override
@@ -147,15 +148,16 @@ public class VerPilotoView extends AppCompatActivity {
         @Override
         protected void onPostExecute(final Boolean success) {
             if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
             }
             else{
+                pilotoAdapter.notifyDataSetChanged();
             }
         }
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -46,11 +46,13 @@ public class CalendarioFragment extends Fragment {
 
     private Spinner spinner;
     private List<GranPremio> listagranPremios = new ArrayList<>();
-    private String idCalendarioCampeonato;
+    private String idCalendarioCampeonato= "";
+    private String calendarioSeleccionado= "";
     private ListView listaView;
     private GranPremioAdapter gpAdapter;
 
     private WebMet_GranPremiosOrdenadoPorFecha wm_granPremiosOrdenadoPorFecha = null;
+    private WebMet_verCampeonatoString wm_verCampeonatoString = null;
 
     public CalendarioFragment() {
         // Required empty public constructor
@@ -83,20 +85,22 @@ public class CalendarioFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //idCalendarioCampeonato = (String) spinner.getSelectedItem();
-                if(position == 1) {
-                    idCalendarioCampeonato = "5bcc07b9faafbb5c8cf932ed";
-                    wm_granPremiosOrdenadoPorFecha = new WebMet_GranPremiosOrdenadoPorFecha();
-                    wm_granPremiosOrdenadoPorFecha.execute();
-                    listaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(view.getContext(), VerGPView.class);
-                            intent.putExtra("GranPremio", listagranPremios.get(position));
-                            startActivity(intent);
-                        }
-                    });
-                }
+                calendarioSeleccionado= (String) spinner.getSelectedItem();
+                //Log.i("calendarioSeleccionado",calendarioSeleccionado);
+                wm_verCampeonatoString= new WebMet_verCampeonatoString();
+                wm_verCampeonatoString.execute();
+                //Log.i("idCampeonato",idCalendarioCampeonato);
+
+                wm_granPremiosOrdenadoPorFecha = new WebMet_GranPremiosOrdenadoPorFecha();
+                wm_granPremiosOrdenadoPorFecha.execute();
+                listaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(view.getContext(), VerGPView.class);
+                        intent.putExtra("GranPremio", listagranPremios.get(position));
+                        startActivity(intent);
+                    }
+                });
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -138,7 +142,12 @@ public class CalendarioFragment extends Fragment {
                     Date fecha= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(granPremio.getPrimitivePropertyAsString("fecha"));
                     String idPista= granPremio.getPrimitivePropertyAsString("pista");
                     int cantVueltas= Integer.parseInt(granPremio.getPrimitivePropertyAsString("cantVueltas"));
-                    //Date mejorVuelta= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
+                    Date mejorVuelta= null;
+                    try {
+                        mejorVuelta = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
+                    }catch (ParseException e){
+                        mejorVuelta = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
+                    }
                     //List<String> id_clasificaciones= Collections.singletonList(granPremio.getPrimitivePropertyAsString("clasificaciones"));
 
                     GranPremio granPremioObjeto= new GranPremio();
@@ -146,7 +155,7 @@ public class CalendarioFragment extends Fragment {
                     granPremioObjeto.setFecha(fecha);
                     granPremioObjeto.setPista(idPista);
                     granPremioObjeto.setCantVueltas(cantVueltas);
-                    //granPremioObjeto.setMejorVuelta(mejorVuelta);
+                    granPremioObjeto.setMejorVuelta(mejorVuelta);
                     //granPremioObjeto.setId_clasificaciones(id_clasificaciones);
                     publishProgress(granPremioObjeto);
                 }
@@ -165,8 +174,6 @@ public class CalendarioFragment extends Fragment {
         @Override
         protected void onProgressUpdate(GranPremio... values) {
             listagranPremios.add(values[0]);
-            //gpAdapter.notifyDataSetChanged();
-            Log.i("Gran Premio values",values[0].getId_str());
         }
 
         @Override
@@ -175,7 +182,6 @@ public class CalendarioFragment extends Fragment {
                 Toast.makeText(getActivity(),"Error", Toast.LENGTH_SHORT).show();
             }
             else{
-                Log.i("Tam lista final",listagranPremios.size()+"");
                 gpAdapter.notifyDataSetChanged();
             }
         }
@@ -184,6 +190,41 @@ public class CalendarioFragment extends Fragment {
         protected void onCancelled() {
             startActivity(new Intent(getActivity(), LoginActivityView.class));
             Toast.makeText(getActivity(),"Error", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class WebMet_verCampeonatoString extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            // TODO: attempt authentication against a network service.
+            //WebService - Opciones
+            final String NAMESPACE = "http://webservice.javeriana.co/";
+            final String URL = "http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
+            final String METHOD_NAME = "verCampeonato";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/verCampeonato";
+
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            request.addProperty("nombre", calendarioSeleccionado);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.setOutputSoapObject(request);
+
+            HttpTransportSE ht = new HttpTransportSE(URL);
+
+            try {
+                ht.call(SOAP_ACTION, envelope);
+                SoapObject response = (SoapObject) envelope.getResponse();
+
+                if (response != null) {
+                    idCalendarioCampeonato = response.getPrimitivePropertyAsString("id_str");
+                    return true;
+                }
+            } catch (Exception e) {
+                Log.i("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return false;
         }
     }
 

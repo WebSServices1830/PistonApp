@@ -144,7 +144,7 @@ public class CalendarioFragment extends Fragment {
                     int cantVueltas= Integer.parseInt(granPremio.getPrimitivePropertyAsString("cantVueltas"));
                     Date mejorVuelta= null;
                     try {
-                        mejorVuelta = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
+                        mejorVuelta = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
                     }catch (ParseException e){
                         mejorVuelta = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
                     }

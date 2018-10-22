@@ -6,24 +6,32 @@ package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
  * and open the template in the editor.
  */
 import java.util.Date;
+import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bson.types.ObjectId;
 
 public class Piloto {
-	
-    private ObjectId id;
-    private String nombreCompleto;
-    private Date fecha_Nacimiento;
-    private String lugarNacimiento;
-    private String foto_ref;
-    private int cant_podiosTotales;
-    private int cant_puntosTotales;
-    private int cant_granPremiosIngresado;
-    
-    public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
-			int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado) {
-    	this.id = new ObjectId();
+
+	private String id_str;
+	private ObjectId id;
+	private String nombreCompleto;
+	private Date fecha_Nacimiento;
+	private String lugarNacimiento;
+	private String foto_ref;
+	private int cant_podiosTotales;
+	private int cant_puntosTotales;
+	private int cant_granPremiosIngresado;
+	private float calificacion;
+
+	public Piloto() {
+
+	}
+
+	public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
+				  int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado) {
+		this.id = new ObjectId();
 		this.nombreCompleto = nombreCompleto;
 		this.fecha_Nacimiento = fecha_Nacimiento;
 		this.lugarNacimiento = lugarNacimiento;
@@ -31,6 +39,16 @@ public class Piloto {
 		this.cant_podiosTotales = cant_podiosTotales;
 		this.cant_puntosTotales = cant_puntosTotales;
 		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
+		this.id_str= this.id.toString();
+		this.calificacion=0;
+	}
+
+	public float getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(float calificacion) {
+		this.calificacion = calificacion;
 	}
 
 	public ObjectId getId() {
@@ -96,6 +114,13 @@ public class Piloto {
 	public void setCant_granPremiosIngresado(int cant_granPremiosIngresado) {
 		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
 	}
-    
-}
 
+	public String getId_str() {
+		return id_str;
+	}
+
+	public void setId_str(String id_str) {
+		this.id_str = id_str;
+	}
+
+}

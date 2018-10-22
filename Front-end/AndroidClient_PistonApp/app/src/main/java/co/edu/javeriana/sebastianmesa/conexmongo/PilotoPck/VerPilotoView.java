@@ -7,12 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
@@ -20,8 +20,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
@@ -33,64 +31,9 @@ public class VerPilotoView extends AppCompatActivity {
     private String Nombre, lugar, foto;
     private Date fecha;
     private int podios, puntos, premios;
-    private WebMet_ConsultarPiloto wm_agregarPiloto = null;
+    private WebMet_VerPilotos wm_verPilotos = null;
     private TextView campoRespuesta = null;
-
-    public String getNombre() {
-        return Nombre;
-    }
-
-    public void setNombre(String nombre) {
-        Nombre = nombre;
-    }
-
-    public String getLugar() {
-        return lugar;
-    }
-
-    public void setLugar(String lugar) {
-        this.lugar = lugar;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getPodios() {
-        return podios;
-    }
-
-    public void setPodios(int podios) {
-        this.podios = podios;
-    }
-
-    public int getPuntos() {
-        return puntos;
-    }
-
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-
-    public int getPremios() {
-        return premios;
-    }
-
-    public void setPremios(int premios) {
-        this.premios = premios;
-    }
+    private ListView listView_pilotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,14 +45,16 @@ public class VerPilotoView extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                wm_agregarPiloto = new WebMet_ConsultarPiloto();
-                wm_agregarPiloto.execute();
+                wm_verPilotos = new WebMet_VerPilotos();
+                wm_verPilotos.execute();
             }
         });
 
+        listView_pilotos = findViewById(R.id.listView_pilotos);
+
     }
 
-    private class WebMet_ConsultarPiloto extends AsyncTask<Void, Void, Boolean> {
+    private class WebMet_VerPilotos extends AsyncTask<Void, Void, Boolean> {
 
 
 
@@ -118,9 +63,9 @@ public class VerPilotoView extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_piloto?wsdl";
-            final String METHOD_NAME = "piloto_readByName";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/piloto_readByName";
+            final String URL="http://10.0.2.2:8081/WS/infoCampeonato?wsdl";
+            final String METHOD_NAME = "verPilotos";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/verPilotos";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 

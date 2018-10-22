@@ -249,7 +249,7 @@ public class LoginActivityView extends AppCompatActivity {
             }
             catch (Exception e)
             {
-                Log.i("Error: ",e.getMessage());
+                Log.i("Error",e.getMessage());
                 //Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 e.printStackTrace();
@@ -266,25 +266,6 @@ public class LoginActivityView extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_SHORT).show();
             }
             else{
-
-//                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-//
-//                if (getNombreUsuario() == null){
-//                    campoRespuesta.setText("Usuario no encontrado");
-//                    Toast.makeText(getApplicationContext(), "Prueba otro nombre", Toast.LENGTH_LONG).show();
-//                }else{
-//                    campoRespuesta.setText(
-//                            "Nombre: "+getNombreUsuario()+/*getFecha()+*/"\n"+
-//                                    "Edad: "+getEdad()+"\n"+
-//                                    "Descripción: "+getDescripcion()+"\n"+
-//                                    "Foto: "+getFoto()+"\n"+
-//                                    "Admin: "+isAdmin()+"\n"+
-//                                    "Bolsillo: "+getBolsillo()
-//                    );
-//
-//                    Toast.makeText(getApplicationContext(), "Viendo Piloto", Toast.LENGTH_LONG).show();
-//
-//                }
             }
         }
 

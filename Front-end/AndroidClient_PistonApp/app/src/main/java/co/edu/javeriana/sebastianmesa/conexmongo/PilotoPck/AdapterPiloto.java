@@ -83,7 +83,7 @@ public class AdapterPiloto extends RecyclerView.Adapter<AdapterPiloto.MyViewHold
                     mContext.startActivity(intent);
                 }
                 if (position == 1){
-                    Intent intent = new Intent(mContext, VerPilotoView.class);
+                    Intent intent = new Intent(mContext, BuscarPilotosView.class);
                     mContext.startActivity(intent);
                 }
                 if (position == 2){

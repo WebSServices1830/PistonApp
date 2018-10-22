@@ -8,6 +8,7 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="0.2"
         app:srcCompat="@drawable/ic_casco" />
 
@@ -16,6 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.8"
-        android:contentDescription="nombrePiloto" />
+        android:contentDescription="nombrePiloto"
+        android:textSize="24sp" />
 
 </LinearLayout>

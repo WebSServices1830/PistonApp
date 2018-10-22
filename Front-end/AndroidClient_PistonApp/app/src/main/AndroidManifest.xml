@@ -17,7 +17,7 @@
         <activity android:name=".AdminMainActivity" />
         <activity android:name=".PilotoPck.IndexPilotoView" />
         <activity android:name=".PilotoPck.CrearPilotoView" />
-        <activity android:name=".PilotoPck.VerPilotoView" />
+        <activity android:name=".PilotoPck.BuscarPilotosView" />
         <activity android:name=".PilotoPck.ActualizarPilotoView" />
         <activity android:name=".PilotoPck.EliminarPilotoView" />
         <activity android:name=".EscuderiaPck.IndexEscuderiaView" />

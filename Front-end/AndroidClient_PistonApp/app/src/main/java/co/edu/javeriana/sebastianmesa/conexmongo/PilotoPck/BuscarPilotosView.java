@@ -9,11 +9,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
-import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -27,7 +25,7 @@ import java.util.List;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
-public class VerPilotoView extends AppCompatActivity {
+public class BuscarPilotosView extends AppCompatActivity {
 
     private ListView listView_pilotos;
     private List<Piloto> listaPilotos = new ArrayList<>();
@@ -41,11 +39,14 @@ public class VerPilotoView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ver_piloto_view);
+        setContentView(R.layout.activity_buscar_pilotos_view);
 
         campo_nombrePiloto = findViewById(R.id.input_nombrePiloto);
         consultaBtn =findViewById(R.id.agregarPiloto);
         listView_pilotos = findViewById(R.id.listView_pilotos);
+
+        wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
+        wm_verPilotosPorNombre.execute();
 
         pilotoAdapter = new PilotoAdapter(this, listaPilotos);
         listView_pilotos.setAdapter(pilotoAdapter);

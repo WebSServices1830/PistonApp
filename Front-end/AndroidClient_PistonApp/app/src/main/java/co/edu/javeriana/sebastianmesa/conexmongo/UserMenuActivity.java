@@ -23,7 +23,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
-import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.VerPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.EstadisticasPilotosFragment;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.IndexFragment;
@@ -171,7 +171,7 @@ public class UserMenuActivity extends AppCompatActivity {
     }
 
     public void verPilotos(View view){
-        startActivity(new Intent(getBaseContext(), VerPilotoView.class));
+        startActivity(new Intent(getBaseContext(), BuscarPilotosView.class));
     }
 
 }

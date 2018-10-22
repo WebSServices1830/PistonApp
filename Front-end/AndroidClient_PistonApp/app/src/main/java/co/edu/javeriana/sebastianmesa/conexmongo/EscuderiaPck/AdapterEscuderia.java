@@ -18,10 +18,6 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.CartaMenu;
-import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.ActualizarPilotoView;
-import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.CrearPilotoView;
-import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.EliminarPilotoView;
-import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.VerPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 /**

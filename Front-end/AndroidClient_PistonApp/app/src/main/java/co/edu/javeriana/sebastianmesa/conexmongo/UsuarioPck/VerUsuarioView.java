@@ -59,6 +59,8 @@ public class VerUsuarioView extends AppCompatActivity {
         tv_fechaNacimientoUsuario = findViewById(R.id.textView_fechaNacimientoUsuario);
         tv_bolsilloUsuario = findViewById(R.id.textView_bolsilloUsuario);
 
+        new WebMet_ConsultarUsuario().execute();
+
     }
 
     private class WebMet_ConsultarUsuario extends AsyncTask<Void, Void, Boolean> {
@@ -110,12 +112,6 @@ public class VerUsuarioView extends AppCompatActivity {
                     ManagerUsuario.usuario.setAdmin(admin);
                     ManagerUsuario.usuario.setBolsillo(bolsillo);
 
-                    if(ManagerUsuario.usuario.isAdmin()){
-                        startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
-                    }else{
-                        startActivity(new Intent(getBaseContext(), UserMenuActivity.class));
-                    }
-
                     return true;
                 }
 
@@ -125,7 +121,6 @@ public class VerUsuarioView extends AppCompatActivity {
             {
                 Log.i("Error",e.getMessage());
                 //Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 e.printStackTrace();
 
             }
@@ -144,7 +139,9 @@ public class VerUsuarioView extends AppCompatActivity {
                 tv_fechaNacimientoUsuario.setText(tv_fechaNacimientoUsuario.getText() + ManagerUsuario.usuario.getFechaNacimiento().toString());
                 tv_bolsilloUsuario.setText(tv_bolsilloUsuario.getText() + Double.toString(ManagerUsuario.usuario.getBolsillo()));
 
-                new DownloadImageTask().execute(ManagerUsuario.usuario.getUrlFoto());
+                if(!ManagerUsuario.usuario.getUrlFoto().equals("")){
+                    new DownloadImageTask().execute(ManagerUsuario.usuario.getUrlFoto());
+                }
             }
         }
 

@@ -67,7 +67,7 @@ public class AdminMainActivity extends AppCompatActivity {
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         // load the store fragment by default
-        toolbar.setTitle("Index");
+        //toolbar.setTitle("Index");
         loadFragment(new IndexFragment());
 
     }

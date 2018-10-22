@@ -42,8 +42,6 @@ public class Piloto {
 		this.id_str= this.id.toString();
 		this.calificacion=0;
 	}
-
-    
     
 	public float getCalificacion() {
 		return calificacion;

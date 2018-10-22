@@ -726,6 +726,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto1= new Piloto("Lewis Hamilton",fechaNacimiento_1.getTime(),"Stevenage, England",fotoRefP1,131,2941,225);
 				manejadorPiloto.piloto_create(piloto1);
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName("Lewis Hamilton").getId_str()));
 				
 				//PILOTO 2
 				GregorianCalendar fechaNacimiento_2 = new GregorianCalendar(1987,06,03);
@@ -738,6 +739,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto2= new Piloto("Sebastian Vettel",fechaNacimiento_2.getTime(),"Heppenheim, Germany",fotoRefP2,109,2689,216);
 				manejadorPiloto.piloto_create(piloto2);
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto2.getNombreCompleto()).getId_str()));
 				//PILOTO 3
 				GregorianCalendar fechaNacimiento_3 = new GregorianCalendar(1989,07,28);
 				String fotoRefP3 = null;
@@ -749,6 +751,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto3= new Piloto("Valtteri Bottas",fechaNacimiento_3.getTime(),"Nastola, Finland",fotoRefP3,30,923,115);
 				manejadorPiloto.piloto_create(piloto3);
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto3.getNombreCompleto()).getId_str()));
 				//PILOTO 4
 				GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979,9,17);
 				String fotoRefP4 = null;
@@ -760,6 +763,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto4= new Piloto("Kimi Räikkönen",fechaNacimiento_4.getTime(),"Espoo, Finland",fotoRefP4,100,1761,290);
 				manejadorPiloto.piloto_create(piloto4);
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto4.getNombreCompleto()).getId_str()));
 				//PILOTO 5
 				GregorianCalendar fechaNacimiento_5 = new GregorianCalendar(1997,8,30);
 				String fotoRefP5 = null;
@@ -771,6 +775,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto5= new Piloto("Max Verstappen",fechaNacimiento_5.getTime(),"Hasselt, Belgium",fotoRefP5,18,594,77);
 				manejadorPiloto.piloto_create(piloto5);
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto5.getNombreCompleto()).getId_str()));
 	
 				//PILOTO 6
 				GregorianCalendar fechaNacimiento_6 = new GregorianCalendar(1989,6,01);
@@ -783,6 +788,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto6= new Piloto("Daniel Ricciardo",fechaNacimiento_6.getTime(),"Perth, Australia",fotoRefP6,29,962,146);
 				manejadorPiloto.piloto_create(piloto6);
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto6.getNombreCompleto()).getId_str()));
 				//PILOTO 7
 				GregorianCalendar fechaNacimiento_7 = new GregorianCalendar(1990,0,26);
 				String fotoRefP7 = null;
@@ -795,6 +801,7 @@ public class InformacionCampeonato {
 				Piloto piloto7= new Piloto("Sergio Perez",fechaNacimiento_7.getTime(),"Guadalajara, Mexico",fotoRefP7,8,520,153);
 	
 				manejadorPiloto.piloto_create(piloto7);
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto7.getNombreCompleto()).getId_str()));
 				//PILOTO 8
 				GregorianCalendar fechaNacimiento_8 = new GregorianCalendar(1992,9,5);
 				String fotoRefP8 = null;
@@ -806,7 +813,7 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto8= new Piloto("Kevin Magnussen",fechaNacimiento_8.getTime(),"Roskilde, Denmark",fotoRefP8,1,134,78);
 				manejadorPiloto.piloto_create(piloto8);
-	
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto8.getNombreCompleto()).getId_str()));
 				//PILOTO 9
 				GregorianCalendar fechaNacimiento_9 = new GregorianCalendar(1987,7,19);
 				String fotoRefP9 = null;
@@ -950,6 +957,20 @@ public class InformacionCampeonato {
 				}
 				Piloto piloto20= new Piloto("Sergey Sirotkin",fechaNacimiento_20.getTime(),"Moscow, Russia",fotoRefP20,0,1,18);
 				manejadorPiloto.piloto_create(piloto20);
+<<<<<<< HEAD
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto9.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto10.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto11.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto12.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto13.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto14.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto15.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto16.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto17.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto18.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto19.getNombreCompleto()).getId_str()));
+				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto20.getNombreCompleto()).getId_str()));
+=======
 
 				//MOTOR 1
 				
@@ -1122,6 +1143,7 @@ public class InformacionCampeonato {
 				Auto auto10= new Auto("Toro Rosso",742,"OZ Racing","Repsol",fotoRefAuto10,motor10);
 				manejadorAuto.auto_create(auto10);
 
+>>>>>>> c2c78af0eaf4ca5956ed7f6f99517e114d0eee06
 				//Escuderia 1
 				
 				String fotoRefEsc1 = null;
@@ -1360,6 +1382,11 @@ public class InformacionCampeonato {
 	@WebMethod
 	public Piloto verPiloto(@WebParam(name = "id")String id){
 		return manejadorPiloto.piloto_get(id);
+	}
+	
+	@WebMethod
+	public List<Piloto> verPilotosPorNombre(@WebParam(name = "textoBusquedaNombre")String textoBusquedaNombre){
+		return manejadorPiloto.piloto_getAllBySearchParameter(textoBusquedaNombre);
 	}
 	
 	@WebMethod

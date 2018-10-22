@@ -1060,8 +1060,8 @@ public class InformacionCampeonato {
 				
 				//MOTOR 6
 				
-				Motor motor6= new Motor("MCL33","6.6 L","V6",true);
-				manejadorMotor.motor_create("MCL33","6.6 L","V6",true);
+				Motor motor6= new Motor("MCL33","1.6 L","V6",true);
+				manejadorMotor.motor_create("MCL33","1.6 L","V6",true);
 
 				//AUTO 6
 				

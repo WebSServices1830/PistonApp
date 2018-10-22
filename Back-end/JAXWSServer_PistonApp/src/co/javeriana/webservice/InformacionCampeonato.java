@@ -1005,4 +1005,10 @@ public class InformacionCampeonato {
 		return manejadorAuto.auto_get(id);
 	}
 	
+	@WebMethod
+	public Campeonato verCampeonato(@WebParam(name = "nombre")String nombre){
+		return manejadorCampeonato.campeonato_readByName(nombre);
+	}
+	
+	
 }

@@ -28,8 +28,7 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
 
     TextView granPremioPista;
     TextView granPremioFecha;
-    String ciudad;
-
+    String ciudad= "";
     GranPremio gp;
 
     private WebMet_verPista wm_verPista = null;
@@ -54,8 +53,6 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
         granPremioPista = (TextView) convertView.findViewById(R.id.granPremioPista);
         wm_verPista = new WebMet_verPista();
         wm_verPista.execute();
-
-        Log.i("Ciudad1",ciudad);
 
         return convertView;
     }
@@ -85,7 +82,6 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
 
                 if (response != null) {
                     ciudad = response.getPrimitivePropertyAsString("ciudad");
-                    granPremioPista.setText(ciudad);
                     return true;
                 }
             } catch (Exception e) {
@@ -96,11 +92,9 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
         }
 
         @Override
-        protected void onPostExecute(Boolean success) {
-            if(success==false){
-                Toast.makeText(getContext(),"Error", Toast.LENGTH_SHORT).show();
-            }
-            else{
+        protected void onPostExecute(final Boolean aBoolean) {
+            if(aBoolean){
+                granPremioPista.setText(ciudad);
             }
         }
     }

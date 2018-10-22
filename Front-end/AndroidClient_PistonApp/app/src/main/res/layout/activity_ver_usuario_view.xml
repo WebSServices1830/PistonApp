@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayoutLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,41 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/imageView_perfilUsuario"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView_nombreUsuario"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:text="Nombre: "
+            />
 
-            <EditText
-                android:id="@+id/nomUusario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Digita nombre piloto"
-                />
+        <TextView
+            android:id="@+id/textView_fechaNacimientoUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha de nacimiento: "/>
 
-            <Button
-                android:id="@+id/verUsuario"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/nomUusario"
-                android:text="Ver piloto" />
-
-            <TextView
-                android:id="@+id/respuestaConsulta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:textSize="16dp"
-                android:textStyle="italic"
-                android:gravity="center"
-                android:layout_below="@+id/verUsuario"/>
-
-        </RelativeLayout>
-
+        <TextView
+            android:id="@+id/textView_bolsilloUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dinero en bolsillo: $"/>
 
     </ScrollView>
 
 
 
-</RelativeLayout>
+</LinearLayoutLayout>

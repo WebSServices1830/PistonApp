@@ -1,5 +1,8 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,104 +10,54 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
+import com.mongodb.client.gridfs.GridFSDownloadStream;
+
+import org.bson.types.ObjectId;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import bolts.Bolts;
+import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
+import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
+import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
+import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.ClienteMongo;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
+import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
 
 public class VerUsuarioView extends AppCompatActivity {
 
 
-    private EditText campoId;
-    private Button consultaBtn;
-    private String nombreUsuario, contra, descripcion,foto;
-    private int edad;
-    private boolean admin;
-    private long bolsillo;
+    private ImageView imagenPerfil;
+    private TextView tv_nombreUsuario, tv_fechaNacimientoUsuario, tv_bolsilloUsuario;
     private WebMet_ConsultarUsuario wm_agregarPiloto = null;
-    private TextView campoRespuesta = null;
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getContra() {
-        return contra;
-    }
-
-    public void setContra(String contra) {
-        this.contra = contra;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public long getBolsillo() {
-        return bolsillo;
-    }
-
-    public void setBolsillo(long bolsillo) {
-        this.bolsillo = bolsillo;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_usuario_view);
 
-        consultaBtn =(Button) findViewById(R.id.verUsuario);
-        consultaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                wm_agregarPiloto = new WebMet_ConsultarUsuario();
-                wm_agregarPiloto.execute();
-            }
-        });
+        imagenPerfil = findViewById(R.id.imageView_perfilUsuario);
+        tv_nombreUsuario = findViewById(R.id.textView_nombreUsuario);
+        tv_fechaNacimientoUsuario = findViewById(R.id.textView_fechaNacimientoUsuario);
+        tv_bolsilloUsuario = findViewById(R.id.textView_bolsilloUsuario);
 
     }
 
@@ -117,14 +70,14 @@ public class VerUsuarioView extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_usuario?wsdl";
-            final String METHOD_NAME = "usuario_readByName";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/usuario_readByName";
+            final String URL="http://10.0.2.2:8080/WS/autenticacion?wsdl";
+            final String METHOD_NAME = "validarLogin";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/validarLogin";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            campoId = (EditText) findViewById(R.id.nomUusario);
-            request.addProperty("nombreUsuario", campoId.getText().toString());
+            request.addProperty("nombreUsuario", ManagerUsuario.usuario.getNombreUsuario());
+            request.addProperty("contrasenia", ManagerUsuario.usuario.getContra());
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -133,40 +86,51 @@ public class VerUsuarioView extends AppCompatActivity {
             HttpTransportSE ht = new HttpTransportSE(URL);
             try {
 
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                campoRespuesta.setText("");
+                //campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
+                //campoRespuesta.setText("");
 
                 ht.call(SOAP_ACTION, envelope);
-                SoapObject response = (SoapObject)envelope.getResponse();
+                SoapObject response = (SoapObject) envelope.getResponse();
 
                 if (response != null) {
 
+                    String nombreUsuario = response.getPrimitivePropertyAsString("nombreUsuario");
+                    String contrasenia = response.getPrimitivePropertyAsString("contra");
+                    Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(response.getPrimitivePropertyAsString("fechaNacimiento"));
+                    String urlFoto = response.getPrimitivePropertyAsString("urlFoto");
+                    boolean admin = Boolean.parseBoolean(response.getPrimitivePropertyAsString("admin"));
+                    double bolsillo = Double.parseDouble(response.getPrimitivePropertyAsString("bolsillo"));
 
-                    setNombreUsuario(response.getPrimitivePropertyAsString("nombreUsuario"));
-                    setContra(response.getPrimitivePropertyAsString("contra"));
-                    setEdad( Integer.parseInt(response.getPrimitivePropertyAsString("edad")));
-                    setDescripcion(response.getPrimitivePropertyAsString("descripcion"));
-                    setFoto(response.getPrimitivePropertyAsString("foto"));
-                    setAdmin(Boolean.parseBoolean (response.getPrimitivePropertyAsString("admin")));
-                    setBolsillo(Long.parseLong (response.getPrimitivePropertyAsString("bolsillo")));
+                    ManagerUsuario.usuario = new Usuario();
 
-                    //campoRespuesta.setText(responseCode);
+                    ManagerUsuario.usuario.setNombreUsuario(nombreUsuario);
+                    ManagerUsuario.usuario.setContra(contrasenia);
+                    ManagerUsuario.usuario.setFechaNacimiento(fechaNacimiento);
+                    ManagerUsuario.usuario.setUrlFoto(urlFoto);
+                    ManagerUsuario.usuario.setAdmin(admin);
+                    ManagerUsuario.usuario.setBolsillo(bolsillo);
 
-                }else{
-                    campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                    campoRespuesta.setText("Usuario no encontrado");
+                    if(ManagerUsuario.usuario.isAdmin()){
+                        startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
+                    }else{
+                        startActivity(new Intent(getBaseContext(), UserMenuActivity.class));
+                    }
+
+                    return true;
                 }
 
 
             }
             catch (Exception e)
             {
-                Log.i("Error: ",e.getMessage());
+                Log.i("Error",e.getMessage());
+                //Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 e.printStackTrace();
-                return false;
+
             }
 
-            return true;
+            return false;
         }
 
         @Override
@@ -176,30 +140,50 @@ public class VerUsuarioView extends AppCompatActivity {
             }
             else{
 
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
+                tv_nombreUsuario.setText(tv_nombreUsuario.getText() + ManagerUsuario.usuario.getNombreUsuario());
+                tv_fechaNacimientoUsuario.setText(tv_fechaNacimientoUsuario.getText() + ManagerUsuario.usuario.getFechaNacimiento().toString());
+                tv_bolsilloUsuario.setText(tv_bolsilloUsuario.getText() + Double.toString(ManagerUsuario.usuario.getBolsillo()));
 
-                if (getNombreUsuario() == null){
-                    campoRespuesta.setText("Usuario no encontrado");
-                    Toast.makeText(getApplicationContext(), "Prueba otro nombre", Toast.LENGTH_LONG).show();
-                }else{
-                    campoRespuesta.setText(
-                            "Nombre: "+getNombreUsuario()+/*getFecha()+*/"\n"+
-                                    "Edad: "+getEdad()+"\n"+
-                                    "Descripción: "+getDescripcion()+"\n"+
-                                    "Foto: "+getFoto()+"\n"+
-                                    "Admin: "+isAdmin()+"\n"+
-                                    "Bolsillo: "+getBolsillo()
-                    );
-
-                    Toast.makeText(getApplicationContext(), "Viendo Piloto", Toast.LENGTH_LONG).show();
-
-                }
+                new DownloadImageTask().execute(ManagerUsuario.usuario.getUrlFoto());
             }
         }
 
         @Override
         protected void onCancelled() {
             Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+        MongoClient mongoClient = ClienteMongo.getInstancia();
+
+        // get handle to "PistonAppDB" database
+        MongoDatabase database = mongoClient.getDatabase("PistonAppDB");
+
+        // Create a gridFSBucket with a custom bucket name "files"
+        GridFSBucket gridFSFilesBucket = GridFSBuckets.create(database, "almacenamiento");
+
+        private Exception exception;
+
+        protected Bitmap doInBackground(String... ids) {
+            ObjectId fileId = new ObjectId(ids[0]); //The id of a file uploaded to GridFS, initialize to valid file id
+
+            GridFSDownloadStream downloadStream = gridFSFilesBucket.openDownloadStream(fileId);
+            int fileLength = (int) downloadStream.getGridFSFile().getLength();
+            byte[] bytesToWriteTo = new byte[fileLength];
+            downloadStream.read(bytesToWriteTo);
+            downloadStream.close();
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytesToWriteTo, 0, bytesToWriteTo.length);
+
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap bitmap) {
+            if(bitmap != null){
+                imagenPerfil.setImageBitmap(bitmap);
+            }
         }
     }
 }

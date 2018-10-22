@@ -40,6 +40,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
+import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.EstadisticasPilotosFragment;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.IndexFragment;
@@ -214,6 +215,10 @@ public class AdminMainActivity extends AppCompatActivity {
 
     public void hacerApuesta(View view){
         startActivity(new Intent(getBaseContext(), BetActivity.class));
+    }
+
+    public void verPerfil(View view){
+        startActivity(new Intent(getBaseContext(), VerUsuarioView.class));
     }
 
 }

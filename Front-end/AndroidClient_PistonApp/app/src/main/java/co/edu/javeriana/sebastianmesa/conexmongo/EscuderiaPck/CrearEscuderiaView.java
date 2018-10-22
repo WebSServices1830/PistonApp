@@ -52,9 +52,9 @@ public class CrearEscuderiaView extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_escuderia?wsdl";
-            final String METHOD_NAME = "escuderia_create";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/escuderia_create";
+            final String URL="http://10.0.2.2:8080/WS/admin?wsdl";
+            final String METHOD_NAME = "registrarEscuderia";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/registrarEscuderia";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 

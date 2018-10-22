@@ -322,7 +322,7 @@ public class InformacionCampeonato {
 				recordVuelta_9.set(Calendar.MINUTE, 1);
 				recordVuelta_9.set(Calendar.SECOND, 06);
 				recordVuelta_9.set(Calendar.MILLISECOND, 957);
-				Record record_9 = new Record(recordVuelta_9.getTime(),"Kimi Räikkönen",2018);
+				Record record_9 = new Record(recordVuelta_9.getTime(),"Kimi Rï¿½ikkï¿½nen",2018);
 				String fotoRef_9 = null;
 				try {
 					fotoRef_9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/AustriaGrandPrix.png", "Austria");
@@ -386,7 +386,7 @@ public class InformacionCampeonato {
 				recordVuelta_11.set(Calendar.MINUTE, 1);
 				recordVuelta_11.set(Calendar.SECOND, 13);
 				recordVuelta_11.set(Calendar.MILLISECOND, 780);
-				Record record_11 = new Record(recordVuelta_11.getTime(),"Kimi Räikkönen",2004);
+				Record record_11 = new Record(recordVuelta_11.getTime(),"Kimi Rï¿½ikkï¿½nen",2004);
 				String fotoRef_11 = null;
 				try {
 					fotoRef_11 = ManejadorImagenes.saveImageIntoMongoDB("fotos/GermanyGrandPrix.png", "Germany");
@@ -575,7 +575,7 @@ public class InformacionCampeonato {
 				recordVuelta_17.set(Calendar.MINUTE,1);
 				recordVuelta_17.set(Calendar.SECOND, 31);
 				recordVuelta_17.set(Calendar.MILLISECOND, 540);
-				Record record_17 = new Record(recordVuelta_17.getTime(),"Kimi Räikkönen",2005);
+				Record record_17 = new Record(recordVuelta_17.getTime(),"Kimi Rï¿½ikkï¿½nen",2005);
 				String fotoRef_17 = null;
 				try {
 					fotoRef_17 = ManejadorImagenes.saveImageIntoMongoDB("fotos/JapanGrandPrix.png", "Japan");
@@ -615,7 +615,7 @@ public class InformacionCampeonato {
 				}
 				
 				if(fotoRef_18 != null) {
-					Pista pista = manejadorPista.pista_create("Austin", fotoRef_18, "Kimi Räikkönen", (float)308.405, (float)5.513, record_18);
+					Pista pista = manejadorPista.pista_create("Austin", fotoRef_18, "Kimi Rï¿½ikkï¿½nen", (float)308.405, (float)5.513, record_18);
 					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_18.getTime(), 56, mejorVuelta_18.getTime(), pista.getId_str(), campeonato.getId_str());
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
@@ -647,7 +647,7 @@ public class InformacionCampeonato {
 				}
 				
 				if(fotoRef_19 != null) {
-					Pista pista = manejadorPista.pista_create("Ciudad de México", fotoRef_19, "Max Verstappen", (float)305.354, (float)4.304, record_19);
+					Pista pista = manejadorPista.pista_create("Ciudad de Mï¿½xico", fotoRef_19, "Max Verstappen", (float)305.354, (float)4.304, record_19);
 					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_19.getTime(), 71, mejorVuelta_19.getTime(), pista.getId_str(), campeonato.getId_str());
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
@@ -756,12 +756,12 @@ public class InformacionCampeonato {
 				GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979,9,17);
 				String fotoRefP4 = null;
 				try {
-					fotoRefP4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kimi Räikkönen.jpg", "Kimi Räikkönen");
+					fotoRefP4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kimi Raikkonen.jpg", "Kimi Raikkonen");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Piloto piloto4= new Piloto("Kimi Räikkönen",fechaNacimiento_4.getTime(),"Espoo, Finland",fotoRefP4,100,1761,290);
+				Piloto piloto4= new Piloto("Kimi Rï¿½ikkï¿½nen",fechaNacimiento_4.getTime(),"Espoo, Finland",fotoRefP4,100,1761,290);
 				manejadorPiloto.piloto_create(piloto4);
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto4.getNombreCompleto()).getId_str()));
 				//PILOTO 5
@@ -847,7 +847,7 @@ public class InformacionCampeonato {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Piloto piloto11= new Piloto("Esteban Ocon",fechaNacimiento_11.getTime(),"Évreux, Normandy",fotoRefP11,0,136,47);
+				Piloto piloto11= new Piloto("Esteban Ocon",fechaNacimiento_11.getTime(),"ï¿½vreux, Normandy",fotoRefP11,0,136,47);
 				manejadorPiloto.piloto_create(piloto11);
 
 				//PILOTO 12
@@ -1060,8 +1060,8 @@ public class InformacionCampeonato {
 				
 				//MOTOR 6
 				
-				Motor motor6= new Motor("MCL33","6.6 L","V6",true);
-				manejadorMotor.motor_create("MCL33","6.6 L","V6",true);
+				Motor motor6= new Motor("MCL33","1.6 L","V6",true);
+				manejadorMotor.motor_create("MCL33","1.6 L","V6",true);
 
 				//AUTO 6
 				
@@ -1193,7 +1193,7 @@ public class InformacionCampeonato {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Escuderia escuderia3= new Escuderia("Red Bull", "Milton Keynes, United Kingdom", "Pierre Waché", "Christian Horner", "RB14", 59, 4, fotoRefEsc3);
+				Escuderia escuderia3= new Escuderia("Red Bull", "Milton Keynes, United Kingdom", "Pierre Wachï¿½", "Christian Horner", "RB14", 59, 4, fotoRefEsc3);
 				//Agrega pilotos escuderia 3
 				List<String> pilotosRed_Bull = new ArrayList<String>();
 				pilotosRed_Bull.add(piloto5.getId_str());		
@@ -1324,7 +1324,7 @@ public class InformacionCampeonato {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Escuderia escuderia9= new Escuderia("Alfa Romeo Sauber F1 Team", "Hinwil, Switzerland", "Simone Resta", "Frédéric Vasseur", "C37", 1, 0, fotoRefEsc9);
+				Escuderia escuderia9= new Escuderia("Alfa Romeo Sauber F1 Team", "Hinwil, Switzerland", "Simone Resta", "Frï¿½dï¿½ric Vasseur", "C37", 1, 0, fotoRefEsc9);
 				//Agrega pilotos escuderia 9
 				List<String> pilotosSauber = new ArrayList<String>();
 				pilotosSauber.add(piloto15.getId_str());
@@ -1386,6 +1386,11 @@ public class InformacionCampeonato {
 	@WebMethod
 	public List<Piloto> verPilotosPorNombre(@WebParam(name = "textoBusquedaNombre")String textoBusquedaNombre){
 		return manejadorPiloto.piloto_getAllBySearchParameter(textoBusquedaNombre);
+	}
+	
+	@WebMethod
+	public List<Piloto> verTodosLosPilotos(){
+		return manejadorPiloto.piloto_getAll();
 	}
 	
 	@WebMethod

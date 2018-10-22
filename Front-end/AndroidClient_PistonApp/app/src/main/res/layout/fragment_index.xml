@@ -18,15 +18,29 @@
             <!--android:gravity="center_horizontal"-->
             <!--android:text="Admin"/>-->
 
+        <!--<info.hoang8f.widget.FButton-->
+            <!--android:id="@+id/button_cargarDatos"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--fbutton:buttonColor="#2d867c"-->
+            <!--fbutton:shadowColor="@color/black"-->
+            <!--android:text="Cargar datos iniciales"-->
+            <!--android:onClick="cargarDatosFragmento"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_margin="10dp"-->
+            <!--fbutton:shadowEnabled="true"-->
+            <!--fbutton:shadowHeight="5dp"-->
+            <!--fbutton:cornerRadius="5dp"-->
+            <!--/>-->
 
 
 
         <info.hoang8f.widget.FButton
+            android:layout_marginTop="40dp"
             android:id="@+id/logOutFragmento"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
             android:onClick="logoutFragmento"
             android:text="Cerrar Sesión" />
 

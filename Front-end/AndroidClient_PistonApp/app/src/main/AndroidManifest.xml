@@ -53,7 +53,8 @@
             android:name=".GranPremioPck.GranPremioAdapter"
             android:label="@string/title_activity_gran_premio_adapter"
             android:theme="@style/AppTheme" />
-        <activity android:name=".EstadisticasPck.EstPorPiloto"></activity>
+        <activity android:name=".EstadisticasPck.EstPorPiloto" />
+        <activity android:name=".PilotoPck.VerPilotoView"></activity>
     </application>
 
 </manifest>

@@ -224,7 +224,7 @@ public class LoginActivityView extends AppCompatActivity {
                     String contrasenia = response.getPrimitivePropertyAsString("contra");
                     Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(response.getPrimitivePropertyAsString("fechaNacimiento"));
                     String urlFoto = response.getPrimitivePropertyAsString("urlFoto");
-                    boolean admin = Boolean.getBoolean(response.getPrimitivePropertyAsString("admin"));
+                    boolean admin = Boolean.parseBoolean(response.getPrimitivePropertyAsString("admin"));
                     double bolsillo = Double.parseDouble(response.getPrimitivePropertyAsString("bolsillo"));
 
                     ManagerUsuario.usuario = new Usuario();

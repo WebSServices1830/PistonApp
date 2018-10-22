@@ -1,4 +1,4 @@
-package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
+package co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

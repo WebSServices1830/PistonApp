@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -19,13 +20,17 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class VerPilotoView extends AppCompatActivity {
 
+    private List<Piloto> listaPilotos = new ArrayList<>();
+    private PilotoAdapter pilotoAdapter;
 
     private EditText campo_nombrePiloto;
     private Button consultaBtn;
@@ -42,8 +47,18 @@ public class VerPilotoView extends AppCompatActivity {
         setContentView(R.layout.activity_ver_piloto_view);
 
         campo_nombrePiloto = findViewById(R.id.input_nombrePiloto);
+        consultaBtn =findViewById(R.id.agregarPiloto);
+        listView_pilotos = findViewById(R.id.listView_pilotos);
 
-        consultaBtn =(Button) findViewById(R.id.agregarPiloto);
+        pilotoAdapter = new PilotoAdapter(this, listaPilotos);
+
+        listView_pilotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
         consultaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -53,11 +68,11 @@ public class VerPilotoView extends AppCompatActivity {
             }
         });
 
-        listView_pilotos = findViewById(R.id.listView_pilotos);
+
 
     }
 
-    private class WebMet_VerPilotosPorNombre extends AsyncTask<Void, Void, Boolean> {
+    private class WebMet_VerPilotosPorNombre extends AsyncTask<Void, Piloto, Boolean> {
 
 
 
@@ -92,9 +107,26 @@ public class VerPilotoView extends AppCompatActivity {
 
                     String id_str = driver.getPropertyAsString("id_str");
                     String nombreCompleto = driver.getPrimitivePropertyAsString("nombreCompleto");
+                    Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(driver.getPrimitivePropertyAsString("fechaNacimiento"));
+                    String lugarNacimiento = driver.getPrimitivePropertyAsString("lugarNacimiento");
+                    String foto_ref = driver.getPrimitivePropertyAsString("foto_ref");
+                    int cant_podiosTotales = Integer.parseInt( driver.getPrimitivePropertyAsString("cant_podiosTotales") );
+                    int cant_puntosTotales = Integer.parseInt( driver.getPrimitivePropertyAsString("cant_puntosTotales") );
+                    int cant_granPremiosIngresado = Integer.parseInt( driver.getPrimitivePropertyAsString("cant_granPremiosIngresado") );
+                    float calificacion = Float.parseFloat( driver.getPrimitivePropertyAsString("calificacion") );
 
                     Piloto piloto = new Piloto();
+                    piloto.setId_str(id_str);
+                    piloto.setNombreCompleto(nombreCompleto);
+                    piloto.setFecha_Nacimiento(fechaNacimiento);
+                    piloto.setLugarNacimiento(lugarNacimiento);
+                    piloto.setFoto_ref(foto_ref);
+                    piloto.setCant_podiosTotales(cant_podiosTotales);
+                    piloto.setCant_puntosTotales(cant_puntosTotales);
+                    piloto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
+                    piloto.setCalificacion(calificacion);
 
+                    publishProgress(piloto);
                 }
 
 
@@ -110,29 +142,16 @@ public class VerPilotoView extends AppCompatActivity {
         }
 
         @Override
+        protected void onProgressUpdate(Piloto... values) {
+            listaPilotos.add(values[0]);
+        }
+
+        @Override
         protected void onPostExecute(final Boolean success) {
             if(success==false){
                 Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
             }
             else{
-
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-
-                if (getNombre() == null){
-                    campoRespuesta.setText("Piloto no encontrado");
-                    Toast.makeText(getApplicationContext(), "Prueba otro nombre", Toast.LENGTH_LONG).show();
-                }else{
-                    campoRespuesta.setText(
-                            "Nombre: "+getNombre()+/*getFecha()+*/"\n"+
-                                    "Lugar nacimiento: "+getLugar()+"\n"+
-//                                "Foto path:"+getFoto()+"\n"+
-                                    "Podios: "+getPodios()+"\n"+
-                                    "Puntos: "+getPuntos()+"\n"+
-                                    "Premios: "+getPremios());
-
-                    Toast.makeText(getApplicationContext(), "Viendo Piloto", Toast.LENGTH_LONG).show();
-
-                }
             }
         }
 

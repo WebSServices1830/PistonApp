@@ -615,7 +615,7 @@ public class InformacionCampeonato {
 				}
 				
 				if(fotoRef_18 != null) {
-					Pista pista = manejadorPista.pista_create("Austin", fotoRef_18, "Kimi Räikkönen", (float)308.405, (float)5.513, record_18);
+					Pista pista = manejadorPista.pista_create("Austin", fotoRef_18, "Kimi Rï¿½ikkï¿½nen", (float)308.405, (float)5.513, record_18);
 					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_18.getTime(), 56, mejorVuelta_18.getTime(), pista.getId_str(), campeonato.getId_str());
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
@@ -756,7 +756,7 @@ public class InformacionCampeonato {
 				GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979,9,17);
 				String fotoRefP4 = null;
 				try {
-					fotoRefP4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kimi Rï¿½ikkï¿½nen.jpg", "Kimi Rï¿½ikkï¿½nen");
+					fotoRefP4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kimi Raikkonen.jpg", "Kimi Raikkonen");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

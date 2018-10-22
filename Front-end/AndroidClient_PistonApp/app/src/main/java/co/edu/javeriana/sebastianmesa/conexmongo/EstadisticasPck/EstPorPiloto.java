@@ -157,10 +157,30 @@ public class EstPorPiloto extends AppCompatActivity {
             }
             else{
 
-                String[][] datosp = { { "1", "Sebas", "Ferrari", "20" },
-                        { "2", listaPilotos.get(0).getNombreCompleto(), "Skyppy", "10" } };
+                String[][] datos = new String[listaPilotos.size()][4];
 
-                tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datosp));
+                for (int i = 0 ; i < listaPilotos.size() ; i++){
+                    for (int j = 0 ; j < 4 ; j++){
+                        switch (j) {
+                            case 0:
+                                datos[i][j] = Integer.toString(i+1);
+                                break;
+                            case 1:
+                                datos[i][j] = listaPilotos.get(i).getNombreCompleto();
+                                break;
+                            case 2:
+                                datos[i][j] = "equipo";
+                                break;
+                            case 3:
+                                datos[i][j] = "0";
+                                break;
+
+                        }
+                    }
+
+                }
+
+                tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
                 Toast.makeText(getBaseContext(),"Bien. Tam: " + listaPilotos.size(), Toast.LENGTH_SHORT).show();
 
             }

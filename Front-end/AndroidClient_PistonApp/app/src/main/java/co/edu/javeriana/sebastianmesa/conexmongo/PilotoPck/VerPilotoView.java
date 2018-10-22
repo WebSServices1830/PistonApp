@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
@@ -26,12 +27,12 @@ import co.edu.javeriana.sebastianmesa.conexmongo.R;
 public class VerPilotoView extends AppCompatActivity {
 
 
-    private EditText campoId;
+    private EditText campo_nombrePiloto;
     private Button consultaBtn;
     private String Nombre, lugar, foto;
     private Date fecha;
     private int podios, puntos, premios;
-    private WebMet_VerPilotos wm_verPilotos = null;
+    private WebMet_VerPilotosPorNombre wm_verPilotosPorNombre = null;
     private TextView campoRespuesta = null;
     private ListView listView_pilotos;
 
@@ -40,13 +41,15 @@ public class VerPilotoView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_piloto_view);
 
+        campo_nombrePiloto = findViewById(R.id.input_nombrePiloto);
+
         consultaBtn =(Button) findViewById(R.id.agregarPiloto);
         consultaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                wm_verPilotos = new WebMet_VerPilotos();
-                wm_verPilotos.execute();
+                wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
+                wm_verPilotosPorNombre.execute();
             }
         });
 
@@ -54,7 +57,7 @@ public class VerPilotoView extends AppCompatActivity {
 
     }
 
-    private class WebMet_VerPilotos extends AsyncTask<Void, Void, Boolean> {
+    private class WebMet_VerPilotosPorNombre extends AsyncTask<Void, Void, Boolean> {
 
 
 
@@ -64,14 +67,13 @@ public class VerPilotoView extends AppCompatActivity {
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
             final String URL="http://10.0.2.2:8081/WS/infoCampeonato?wsdl";
-            final String METHOD_NAME = "verPilotos";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/verPilotos";
+            final String METHOD_NAME = "verPilotosPorNombre";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/verPilotosPorNombre";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            campoId = (EditText) findViewById(R.id.idPiloto);
-            request.addProperty("nombreCompleto", campoId.getText().toString());
 
+            request.addProperty("textoBusquedaNombre", campo_nombrePiloto.getText().toString());
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
@@ -83,6 +85,18 @@ public class VerPilotoView extends AppCompatActivity {
                 campoRespuesta.setText("");
 
                 ht.call(SOAP_ACTION, envelope);
+
+                KvmSerializable ks = (KvmSerializable)envelope.bodyIn;
+                for(int i = 0; i < ks.getPropertyCount(); ++i){
+                    SoapObject driver = (SoapObject) ks.getProperty(i);
+
+                    String id_str = driver.getPropertyAsString("id_str");
+                    String nombreCompleto = driver.getPrimitivePropertyAsString("nombreCompleto");
+                    
+
+                    Piloto piloto = new Piloto();
+
+                }
                 SoapObject response = (SoapObject)envelope.getResponse();
 
                 if (response != null) {

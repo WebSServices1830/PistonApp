@@ -1201,7 +1201,7 @@ public class InformacionCampeonato {
 				escuderia3.setPilotos(pilotosRed_Bull);
 				//Agrega autos escuderia 3
 				List<String> autosRed_Bull = new ArrayList<String>();
-				autosRed_Bull.add(auto3.getId_str());		
+				autosRed_Bull.add(auto9.getId_str());		
 				escuderia3.setAutos(autosRed_Bull);
 		
 				manejadorEscuderia.escuderia_create(escuderia3);
@@ -1222,7 +1222,7 @@ public class InformacionCampeonato {
 				escuderia4.setPilotos(pilotosRenault);
 				//Agrega autos escuderia 4
 				List<String> autosRenault = new ArrayList<String>();
-				autosRenault.add(auto4.getId_str());		
+				autosRenault.add(auto3.getId_str());		
 				escuderia4.setAutos(autosRenault);
 		
 

@@ -9,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import java.util.List;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.Movie;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
+import info.hoang8f.widget.FButton;
 
 public class IndexFragment extends Fragment {
 
@@ -57,6 +60,23 @@ public class IndexFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_index, container, false);
 
+        String nombreActividad = getActivity().toString();
+        Log.i("dondeestoy", "Estoy en: " + nombreActividad);
+
+
+
+        if (nombreActividad.contains("User") || nombreActividad.contains("user") ){
+
+//            FButton boton = (FButton) getActivity().findViewById(R.id.button_cargarDatos);
+//            boton.setVisibility(View.INVISIBLE);
+
+
+        }else if (nombreActividad.contains("Admin") || nombreActividad.contains("admin") ){
+
+
+
+        }
+
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
         //mAdapter = new StoreAdapter(getActivity(), itemsList);
@@ -73,39 +93,6 @@ public class IndexFragment extends Fragment {
         return view;
     }
 
-    /**
-     * fetching shopping item by making http call
-     */
-//    private void fetchStoreItems() {
-//        JsonArrayRequest request = new JsonArrayRequest(URL,
-//                new Response.Listener<JSONArray>() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        if (response == null) {
-//                            Toast.makeText(getActivity(), "Couldn't fetch the store items! Pleas try again.", Toast.LENGTH_LONG).show();
-//                            return;
-//                        }
-//
-//                        List<Movie> items = new Gson().fromJson(response.toString(), new TypeToken<List<Movie>>() {
-//                        }.getType());
-//
-//                        itemsList.clear();
-//                        itemsList.addAll(items);
-//
-//                        // refreshing recycler view
-//                        mAdapter.notifyDataSetChanged();
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                // error in getting json
-//                Log.e(TAG, "Error: " + error.getMessage());
-//                Toast.makeText(getActivity(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        MyApplication.getInstance().addToRequestQueue(request);
-//    }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 

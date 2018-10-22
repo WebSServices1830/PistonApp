@@ -1,259 +1,489 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--tools:context=".GranPremioPck.VerGPView"-->
+<!--android:fitsSystemWindows="true"-->
+<!--tools:layout_editor_absoluteY="25dp">-->
+
+<!--<ImageView-->
+    <!--android:id="@+id/imagenViewGP"-->
+    <!--android:layout_width="204dp"-->
+    <!--android:layout_height="209dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:srcCompat="@drawable/ic_gp"-->
+    <!--tools:layout_editor_absoluteY="42dp"-->
+    <!--tools:ignore="MissingConstraints" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/tituloPistaViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="Nombre de la pista"-->
+    <!--android:textSize="20sp"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/imagenViewGP"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/fechaCarreraViewGp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="TextView"-->
+    <!--android:textSize="15sp"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/imagenBandera"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/textView11"-->
+    <!--app:layout_constraintHorizontal_bias="0.074"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/imagenViewGP"-->
+    <!--app:layout_constraintVertical_bias="0.25"-->
+    <!--tools:text="Fecha de la carrera:" />-->
+
+<!--<ImageView-->
+    <!--android:id="@+id/imagenTrofeo"-->
+    <!--android:layout_width="114dp"-->
+    <!--android:layout_height="79dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="1.0"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/imagenViewGP"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/recordActualTituloViewGP"-->
+    <!--app:srcCompat="@drawable/trofeo" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/recordActualTituloViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:text="Record Actual"-->
+    <!--android:textSize="15sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.519"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/imagenViewGP"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/tituloPistaViewGP" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewTiempoRecordViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="56dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="56dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="Tiempo"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textViewNombrePilotoRecordViewGp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.048"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/imagenViewGP"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/imagenTrofeo"-->
+    <!--app:layout_constraintVertical_bias="0.0" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewNombrePilotoRecordViewGp"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="24dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="24dp"-->
+    <!--android:text="Nombre del piloto"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textViewFechaRecordViewGP"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.15"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/imagenViewGP" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewFechaRecordViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="18dp"-->
+    <!--android:layout_marginBottom="68dp"-->
+    <!--android:layout_marginEnd="20dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:text="27/07/2012"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textView11"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.655"-->
+    <!--app:layout_constraintStart_toEndOf="@+id/imagenViewGP" />-->
+
+<!--<ImageView-->
+    <!--android:id="@+id/imagenBandera"-->
+    <!--android:layout_width="149dp"-->
+    <!--android:layout_height="124dp"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textViewDistanciaViewGP"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/imagenCalificacion"-->
+    <!--app:layout_constraintHorizontal_bias="0.195"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:srcCompat="@drawable/carrera" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewDistanciaViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="16dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="16dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:text="Distancia de la carrera"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textViewKMViewGP"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/textViewCalificacionViewGP"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--android:textSize="15sp"-->
+    <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewNumeroVueltasViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="28dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="28dp"-->
+    <!--android:text="Número de vueltas"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textViewVueltasViewGP"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/buttonComentarioPista"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewKMViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="64dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="64dp"-->
+    <!--android:text="305km"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textViewNumeroVueltasViewGP"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/textViewCalificacionViewGP"-->
+    <!--app:layout_constraintHorizontal_bias="0.007"-->
+    <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewVueltasViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginLeft="76dp"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:layout_marginStart="76dp"-->
+    <!--android:text="71"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/buttonComentarioPista"-->
+    <!--app:layout_constraintHorizontal_bias="0.015"-->
+    <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--<ImageView-->
+    <!--android:id="@+id/imagenCalificacion"-->
+    <!--android:layout_width="162dp"-->
+    <!--android:layout_height="122dp"-->
+    <!--android:layout_marginBottom="12dp"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/textViewCalificacionViewGP"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:srcCompat="@drawable/calificacion" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textView11"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="56dp"-->
+    <!--android:layout_marginRight="56dp"-->
+    <!--android:text="Calificación"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/imagenCalificacion"-->
+    <!--app:layout_constraintEnd_toEndOf="parent" />-->
+
+<!--<Button-->
+    <!--android:id="@+id/buttonComentarioPista"-->
+    <!--android:layout_width="114dp"-->
+    <!--android:layout_height="55dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="40dp"-->
+    <!--android:layout_marginRight="40dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="Realizar Comentario"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/textViewCalificacionViewGP"-->
+    <!--app:layout_constraintVertical_bias="0.555" />-->
+
+<!--<TextView-->
+    <!--android:id="@+id/textViewCalificacionViewGP"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="64dp"-->
+    <!--android:layout_marginRight="64dp"-->
+    <!--android:text="4 estrellas"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--tools:layout_editor_absoluteY="460dp"-->
+    <!--tools:ignore="MissingConstraints" />-->
+<!--</android.support.constraint.ConstraintLayout>-->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GranPremioPck.VerGPView"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:layout_editor_absoluteY="25dp">
-
-    <ImageView
-        android:id="@+id/imagenViewGP"
-        android:layout_width="204dp"
-        android:layout_height="209dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_gp"
-        tools:layout_editor_absoluteY="42dp"
-        tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/tituloPistaViewGP"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="Nombre de la pista"
+        android:gravity="center"
         android:textSize="20sp"
+        android:fitsSystemWindows="true"
         app:layout_constraintBottom_toTopOf="@+id/imagenViewGP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/fechaCarreraViewGp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/imagenBandera"
-        app:layout_constraintEnd_toStartOf="@+id/textView11"
-        app:layout_constraintHorizontal_bias="0.074"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenViewGP"
-        app:layout_constraintVertical_bias="0.25"
-        tools:text="Fecha de la carrera:" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imagenTrofeo"
-        android:layout_width="114dp"
-        android:layout_height="79dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imagenViewGP"
-        app:layout_constraintTop_toBottomOf="@+id/recordActualTituloViewGP"
-        app:srcCompat="@drawable/trofeo" />
 
-    <TextView
-        android:id="@+id/recordActualTituloViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Record Actual"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
-        app:layout_constraintStart_toEndOf="@+id/imagenViewGP"
-        app:layout_constraintTop_toBottomOf="@+id/tituloPistaViewGP" />
 
-    <TextView
-        android:id="@+id/textViewTiempoRecordViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="8dp"
-        android:text="Tiempo"
-        app:layout_constraintBottom_toTopOf="@+id/textViewNombrePilotoRecordViewGp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
-        app:layout_constraintStart_toEndOf="@+id/imagenViewGP"
-        app:layout_constraintTop_toBottomOf="@+id/imagenTrofeo"
-        app:layout_constraintVertical_bias="0.0" />
+        <ImageView
+            android:id="@+id/imagenViewGP"
+            android:layout_width="204dp"
+            android:layout_height="209dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_gp"
+            tools:layout_editor_absoluteY="42dp"
+            tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/textViewNombrePilotoRecordViewGp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="24dp"
-        android:text="Nombre del piloto"
-        app:layout_constraintBottom_toTopOf="@+id/textViewFechaRecordViewGP"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toEndOf="@+id/imagenViewGP" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textViewFechaRecordViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginBottom="68dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginStart="8dp"
-        android:text="27/07/2012"
-        app:layout_constraintBottom_toTopOf="@+id/textView11"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.655"
-        app:layout_constraintStart_toEndOf="@+id/imagenViewGP" />
 
-    <ImageView
-        android:id="@+id/imagenBandera"
-        android:layout_width="149dp"
-        android:layout_height="124dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDistanciaViewGP"
-        app:layout_constraintEnd_toStartOf="@+id/imagenCalificacion"
-        app:layout_constraintHorizontal_bias="0.195"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/carrera" />
 
-    <TextView
-        android:id="@+id/textViewDistanciaViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
-        android:text="Distancia de la carrera"
-        app:layout_constraintBottom_toTopOf="@+id/textViewKMViewGP"
-        app:layout_constraintEnd_toStartOf="@+id/textViewCalificacionViewGP"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/recordActualTituloViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Record Actual"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.519"
+                app:layout_constraintStart_toEndOf="@+id/imagenViewGP"
+                app:layout_constraintTop_toBottomOf="@+id/tituloPistaViewGP" />
 
-    <TextView
-        android:id="@+id/textViewNumeroVueltasViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="28dp"
-        android:text="Número de vueltas"
-        app:layout_constraintBottom_toTopOf="@+id/textViewVueltasViewGP"
-        app:layout_constraintEnd_toStartOf="@+id/buttonComentarioPista"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/imagenTrofeo"
+                android:layout_width="114dp"
+                android:layout_height="79dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/imagenViewGP"
+                app:layout_constraintTop_toBottomOf="@+id/recordActualTituloViewGP"
+                app:srcCompat="@drawable/trofeo" />
 
-    <TextView
-        android:id="@+id/textViewKMViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="64dp"
-        android:text="305km"
-        app:layout_constraintBottom_toTopOf="@+id/textViewNumeroVueltasViewGP"
-        app:layout_constraintEnd_toStartOf="@+id/textViewCalificacionViewGP"
-        app:layout_constraintHorizontal_bias="0.007"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewVueltasViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="76dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="76dp"
-        android:text="71"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonComentarioPista"
-        app:layout_constraintHorizontal_bias="0.015"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/textViewTiempoRecordViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tiempo"
+                android:gravity="center"
+                android:layout_gravity="center"/>
 
-    <ImageView
-        android:id="@+id/imagenCalificacion"
-        android:layout_width="162dp"
-        android:layout_height="122dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewCalificacionViewGP"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/calificacion" />
+            <TextView
+                android:id="@+id/textViewNombrePilotoRecordViewGp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre del piloto"
+                android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginRight="56dp"
-        android:text="Calificación"
-        app:layout_constraintBottom_toTopOf="@+id/imagenCalificacion"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/textViewFechaRecordViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:text="27/07/2012"
+                app:layout_constraintBottom_toTopOf="@+id/textView11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.655"
+                app:layout_constraintStart_toEndOf="@+id/imagenViewGP" />
 
-    <Button
-        android:id="@+id/buttonComentarioPista"
-        android:layout_width="114dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="8dp"
-        android:text="Realizar Comentario"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCalificacionViewGP"
-        app:layout_constraintVertical_bias="0.555" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewCalificacionViewGP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:text="4 estrellas"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="460dp"
-        tools:ignore="MissingConstraints" />
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fechaCarreraViewGp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_gravity="center"
+                android:textSize="15sp"
+                app:layout_constraintVertical_bias="0.25"
+                tools:text="Fecha de la carrera:" />
+
+            <ImageView
+                android:id="@+id/imagenBandera"
+                android:layout_width="149dp"
+                android:layout_height="124dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/carrera" />
+
+            <TextView
+                android:id="@+id/textViewDistanciaViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:text="Distancia de la carrera"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+            <TextView
+                android:id="@+id/textViewKMViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="305km"/>
+
+            <TextView
+                android:id="@+id/textViewNumeroVueltasViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Número de vueltas"/>
+
+            <TextView
+                android:id="@+id/textViewVueltasViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="71"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calificación"/>
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/imagenCalificacion"
+                android:layout_width="162dp"
+                android:layout_height="122dp"
+                app:srcCompat="@drawable/calificacion" />
+
+            <TextView
+                android:id="@+id/textViewCalificacionViewGP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4 estrellas"
+                android:layout_gravity="center"
+                tools:ignore="MissingConstraints" />
+
+            <Button
+                android:id="@+id/buttonComentarioPista"
+                android:layout_width="114dp"
+                android:layout_height="55dp"
+                android:text="Realizar Comentario"
+                android:layout_gravity="center"
+                app:layout_constraintVertical_bias="0.555" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</LinearLayout>

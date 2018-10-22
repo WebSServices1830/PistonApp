@@ -3,9 +3,11 @@ package co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -57,6 +60,8 @@ public class VerGPView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_gpview);
 
+
+
         wb_verPista= new WebMet_verPista();
 
         imagenViewGP2= findViewById(R.id.imagenViewGP);
@@ -69,12 +74,9 @@ public class VerGPView extends AppCompatActivity {
         textViewCalificacionViewGP2= findViewById(R.id.textViewCalificacionViewGP);
         textViewVueltasViewGP2= findViewById(R.id.textViewVueltasViewGP);
 
-        downloadImageTask = new VerGPView.DownloadImageTask();
-        downloadImageTask.execute(foto_ref);
-
         gp = (GranPremio) getIntent().getSerializableExtra("GranPremio");
-        wb_verPista.execute();
-        textViewVueltasViewGP2.setText(gp.getCantVueltas());
+
+        textViewVueltasViewGP2.setText( Integer.toString(gp.getCantVueltas()) );
         Date fecha = gp.getFecha();
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(fecha);
@@ -82,12 +84,10 @@ public class VerGPView extends AppCompatActivity {
         int mes = calendar.get(Calendar.MONTH) + 1;
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         fechaCarreraViewGp2.setText("Fecha de la carrera: "+anio+"/"+mes+"/"+dia);
-        tituloPistaViewGP2.setText(ciudad);
-        textViewKMViewGP2.setText(distanciaCarrera_km+"km");
-        textViewCalificacionViewGP2.setText(calificacion+" estrellas");
-        textViewFechaRecordViewGP2.setText(record.getRecordVuelta_anio());
-        textViewNombrePilotoRecordViewGp2.setText(record.getRecordVuelta_piloto());
-        textViewTiempoRecordViewGP2.setText(record.getRecordVuleta_tiempo().toString());
+
+        wb_verPista.execute();
+
+
 
     }
 
@@ -152,8 +152,14 @@ public class VerGPView extends AppCompatActivity {
                     ciudad = response.getPrimitivePropertyAsString("ciudad");
                     foto_ref= response.getPrimitivePropertyAsString("foto_ref");
                     distanciaCarrera_km= Float.parseFloat(response.getPrimitivePropertyAsString("distanciaCarrera_km"));
-                    calificacion= Integer.parseInt(response.getPrimitivePropertyAsString("calificacion"));
-                    record= (Record) response.getPrimitiveProperty("record");
+                    calificacion= Float.parseFloat(response.getPrimitivePropertyAsString("calificacion"));
+                    SoapObject recordSoap = (SoapObject) response.getProperty("record");
+
+                    record = new Record();
+
+                    record.setRecordVuelta_anio( Integer.parseInt(recordSoap.getPrimitivePropertyAsString("recordVuelta_anio")) );
+                    record.setRecordVuelta_piloto( recordSoap.getPrimitivePropertyAsString("recordVuelta_piloto"));
+                    record.setRecordVuleta_tiempo( new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(recordSoap.getPrimitivePropertyAsString("recordVuleta_tiempo")));
 
                     return true;
                 }
@@ -168,6 +174,15 @@ public class VerGPView extends AppCompatActivity {
         protected void onPostExecute(final Boolean aBoolean) {
             if(aBoolean){
 
+                tituloPistaViewGP2.setText(ciudad);
+                textViewKMViewGP2.setText(distanciaCarrera_km+"km");
+                textViewCalificacionViewGP2.setText(calificacion+" estrellas");
+                textViewFechaRecordViewGP2.setText( Integer.toString(record.getRecordVuelta_anio()) );
+                textViewNombrePilotoRecordViewGp2.setText( record.getRecordVuelta_piloto().toString() );
+                textViewTiempoRecordViewGP2.setText( record.getRecordVuleta_tiempo().toString());
+
+                downloadImageTask = new VerGPView.DownloadImageTask();
+                downloadImageTask.execute(foto_ref);
             }
         }
     }

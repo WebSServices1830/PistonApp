@@ -34,7 +34,7 @@ public class EstPorEscuderia extends AppCompatActivity {
     private String[][] datos = { { "1", "Sebas", "Ferrari", "20" },
             { "2", "Heikki", "Skyppy", "10" } };
 
-    static String[] encabezado={"#","Escuderia","Puntos"};
+    static String[] encabezado={"#","Escuderia","Podios"};
     private WebMet_ObtenerPiloto wm_validarLogin = null;
     private List<Escuderia> listaEscuderias = new ArrayList<>();
     public TableView<String[]> tableView;
@@ -100,10 +100,12 @@ public class EstPorEscuderia extends AppCompatActivity {
 
                     String id_str = escuderia.getPrimitivePropertyAsString("id_str");
                     String nombre = escuderia.getPrimitivePropertyAsString("nombre");
+                    int cant_vecesEnPodio = Integer.parseInt(escuderia.getPrimitivePropertyAsString("cant_vecesEnPodio"));
 
                     Escuderia escuderiaObjeto= new Escuderia();
                     escuderiaObjeto.setId_str(id_str);
                     escuderiaObjeto.setNombre(nombre);
+                    escuderiaObjeto.setCant_vecesEnPodio(cant_vecesEnPodio);
 
                     listaEscuderias.add(escuderiaObjeto);
 
@@ -141,13 +143,8 @@ public class EstPorEscuderia extends AppCompatActivity {
                             case 1:
                                 datos[i][j] = listaEscuderias.get(i).getNombre();
                                 break;
-                            case 2:
-                                datos[i][j] = "equipo";
-                                break;
                             case 3:
-                                Random rand = new Random();
-                                int  n = rand.nextInt(150) + 101;
-                                datos[i][j] = Integer.toString(n);
+                                datos[i][j] = Integer.toString(listaEscuderias.get(i).getCant_vecesEnPodio());
                                 break;
 
                         }
@@ -157,8 +154,8 @@ public class EstPorEscuderia extends AppCompatActivity {
 
                 Arrays.sort(datos, new Comparator() {
                     public int compare(Object o1, Object o2) {
-                        String[] elt1 = (String[])o2;
-                        String[] elt2 = (String[])o1;
+                        Integer[] elt1 = (Integer[])o2;
+                        Integer[] elt2 = (Integer[])o1;
                         return elt1[2].compareTo(elt2[2]);
                     }
                 });

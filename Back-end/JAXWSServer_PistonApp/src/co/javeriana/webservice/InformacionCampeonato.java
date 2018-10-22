@@ -53,6 +53,282 @@ public class InformacionCampeonato {
 		GregorianCalendar fechaFin = new GregorianCalendar(2018,11,31);
 		
 		Campeonato campeonato = manejadorCampeonato.campeonato_create("Campeonato 2018", fechaInicio.getTime(), fechaFin.getTime());
+		GregorianCalendar Vuelta_P1 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P2 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P3 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P4 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P5 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P6 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P7 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P8 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P9 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P10 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P11 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P12 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P13 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P14 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P15 = new GregorianCalendar();
+	
+		//PILOTO 1
+		GregorianCalendar fechaNacimiento_1 = new GregorianCalendar(1985,0,07);
+		String fotoRefP1 = null;
+		try {
+			fotoRefP1 = ManejadorImagenes.saveImageIntoMongoDB("fotos/LewisHamilton.jpg", "Lewis Hamilton");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto1= new Piloto("Lewis Hamilton",fechaNacimiento_1.getTime(),"Stevenage, England",fotoRefP1,131,2941,225);
+		manejadorPiloto.piloto_create(piloto1);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName("Lewis Hamilton").getId_str()));
+		
+		//PILOTO 2
+		GregorianCalendar fechaNacimiento_2 = new GregorianCalendar(1987,06,03);
+		String fotoRefP2 = null;
+		try {
+			fotoRefP2 = ManejadorImagenes.saveImageIntoMongoDB("fotos/sebastian.jpg", "Sebatian Vettel");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto2= new Piloto("Sebastian Vettel",fechaNacimiento_2.getTime(),"Heppenheim, Germany",fotoRefP2,109,2689,216);
+		manejadorPiloto.piloto_create(piloto2);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto2.getNombreCompleto()).getId_str()));
+		//PILOTO 3
+		GregorianCalendar fechaNacimiento_3 = new GregorianCalendar(1989,07,28);
+		String fotoRefP3 = null;
+		try {
+			fotoRefP3 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Valtteri Bottas.jpg", "Valtteri Bottas");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto3= new Piloto("Valtteri Bottas",fechaNacimiento_3.getTime(),"Nastola, Finland",fotoRefP3,30,923,115);
+		manejadorPiloto.piloto_create(piloto3);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto3.getNombreCompleto()).getId_str()));
+		//PILOTO 4
+		GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979,9,17);
+		String fotoRefP4 = null;
+		try {
+			fotoRefP4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kimi Raikkonen.jpg", "Kimi Raikkonen");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto4= new Piloto("Kimi R�ikk�nen",fechaNacimiento_4.getTime(),"Espoo, Finland",fotoRefP4,100,1761,290);
+		manejadorPiloto.piloto_create(piloto4);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto4.getNombreCompleto()).getId_str()));
+		//PILOTO 5
+		GregorianCalendar fechaNacimiento_5 = new GregorianCalendar(1997,8,30);
+		String fotoRefP5 = null;
+		try {
+			fotoRefP5 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Max Verstappen.jpg", "Max Verstappen");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto5= new Piloto("Max Verstappen",fechaNacimiento_5.getTime(),"Hasselt, Belgium",fotoRefP5,18,594,77);
+		manejadorPiloto.piloto_create(piloto5);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto5.getNombreCompleto()).getId_str()));
+
+		//PILOTO 6
+		GregorianCalendar fechaNacimiento_6 = new GregorianCalendar(1989,6,01);
+		String fotoRefP6 = null;
+		try {
+			fotoRefP6 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Daniel Ricciardo.jpg", "Daniel Ricciardo");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto6= new Piloto("Daniel Ricciardo",fechaNacimiento_6.getTime(),"Perth, Australia",fotoRefP6,29,962,146);
+		manejadorPiloto.piloto_create(piloto6);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto6.getNombreCompleto()).getId_str()));
+		//PILOTO 7
+		GregorianCalendar fechaNacimiento_7 = new GregorianCalendar(1990,0,26);
+		String fotoRefP7 = null;
+		try {
+			fotoRefP7 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sergio Perez.jpg", "Sergio Perez");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto7= new Piloto("Sergio Perez",fechaNacimiento_7.getTime(),"Guadalajara, Mexico",fotoRefP7,8,520,153);
+
+		manejadorPiloto.piloto_create(piloto7);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto7.getNombreCompleto()).getId_str()));
+		//PILOTO 8
+		GregorianCalendar fechaNacimiento_8 = new GregorianCalendar(1992,9,5);
+		String fotoRefP8 = null;
+		try {
+			fotoRefP8 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kevin Magnussen.jpg", "Kevin Magnussen");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto8= new Piloto("Kevin Magnussen",fechaNacimiento_8.getTime(),"Roskilde, Denmark",fotoRefP8,1,134,78);
+		manejadorPiloto.piloto_create(piloto8);
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto8.getNombreCompleto()).getId_str()));
+		//PILOTO 9
+		GregorianCalendar fechaNacimiento_9 = new GregorianCalendar(1987,7,19);
+		String fotoRefP9 = null;
+		try {
+			fotoRefP9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Nico Hulkenberg.jpg", "Nico Hulkenberg");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto9= new Piloto("Nico Hulkenberg",fechaNacimiento_9.getTime(),"Emmerich am Rhein, Germany",fotoRefP9,0,458,154);
+		manejadorPiloto.piloto_create(piloto9);
+
+		//PILOTO 10
+		GregorianCalendar fechaNacimiento_10 = new GregorianCalendar(1981,6,29);
+		String fotoRefP10 = null;
+		try {
+			fotoRefP10 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Fernando Alonso.jpg", "Fernando Alonso");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto10= new Piloto("Fernando Alonso",fechaNacimiento_10.getTime(),"Oviedo, Spain",fotoRefP10,97,1899,310);
+		manejadorPiloto.piloto_create(piloto10);
+		
+		//PILOTO 11
+		GregorianCalendar fechaNacimiento_11 = new GregorianCalendar(1996,8,17);
+		String fotoRefP11 = null;
+		try {
+			fotoRefP11 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Esteban Ocon.jpg", "Esteban Ocon");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto11= new Piloto("Esteban Ocon",fechaNacimiento_11.getTime(),"�vreux, Normandy",fotoRefP11,0,136,47);
+		manejadorPiloto.piloto_create(piloto11);
+
+		//PILOTO 12
+		GregorianCalendar fechaNacimiento_12 = new GregorianCalendar(1994,8,1);
+		String fotoRefP12 = null;
+		try {
+			fotoRefP12 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Carlos Sainz.jpg", "Carlos Sainz");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto12= new Piloto("Carlos Sainz",fechaNacimiento_12.getTime(),"Madrid, Spain",fotoRefP12,0,157,78);
+		manejadorPiloto.piloto_create(piloto12);
+
+		//PILOTO 13
+		GregorianCalendar fechaNacimiento_13 = new GregorianCalendar(1986,3,17);
+		String fotoRefP13 = null;
+		try {
+			fotoRefP13 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Romain Grosjean.jpg", "Romain Grosjean");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto13= new Piloto("Romain Grosjean",fechaNacimiento_13.getTime(),"Geneva, Switzerland",fotoRefP13,10,375,142);
+		manejadorPiloto.piloto_create(piloto13);
+		
+		//PILOTO 14
+		GregorianCalendar fechaNacimiento_14 = new GregorianCalendar(1996,1,7);
+		String fotoRefP14 = null;
+		try {
+			fotoRefP14 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Pierre Gasly.jpg", "Pierre Gasly");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto14= new Piloto("Pierre Gasly",fechaNacimiento_14.getTime(),"Rouen, France",fotoRefP14,0,28,23);
+		manejadorPiloto.piloto_create(piloto14);
+
+		//PILOTO 15
+		GregorianCalendar fechaNacimiento_15 = new GregorianCalendar(1997,9,16);
+		String fotoRefP15 = null;
+		try {
+			fotoRefP15 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Charles Leclerc.jpg", "Charles Leclerc");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto15= new Piloto("Charles Leclerc",fechaNacimiento_15.getTime(),"Monte Carlo, Monaco",fotoRefP15,0,21,18);
+		manejadorPiloto.piloto_create(piloto15);
+
+		//PILOTO 16
+		GregorianCalendar fechaNacimiento_16 = new GregorianCalendar(1992,2,26);
+		String fotoRefP16 = null;
+		try {
+			fotoRefP16 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Stoffel Vandoorne.jpg", "Stoffel Vandoorne");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto16= new Piloto("Stoffel Vandoorne",fechaNacimiento_16.getTime(),"Kortrijk, Belgium",fotoRefP16,0,22,39);
+		manejadorPiloto.piloto_create(piloto16);
+
+		//PILOTO 17
+		GregorianCalendar fechaNacimiento_17 = new GregorianCalendar(1998,9,29);
+		String fotoRefP17 = null;
+		try {
+			fotoRefP17 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Lance Stroll.jpg", "Lance Stroll");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto17= new Piloto("Lance Stroll",fechaNacimiento_17.getTime(),"Montreal, Canada",fotoRefP17,1,46,38);
+		manejadorPiloto.piloto_create(piloto17);
+
+		//PILOTO 18
+		GregorianCalendar fechaNacimiento_18 = new GregorianCalendar(1990,8,2);
+		String fotoRefP18 = null;
+		try {
+			fotoRefP18 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Marcus Ericsson.jpg", "Marcus Ericsson");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto18= new Piloto("Marcus Ericsson",fechaNacimiento_18.getTime(),"Kumla, Sweden",fotoRefP18,0,15,94);
+		manejadorPiloto.piloto_create(piloto18);
+
+		//PILOTO 19
+		GregorianCalendar fechaNacimiento_19 = new GregorianCalendar(1989,10,10);
+		String fotoRefP19 = null;
+		try {
+			fotoRefP19 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Brendon Hartley.jpg", "Brendon Hartley");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto19= new Piloto("Brendon Hartley",fechaNacimiento_19.getTime(),"Palmerston North, New Zealand",fotoRefP19,0,2,22);
+		manejadorPiloto.piloto_create(piloto19);
+
+		//PILOTO 20
+		GregorianCalendar fechaNacimiento_20 = new GregorianCalendar(1995,07,25);
+		String fotoRefP20 = null;
+		try {
+			fotoRefP20 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sergey Sirotkin.jpg", "Sergey Sirotkin");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Piloto piloto20= new Piloto("Sergey Sirotkin",fechaNacimiento_20.getTime(),"Moscow, Russia",fotoRefP20,0,1,18);
+		manejadorPiloto.piloto_create(piloto20);
+		
+		
+		ClasificacionCarrera CCP1= new ClasificacionCarrera();
+		ClasificacionCarrera CCP2= new ClasificacionCarrera();
+		ClasificacionCarrera CCP3= new ClasificacionCarrera();
+		ClasificacionCarrera CCP4= new ClasificacionCarrera();
+		ClasificacionCarrera CCP5= new ClasificacionCarrera();
+		ClasificacionCarrera CCP6= new ClasificacionCarrera();
+		ClasificacionCarrera CCP7= new ClasificacionCarrera();
+		ClasificacionCarrera CCP8= new ClasificacionCarrera();
+		ClasificacionCarrera CCP9= new ClasificacionCarrera();
+		ClasificacionCarrera CCP10= new ClasificacionCarrera();
+		ClasificacionCarrera CCP11= new ClasificacionCarrera();
+		ClasificacionCarrera CCP12= new ClasificacionCarrera();
+		ClasificacionCarrera CCP13= new ClasificacionCarrera();
+		ClasificacionCarrera CCP14= new ClasificacionCarrera();
+		ClasificacionCarrera CCP15= new ClasificacionCarrera();
+
 		
 		//GRAN PREMIO 1
 		GregorianCalendar fechaGranPremio_1 = new GregorianCalendar(2018,2,25);
@@ -81,7 +357,116 @@ public class InformacionCampeonato {
 		if(fotoRef_1 != null) {
 			Pista pista = manejadorPista.pista_create("Melbourne", fotoRef_1, "Sebastian Vettel", (float)307.57, (float)5.303, record_1);
 			
+			Vuelta_P1.set(Calendar.HOUR,1);
+			Vuelta_P1.set(Calendar.MINUTE,29);
+			Vuelta_P1.set(Calendar.SECOND,33);
+			Vuelta_P1.set(Calendar.MILLISECOND,283);
+			CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto2.getId_str());
+			
+			
+			Vuelta_P2.set(Calendar.HOUR,1);
+			Vuelta_P2.set(Calendar.MINUTE,29);
+			Vuelta_P2.set(Calendar.SECOND,38);
+			Vuelta_P2.set(Calendar.MILLISECOND,319);
+			CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto1.getId_str());
+			
+			Vuelta_P3.set(Calendar.HOUR,1);
+			Vuelta_P3.set(Calendar.MINUTE,29);
+			Vuelta_P3.set(Calendar.SECOND,39);
+			Vuelta_P3.set(Calendar.MILLISECOND,592);
+			CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto4.getId_str());
+/*	//*
+			Vuelta_P4.set(Calendar.HOUR,1);
+			Vuelta_P4.set(Calendar.MINUTE,29);
+			Vuelta_P4.set(Calendar.SECOND,40);
+			Vuelta_P4.set(Calendar.MILLISECOND,352);
+			CCP4= new ClasificacionCarrera(12,Vuelta_P4.getTime(), "Daniel Ricciardo");
+			
+			Vuelta_P5.set(Calendar.HOUR,1);
+			Vuelta_P5.set(Calendar.MINUTE,29);
+			Vuelta_P5.set(Calendar.SECOND,61);
+			Vuelta_P5.set(Calendar.MILLISECOND,169);
+			 CCP5= new ClasificacionCarrera(10,Vuelta_P5.getTime(), "Fernando Alonso");
+			
+			Vuelta_P6.set(Calendar.HOUR,1);
+			Vuelta_P6.set(Calendar.MINUTE,29);
+			Vuelta_P6.set(Calendar.SECOND,62);
+			Vuelta_P6.set(Calendar.MILLISECOND,228);
+			CCP6= new ClasificacionCarrera(8,Vuelta_P6.getTime(), "Max Verstappen");
+			
+			Vuelta_P7.set(Calendar.HOUR,1);
+			Vuelta_P7.set(Calendar.MINUTE,30);
+			Vuelta_P7.set(Calendar.SECOND,5);
+			Vuelta_P7.set(Calendar.MILLISECOND,954);
+			CCP7= new ClasificacionCarrera(6,Vuelta_P7.getTime(), "Nico Hulkenberg");
+			
+			Vuelta_P8.set(Calendar.HOUR,1);
+			Vuelta_P8.set(Calendar.MINUTE,30);
+			Vuelta_P8.set(Calendar.SECOND,7);
+			Vuelta_P8.set(Calendar.MILLISECOND,622);
+			CCP8= new ClasificacionCarrera(4,Vuelta_P8.getTime(), "Valtteri Bottas");
+			
+			Vuelta_P9.set(Calendar.HOUR,1);
+			Vuelta_P9.set(Calendar.MINUTE,30);
+			Vuelta_P9.set(Calendar.SECOND,8);
+			Vuelta_P9.set(Calendar.MILLISECOND,204);
+			CCP9= new ClasificacionCarrera(2,Vuelta_P9.getTime(), "Stoffel Vandoorne");
+			
+			Vuelta_P10.set(Calendar.HOUR,1);
+			Vuelta_P10.set(Calendar.MINUTE,30);
+			Vuelta_P10.set(Calendar.SECOND,19);
+			Vuelta_P10.set(Calendar.MILLISECOND,005);
+			CCP10= new ClasificacionCarrera(1,Vuelta_P10.getTime(), "Carlos Sainz");
+			
+			Vuelta_P11.set(Calendar.HOUR,1);
+			Vuelta_P11.set(Calendar.MINUTE,30);
+			Vuelta_P11.set(Calendar.SECOND,20);
+			Vuelta_P11.set(Calendar.MILLISECOND,100);
+			CCP11= new ClasificacionCarrera(0,Vuelta_P11.getTime(), "Sergio Perez");
+			
+			Vuelta_P12.set(Calendar.HOUR,1);
+			Vuelta_P12.set(Calendar.MINUTE,30);
+			Vuelta_P12.set(Calendar.SECOND,33);
+			Vuelta_P12.set(Calendar.MILLISECOND,561);
+			CCP12= new ClasificacionCarrera(0,Vuelta_P12.getTime(), "Esteban Ocon");
+			
+			Vuelta_P13.set(Calendar.HOUR,1);
+			Vuelta_P13.set(Calendar.MINUTE,30);
+			Vuelta_P13.set(Calendar.SECOND,49);
+			Vuelta_P13.set(Calendar.MILLISECOND,042);
+			CCP13= new ClasificacionCarrera(0,Vuelta_P13.getTime(), "Charles Leclerc");
+			
+			Vuelta_P14.set(Calendar.HOUR,1);
+			Vuelta_P14.set(Calendar.MINUTE,30);
+			Vuelta_P14.set(Calendar.SECOND,51);
+			Vuelta_P14.set(Calendar.MILLISECOND,571);
+			CCP14= new ClasificacionCarrera(0,Vuelta_P14.getTime(), "Lance Stroll");
+			
+			Vuelta_P15.set(Calendar.HOUR,1);
+			Vuelta_P15.set(Calendar.MINUTE,30);
+			Vuelta_P15.set(Calendar.SECOND,57);
+			Vuelta_P15.set(Calendar.MILLISECOND,408);
+			CCP15= new ClasificacionCarrera(0,Vuelta_P15.getTime(), "Brendon Hartley");
+			*/
+			List<String> CCGPAustralia = new ArrayList<String>();
+			CCGPAustralia.add(CCP1.getId_str());
+			CCGPAustralia.add(CCP2.getId_str());
+			CCGPAustralia.add(CCP3.getId_str());
+			/*CCGPAustralia.add(CCP4.getId_str());
+			CCGPAustralia.add(CCP5.getId_str());
+			CCGPAustralia.add(CCP6.getId_str());
+			CCGPAustralia.add(CCP7.getId_str());
+			CCGPAustralia.add(CCP8.getId_str());
+			CCGPAustralia.add(CCP9.getId_str());
+			CCGPAustralia.add(CCP10.getId_str());
+			CCGPAustralia.add(CCP11.getId_str());
+			CCGPAustralia.add(CCP12.getId_str());
+			CCGPAustralia.add(CCP13.getId_str());
+			CCGPAustralia.add(CCP14.getId_str());
+			CCGPAustralia.add(CCP15.getId_str());*/
+
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_1.getTime(), 58, mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
+			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_1.getTime(), CCGPAustralia);
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 		}
 		
@@ -113,7 +498,33 @@ public class InformacionCampeonato {
 				if(fotoRef_2 != null) {
 					Pista pista = manejadorPista.pista_create("Bahrain", fotoRef_2, "Sebastian Vettel", (float)308.23, (float)5.412, record_2);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,32);
+					Vuelta_P1.set(Calendar.SECOND,1);
+					Vuelta_P1.set(Calendar.MILLISECOND,940);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto2.getId_str());
+					
+					
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,32);
+					Vuelta_P2.set(Calendar.SECOND,2);
+					Vuelta_P2.set(Calendar.MILLISECOND,639);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto3.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,32);
+					Vuelta_P3.set(Calendar.SECOND,9);
+					Vuelta_P3.set(Calendar.MILLISECOND,452);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto1.getId_str());
+					
+					List<String> CCGPBahrain = new ArrayList<String>();
+					CCGPBahrain.add(CCP1.getId_str());
+					CCGPBahrain.add(CCP2.getId_str());
+					CCGPBahrain.add(CCP3.getId_str());
+
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_2.getTime(), 57, mejorVuelta_2.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_2.getTime(), CCGPBahrain);
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 				
@@ -145,7 +556,34 @@ public class InformacionCampeonato {
 				if(fotoRef_3 != null) {
 					Pista pista = manejadorPista.pista_create("Shangai", fotoRef_3, "Daniel Ricciardo", (float)305.066, (float)5.451, record_3);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,35);
+					Vuelta_P1.set(Calendar.SECOND,36);
+					Vuelta_P1.set(Calendar.MILLISECOND,380);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto6.getId_str());
+					
+					
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,35);
+					Vuelta_P2.set(Calendar.SECOND,45);
+					Vuelta_P2.set(Calendar.MILLISECOND,274);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto3.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,35);
+					Vuelta_P3.set(Calendar.SECOND,46);
+					Vuelta_P3.set(Calendar.MILLISECOND,17);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto4.getId_str());
+					
+					List<String> CCGPShangai = new ArrayList<String>();
+					CCGPShangai.add(CCP1.getId_str());
+					CCGPShangai.add(CCP2.getId_str());
+					CCGPShangai.add(CCP3.getId_str());
+
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_3.getTime(), 56, mejorVuelta_3.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_3.getTime(), CCGPShangai);
+
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 		
@@ -177,7 +615,35 @@ public class InformacionCampeonato {
 				if(fotoRef_4 != null) {
 					Pista pista = manejadorPista.pista_create("Azerbaijan", fotoRef_4, "Lewis Hamilton", (float)306.049, (float)6.003, record_4);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,43);
+					Vuelta_P1.set(Calendar.SECOND,44);
+					Vuelta_P1.set(Calendar.MILLISECOND,291);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto1.getId_str());
+					
+					
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,43);
+					Vuelta_P2.set(Calendar.SECOND,46);
+					Vuelta_P2.set(Calendar.MILLISECOND,337);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto4.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,43);
+					Vuelta_P3.set(Calendar.SECOND,48);
+					Vuelta_P3.set(Calendar.MILLISECOND,315);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto7.getId_str());
+					
+					List<String> CCGPAZERBAIJAN = new ArrayList<String>();
+					CCGPAZERBAIJAN.add(CCP1.getId_str());
+					CCGPAZERBAIJAN.add(CCP2.getId_str());
+					CCGPAZERBAIJAN.add(CCP3.getId_str());
+
+					
+					
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_4.getTime(), 51, mejorVuelta_4.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_4.getTime(), CCGPAZERBAIJAN);
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 				
@@ -209,7 +675,35 @@ public class InformacionCampeonato {
 				if(fotoRef_5 != null) {
 					Pista pista = manejadorPista.pista_create("Barcelona", fotoRef_5, "Lewis Hamilton", (float)307.104, (float)4.655, record_5);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,35);
+					Vuelta_P1.set(Calendar.SECOND,29);
+					Vuelta_P1.set(Calendar.MILLISECOND,972);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto1.getId_str());
+					
+					
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,35);
+					Vuelta_P2.set(Calendar.SECOND,50);
+					Vuelta_P2.set(Calendar.MILLISECOND,568);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto3.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,35);
+					Vuelta_P3.set(Calendar.SECOND,56);
+					Vuelta_P3.set(Calendar.MILLISECOND,595);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto5.getId_str());
+					
+					List<String> CCGPSPAIN = new ArrayList<String>();
+					CCGPSPAIN.add(CCP1.getId_str());
+					CCGPSPAIN.add(CCP2.getId_str());
+					CCGPSPAIN.add(CCP3.getId_str());
+
+					
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_5.getTime(), 66, mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_5.getTime(), CCGPSPAIN);
+
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 		
@@ -241,7 +735,33 @@ public class InformacionCampeonato {
 				if(fotoRef_6 != null) {
 					Pista pista = manejadorPista.pista_create("Principado de Monaco", fotoRef_6, "Daniel Ricciardo", (float)260.286, (float)3.337, record_6);
 					
+
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,42);
+					Vuelta_P1.set(Calendar.SECOND,54);
+					Vuelta_P1.set(Calendar.MILLISECOND,807);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto7.getId_str());
+
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,43);
+					Vuelta_P2.set(Calendar.SECOND,2);
+					Vuelta_P2.set(Calendar.MILLISECOND,143);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto2.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,43);
+					Vuelta_P3.set(Calendar.SECOND,11);
+					Vuelta_P3.set(Calendar.MILLISECOND,820);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto1.getId_str());
+					
+					List<String> CCGPMONACO = new ArrayList<String>();
+					CCGPMONACO.add(CCP1.getId_str());
+					CCGPMONACO.add(CCP2.getId_str());
+					CCGPMONACO.add(CCP3.getId_str());
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_6.getTime(), 78, mejorVuelta_6.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_6.getTime(), CCGPMONACO);
+
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 				
@@ -273,7 +793,32 @@ public class InformacionCampeonato {
 				if(fotoRef_7 != null) {
 					Pista pista = manejadorPista.pista_create("Canada", fotoRef_7, "Sebastian Vettel", (float)305.27, (float)4.361, record_7);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,28);
+					Vuelta_P1.set(Calendar.SECOND,31);
+					Vuelta_P1.set(Calendar.MILLISECOND,377);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto2.getId_str());
+
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,28);
+					Vuelta_P2.set(Calendar.SECOND,38);
+					Vuelta_P2.set(Calendar.MILLISECOND,753);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto3.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,28);
+					Vuelta_P3.set(Calendar.SECOND,39);
+					Vuelta_P3.set(Calendar.MILLISECOND,413);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto5.getId_str());
+					
+					List<String> CCGPCANADA = new ArrayList<String>();
+					CCGPCANADA.add(CCP1.getId_str());
+					CCGPCANADA.add(CCP2.getId_str());
+					CCGPCANADA.add(CCP3.getId_str());
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_7.getTime(), 70, mejorVuelta_7.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_7.getTime(), CCGPCANADA);
+
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 				
@@ -305,7 +850,32 @@ public class InformacionCampeonato {
 				if(fotoRef_8 != null) {
 					Pista pista = manejadorPista.pista_create("France", fotoRef_8, "Lewis Hamilton", (float)309.69, (float)5.842, record_8);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,30);
+					Vuelta_P1.set(Calendar.SECOND,11);
+					Vuelta_P1.set(Calendar.MILLISECOND,385);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto1.getId_str());
+
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,30);
+					Vuelta_P2.set(Calendar.SECOND,20);
+					Vuelta_P2.set(Calendar.MILLISECOND,394);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto5.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,30);
+					Vuelta_P3.set(Calendar.SECOND,37);
+					Vuelta_P3.set(Calendar.MILLISECOND,273);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto4.getId_str());
+					
+					List<String> CCGPFRANCE = new ArrayList<String>();
+					CCGPFRANCE.add(CCP1.getId_str());
+					CCGPFRANCE.add(CCP2.getId_str());
+					CCGPFRANCE.add(CCP3.getId_str());
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_8.getTime(), 53, mejorVuelta_8.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_8.getTime(), CCGPFRANCE);
+
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 		
@@ -314,10 +884,10 @@ public class InformacionCampeonato {
 				GregorianCalendar fechaGranPremio_9 = new GregorianCalendar(2018,6,1);
 				
 				GregorianCalendar mejorVuelta_9 = new GregorianCalendar();
-				mejorVuelta_4.set(Calendar.HOUR,1);
-				mejorVuelta_4.set(Calendar.MINUTE,21);
-				mejorVuelta_4.set(Calendar.SECOND,56);
-				mejorVuelta_4.set(Calendar.MILLISECOND,024);
+				mejorVuelta_9.set(Calendar.HOUR,1);
+				mejorVuelta_9.set(Calendar.MINUTE,21);
+				mejorVuelta_9.set(Calendar.SECOND,56);
+				mejorVuelta_9.set(Calendar.MILLISECOND,024);
 				
 				//PISTA 9
 				GregorianCalendar recordVuelta_9 = new GregorianCalendar();
@@ -337,7 +907,32 @@ public class InformacionCampeonato {
 				if(fotoRef_9!= null) {
 					Pista pista = manejadorPista.pista_create("Austria", fotoRef_9, "Max Verstappen", (float)306.452, (float)4.318, record_9);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,21);
+					Vuelta_P1.set(Calendar.SECOND,56);
+					Vuelta_P1.set(Calendar.MILLISECOND,024);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto5.getId_str());
+
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,21);
+					Vuelta_P2.set(Calendar.SECOND,57);
+					Vuelta_P2.set(Calendar.MILLISECOND,528);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto4.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,21);
+					Vuelta_P3.set(Calendar.SECOND,59);
+					Vuelta_P3.set(Calendar.MILLISECOND,205);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto2.getId_str());
+					
+					List<String> CCGPAustria = new ArrayList<String>();
+					CCGPAustria.add(CCP1.getId_str());
+					CCGPAustria.add(CCP2.getId_str());
+					CCGPAustria.add(CCP3.getId_str());
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_9.getTime(), 71, mejorVuelta_9.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_9.getTime(), CCGPAustria);
+
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 				
@@ -369,7 +964,32 @@ public class InformacionCampeonato {
 				if(fotoRef_10 != null) {
 					Pista pista = manejadorPista.pista_create("Gran Bretania", fotoRef_10, "Sebastian Vettel", (float)306.198, (float)5.891, record_10);
 					
+					Vuelta_P1.set(Calendar.HOUR,1);
+					Vuelta_P1.set(Calendar.MINUTE,27);
+					Vuelta_P1.set(Calendar.SECOND,29);
+					Vuelta_P1.set(Calendar.MILLISECOND,784);
+					CCP1= new ClasificacionCarrera(25,Vuelta_P1.getTime(), piloto2.getId_str());
+
+					Vuelta_P2.set(Calendar.HOUR,1);
+					Vuelta_P2.set(Calendar.MINUTE,27);
+					Vuelta_P2.set(Calendar.SECOND,32);
+					Vuelta_P2.set(Calendar.MILLISECOND,48);
+					CCP2= new ClasificacionCarrera(18,Vuelta_P2.getTime(), piloto1.getId_str());
+					
+					Vuelta_P3.set(Calendar.HOUR,1);
+					Vuelta_P3.set(Calendar.MINUTE,27);
+					Vuelta_P3.set(Calendar.SECOND,33);
+					Vuelta_P3.set(Calendar.MILLISECOND,436);
+					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto4.getId_str());
+					
+					List<String> CCGPBretania = new ArrayList<String>();
+					CCGPBretania.add(CCP1.getId_str());
+					CCGPBretania.add(CCP2.getId_str());
+					CCGPBretania.add(CCP3.getId_str());
+					
 					GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_10.getTime(), 52, mejorVuelta_10.getTime(), pista.getId_str(), campeonato.getId_str());
+					manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_10.getTime(), CCGPBretania);
+
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 		
@@ -718,248 +1338,7 @@ public class InformacionCampeonato {
 					manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 				}
 		
-				//PILOTO 1
-				GregorianCalendar fechaNacimiento_1 = new GregorianCalendar(1985,0,07);
-				String fotoRefP1 = null;
-				try {
-					fotoRefP1 = ManejadorImagenes.saveImageIntoMongoDB("fotos/LewisHamilton.jpg", "Lewis Hamilton");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto1= new Piloto("Lewis Hamilton",fechaNacimiento_1.getTime(),"Stevenage, England",fotoRefP1,131,2941,225);
-				manejadorPiloto.piloto_create(piloto1);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName("Lewis Hamilton").getId_str()));
 				
-				//PILOTO 2
-				GregorianCalendar fechaNacimiento_2 = new GregorianCalendar(1987,06,03);
-				String fotoRefP2 = null;
-				try {
-					fotoRefP2 = ManejadorImagenes.saveImageIntoMongoDB("fotos/sebastian.jpg", "Sebatian Vettel");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto2= new Piloto("Sebastian Vettel",fechaNacimiento_2.getTime(),"Heppenheim, Germany",fotoRefP2,109,2689,216);
-				manejadorPiloto.piloto_create(piloto2);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto2.getNombreCompleto()).getId_str()));
-				//PILOTO 3
-				GregorianCalendar fechaNacimiento_3 = new GregorianCalendar(1989,07,28);
-				String fotoRefP3 = null;
-				try {
-					fotoRefP3 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Valtteri Bottas.jpg", "Valtteri Bottas");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto3= new Piloto("Valtteri Bottas",fechaNacimiento_3.getTime(),"Nastola, Finland",fotoRefP3,30,923,115);
-				manejadorPiloto.piloto_create(piloto3);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto3.getNombreCompleto()).getId_str()));
-				//PILOTO 4
-				GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979,9,17);
-				String fotoRefP4 = null;
-				try {
-					fotoRefP4 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kimi Raikkonen.jpg", "Kimi Raikkonen");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto4= new Piloto("Kimi R�ikk�nen",fechaNacimiento_4.getTime(),"Espoo, Finland",fotoRefP4,100,1761,290);
-				manejadorPiloto.piloto_create(piloto4);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto4.getNombreCompleto()).getId_str()));
-				//PILOTO 5
-				GregorianCalendar fechaNacimiento_5 = new GregorianCalendar(1997,8,30);
-				String fotoRefP5 = null;
-				try {
-					fotoRefP5 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Max Verstappen.jpg", "Max Verstappen");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto5= new Piloto("Max Verstappen",fechaNacimiento_5.getTime(),"Hasselt, Belgium",fotoRefP5,18,594,77);
-				manejadorPiloto.piloto_create(piloto5);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto5.getNombreCompleto()).getId_str()));
-	
-				//PILOTO 6
-				GregorianCalendar fechaNacimiento_6 = new GregorianCalendar(1989,6,01);
-				String fotoRefP6 = null;
-				try {
-					fotoRefP6 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Daniel Ricciardo.jpg", "Daniel Ricciardo");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto6= new Piloto("Daniel Ricciardo",fechaNacimiento_6.getTime(),"Perth, Australia",fotoRefP6,29,962,146);
-				manejadorPiloto.piloto_create(piloto6);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto6.getNombreCompleto()).getId_str()));
-				//PILOTO 7
-				GregorianCalendar fechaNacimiento_7 = new GregorianCalendar(1990,0,26);
-				String fotoRefP7 = null;
-				try {
-					fotoRefP7 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sergio Perez.jpg", "Sergio Perez");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto7= new Piloto("Sergio Perez",fechaNacimiento_7.getTime(),"Guadalajara, Mexico",fotoRefP7,8,520,153);
-	
-				manejadorPiloto.piloto_create(piloto7);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto7.getNombreCompleto()).getId_str()));
-				//PILOTO 8
-				GregorianCalendar fechaNacimiento_8 = new GregorianCalendar(1992,9,5);
-				String fotoRefP8 = null;
-				try {
-					fotoRefP8 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Kevin Magnussen.jpg", "Kevin Magnussen");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto8= new Piloto("Kevin Magnussen",fechaNacimiento_8.getTime(),"Roskilde, Denmark",fotoRefP8,1,134,78);
-				manejadorPiloto.piloto_create(piloto8);
-				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto8.getNombreCompleto()).getId_str()));
-				//PILOTO 9
-				GregorianCalendar fechaNacimiento_9 = new GregorianCalendar(1987,7,19);
-				String fotoRefP9 = null;
-				try {
-					fotoRefP9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Nico Hulkenberg.jpg", "Nico Hulkenberg");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto9= new Piloto("Nico Hulkenberg",fechaNacimiento_9.getTime(),"Emmerich am Rhein, Germany",fotoRefP9,0,458,154);
-				manejadorPiloto.piloto_create(piloto9);
-	
-				//PILOTO 10
-				GregorianCalendar fechaNacimiento_10 = new GregorianCalendar(1981,6,29);
-				String fotoRefP10 = null;
-				try {
-					fotoRefP10 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Fernando Alonso.jpg", "Fernando Alonso");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto10= new Piloto("Fernando Alonso",fechaNacimiento_10.getTime(),"Oviedo, Spain",fotoRefP10,97,1899,310);
-				manejadorPiloto.piloto_create(piloto10);
-				
-				//PILOTO 11
-				GregorianCalendar fechaNacimiento_11 = new GregorianCalendar(1996,8,17);
-				String fotoRefP11 = null;
-				try {
-					fotoRefP11 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Esteban Ocon.jpg", "Esteban Ocon");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto11= new Piloto("Esteban Ocon",fechaNacimiento_11.getTime(),"�vreux, Normandy",fotoRefP11,0,136,47);
-				manejadorPiloto.piloto_create(piloto11);
-
-				//PILOTO 12
-				GregorianCalendar fechaNacimiento_12 = new GregorianCalendar(1994,8,1);
-				String fotoRefP12 = null;
-				try {
-					fotoRefP12 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Carlos Sainz.jpg", "Carlos Sainz");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto12= new Piloto("Carlos Sainz",fechaNacimiento_12.getTime(),"Madrid, Spain",fotoRefP12,0,157,78);
-				manejadorPiloto.piloto_create(piloto12);
-
-				//PILOTO 13
-				GregorianCalendar fechaNacimiento_13 = new GregorianCalendar(1986,3,17);
-				String fotoRefP13 = null;
-				try {
-					fotoRefP13 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Romain Grosjean.jpg", "Romain Grosjean");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto13= new Piloto("Romain Grosjean",fechaNacimiento_13.getTime(),"Geneva, Switzerland",fotoRefP13,10,375,142);
-				manejadorPiloto.piloto_create(piloto13);
-				
-				//PILOTO 14
-				GregorianCalendar fechaNacimiento_14 = new GregorianCalendar(1996,1,7);
-				String fotoRefP14 = null;
-				try {
-					fotoRefP14 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Pierre Gasly.jpg", "Pierre Gasly");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto14= new Piloto("Pierre Gasly",fechaNacimiento_14.getTime(),"Rouen, France",fotoRefP14,0,28,23);
-				manejadorPiloto.piloto_create(piloto14);
-
-				//PILOTO 15
-				GregorianCalendar fechaNacimiento_15 = new GregorianCalendar(1997,9,16);
-				String fotoRefP15 = null;
-				try {
-					fotoRefP15 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Charles Leclerc.jpg", "Charles Leclerc");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto15= new Piloto("Charles Leclerc",fechaNacimiento_15.getTime(),"Monte Carlo, Monaco",fotoRefP15,0,21,18);
-				manejadorPiloto.piloto_create(piloto15);
-
-				//PILOTO 16
-				GregorianCalendar fechaNacimiento_16 = new GregorianCalendar(1992,2,26);
-				String fotoRefP16 = null;
-				try {
-					fotoRefP16 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Stoffel Vandoorne.jpg", "Stoffel Vandoorne");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto16= new Piloto("Stoffel Vandoorne",fechaNacimiento_16.getTime(),"Kortrijk, Belgium",fotoRefP16,0,22,39);
-				manejadorPiloto.piloto_create(piloto16);
-
-				//PILOTO 17
-				GregorianCalendar fechaNacimiento_17 = new GregorianCalendar(1998,9,29);
-				String fotoRefP17 = null;
-				try {
-					fotoRefP17 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Lance Stroll.jpg", "Lance Stroll");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto17= new Piloto("Lance Stroll",fechaNacimiento_17.getTime(),"Montreal, Canada",fotoRefP17,1,46,38);
-				manejadorPiloto.piloto_create(piloto17);
-
-				//PILOTO 18
-				GregorianCalendar fechaNacimiento_18 = new GregorianCalendar(1990,8,2);
-				String fotoRefP18 = null;
-				try {
-					fotoRefP18 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Marcus Ericsson.jpg", "Marcus Ericsson");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto18= new Piloto("Marcus Ericsson",fechaNacimiento_18.getTime(),"Kumla, Sweden",fotoRefP18,0,15,94);
-				manejadorPiloto.piloto_create(piloto18);
-
-				//PILOTO 19
-				GregorianCalendar fechaNacimiento_19 = new GregorianCalendar(1989,10,10);
-				String fotoRefP19 = null;
-				try {
-					fotoRefP19 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Brendon Hartley.jpg", "Brendon Hartley");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto19= new Piloto("Brendon Hartley",fechaNacimiento_19.getTime(),"Palmerston North, New Zealand",fotoRefP19,0,2,22);
-				manejadorPiloto.piloto_create(piloto19);
-
-				//PILOTO 20
-				GregorianCalendar fechaNacimiento_20 = new GregorianCalendar(1995,07,25);
-				String fotoRefP20 = null;
-				try {
-					fotoRefP20 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sergey Sirotkin.jpg", "Sergey Sirotkin");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Piloto piloto20= new Piloto("Sergey Sirotkin",fechaNacimiento_20.getTime(),"Moscow, Russia",fotoRefP20,0,1,18);
-				manejadorPiloto.piloto_create(piloto20);
 				
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto9.getNombreCompleto()).getId_str()));
 				manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName(piloto10.getNombreCompleto()).getId_str()));

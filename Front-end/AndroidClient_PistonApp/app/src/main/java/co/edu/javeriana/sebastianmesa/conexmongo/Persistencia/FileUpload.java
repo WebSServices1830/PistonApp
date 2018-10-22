@@ -1,14 +1,19 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.Persistencia;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
+import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.GridFSUploadStream;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 
@@ -26,6 +31,8 @@ public class FileUpload {
 
     // Create a gridFSBucket with a custom bucket name "files"
     static GridFSBucket gridFSFilesBucket = GridFSBuckets.create(database, "almacenamiento");
+
+    Bitmap bitmap = null;
 
     public static String saveImageIntoMongoDB(Drawable imageDrawable, String fileName) throws IOException {
 
@@ -49,4 +56,6 @@ public class FileUpload {
         return fileId.toString();
 
     }
+
+
 }

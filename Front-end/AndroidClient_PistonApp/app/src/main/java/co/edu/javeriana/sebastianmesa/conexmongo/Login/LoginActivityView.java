@@ -3,11 +3,14 @@ package co.edu.javeriana.sebastianmesa.conexmongo.Login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -52,7 +55,13 @@ public class LoginActivityView extends AppCompatActivity {
             setContentView(R.layout.activity_login_view);
             ButterKnife.bind(this);
 
-            findViewById(R.id.fondo).setBackground(ContextCompat.getDrawable(this,R.drawable.ic_fondo));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Window w = getWindow(); // in Activity's onCreate() for instance
+                w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            }
+
+            getWindow().setBackgroundDrawableResource(R.drawable.ic_fondo);
+            //findViewById(R.id.fondo).setBackground(ContextCompat.getDrawable(this,R.drawable.ic_fondo));
 
             _loginButton = (Button) findViewById(R.id.btn_login);
             _signupLink = (TextView) findViewById(R.id.link_signup);

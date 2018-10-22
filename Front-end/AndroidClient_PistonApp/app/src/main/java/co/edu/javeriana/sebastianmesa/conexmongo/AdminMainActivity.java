@@ -30,10 +30,12 @@ import android.support.v4.app.FragmentManager;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
+import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.IndexGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
@@ -96,9 +98,13 @@ public class AdminMainActivity extends AppCompatActivity {
         startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 
-    public void cargarDatos (View view){
+    public void cargarDatosFragmento (View view){
         wm_inicializarCampeonato = new WebMet_InicializarCampeonato();
         wm_inicializarCampeonato.execute();
+    }
+
+    public void logoutFragmento (View view){
+        startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 
     private class WebMet_InicializarCampeonato extends AsyncTask<Void, Void, Boolean> {
@@ -167,22 +173,22 @@ public class AdminMainActivity extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_index:
-                    toolbar.setTitle("Index");
+                    //toolbar.setTitle("Index");
                     fragment = new IndexFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_calendario:
-                    toolbar.setTitle("Calendario");
+                    //toolbar.setTitle("Calendario");
                     fragment = new CalendarioFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_estadisticas:
-                    toolbar.setTitle("Estadisticas");
+                    //toolbar.setTitle("Estadisticas");
                     fragment = new EstadisticasPilotosFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_mas:
-                    toolbar.setTitle("Más");
+                    //toolbar.setTitle("Más");
                     fragment = new MasFragment();
                     loadFragment(fragment);
                     return true;
@@ -191,5 +197,13 @@ public class AdminMainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    public void verTablaPilotos(View view){
+        startActivity(new Intent(getBaseContext(), EstPorPiloto.class));
+    }
+
+    public void verPilotos(View view){
+        startActivity(new Intent(getBaseContext(), BuscarPilotosView.class));
+    }
 
 }

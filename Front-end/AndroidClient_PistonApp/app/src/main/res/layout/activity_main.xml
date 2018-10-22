@@ -1,6 +1,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminMainActivity" >
@@ -93,12 +94,83 @@
     <!--</LinearLayout>-->
 
 
-
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Bienvenido Admin!"/>
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/accionesPiloto"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            fbutton:buttonColor="@color/color_concrete"
+            fbutton:shadowColor="@color/black"
+            android:onClick="accionesPiloto"
+            android:text="Acciones Piloto"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="5dp"
+            />
+        <info.hoang8f.widget.FButton
+            android:id="@+id/accionesEscuderia"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            fbutton:buttonColor="@color/color_concrete"
+            fbutton:shadowColor="@color/black"
+            android:onClick="accionesPiloto"
+            android:text="Acciones Escuderia"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="5dp"
+            />
+        <info.hoang8f.widget.FButton
+            android:id="@+id/accionesAuto"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            fbutton:buttonColor="@color/color_concrete"
+            fbutton:shadowColor="@color/black"
+            android:onClick="accionesPiloto"
+            android:text="Acciones Auto"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="5dp"
+            />
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/button_cargarDatos"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            fbutton:buttonColor="#2d867c"
+            fbutton:shadowColor="@color/black"
+            android:text="Cargar datos iniciales"
+            android:onClick="cargarDatosFragmento"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="5dp"
+            />
+
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

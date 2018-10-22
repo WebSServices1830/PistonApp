@@ -55,6 +55,10 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".EstadisticasPck.EstPorPiloto" />
         <activity android:name=".PilotoPck.VerPilotoView"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

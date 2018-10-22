@@ -96,9 +96,13 @@ public class AdminMainActivity extends AppCompatActivity {
         startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 
-    public void cargarDatos (View view){
+    public void cargarDatosFragmento (View view){
         wm_inicializarCampeonato = new WebMet_InicializarCampeonato();
         wm_inicializarCampeonato.execute();
+    }
+
+    public void logoutFragmento (View view){
+        startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 
     private class WebMet_InicializarCampeonato extends AsyncTask<Void, Void, Boolean> {

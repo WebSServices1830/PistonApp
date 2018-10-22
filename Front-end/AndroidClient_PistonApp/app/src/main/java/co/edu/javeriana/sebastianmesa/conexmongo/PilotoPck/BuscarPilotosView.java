@@ -1,6 +1,8 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,7 +56,9 @@ public class BuscarPilotosView extends AppCompatActivity {
         listView_pilotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(view.getContext(),VerPilotoView.class);
+                intent.putExtra("Piloto", listaPilotos.get(position));
+                startActivity(intent);
             }
         });
 
@@ -75,8 +79,6 @@ public class BuscarPilotosView extends AppCompatActivity {
     }
 
     private class WebMet_VerPilotosPorNombre extends AsyncTask<Void, Piloto, Boolean> {
-
-
 
         @Override
         protected Boolean doInBackground(Void... params) {

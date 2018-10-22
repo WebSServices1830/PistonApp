@@ -5,6 +5,7 @@ package co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -12,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bson.types.ObjectId;
 
-public class Piloto {
+public class Piloto implements Serializable {
 
 	private String id_str;
 	private ObjectId id;

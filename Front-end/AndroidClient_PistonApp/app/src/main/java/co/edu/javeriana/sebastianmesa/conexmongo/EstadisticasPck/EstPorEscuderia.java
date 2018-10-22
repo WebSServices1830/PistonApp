@@ -152,13 +152,13 @@ public class EstPorEscuderia extends AppCompatActivity {
 
                 }
 
-                Arrays.sort(datos, new Comparator() {
-                    public int compare(Object o1, Object o2) {
-                        Integer[] elt1 = (Integer[])o2;
-                        Integer[] elt2 = (Integer[])o1;
-                        return elt1[2].compareTo(elt2[2]);
-                    }
-                });
+//                Arrays.sort(datos, new Comparator() {
+//                    public int compare(Object o1, Object o2) {
+//                        Integer[] elt1 = (Integer[])o2;
+//                        Integer[] elt2 = (Integer[])o1;
+//                        return elt1[2].compareTo(elt2[2]);
+//                    }
+//                });
 
                 tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
                 Toast.makeText(getBaseContext(),"Bien. Tam: " + listaEscuderias.size(), Toast.LENGTH_SHORT).show();

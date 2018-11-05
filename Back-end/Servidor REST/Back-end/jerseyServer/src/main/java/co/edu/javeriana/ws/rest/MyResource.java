@@ -34,6 +34,7 @@ import DataManagers.CRUD_Pista;
 import clases_mongoDB.ManejadorImagenes;
 
 import co.edu.javeriana.ws.rest.clases.Usuario;
+import co.edu.javeriana.ws.rest.clases.Apuesta;
 import co.edu.javeriana.ws.rest.clases.Auto;
 import co.edu.javeriana.ws.rest.clases.Campeonato;
 import co.edu.javeriana.ws.rest.clases.ClasificacionCampeonato;

@@ -87,9 +87,9 @@ public class CRUD_Escuderia {
 		
 	}
 
-   	public void escuderia_update(Escuderia escuderia){
+   	public void escuderia_update(Escuderia escuderia, String idEscuderia) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
-   				eq("id", escuderia.getId()) , 
+   				eq("id", idEscuderia) , 
    				combine(
    						set("nombre",escuderia.getNombre()), 
 						set("lugarBase",escuderia.getLugarBase()), 
@@ -105,11 +105,11 @@ public class CRUD_Escuderia {
    				);
    	}
    	
-	public void escuderia_delete(String id){
+	public void escuderia_delete(String id) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
 		collection.deleteOne(eq("id", id));
 	}
 	
-	public void escuderia_deleteByName(String nombre){
+	public void escuderia_deleteByName(String nombre) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
 		collection.deleteOne(eq("nombre",nombre));
 		
 	}

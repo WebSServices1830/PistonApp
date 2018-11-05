@@ -111,7 +111,7 @@ public class CRUD_Piloto {
 		return pilotos;
 	}
 
-   	public void piloto_update(Piloto piloto){
+   	public void piloto_update(Piloto piloto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
    				eq("id_str", piloto.getId_str()) , 
    				combine(
@@ -132,7 +132,7 @@ public class CRUD_Piloto {
 		collection.deleteOne(eq("id_str", id));
 	}
 	
-	public void piloto_deleteByName(String nombreCompleto){
+	public void piloto_deleteByName(String nombreCompleto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
 		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
 		
 	}

@@ -47,7 +47,7 @@ public class CRUD_Escuderia {
     // get a handle to the "people" collection
     MongoCollection<co.edu.javeriana.ws.rest.clases.Escuderia> collection = database.getCollection("escuderias", Escuderia.class);
     
-    public void escuderia_create(Escuderia escuderia) {
+    public void escuderia_create(Escuderia escuderia) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
     	collection.insertOne(escuderia);
     }
     

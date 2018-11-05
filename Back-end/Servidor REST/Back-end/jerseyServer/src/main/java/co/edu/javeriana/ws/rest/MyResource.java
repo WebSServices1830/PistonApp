@@ -155,6 +155,53 @@ public class MyResource {
     	
     }
     
+  //ESCUDERIA------------------------------------------------------------------
+    //http://localhost:8080/myapp/PistonApp/escuderias
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/escuderias")
+    public List<Escuderia> consultarEscuderias() {
+    	return manejadorEscuderia.escuderia_getAll();
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/escuderias/<id-escuderia>
+    @DELETE
+    @Path("/escuderias/{idEscuderia}")
+    public ResponseBuilder eliminarEscuderia(@PathParam("idEscuderia") String idEscuderia) {
+    	try {
+	    	manejadorEscuderia.escuderia_delete(idEscuderia);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/escuderias/<id-escuderia>
+    @PUT
+    @Path("/escuderias/{idEscuderia}")
+    @Consumes("application/json")
+    public ResponseBuilder actualizarEscuderia(@PathParam("idEscuderia") String idEscuderia, Escuderia escuderia) {
+    	try {
+	    	manejadorEscuderia.escuderia_update(escuderia,idEscuderia);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/escuderias
+    @POST
+    @Path("/escuderias")
+    @Consumes("application/json")
+    public ResponseBuilder crearEscuderia(Escuderia escuderia) {
+    	
+    	manejadorEscuderia.escuderia_create(escuderia);
+    	
+    	return Response.status(200);
+    	
+    }
     
     //PISTON APP------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp

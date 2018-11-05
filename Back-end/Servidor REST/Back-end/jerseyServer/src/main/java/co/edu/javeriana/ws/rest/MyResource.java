@@ -27,6 +27,7 @@ import DataManagers.CRUD_Auto;
 import DataManagers.CRUD_Apuesta;
 import DataManagers.CRUD_Campeonato;
 import DataManagers.CRUD_ClasificacionCampeonato;
+import DataManagers.CRUD_ClasificacionCarrera;
 import DataManagers.CRUD_Escuderia;
 import DataManagers.CRUD_GranPremio;
 import DataManagers.CRUD_Piloto;
@@ -55,6 +56,7 @@ public class MyResource {
 	CRUD_Piloto manejadorPiloto = new CRUD_Piloto();
 	CRUD_Campeonato manejadorCampeonato = new CRUD_Campeonato();
 	CRUD_ClasificacionCampeonato manejadorClasificacion_Campeonato = new CRUD_ClasificacionCampeonato();
+	CRUD_ClasificacionCarrera manejadorClasificacion_Carrera = new CRUD_ClasificacionCarrera();
 	CRUD_Pista manejadorPista = new CRUD_Pista();
 	CRUD_GranPremio manejadorGranPremio= new CRUD_GranPremio();
 	CRUD_Auto manejadorAuto= new CRUD_Auto();
@@ -276,6 +278,96 @@ public class MyResource {
     @Path("/pistas")
     public ResponseBuilder crearPista(Pista pista) {
     	manejadorPista.pista_create(pista);
+    	return Response.status(200);
+    }
+    
+    //CLASIFICACION_CARRERA---------------------------------------------------------------------
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCarrera
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/clasificacionesCarrera")
+    public List<ClasificacionCarrera> consultarClasificacionCarrera() {
+    	return manejadorClasificacion_Carrera.clasificacionCarrera_getAll();
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCarrera(<idClasificacionCarrera>
+    @DELETE
+    @Path("/clasificacionesCarrera/{idClasificacionCarrera}")
+    public ResponseBuilder eliminarClasificacionCarrera(@PathParam("idClasificacionCarrera") String idClasificacionCarrera) {
+	    try {
+	    	manejadorClasificacion_Carrera.clasificacionCarrera_delete(idClasificacionCarrera);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCarrera/<idClasificacionCarrera>
+    @PUT
+    @Path("/clasificacionesCarrera/{idClasificacionCarrera}")
+    @Consumes("application/json")
+    public ResponseBuilder actualizarClasificacionCarrera(@PathParam("idClasificacionCarrera") String idClasificacionCarrera, ClasificacionCarrera clasificacionCarrera) {
+    	try {
+	    	manejadorClasificacion_Carrera.clasificacionCarrera_update(clasificacionCarrera, idClasificacionCarrera);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCarrera
+    @POST
+    @Consumes("application/json")
+    @Path("/clasificacionesCarrera")
+    public ResponseBuilder crearClasificacionCarrera(ClasificacionCarrera clasificacionCarrera) {
+    	manejadorClasificacion_Carrera.clasificacionCarrera_create(clasificacionCarrera);
+    	return Response.status(200);
+    }
+    
+    //CLASIFICACION_CAMPEONATO---------------------------------------------------------------------
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCarrera
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/clasificacionesCampeonato")
+    public List<ClasificacionCampeonato> consultarClasificacionCampeonato() {
+    	return manejadorClasificacion_Campeonato.clasificacionCampeonato_getAll();
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCampeonato(<idClasificacionCampeonato>
+    @DELETE
+    @Path("/clasificacionesCampeonato/{idClasificacionCampeonato}")
+    public ResponseBuilder eliminarClasificacionCampeonato(@PathParam("idClasificacionCampeonato") String idClasificacionCampeonato) {
+	    try {
+	    	manejadorClasificacion_Campeonato.clasificacionCampeonato_delete(idClasificacionCampeonato);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCampeonato/<idClasificacionCampeonato>
+    @PUT
+    @Path("/clasificacionesCampeonato/{idClasificacionCampeonato}")
+    @Consumes("application/json")
+    public ResponseBuilder actualizarClasificacionCampeonato(@PathParam("idClasificacionCampeonato") String idClasificacionCampeonato, ClasificacionCampeonato clasificacionCampeonato) {
+    	try {
+	    	manejadorClasificacion_Campeonato.clasificacionCampeonato_update(clasificacionCampeonato, idClasificacionCampeonato);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/clasificacionesCampeonato
+    @POST
+    @Consumes("application/json")
+    @Path("/clasificacionesCampeonato")
+    public ResponseBuilder crearClasificacionCampeonato(ClasificacionCampeonato clasificacionCampeonato) {
+    	manejadorClasificacion_Campeonato.clasificacionCampeonato_create(clasificacionCampeonato);
     	return Response.status(200);
     }
     

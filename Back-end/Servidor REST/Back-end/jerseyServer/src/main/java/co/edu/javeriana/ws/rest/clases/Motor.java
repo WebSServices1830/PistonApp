@@ -1,6 +1,8 @@
 package co.edu.javeriana.ws.rest.clases;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Motor {
 	private String referencia;
 	private String cilindraje;

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.bson.types.ObjectId;
 
+@XmlRootElement
 public class GranPremio {
 	
 	private String id_str;

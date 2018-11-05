@@ -4,8 +4,11 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.bson.types.ObjectId;
 
+@XmlRootElement
 public class ClasificacionCarrera {
 
 	private String id_str;

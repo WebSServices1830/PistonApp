@@ -1,7 +1,10 @@
 package co.edu.javeriana.ws.rest.clases;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.bson.types.ObjectId;
 
+@XmlRootElement
 public class Auto {
 	
 	private String id_str;

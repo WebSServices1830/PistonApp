@@ -3,8 +3,11 @@ package co.edu.javeriana.ws.rest.clases;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.bson.types.ObjectId;
 
+@XmlRootElement
 public class Pista {
 	
 	private String id_str;

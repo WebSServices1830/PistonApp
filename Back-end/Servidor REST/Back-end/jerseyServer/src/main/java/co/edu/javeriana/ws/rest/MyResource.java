@@ -22,15 +22,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import DataManagers.CRUD_Usuario;
 import DataManagers.CRUD_Auto;
 import DataManagers.CRUD_Campeonato;
 import DataManagers.CRUD_ClasificacionCampeonato;
 import DataManagers.CRUD_Escuderia;
 import DataManagers.CRUD_GranPremio;
-import DataManagers.CRUD_Motor;
 import DataManagers.CRUD_Piloto;
 import DataManagers.CRUD_Pista;
+
 import clases_mongoDB.ManejadorImagenes;
+
+import co.edu.javeriana.ws.rest.clases.Usuario;
 import co.edu.javeriana.ws.rest.clases.Auto;
 import co.edu.javeriana.ws.rest.clases.Campeonato;
 import co.edu.javeriana.ws.rest.clases.ClasificacionCampeonato;
@@ -46,12 +49,12 @@ import co.edu.javeriana.ws.rest.clases.SerieFibonacci;
 @Path("/PistonApp")
 public class MyResource {
 	
+	CRUD_Usuario manejadorUsuario = new CRUD_Usuario();
 	CRUD_Piloto manejadorPiloto = new CRUD_Piloto();
 	CRUD_Campeonato manejadorCampeonato = new CRUD_Campeonato();
 	CRUD_ClasificacionCampeonato manejadorClasificacion_Campeonato = new CRUD_ClasificacionCampeonato();
 	CRUD_Pista manejadorPista = new CRUD_Pista();
 	CRUD_GranPremio manejadorGranPremio= new CRUD_GranPremio();
-	CRUD_Motor manejadorMotor= new CRUD_Motor();
 	CRUD_Auto manejadorAuto= new CRUD_Auto();
 	CRUD_Escuderia manejadorEscuderia= new CRUD_Escuderia();
 
@@ -3442,7 +3445,6 @@ public class MyResource {
 				//MOTOR 1
 				
 				Motor motor1= new Motor("SF71H","1.6 L","V6",true);
-				manejadorMotor.motor_create("SF71H","1.6 L","V6",true);
 
 				//AUTO 1
 				
@@ -3459,7 +3461,6 @@ public class MyResource {
 				//MOTOR 2
 				
 				Motor motor2= new Motor("W09","1.6 L","V6",true);
-				manejadorMotor.motor_create("W09","1.6 L","V6",true);
 
 				//AUTO 2
 				
@@ -3476,7 +3477,6 @@ public class MyResource {
 				//MOTOR 3
 				
 				Motor motor3= new Motor("R.S.18","1.6 L","V6",true);
-				manejadorMotor.motor_create("R.S.18","1.6 L","V6",true);
 
 				//AUTO 3
 				
@@ -3493,7 +3493,6 @@ public class MyResource {
 				//MOTOR 4
 				
 				Motor motor4= new Motor("FW41","1.6 L","V6",true);
-				manejadorMotor.motor_create("FW41","1.6 L","V6",true);
 
 				//AUTO 4
 				
@@ -3510,7 +3509,6 @@ public class MyResource {
 				//MOTOR 5
 				
 				Motor motor5= new Motor("VJM11","1.6 L","V6",true);
-				manejadorMotor.motor_create("VJM11","1.6 L","V6",true);
 
 				//AUTO 5
 				
@@ -3528,7 +3526,6 @@ public class MyResource {
 				//MOTOR 6
 				
 				Motor motor6= new Motor("MCL33","1.6 L","V6",true);
-				manejadorMotor.motor_create("MCL33","1.6 L","V6",true);
 
 				//AUTO 6
 				
@@ -3545,7 +3542,6 @@ public class MyResource {
 				//MOTOR 7
 				
 				Motor motor7= new Motor("C37","1.6 L","V6",true);
-				manejadorMotor.motor_create("C37","1.6 L","V6",true);
 
 				//AUTO 7
 				
@@ -3563,7 +3559,6 @@ public class MyResource {
 				//MOTOR 8
 				
 				Motor motor8= new Motor("VF-18","1.6 L","V6",true);
-				manejadorMotor.motor_create("VF-18","1.6 L","V6",true);
 
 				//AUTO 8
 				
@@ -3580,7 +3575,6 @@ public class MyResource {
 				//MOTOR 9
 				
 				Motor motor9= new Motor("RB14","1.6 L","V6",true);
-				manejadorMotor.motor_create("RB14","1.6 L","V6",true);
 
 				//AUTO 9
 				
@@ -3597,7 +3591,6 @@ public class MyResource {
 				//MOTOR 10
 				
 				Motor motor10= new Motor("STR13","1.6 L","V6",true);
-				manejadorMotor.motor_create("STR13","1.6 L","V6",true);
 				//AUTO 10
 				
 				String fotoRefAuto10 = null;

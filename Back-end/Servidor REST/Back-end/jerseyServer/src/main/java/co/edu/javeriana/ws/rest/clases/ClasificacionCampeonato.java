@@ -3,8 +3,11 @@ package co.edu.javeriana.ws.rest.clases;
 import java.time.LocalTime;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.bson.types.ObjectId;
 
+@XmlRootElement
 public class ClasificacionCampeonato {
 	
 	private String id_str;

@@ -3,8 +3,11 @@ package co.edu.javeriana.ws.rest.clases;
 import java.time.LocalTime;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.bson.types.ObjectId;
 
+@XmlRootElement
 public class Record {
 	private Date recordVuelta_tiempo;
 	private String recordVuelta_piloto;

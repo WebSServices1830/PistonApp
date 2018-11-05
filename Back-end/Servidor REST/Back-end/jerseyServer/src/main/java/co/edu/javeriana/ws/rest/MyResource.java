@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import DataManagers.CRUD_Usuario;
 import DataManagers.CRUD_Auto;
+import DataManagers.CRUD_Apuesta;
 import DataManagers.CRUD_Campeonato;
 import DataManagers.CRUD_ClasificacionCampeonato;
 import DataManagers.CRUD_Escuderia;
@@ -58,6 +59,7 @@ public class MyResource {
 	CRUD_GranPremio manejadorGranPremio= new CRUD_GranPremio();
 	CRUD_Auto manejadorAuto= new CRUD_Auto();
 	CRUD_Escuderia manejadorEscuderia= new CRUD_Escuderia();
+	CRUD_Apuesta manejadorApuesta = new CRUD_Apuesta();
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent

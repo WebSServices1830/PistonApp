@@ -29,7 +29,7 @@ import co.edu.javeriana.ws.rest.clases.SerieFibonacci;
 @Path("/PistonApp")
 public class MyResource {
 	
-	CRUD_Piloto manejadorPiloto= new CRUD_Piloto();
+	CRUD_Piloto manejadorPiloto = new CRUD_Piloto();
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent

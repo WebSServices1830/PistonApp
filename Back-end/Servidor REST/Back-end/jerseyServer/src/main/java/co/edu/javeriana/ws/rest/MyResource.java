@@ -64,6 +64,8 @@ public class MyResource {
     	return retorno;
     }
     
+    
+    //PILOTOS---------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/pilotos
     @GET
     @Produces({"application/xml", "application/json"})
@@ -98,7 +100,6 @@ public class MyResource {
     	return Response.status(404);
     }
     
-    
     //http://localhost:8080/myapp/PistonApp/pilotos?nombreCompleto=PostMalone&fechaNacimiento=04/07/1995&idEscuderia=1
     @POST
     @Path("/pilotos")
@@ -125,6 +126,7 @@ public class MyResource {
     }
     
     
+    //PISTON APP------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp
     @POST
     public ResponseBuilder crearPilotos(){

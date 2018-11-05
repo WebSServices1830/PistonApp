@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import DataManagers.CRUD_Usuario;
+import DataManagers.Simulacion;
 import DataManagers.CRUD_Auto;
 import DataManagers.CRUD_Apuesta;
 import DataManagers.CRUD_Campeonato;
@@ -62,6 +63,7 @@ public class MyResource {
 	CRUD_Auto manejadorAuto= new CRUD_Auto();
 	CRUD_Escuderia manejadorEscuderia= new CRUD_Escuderia();
 	CRUD_Apuesta manejadorApuesta = new CRUD_Apuesta();
+	Simulacion manejadorSimulacion = new Simulacion();
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -96,7 +98,42 @@ public class MyResource {
     	return retorno;
     }
     
+    @POST
+    @Path("/simulacion")
+    @Consumes("application/json")
+    public ResponseBuilder simulacion(String idGranpremio) {
+    	manejadorSimulacion.simularGranPremio(idGranpremio);
+    	return Response.status(200);
+    	
+    }
     
+
+	
+ 	@PUT
+ 	@Path("/casino/{idPiloto}")
+ 	public ResponseBuilder apostar(@PathParam("idPiloto") Apuesta apuesta) {
+
+ 		Usuario u = manejadorUsuario.usuario_get(apuesta.getUsuario());
+
+ 		if (apuesta != null) {
+ 			if (u.getBolsillo() - apuesta.getMonto() >= 0) {
+ 				manejadorApuesta.apuesta_create(apuesta);
+ 				manejadorUsuario.usuario_update_bolsillo(u.getId_str(), u.getBolsillo() - apuesta.getMonto());
+ 				return Response.status(200);
+ 			}
+ 		}
+ 		return Response.status(404);
+ 	}
+ 	@GET
+ 	@Produces({ "application/xml", "application/json" })
+ 	@Path("/apuestas")
+ 	public List<Apuesta> consultarApuestas() {
+ 		return manejadorApuesta.pista_getAll();
+ 	}
+ 	
+ 	
+
+
     //PILOTOS---------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/pilotos
     @GET

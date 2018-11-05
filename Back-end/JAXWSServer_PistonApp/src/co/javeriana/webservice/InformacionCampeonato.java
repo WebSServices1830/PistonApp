@@ -69,6 +69,11 @@ public class InformacionCampeonato {
 		GregorianCalendar Vuelta_P13 = new GregorianCalendar();
 		GregorianCalendar Vuelta_P14 = new GregorianCalendar();
 		GregorianCalendar Vuelta_P15 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P16 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P17 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P18 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P19 = new GregorianCalendar();
+		GregorianCalendar Vuelta_P20 = new GregorianCalendar();
 	
 		//PILOTO 1
 		GregorianCalendar fechaNacimiento_1 = new GregorianCalendar(1985,0,07);
@@ -330,6 +335,11 @@ public class InformacionCampeonato {
 		ClasificacionCarrera CCP13= new ClasificacionCarrera();
 		ClasificacionCarrera CCP14= new ClasificacionCarrera();
 		ClasificacionCarrera CCP15= new ClasificacionCarrera();
+		ClasificacionCarrera CCP16= new ClasificacionCarrera();
+		ClasificacionCarrera CCP17= new ClasificacionCarrera();
+		ClasificacionCarrera CCP18= new ClasificacionCarrera();
+		ClasificacionCarrera CCP19= new ClasificacionCarrera();
+		ClasificacionCarrera CCP20= new ClasificacionCarrera();
 
 		
 		//GRAN PREMIO 1
@@ -520,76 +530,89 @@ public class InformacionCampeonato {
 					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto1.getId_str());
 					
 					Vuelta_P4.set(Calendar.HOUR,1);
-					Vuelta_P4.set(Calendar.MINUTE,29);
-					Vuelta_P4.set(Calendar.SECOND,40);
-					Vuelta_P4.set(Calendar.MILLISECOND,352);
-					CCP4= new ClasificacionCarrera(12,Vuelta_P4.getTime(), piloto6.getId_str());
+					Vuelta_P4.set(Calendar.MINUTE,33);
+					Vuelta_P4.set(Calendar.SECOND,4);
+					Vuelta_P4.set(Calendar.MILLISECOND,174);
+					CCP4= new ClasificacionCarrera(12,Vuelta_P4.getTime(), piloto14.getId_str());
 					
 					Vuelta_P5.set(Calendar.HOUR,1);
-					Vuelta_P5.set(Calendar.MINUTE,29);
-					Vuelta_P5.set(Calendar.SECOND,61);
-					Vuelta_P5.set(Calendar.MILLISECOND,169);
-					 CCP5= new ClasificacionCarrera(10,Vuelta_P5.getTime(), piloto10.getId_str());
+					Vuelta_P5.set(Calendar.MINUTE,33);
+					Vuelta_P5.set(Calendar.SECOND,17);
+					Vuelta_P5.set(Calendar.MILLISECOND,986);
+					 CCP5= new ClasificacionCarrera(10,Vuelta_P5.getTime(), piloto8.getId_str());
 					
 					Vuelta_P6.set(Calendar.HOUR,1);
-					Vuelta_P6.set(Calendar.MINUTE,29);
-					Vuelta_P6.set(Calendar.SECOND,62);
+					Vuelta_P6.set(Calendar.MINUTE,33);
+					Vuelta_P6.set(Calendar.SECOND,40);
 					Vuelta_P6.set(Calendar.MILLISECOND,228);
-					CCP6= new ClasificacionCarrera(8,Vuelta_P6.getTime(), piloto5.getId_str());
+					CCP6= new ClasificacionCarrera(8,Vuelta_P6.getTime(), piloto9.getId_str());
 					
 					Vuelta_P7.set(Calendar.HOUR,1);
-					Vuelta_P7.set(Calendar.MINUTE,30);
-					Vuelta_P7.set(Calendar.SECOND,5);
-					Vuelta_P7.set(Calendar.MILLISECOND,954);
-					CCP7= new ClasificacionCarrera(6,Vuelta_P7.getTime(), piloto9.getId_str());
+					Vuelta_P7.set(Calendar.MINUTE,34);
+					Vuelta_P7.set(Calendar.SECOND,0);
+					Vuelta_P7.set(Calendar.MILLISECOND,500);
+					CCP7= new ClasificacionCarrera(6,Vuelta_P7.getTime(), piloto10.getId_str());
 					
 					Vuelta_P8.set(Calendar.HOUR,1);
-					Vuelta_P8.set(Calendar.MINUTE,30);
-					Vuelta_P8.set(Calendar.SECOND,7);
-					Vuelta_P8.set(Calendar.MILLISECOND,622);
-					CCP8= new ClasificacionCarrera(4,Vuelta_P8.getTime(), piloto3.getId_str());
+					Vuelta_P8.set(Calendar.MINUTE,34);
+					Vuelta_P8.set(Calendar.SECOND,0);
+					Vuelta_P8.set(Calendar.MILLISECOND,500);
+					CCP8= new ClasificacionCarrera(4,Vuelta_P8.getTime(), piloto16.getId_str());
 					
 					Vuelta_P9.set(Calendar.HOUR,1);
-					Vuelta_P9.set(Calendar.MINUTE,30);
-					Vuelta_P9.set(Calendar.SECOND,8);
-					Vuelta_P9.set(Calendar.MILLISECOND,204);
-					CCP9= new ClasificacionCarrera(2,Vuelta_P9.getTime(), piloto16.getId_str());
+					Vuelta_P9.set(Calendar.MINUTE,35);
+					Vuelta_P9.set(Calendar.SECOND,0);
+					Vuelta_P9.set(Calendar.MILLISECOND,0);
+					CCP9= new ClasificacionCarrera(2,Vuelta_P9.getTime(), piloto18.getId_str());
 					
 					Vuelta_P10.set(Calendar.HOUR,1);
-					Vuelta_P10.set(Calendar.MINUTE,30);
-					Vuelta_P10.set(Calendar.SECOND,19);
-					Vuelta_P10.set(Calendar.MILLISECOND,005);
-					CCP10= new ClasificacionCarrera(1,Vuelta_P10.getTime(), piloto12.getId_str());
+					Vuelta_P10.set(Calendar.MINUTE,36);
+					Vuelta_P10.set(Calendar.SECOND,0);
+					Vuelta_P10.set(Calendar.MILLISECOND,0);
+					CCP10= new ClasificacionCarrera(1,Vuelta_P10.getTime(), piloto11.getId_str());
 					
 					Vuelta_P11.set(Calendar.HOUR,1);
-					Vuelta_P11.set(Calendar.MINUTE,30);
-					Vuelta_P11.set(Calendar.SECOND,20);
-					Vuelta_P11.set(Calendar.MILLISECOND,100);
-					CCP11= new ClasificacionCarrera(0,Vuelta_P11.getTime(), piloto7.getId_str());
+					Vuelta_P11.set(Calendar.MINUTE,37);
+					Vuelta_P11.set(Calendar.SECOND,0);
+					Vuelta_P11.set(Calendar.MILLISECOND,0);
+					CCP11= new ClasificacionCarrera(0,Vuelta_P11.getTime(), piloto12.getId_str());
 					
 					Vuelta_P12.set(Calendar.HOUR,1);
-					Vuelta_P12.set(Calendar.MINUTE,30);
-					Vuelta_P12.set(Calendar.SECOND,33);
-					Vuelta_P12.set(Calendar.MILLISECOND,561);
-					CCP12= new ClasificacionCarrera(0,Vuelta_P12.getTime(), piloto11.getId_str());
+					Vuelta_P12.set(Calendar.MINUTE,38);
+					Vuelta_P12.set(Calendar.SECOND,0);
+					Vuelta_P12.set(Calendar.MILLISECOND,0);
+					CCP12= new ClasificacionCarrera(0,Vuelta_P12.getTime(), piloto15.getId_str());
 					
 					Vuelta_P13.set(Calendar.HOUR,1);
-					Vuelta_P13.set(Calendar.MINUTE,30);
-					Vuelta_P13.set(Calendar.SECOND,49);
-					Vuelta_P13.set(Calendar.MILLISECOND,042);
-					CCP13= new ClasificacionCarrera(0,Vuelta_P13.getTime(), piloto15.getId_str());
+					Vuelta_P13.set(Calendar.MINUTE,39);
+					Vuelta_P13.set(Calendar.SECOND,0);
+					Vuelta_P13.set(Calendar.MILLISECOND,0);
+					CCP13= new ClasificacionCarrera(0,Vuelta_P13.getTime(), piloto13.getId_str());
 					
 					Vuelta_P14.set(Calendar.HOUR,1);
-					Vuelta_P14.set(Calendar.MINUTE,30);
-					Vuelta_P14.set(Calendar.SECOND,51);
-					Vuelta_P14.set(Calendar.MILLISECOND,571);
+					Vuelta_P14.set(Calendar.MINUTE,40);
+					Vuelta_P14.set(Calendar.SECOND,0);
+					Vuelta_P14.set(Calendar.MILLISECOND,0);
 					CCP14= new ClasificacionCarrera(0,Vuelta_P14.getTime(), piloto17.getId_str());
 					
 					Vuelta_P15.set(Calendar.HOUR,1);
-					Vuelta_P15.set(Calendar.MINUTE,30);
-					Vuelta_P15.set(Calendar.SECOND,57);
-					Vuelta_P15.set(Calendar.MILLISECOND,408);
-					CCP15= new ClasificacionCarrera(0,Vuelta_P15.getTime(), piloto19.getId_str());
+					Vuelta_P15.set(Calendar.MINUTE,41);
+					Vuelta_P15.set(Calendar.SECOND,0);
+					Vuelta_P15.set(Calendar.MILLISECOND,0);
+					CCP15= new ClasificacionCarrera(0,Vuelta_P15.getTime(), piloto20.getId_str());
+					
+					Vuelta_P16.set(Calendar.HOUR,1);
+					Vuelta_P16.set(Calendar.MINUTE,42);
+					Vuelta_P16.set(Calendar.SECOND,0);
+					Vuelta_P16.set(Calendar.MILLISECOND,0);
+					CCP16= new ClasificacionCarrera(0,Vuelta_P16.getTime(), piloto7.getId_str());
+
+					Vuelta_P17.set(Calendar.HOUR,1);
+					Vuelta_P17.set(Calendar.MINUTE,43);
+					Vuelta_P17.set(Calendar.SECOND,0);
+					Vuelta_P17.set(Calendar.MILLISECOND,0);
+					CCP17= new ClasificacionCarrera(0,Vuelta_P17.getTime(), piloto19.getId_str());
+
 					
 					List<String> CCGPBahrain = new ArrayList<String>();
 					CCGPBahrain.add(CCP1.getId_str());
@@ -607,6 +630,8 @@ public class InformacionCampeonato {
 					CCGPBahrain.add(CCP13.getId_str());
 					CCGPBahrain.add(CCP14.getId_str());
 					CCGPBahrain.add(CCP15.getId_str());
+					CCGPBahrain.add(CCP16.getId_str());
+					CCGPBahrain.add(CCP17.getId_str());
 
 
 					
@@ -659,81 +684,111 @@ public class InformacionCampeonato {
 					Vuelta_P3.set(Calendar.HOUR,1);
 					Vuelta_P3.set(Calendar.MINUTE,35);
 					Vuelta_P3.set(Calendar.SECOND,46);
-					Vuelta_P3.set(Calendar.MILLISECOND,17);
+					Vuelta_P3.set(Calendar.MILLISECOND,017);
 					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto4.getId_str());
 					
 					Vuelta_P4.set(Calendar.HOUR,1);
-					Vuelta_P4.set(Calendar.MINUTE,29);
-					Vuelta_P4.set(Calendar.SECOND,40);
-					Vuelta_P4.set(Calendar.MILLISECOND,352);
-					CCP4= new ClasificacionCarrera(12,Vuelta_P4.getTime(), piloto6.getId_str());
+					Vuelta_P4.set(Calendar.MINUTE,35);
+					Vuelta_P4.set(Calendar.SECOND,53);
+					Vuelta_P4.set(Calendar.MILLISECOND,365);
+					CCP4= new ClasificacionCarrera(12,Vuelta_P4.getTime(), piloto1.getId_str());
 					
 					Vuelta_P5.set(Calendar.HOUR,1);
-					Vuelta_P5.set(Calendar.MINUTE,29);
-					Vuelta_P5.set(Calendar.SECOND,61);
-					Vuelta_P5.set(Calendar.MILLISECOND,169);
-					 CCP5= new ClasificacionCarrera(10,Vuelta_P5.getTime(), piloto10.getId_str());
+					Vuelta_P5.set(Calendar.MINUTE,35);
+					Vuelta_P5.set(Calendar.SECOND,56);
+					Vuelta_P5.set(Calendar.MILLISECOND,816);
+					 CCP5= new ClasificacionCarrera(10,Vuelta_P5.getTime(), piloto5.getId_str());
 					
 					Vuelta_P6.set(Calendar.HOUR,1);
-					Vuelta_P6.set(Calendar.MINUTE,29);
-					Vuelta_P6.set(Calendar.SECOND,62);
-					Vuelta_P6.set(Calendar.MILLISECOND,228);
-					CCP6= new ClasificacionCarrera(8,Vuelta_P6.getTime(), piloto5.getId_str());
+					Vuelta_P6.set(Calendar.MINUTE,35);
+					Vuelta_P6.set(Calendar.SECOND,57);
+					Vuelta_P6.set(Calendar.MILLISECOND,432);
+					CCP6= new ClasificacionCarrera(8,Vuelta_P6.getTime(), piloto9.getId_str());
 					
 					Vuelta_P7.set(Calendar.HOUR,1);
-					Vuelta_P7.set(Calendar.MINUTE,30);
-					Vuelta_P7.set(Calendar.SECOND,5);
-					Vuelta_P7.set(Calendar.MILLISECOND,954);
-					CCP7= new ClasificacionCarrera(6,Vuelta_P7.getTime(), piloto9.getId_str());
+					Vuelta_P7.set(Calendar.MINUTE,36);
+					Vuelta_P7.set(Calendar.SECOND,7);
+					Vuelta_P7.set(Calendar.MILLISECOND,19);
+					CCP7= new ClasificacionCarrera(6,Vuelta_P7.getTime(), piloto10.getId_str());
 					
 					Vuelta_P8.set(Calendar.HOUR,1);
-					Vuelta_P8.set(Calendar.MINUTE,30);
-					Vuelta_P8.set(Calendar.SECOND,7);
-					Vuelta_P8.set(Calendar.MILLISECOND,622);
-					CCP8= new ClasificacionCarrera(4,Vuelta_P8.getTime(), piloto3.getId_str());
+					Vuelta_P8.set(Calendar.MINUTE,36);
+					Vuelta_P8.set(Calendar.SECOND,12);
+					Vuelta_P8.set(Calendar.MILLISECOND,666);
+					CCP8= new ClasificacionCarrera(4,Vuelta_P8.getTime(), piloto2.getId_str());
 					
 					Vuelta_P9.set(Calendar.HOUR,1);
-					Vuelta_P9.set(Calendar.MINUTE,30);
-					Vuelta_P9.set(Calendar.SECOND,8);
-					Vuelta_P9.set(Calendar.MILLISECOND,204);
-					CCP9= new ClasificacionCarrera(2,Vuelta_P9.getTime(), piloto16.getId_str());
+					Vuelta_P9.set(Calendar.MINUTE,36);
+					Vuelta_P9.set(Calendar.SECOND,16);
+					Vuelta_P9.set(Calendar.MILLISECOND,974);
+					CCP9= new ClasificacionCarrera(2,Vuelta_P9.getTime(), piloto12.getId_str());
 					
 					Vuelta_P10.set(Calendar.HOUR,1);
-					Vuelta_P10.set(Calendar.MINUTE,30);
-					Vuelta_P10.set(Calendar.SECOND,19);
-					Vuelta_P10.set(Calendar.MILLISECOND,005);
-					CCP10= new ClasificacionCarrera(1,Vuelta_P10.getTime(), piloto12.getId_str());
+					Vuelta_P10.set(Calendar.MINUTE,36);
+					Vuelta_P10.set(Calendar.SECOND,21);
+					Vuelta_P10.set(Calendar.MILLISECOND,430);
+					CCP10= new ClasificacionCarrera(1,Vuelta_P10.getTime(), piloto8.getId_str());
 					
 					Vuelta_P11.set(Calendar.HOUR,1);
-					Vuelta_P11.set(Calendar.MINUTE,30);
-					Vuelta_P11.set(Calendar.SECOND,20);
+					Vuelta_P11.set(Calendar.MINUTE,36);
+					Vuelta_P11.set(Calendar.SECOND,22);
 					Vuelta_P11.set(Calendar.MILLISECOND,100);
-					CCP11= new ClasificacionCarrera(0,Vuelta_P11.getTime(), piloto7.getId_str());
+					CCP11= new ClasificacionCarrera(0,Vuelta_P11.getTime(), piloto11.getId_str());
 					
 					Vuelta_P12.set(Calendar.HOUR,1);
-					Vuelta_P12.set(Calendar.MINUTE,30);
-					Vuelta_P12.set(Calendar.SECOND,33);
-					Vuelta_P12.set(Calendar.MILLISECOND,561);
-					CCP12= new ClasificacionCarrera(0,Vuelta_P12.getTime(), piloto11.getId_str());
+					Vuelta_P12.set(Calendar.MINUTE,36);
+					Vuelta_P12.set(Calendar.SECOND,22);
+					Vuelta_P12.set(Calendar.MILLISECOND,19);
+					CCP12= new ClasificacionCarrera(0,Vuelta_P12.getTime(), piloto7.getId_str());
 					
 					Vuelta_P13.set(Calendar.HOUR,1);
-					Vuelta_P13.set(Calendar.MINUTE,30);
-					Vuelta_P13.set(Calendar.SECOND,49);
-					Vuelta_P13.set(Calendar.MILLISECOND,042);
-					CCP13= new ClasificacionCarrera(0,Vuelta_P13.getTime(), piloto15.getId_str());
+					Vuelta_P13.set(Calendar.MINUTE,36);
+					Vuelta_P13.set(Calendar.SECOND,25);
+					Vuelta_P13.set(Calendar.MILLISECOND,753);
+					CCP13= new ClasificacionCarrera(0,Vuelta_P13.getTime(), piloto16.getId_str());
 					
 					Vuelta_P14.set(Calendar.HOUR,1);
-					Vuelta_P14.set(Calendar.MINUTE,30);
-					Vuelta_P14.set(Calendar.SECOND,51);
-					Vuelta_P14.set(Calendar.MILLISECOND,571);
+					Vuelta_P14.set(Calendar.MINUTE,36);
+					Vuelta_P14.set(Calendar.SECOND,31);
+					Vuelta_P14.set(Calendar.MILLISECOND,870);
 					CCP14= new ClasificacionCarrera(0,Vuelta_P14.getTime(), piloto17.getId_str());
 					
 					Vuelta_P15.set(Calendar.HOUR,1);
-					Vuelta_P15.set(Calendar.MINUTE,30);
-					Vuelta_P15.set(Calendar.SECOND,57);
-					Vuelta_P15.set(Calendar.MILLISECOND,408);
-					CCP15= new ClasificacionCarrera(0,Vuelta_P15.getTime(), piloto19.getId_str());
+					Vuelta_P15.set(Calendar.MINUTE,36);
+					Vuelta_P15.set(Calendar.SECOND,34);
+					Vuelta_P15.set(Calendar.MILLISECOND,621);
+					CCP15= new ClasificacionCarrera(0,Vuelta_P15.getTime(), piloto20.getId_str());
 					
+					Vuelta_P16.set(Calendar.HOUR,1);
+					Vuelta_P16.set(Calendar.MINUTE,36);
+					Vuelta_P16.set(Calendar.SECOND,38);
+					Vuelta_P16.set(Calendar.MILLISECOND,984);
+					CCP16= new ClasificacionCarrera(0,Vuelta_P16.getTime(), piloto18.getId_str());
+
+					Vuelta_P17.set(Calendar.HOUR,1);
+					Vuelta_P17.set(Calendar.MINUTE,36);
+					Vuelta_P17.set(Calendar.SECOND,41);
+					Vuelta_P17.set(Calendar.MILLISECOND,676);
+					CCP17= new ClasificacionCarrera(0,Vuelta_P17.getTime(), piloto13.getId_str());
+					
+					Vuelta_P18.set(Calendar.HOUR,1);
+					Vuelta_P18.set(Calendar.MINUTE,36);
+					Vuelta_P18.set(Calendar.SECOND,42);
+					Vuelta_P18.set(Calendar.MILLISECOND,710);
+					CCP18= new ClasificacionCarrera(0,Vuelta_P18.getTime(), piloto14.getId_str());
+					
+					Vuelta_P19.set(Calendar.HOUR,1);
+					Vuelta_P19.set(Calendar.MINUTE,36);
+					Vuelta_P19.set(Calendar.SECOND,58);
+					Vuelta_P19.set(Calendar.MILLISECOND,955);
+					CCP19= new ClasificacionCarrera(0,Vuelta_P19.getTime(), piloto15.getId_str());
+
+					Vuelta_P20.set(Calendar.HOUR,1);
+					Vuelta_P20.set(Calendar.MINUTE,40);
+					Vuelta_P20.set(Calendar.SECOND,0);
+					Vuelta_P20.set(Calendar.MILLISECOND,0);
+					CCP20= new ClasificacionCarrera(0,Vuelta_P20.getTime(), piloto19.getId_str());
+
 					List<String> CCGPShangai = new ArrayList<String>();
 					CCGPShangai.add(CCP1.getId_str());
 					CCGPShangai.add(CCP2.getId_str());
@@ -750,6 +805,11 @@ public class InformacionCampeonato {
 					CCGPShangai.add(CCP13.getId_str());
 					CCGPShangai.add(CCP14.getId_str());
 					CCGPShangai.add(CCP15.getId_str());
+					CCGPShangai.add(CCP16.getId_str());
+					CCGPShangai.add(CCP17.getId_str());
+					CCGPShangai.add(CCP18.getId_str());
+					CCGPShangai.add(CCP19.getId_str());
+					CCGPShangai.add(CCP20.getId_str());
 
 
 					
@@ -807,77 +867,72 @@ public class InformacionCampeonato {
 					CCP3= new ClasificacionCarrera(15,Vuelta_P3.getTime(), piloto7.getId_str());
 					
 					Vuelta_P4.set(Calendar.HOUR,1);
-					Vuelta_P4.set(Calendar.MINUTE,29);
-					Vuelta_P4.set(Calendar.SECOND,40);
-					Vuelta_P4.set(Calendar.MILLISECOND,352);
-					CCP4= new ClasificacionCarrera(12,Vuelta_P4.getTime(), piloto6.getId_str());
+					Vuelta_P4.set(Calendar.MINUTE,43);
+					Vuelta_P4.set(Calendar.SECOND,49);
+					Vuelta_P4.set(Calendar.MILLISECOND,751);
+					CCP4= new ClasificacionCarrera(12,Vuelta_P4.getTime(), piloto2.getId_str());
 					
 					Vuelta_P5.set(Calendar.HOUR,1);
-					Vuelta_P5.set(Calendar.MINUTE,29);
-					Vuelta_P5.set(Calendar.SECOND,61);
-					Vuelta_P5.set(Calendar.MILLISECOND,169);
-					 CCP5= new ClasificacionCarrera(10,Vuelta_P5.getTime(), piloto10.getId_str());
+					Vuelta_P5.set(Calendar.MINUTE,43);
+					Vuelta_P5.set(Calendar.SECOND,51);
+					Vuelta_P5.set(Calendar.MILLISECOND,806);
+					 CCP5= new ClasificacionCarrera(10,Vuelta_P5.getTime(), piloto12.getId_str());
 					
 					Vuelta_P6.set(Calendar.HOUR,1);
-					Vuelta_P6.set(Calendar.MINUTE,29);
-					Vuelta_P6.set(Calendar.SECOND,62);
-					Vuelta_P6.set(Calendar.MILLISECOND,228);
-					CCP6= new ClasificacionCarrera(8,Vuelta_P6.getTime(), piloto5.getId_str());
+					Vuelta_P6.set(Calendar.MINUTE,43);
+					Vuelta_P6.set(Calendar.SECOND,53);
+					Vuelta_P6.set(Calendar.MILLISECOND,449);
+					CCP6= new ClasificacionCarrera(8,Vuelta_P6.getTime(), piloto15.getId_str());
 					
 					Vuelta_P7.set(Calendar.HOUR,1);
-					Vuelta_P7.set(Calendar.MINUTE,30);
-					Vuelta_P7.set(Calendar.SECOND,5);
-					Vuelta_P7.set(Calendar.MILLISECOND,954);
-					CCP7= new ClasificacionCarrera(6,Vuelta_P7.getTime(), piloto9.getId_str());
+					Vuelta_P7.set(Calendar.MINUTE,43);
+					Vuelta_P7.set(Calendar.SECOND,55);
+					Vuelta_P7.set(Calendar.MILLISECOND,222);
+					CCP7= new ClasificacionCarrera(6,Vuelta_P7.getTime(), piloto10.getId_str());
 					
 					Vuelta_P8.set(Calendar.HOUR,1);
-					Vuelta_P8.set(Calendar.MINUTE,30);
-					Vuelta_P8.set(Calendar.SECOND,7);
-					Vuelta_P8.set(Calendar.MILLISECOND,622);
-					CCP8= new ClasificacionCarrera(4,Vuelta_P8.getTime(), piloto3.getId_str());
+					Vuelta_P8.set(Calendar.MINUTE,43);
+					Vuelta_P8.set(Calendar.SECOND,56);
+					Vuelta_P8.set(Calendar.MILLISECOND,837);
+					CCP8= new ClasificacionCarrera(4,Vuelta_P8.getTime(), piloto17.getId_str());
 					
 					Vuelta_P9.set(Calendar.HOUR,1);
-					Vuelta_P9.set(Calendar.MINUTE,30);
-					Vuelta_P9.set(Calendar.SECOND,8);
-					Vuelta_P9.set(Calendar.MILLISECOND,204);
+					Vuelta_P9.set(Calendar.MINUTE,43);
+					Vuelta_P9.set(Calendar.SECOND,58);
+					Vuelta_P9.set(Calendar.MILLISECOND,443);
 					CCP9= new ClasificacionCarrera(2,Vuelta_P9.getTime(), piloto16.getId_str());
 					
 					Vuelta_P10.set(Calendar.HOUR,1);
-					Vuelta_P10.set(Calendar.MINUTE,30);
-					Vuelta_P10.set(Calendar.SECOND,19);
-					Vuelta_P10.set(Calendar.MILLISECOND,005);
-					CCP10= new ClasificacionCarrera(1,Vuelta_P10.getTime(), piloto12.getId_str());
+					Vuelta_P10.set(Calendar.MINUTE,44);
+					Vuelta_P10.set(Calendar.SECOND,2);
+					Vuelta_P10.set(Calendar.MILLISECOND,321);
+					CCP10= new ClasificacionCarrera(1,Vuelta_P10.getTime(), piloto19.getId_str());
 					
 					Vuelta_P11.set(Calendar.HOUR,1);
-					Vuelta_P11.set(Calendar.MINUTE,30);
-					Vuelta_P11.set(Calendar.SECOND,20);
-					Vuelta_P11.set(Calendar.MILLISECOND,100);
-					CCP11= new ClasificacionCarrera(0,Vuelta_P11.getTime(), piloto7.getId_str());
+					Vuelta_P11.set(Calendar.MINUTE,44);
+					Vuelta_P11.set(Calendar.SECOND,2);
+					Vuelta_P11.set(Calendar.MILLISECOND,803);
+					CCP11= new ClasificacionCarrera(0,Vuelta_P11.getTime(), piloto18.getId_str());
 					
 					Vuelta_P12.set(Calendar.HOUR,1);
-					Vuelta_P12.set(Calendar.MINUTE,30);
-					Vuelta_P12.set(Calendar.SECOND,33);
-					Vuelta_P12.set(Calendar.MILLISECOND,561);
-					CCP12= new ClasificacionCarrera(0,Vuelta_P12.getTime(), piloto11.getId_str());
+					Vuelta_P12.set(Calendar.MINUTE,44);
+					Vuelta_P12.set(Calendar.SECOND,8);
+					Vuelta_P12.set(Calendar.MILLISECOND,954);
+					CCP12= new ClasificacionCarrera(0,Vuelta_P12.getTime(), piloto14.getId_str());
 					
 					Vuelta_P13.set(Calendar.HOUR,1);
-					Vuelta_P13.set(Calendar.MINUTE,30);
-					Vuelta_P13.set(Calendar.SECOND,49);
-					Vuelta_P13.set(Calendar.MILLISECOND,042);
-					CCP13= new ClasificacionCarrera(0,Vuelta_P13.getTime(), piloto15.getId_str());
+					Vuelta_P13.set(Calendar.MINUTE,44);
+					Vuelta_P13.set(Calendar.SECOND,24);
+					Vuelta_P13.set(Calendar.MILLISECOND,954);
+					CCP13= new ClasificacionCarrera(0,Vuelta_P13.getTime(), piloto8.getId_str());
 					
 					Vuelta_P14.set(Calendar.HOUR,1);
-					Vuelta_P14.set(Calendar.MINUTE,30);
-					Vuelta_P14.set(Calendar.SECOND,51);
-					Vuelta_P14.set(Calendar.MILLISECOND,571);
-					CCP14= new ClasificacionCarrera(0,Vuelta_P14.getTime(), piloto17.getId_str());
+					Vuelta_P14.set(Calendar.MINUTE,45);
+					Vuelta_P14.set(Calendar.SECOND,0);
+					Vuelta_P14.set(Calendar.MILLISECOND,0);
+					CCP14= new ClasificacionCarrera(0,Vuelta_P14.getTime(), piloto3.getId_str());
 					
-					Vuelta_P15.set(Calendar.HOUR,1);
-					Vuelta_P15.set(Calendar.MINUTE,30);
-					Vuelta_P15.set(Calendar.SECOND,57);
-					Vuelta_P15.set(Calendar.MILLISECOND,408);
-					CCP15= new ClasificacionCarrera(0,Vuelta_P15.getTime(), piloto19.getId_str());
-
+					
 					List<String> CCGPAZERBAIJAN = new ArrayList<String>();
 					CCGPAZERBAIJAN.add(CCP1.getId_str());
 					CCGPAZERBAIJAN.add(CCP2.getId_str());
@@ -893,7 +948,7 @@ public class InformacionCampeonato {
 					CCGPAZERBAIJAN.add(CCP12.getId_str());
 					CCGPAZERBAIJAN.add(CCP13.getId_str());
 					CCGPAZERBAIJAN.add(CCP14.getId_str());
-					CCGPAZERBAIJAN.add(CCP15.getId_str());
+			
 
 					
 					

@@ -117,45 +117,31 @@ public class MyResource {
 	    return Response.status(200);
     }
     
-    //http://localhost:8080/myapp/PistonApp/pilotos/5bd729797cb2bc1e3c10d49f?nuevoNombre=TheGrefg
+    //http://localhost:8080/myapp/PistonApp/pilotos/<id-piloto>
     @PUT
     @Path("/pilotos/{idPiloto}")
-    public ResponseBuilder cambiarNombrePiloto(@PathParam("idPiloto") String idPiloto, @QueryParam("nuevoNombre") String nuevoNombre) {
-    	Piloto piloto= manejadorPiloto.piloto_get(idPiloto);
-    	if(piloto != null){
-    		piloto.setNombreCompleto(nuevoNombre);
-    		manejadorPiloto.piloto_update(piloto);
-    		return Response.status(200);
-    	}
-    	return Response.status(404);
-    }
-    
-    //http://localhost:8080/myapp/PistonApp/pilotos?nombreCompleto=PostMalone&fechaNacimiento=04/07/1995&idEscuderia=1
-    @POST
-    @Path("/pilotos")
-    public ResponseBuilder crearPiloto(@QueryParam("nombreCompleto") String nombreCompleto, @QueryParam("fechaNacimiento") String fechaNacimiento, @QueryParam("idEscuderia") String idEscuderia) {
-    	Piloto piloto = new Piloto();
-    	piloto.setNombreCompleto(nombreCompleto);
-    	
-    	Date fechaNacimiento_date;
-		try {
-			fechaNacimiento_date = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+    @Consumes("application/json")
+    public ResponseBuilder actualizarPiloto(@PathParam("idPiloto") String idPiloto, Piloto piloto) {
+    	try {
+	    	manejadorPiloto.piloto_update(piloto,idPiloto);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);
 		}
-    	piloto.setFecha_Nacimiento(fechaNacimiento_date);
-    	
-    	piloto.setId_escuderia(idEscuderia);
-    	
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/pilotos
+    @POST
+    @Path("/pilotos")
+    @Consumes("application/json")
+    public ResponseBuilder crearPiloto(Piloto piloto) {
     	manejadorPiloto.piloto_create(piloto);
-    	
     	return Response.status(200);
     	
     }
     
-  //ESCUDERIA------------------------------------------------------------------
+    //ESCUDERIA------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/escuderias
     @GET
     @Produces({"application/xml", "application/json"})
@@ -201,6 +187,96 @@ public class MyResource {
     	
     	return Response.status(200);
     	
+    }
+    
+  //AUTOS---------------------------------------------------------------------
+    //http://localhost:8080/myapp/PistonApp/autos
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/autos")
+    public List<Auto> consultarAutos() {
+    	return manejadorAuto.auto_getAll();
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/autos/5bd7288b7cb2bc1e3c10d43e
+    @DELETE
+    @Path("/autos/{idAuto}")
+    public ResponseBuilder eliminarAuto(@PathParam("idAuto") String idAuto) {
+	    try {
+	    	manejadorAuto.auto_delete(idAuto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/autos/<idAuto>
+    @PUT
+    @Path("/autos/{idAuto}")
+    @Consumes("application/json")
+    public ResponseBuilder actualizarAuto(@PathParam("idAuto") String idAuto, Auto auto) {
+    	try {
+	    	manejadorAuto.auto_update(auto,idAuto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/autos
+    @POST
+    @Consumes("application/json")
+    @Path("/autos")
+    public ResponseBuilder crearAuto(Auto auto) {
+    	manejadorAuto.auto_create(auto);
+    	return Response.status(200);
+    }
+    
+    //PISTAS---------------------------------------------------------------------
+    //http://localhost:8080/myapp/PistonApp/pistas
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/pistas")
+    public List<Pista> consultarPistas() {
+    	return manejadorPista.pista_getAll();
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/autos/5bd7288b7cb2bc1e3c10d43e
+    @DELETE
+    @Path("/pistas/{idPista}")
+    public ResponseBuilder eliminarPista(@PathParam("idPista") String idPista) {
+	    try {
+	    	manejadorPista.pista_delete(idPista);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+  //http://localhost:8080/myapp/PistonApp/autos/<idAuto>
+    @PUT
+    @Path("/pistas/{idPista}")
+    @Consumes("application/json")
+    public ResponseBuilder actualizarPista(@PathParam("idPista") String idPista, Pista pista) {
+    	try {
+	    	manejadorPista.pista_update(pista,idPista);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/pistas
+    @POST
+    @Consumes("application/json")
+    @Path("/pistas")
+    public ResponseBuilder crearPista(Pista pista) {
+    	manejadorPista.pista_create(pista);
+    	return Response.status(200);
     }
     
     //PISTON APP------------------------------------------------------------------

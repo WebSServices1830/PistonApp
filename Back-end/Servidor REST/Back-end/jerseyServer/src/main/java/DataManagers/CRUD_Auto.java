@@ -86,9 +86,9 @@ public class CRUD_Auto {
 		
 	}
 
-   	public void auto_update(Auto auto){
+   	public void auto_update(Auto auto, String idAuto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
-   				eq("id", auto.getId()) , 
+   				eq("id", idAuto) , 
    				combine(
    						set("nombre",auto.getNombre()), 
    						set("pesoEnKg",auto.getPesoEnKg()), 

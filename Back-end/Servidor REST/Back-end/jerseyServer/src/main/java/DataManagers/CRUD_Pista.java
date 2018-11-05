@@ -93,9 +93,9 @@ public class CRUD_Pista {
 		
 	}
 
-   	public void pista_update(Pista pista){
+   	public void pista_update(Pista pista, String idPista) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
-   				eq("id", pista.getId()) , 
+   				eq("id", idPista) , 
    				combine(
    						set("ciudad",pista.getCiudad()), 
 						set("foto_ref",pista.getFoto_ref()), 

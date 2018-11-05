@@ -111,9 +111,9 @@ public class CRUD_Piloto {
 		return pilotos;
 	}
 
-   	public void piloto_update(Piloto piloto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+   	public void piloto_update(Piloto piloto, String idPiloto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
-   				eq("id_str", piloto.getId_str()) , 
+   				eq("id_str", idPiloto) , 
    				combine(
    						set("nombreCompleto",piloto.getNombreCompleto()), 
    						set("fecha_Nacimiento",piloto.getFecha_Nacimiento()), 

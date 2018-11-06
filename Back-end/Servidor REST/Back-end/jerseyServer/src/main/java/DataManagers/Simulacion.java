@@ -64,7 +64,7 @@ public class Simulacion {
 			resultados.add(n);
 		}
 		//otorga valores de tiempo aleatorios para cada clasificacion
-		resultados= this.tiemposAleatorios(resultados);
+		this.tiemposAleatorios(resultados);
 		//ordena de manera decendente los tiempos de carrera
 		Collections.sort(resultados, new Comparator<ClasificacionCarrera>() {
 			  public int compare(ClasificacionCarrera o1, ClasificacionCarrera o2) {

@@ -99,9 +99,9 @@ public class MyResource {
     }
     
     @POST
-    @Path("/simulacion")
+    @Path("/granPremio/{idGranpremio}/simulacion")
     @Consumes("application/json")
-    public ResponseBuilder simulacion(String idGranpremio) {
+    public ResponseBuilder simulacion(@PathParam("idGranpremio")String idGranpremio) {
     	manejadorSimulacion.simularGranPremio(idGranpremio);
     	return Response.status(200);
     	
@@ -4075,6 +4075,8 @@ public class MyResource {
 		
 
 				manejadorEscuderia.escuderia_create(escuderia10);
+				
+				
 		
 		return Response.status(200);
 

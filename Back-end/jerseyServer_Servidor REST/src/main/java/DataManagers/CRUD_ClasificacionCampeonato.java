@@ -72,7 +72,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
    	
    	public void clasificacionCampeonato_update(ClasificacionCampeonato clasificacionCampeonato, String idClasificacionCampeonato) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
-   				eq("id", idClasificacionCampeonato) , 
+   				eq("str_id", idClasificacionCampeonato) , 
    				combine(
    						set("puntaje",clasificacionCampeonato.getPuntaje()), 
    						set("posicion",clasificacionCampeonato.getPosicion())

@@ -97,7 +97,7 @@ public class MyResource {
     	
     	return retorno;
     }
-    
+    //http://localhost:8080/myapp/PistonApp/granPremio/5be0cc5e8f2dfa4c6467b6fe/simulacion
     @POST
     @Path("/granPremio/{idGranpremio}/simulacion")
     @Consumes("application/json")

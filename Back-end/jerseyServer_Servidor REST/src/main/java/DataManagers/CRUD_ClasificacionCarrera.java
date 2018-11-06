@@ -71,12 +71,13 @@ public class CRUD_ClasificacionCarrera {
    	
    	public void clasificacionCarrera_update(ClasificacionCarrera clasificacionCarrera, String idClasificacionCarrera) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
-   				eq("id", idClasificacionCarrera) , 
+   				eq("id_str", idClasificacionCarrera) , 
    				combine(
    						set("puntaje",clasificacionCarrera.getPuntaje()), 
    						set("tiempo",clasificacionCarrera.getTiempo())
    						)
    				);
+   		//System.out.println("2: id"+idClasificacionCarrera+" puntaje:"+clasificacionCarrera.getPuntaje()+" tiempo:"+clasificacionCarrera.getTiempo());
    	}
    	
 	public void clasificacionCarrera_delete(String id){

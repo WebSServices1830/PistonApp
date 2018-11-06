@@ -120,43 +120,59 @@ public class Simulacion {
 			id_clasificaciones.add(c.getId_str());
 			
 		}
+		System.out.println("hola ya sali ahora voy a actualizar las posiciones del campeonato");
 		carrera.setId_clasificaciones(id_clasificaciones);
 		manejadorGranPremio.granPremio_update_clasificaciones(carrera.getFecha(), id_clasificaciones);
 		//se ejecutan las apuestas
 		//this.simularApuestas(id_granpremio, resultados.get(0).getId_str());
+		Campeonato c = manejadorCampeonato.campeonato_read(manejadorGranPremio.granPremio_read(id_granpremio).getId_campeonato());
+		
 		this.actualizarPosicionCampeonato(id_granpremio);
 		
+		
 	}
+	
+
 	private void actualizarPosicionCampeonato(String id_granpremio) {
+		System.out.println("entre a actualizar las posiciones");
 		Campeonato c = manejadorCampeonato.campeonato_read(manejadorGranPremio.granPremio_read(id_granpremio).getId_campeonato());
-		List<String> id_calsificaciones = c.getClasificaciones();
+		System.out.println("el nombre del campeonato es: "+c.getNombre());
+		List<String> id_clasificaciones = c.getClasificaciones();
 		List<ClasificacionCampeonato> tabla = new ArrayList<>();
-		for (String string : id_calsificaciones) {
+		for (String string : id_clasificaciones) {
 			ClasificacionCampeonato clasificacion = manejadorClasificacionCampeonato.clasificacionCampeonato_get(string);
+			System.out.println("voy a actualizar la posicion de: " + manejadorPiloto.piloto_get(clasificacion.getPiloto()).getNombreCompleto() );
 			tabla.add(clasificacion);
 		}
 		Collections.sort(tabla, new Comparator<ClasificacionCampeonato>() {
 			  public int compare(ClasificacionCampeonato o1, ClasificacionCampeonato o2) {
-			      return o1.getPuntaje()-o2.getPuntaje();
+			      return o2.getPuntaje()-o1.getPuntaje();
 			  }
 			});
 		for (ClasificacionCampeonato clasificacionCampeonato : tabla) {
-			clasificacionCampeonato.setPosicion(tabla.indexOf(clasificacionCampeonato));
+			
+			clasificacionCampeonato.setPosicion(tabla.indexOf(clasificacionCampeonato)+1);
+			System.out.println("la nueva posicion en el campeonato de: "+manejadorPiloto.piloto_get(clasificacionCampeonato.getPiloto()).getNombreCompleto()
+					+" en la posicion "+ clasificacionCampeonato.getPosicion()+" con:  "+clasificacionCampeonato.getPuntaje()+" puntos ");
 			manejadorClasificacionCampeonato.clasificacionCampeonato_update(clasificacionCampeonato, clasificacionCampeonato.getId_str());
 		}
 		
 	}
 	private void actualizarPuntosCampeonato(String id_granpremio, String piloto,int puntos) {
 		Campeonato c = manejadorCampeonato.campeonato_read(manejadorGranPremio.granPremio_read(id_granpremio).getId_campeonato());
+		ClasificacionCampeonato clasificacion = manejadorClasificacionCampeonato.clasificacionCampeonato_getByPiloto(piloto);
+		clasificacion.setPuntaje(puntos+clasificacion.getPuntaje());
+		manejadorClasificacionCampeonato.clasificacionCampeonato_update(clasificacion, clasificacion.getId_str());
+
 		List<String> id_calsificaciones = c.getClasificaciones();
-		for (String string : id_calsificaciones) {
-			ClasificacionCampeonato clasificacion = manejadorClasificacionCampeonato.clasificacionCampeonato_get(string);
-			if(clasificacion.getPiloto().equals(piloto)) {
-				clasificacion.setPuntaje(puntos+clasificacion.getPuntaje());
-				manejadorClasificacionCampeonato.clasificacionCampeonato_update(clasificacion, clasificacion.getId_str());
-				break;
-			}
+		if(!id_calsificaciones.contains(clasificacion.getId_str())) {
+			List<String> aux = c.getClasificaciones();
+			aux.add(clasificacion.getId_str());
+			c.setClasificaciones(aux);
+			manejadorCampeonato.campeonato_update(c.getNombre(), c.getFecha_inicio(), c.getFecha_final(),c.getClasificaciones());
 		}
+		
+
 	}
 	private List<ClasificacionCarrera> tiemposAleatorios(List<ClasificacionCarrera>resultados){
 		for (ClasificacionCarrera clasificacionCarrera : resultados) {

@@ -44,7 +44,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     }
     
     public ClasificacionCampeonato clasificacionCampeonato_get(String id) {
-    	ClasificacionCampeonato clasificacionCampeonato = collection.find(eq("id", id)).first();
+    	ClasificacionCampeonato clasificacionCampeonato = collection.find(eq("id_str", id)).first();
     	return clasificacionCampeonato;
     }
     
@@ -72,7 +72,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
    	
    	public void clasificacionCampeonato_update(ClasificacionCampeonato clasificacionCampeonato, String idClasificacionCampeonato) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
    		collection.updateOne(
-   				eq("str_id", idClasificacionCampeonato) , 
+   				eq("id_str", idClasificacionCampeonato) , 
    				combine(
    						set("puntaje",clasificacionCampeonato.getPuntaje()), 
    						set("posicion",clasificacionCampeonato.getPosicion())

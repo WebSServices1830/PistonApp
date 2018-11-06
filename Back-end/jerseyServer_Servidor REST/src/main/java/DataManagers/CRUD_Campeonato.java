@@ -81,13 +81,15 @@ public class CRUD_Campeonato {
 	public void campeonato_update(
 			String nombre,
 			Date fecha_inicio,
-			Date fecha_final){
+			Date fecha_final,
+			List<String> clasificaciones){
 		collection.updateOne(
 				eq("nombre", nombre) , 
 				combine(
 						set("nombre",nombre), 
 						set("fecha_inicio",fecha_inicio), 
-						set("fecha_final",fecha_final)
+						set("fecha_final",fecha_final),
+						set("clasificaciones", clasificaciones)
 						) 
 				);
 	}

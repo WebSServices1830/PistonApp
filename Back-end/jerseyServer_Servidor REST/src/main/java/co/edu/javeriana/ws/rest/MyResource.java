@@ -150,6 +150,46 @@ public class MyResource {
 		return Response.status(409);
 		
 	}
+ 	//http://localhost:8080/myapp/PistonApp/usuarios/{insertar nombre usuario}
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/usuarios/{nombreUsuario}")
+    public Usuario obteneUsuarioPorNombre(@PathParam("nombreUsuario") String nombreUsuario) {
+	    try {
+	    	Usuario u = manejadorUsuario.usuario_getByName(nombreUsuario);
+	    	return u;
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	    return null;
+    }
+ 	 //http://localhost:8080/myapp/PistonApp/usuarios/{insertar nombre usuario}
+    @DELETE
+    @Path("/usuarios/{nombreUsuario}")
+    public ResponseBuilder eliminarUsuario(@PathParam("nombreUsuario") String nombreUsuario) {
+	    try {
+	    	manejadorUsuario.usuario_deleteByName(nombreUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
+    
+    //http://localhost:8080/myapp/PistonApp/pilotos/<id-piloto>
+    @PUT
+    @Path("/usuarios/{idUsuario}")
+    @Consumes("application/json")
+    public ResponseBuilder actualizarUsuario(@PathParam("idUsuario") String idUsuario, Usuario usuario) {
+    	try {
+	    	manejadorUsuario.usuario_update(usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+	    return Response.status(200);
+    }
 
 
     //PILOTOS---------------------------------------------------------------------

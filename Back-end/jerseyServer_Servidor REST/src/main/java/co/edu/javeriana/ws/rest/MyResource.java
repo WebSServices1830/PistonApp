@@ -110,8 +110,8 @@ public class MyResource {
 
 	
  	@PUT
- 	@Path("/casino/{idPiloto}")
- 	public ResponseBuilder apostar(@PathParam("idPiloto") Apuesta apuesta) {
+ 	@Path("/casino/{apuesta}")
+ 	public ResponseBuilder apostar(@PathParam("apuesta") Apuesta apuesta) {
 
  		Usuario u = manejadorUsuario.usuario_get(apuesta.getUsuario());
 

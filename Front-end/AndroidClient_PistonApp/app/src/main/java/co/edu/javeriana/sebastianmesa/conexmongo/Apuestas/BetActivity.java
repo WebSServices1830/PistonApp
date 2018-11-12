@@ -87,9 +87,12 @@ public class BetActivity extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
+            final RequestQueue queue;
+            final String URL="http://localhost:8080/myapp/PistonApp/";
+            final String path ="apuestas";
+            //final StringRequest req;
             final String METHOD_NAME = "verPilotosPorNombre";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/verPilotosPorNombre";
+            final String SOAP_ACTION = "http://webservice.javeriana.co/v+";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 

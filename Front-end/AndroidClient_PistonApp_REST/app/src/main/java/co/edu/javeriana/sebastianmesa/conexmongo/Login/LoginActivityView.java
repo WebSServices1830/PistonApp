@@ -17,6 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
@@ -39,153 +46,189 @@ import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
 
 public class LoginActivityView extends AppCompatActivity {
 
-        private static final String TAG = "LoginActivity";
-        private static final int REQUEST_SIGNUP = 0;
+    private static final String TAG = "LoginActivity";
+    private static final int REQUEST_SIGNUP = 0;
 
-        private TextView _signupLink, _emailText, _passwordText;
-        private Button _loginButton;
-        private WebMet_ValidarLogin wm_validarLogin = null;
+    private TextView _signupLink, _emailText, _passwordText;
+    private Button _loginButton;
+    private WebMet_ValidarLogin wm_validarLogin = null;
 
-        private LinearLayout ll;
+    private LinearLayout ll;
 
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_login_view);
-            ButterKnife.bind(this);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login_view);
+        ButterKnife.bind(this);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                Window w = getWindow(); // in Activity's onCreate() for instance
-                w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
+        getWindow().setBackgroundDrawableResource(R.drawable.ic_fondo);
+        //findViewById(R.id.fondo).setBackground(ContextCompat.getDrawable(this,R.drawable.ic_fondo));
+
+        _loginButton = (Button) findViewById(R.id.btn_login);
+        _signupLink = (TextView) findViewById(R.id.link_signup);
+
+        _loginButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                login();
             }
+        });
 
-            getWindow().setBackgroundDrawableResource(R.drawable.ic_fondo);
-            //findViewById(R.id.fondo).setBackground(ContextCompat.getDrawable(this,R.drawable.ic_fondo));
+        _signupLink.setOnClickListener(new View.OnClickListener() {
 
-            _loginButton = (Button) findViewById(R.id.btn_login);
-            _signupLink = (TextView) findViewById(R.id.link_signup);
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), CrearUsuarioView.class);
+                startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
+    }
 
-            _loginButton.setOnClickListener(new View.OnClickListener() {
+    public void login() {
+        Log.d(TAG, "Login");
 
-                @Override
-                public void onClick(View v) {
-                    login();
+        if (!validate()) {
+            onLoginFailed();
+            return;
+        }
+        _loginButton = (Button) findViewById(R.id.btn_login);
+        _loginButton.setEnabled(false);
+
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivityView.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Autenticando...");
+        progressDialog.show();
+
+        _emailText = (EditText) findViewById(R.id.input_email);
+        _passwordText = (EditText) findViewById(R.id.input_password);
+
+        String email = _emailText.getText().toString();
+        String password = _passwordText.getText().toString();
+
+        wm_validarLogin = new WebMet_ValidarLogin();
+        wm_validarLogin.execute();
+
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        // On complete call either onLoginSuccess or onLoginFailed
+                        onLoginSuccess();
+                        // onLoginFailed();
+                        progressDialog.dismiss();
+                    }
+                }, 3000);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SIGNUP) {
+            if (resultCode == RESULT_OK) {
+
+                startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
+                this.finish();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // disable going back to the AdminMainActivity
+        moveTaskToBack(true);
+    }
+
+    public void onLoginSuccess() {
+        _loginButton = (Button) findViewById(R.id.btn_login);
+        _loginButton.setEnabled(true);
+        finish();
+    }
+
+    public void onLoginFailed() {
+        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        _loginButton = (Button) findViewById(R.id.btn_login);
+        _loginButton.setEnabled(true);
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+        _emailText = (EditText) findViewById(R.id.input_email);
+        _passwordText = (EditText) findViewById(R.id.input_password);
+
+        String email = _emailText.getText().toString();
+        String password = _passwordText.getText().toString();
+
+        if (email.isEmpty()) {
+            _emailText.setError("Llene el campo de usuario");
+            valid = false;
+        } else {
+            _emailText.setError(null);
+        }
+
+        if (password.isEmpty()) {
+            _passwordText.setError("Llene el campo de pass");
+            valid = false;
+        } else {
+            _passwordText.setError(null);
+        }
+
+        return valid;
+    }
+
+    public String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.reset();
+
+        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < byteData.length; i++) {
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
+    }
+
+    public void getUsuario(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8080/rest/v2/";
+        String path = "currency/jpy";
+        String query = "?fields=name;capital";
+        StringRequest req = new StringRequest(Request.Method.GET, url+path+query,
+                new Response.Listener() {
+
+                    public void onResponse(Object response) {
+                        String data = (String)response;
+                        //restResponse.setText(data);
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("TAG", "Error handling rest invocation"+error.getCause());
+                    }
                 }
-            });
+        );
+        queue.add(req);
+    }
 
-            _signupLink.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // Start the Signup activity
-                    Intent intent = new Intent(getApplicationContext(), CrearUsuarioView.class);
-                    startActivityForResult(intent, REQUEST_SIGNUP);
-                }
-            });
-        }
-
-        public void login() {
-            Log.d(TAG, "Login");
-
-            if (!validate()) {
-                onLoginFailed();
-                return;
-            }
-            _loginButton = (Button) findViewById(R.id.btn_login);
-            _loginButton.setEnabled(false);
-
-            final ProgressDialog progressDialog = new ProgressDialog(LoginActivityView.this,
-                    R.style.AppTheme_Dark_Dialog);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Autenticando...");
-            progressDialog.show();
-
-            _emailText = (EditText) findViewById(R.id.input_email);
-            _passwordText = (EditText) findViewById(R.id.input_password);
-
-            String email = _emailText.getText().toString();
-            String password = _passwordText.getText().toString();
-
-            wm_validarLogin = new WebMet_ValidarLogin();
-            wm_validarLogin.execute();
-
-
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            // On complete call either onLoginSuccess or onLoginFailed
-                            onLoginSuccess();
-                            // onLoginFailed();
-                            progressDialog.dismiss();
-                        }
-                    }, 3000);
-        }
-
-
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (requestCode == REQUEST_SIGNUP) {
-                if (resultCode == RESULT_OK) {
-
-                    startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
-                    this.finish();
-                }
-            }
-        }
-
-        @Override
-        public void onBackPressed() {
-            // disable going back to the AdminMainActivity
-            moveTaskToBack(true);
-        }
-
-        public void onLoginSuccess() {
-            _loginButton = (Button) findViewById(R.id.btn_login);
-            _loginButton.setEnabled(true);
-            finish();
-        }
-
-        public void onLoginFailed() {
-            Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-            _loginButton = (Button) findViewById(R.id.btn_login);
-            _loginButton.setEnabled(true);
-        }
-
-        public boolean validate() {
-            boolean valid = true;
-
-            _emailText = (EditText) findViewById(R.id.input_email);
-            _passwordText = (EditText) findViewById(R.id.input_password);
-
-            String email = _emailText.getText().toString();
-            String password = _passwordText.getText().toString();
-
-            if (email.isEmpty()) {
-                _emailText.setError("Llene el campo de usuario");
-                valid = false;
-            } else {
-                _emailText.setError(null);
-            }
-
-            if (password.isEmpty()) {
-                _passwordText.setError("Llene el campo de pass");
-                valid = false;
-            } else {
-                _passwordText.setError(null);
-            }
-
-            return valid;
-        }
-
-    private class WebMet_ValidarLogin extends AsyncTask<Void, Void, Boolean>  {
+    private class WebMet_ValidarLogin extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/autenticacion?wsdl";
+            final String URL = "http://10.0.2.2:8080/WS/autenticacion?wsdl";
             final String METHOD_NAME = "validarLogin";
             final String SOAP_ACTION = "http://webservice.javeriana.co/validarLogin";
 
@@ -197,13 +240,13 @@ public class LoginActivityView extends AppCompatActivity {
                 contra_hash = computeHash(password);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-                Log.i("Error: ",e.getMessage());
+                Log.i("Error: ", e.getMessage());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                Log.i("Error: ",e.getMessage());
+                Log.i("Error: ", e.getMessage());
             }
 
-            if(contra_hash == null){
+            if (contra_hash == null) {
                 return false;
             }
 
@@ -215,7 +258,7 @@ public class LoginActivityView extends AppCompatActivity {
             Log.i("Login", contra_hash);
 
 
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
 
             HttpTransportSE ht = new HttpTransportSE(URL);
@@ -245,9 +288,9 @@ public class LoginActivityView extends AppCompatActivity {
                     ManagerUsuario.usuario.setAdmin(admin);
                     ManagerUsuario.usuario.setBolsillo(bolsillo);
 
-                    if(ManagerUsuario.usuario.isAdmin()){
+                    if (ManagerUsuario.usuario.isAdmin()) {
                         startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
-                    }else{
+                    } else {
                         startActivity(new Intent(getBaseContext(), UserMenuActivity.class));
                     }
 
@@ -255,10 +298,8 @@ public class LoginActivityView extends AppCompatActivity {
                 }
 
 
-            }
-            catch (Exception e)
-            {
-                Log.i("Error",e.getMessage());
+            } catch (Exception e) {
+                Log.i("Error", e.getMessage());
                 //Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 e.printStackTrace();
@@ -270,32 +311,19 @@ public class LoginActivityView extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if(success==false){
+            if (success == false) {
                 startActivity(new Intent(getBaseContext(), LoginActivityView.class));
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_SHORT).show();
-            }
-            else{
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            } else {
             }
         }
 
         @Override
         protected void onCancelled() {
             startActivity(new Intent(getBaseContext(), LoginActivityView.class));
-            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
         }
     }
 
-    public String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        digest.reset();
-
-        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
-        StringBuffer sb = new StringBuffer();
-
-        for (int i = 0; i < byteData.length; i++){
-            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return sb.toString();
-    }
 
 }

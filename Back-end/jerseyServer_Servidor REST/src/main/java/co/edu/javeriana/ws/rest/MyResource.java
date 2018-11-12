@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.jws.WebParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -132,6 +133,23 @@ public class MyResource {
  	}
  	
  	
+ 	//USUARIOS---------------------------------------------------------------------
+ 	//http://localhost:8080/myapp/PistonApp/usuarios
+ 	@POST
+    @Path("/usuarios")
+    @Consumes("application/json")
+ 	public ResponseBuilder registrarUsuario(Usuario usuario) {
+		
+		boolean yaExisteUsuario = manejadorUsuario.existeUsuario(usuario.getNombreUsuario());
+		
+		if(!yaExisteUsuario) {
+			manejadorUsuario.usuario_create(usuario);
+			return Response.status(200);
+		}
+		
+		return Response.status(409);
+		
+	}
 
 
     //PILOTOS---------------------------------------------------------------------

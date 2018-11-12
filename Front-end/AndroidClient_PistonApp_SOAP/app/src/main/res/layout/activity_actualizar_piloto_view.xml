@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PilotoPck.ActualizarPilotoView">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <EditText
+                android:id="@+id/nomPiloto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre Piloto"
+                />
+            <EditText
+                android:id="@+id/fechaPiloto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nomPiloto"
+                android:hint="Fecha: Por ahora se enviará null"
+                />
+            <EditText
+                android:id="@+id/lugarNacimientoPiloto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fechaPiloto"
+                android:hint="Lugar de nacimiento"
+                />
+            <EditText
+                android:id="@+id/fotoRefPiloto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lugarNacimientoPiloto"
+                android:hint="Ref foto piloto"
+                />
+            <EditText
+                android:id="@+id/podiosTotales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fotoRefPiloto"
+                android:hint="Cantidad podios"
+                />
+            <EditText
+                android:id="@+id/puntosTotales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/podiosTotales"
+                android:hint="Cantidad puntos"
+                />
+            <EditText
+                android:id="@+id/gpTotales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/puntosTotales"
+                android:hint="Cantidad Gran Premios"
+                />
+
+            <Button
+                android:id="@+id/actPiloto"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:layout_below="@+id/gpTotales"
+                android:text="Actualizar Piloto" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

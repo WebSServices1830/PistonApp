@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PilotoPck.BuscarPilotosView">
+
+
+    <EditText
+        android:id="@+id/input_nombrePiloto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Digita nombre piloto"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/agregarPiloto"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_nombrePiloto"
+        android:layout_centerHorizontal="true"
+        android:text="Buscar piloto" />
+
+    <ListView
+        android:id="@+id/listView_pilotos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/agregarPiloto">
+
+    </ListView>
+
+
+
+
+</RelativeLayout>

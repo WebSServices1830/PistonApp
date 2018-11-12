@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GranPremioPck.CrearGPView">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/fechaGP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre GP"
+                />
+            <EditText
+                android:id="@+id/vueltasGP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fechaGP"
+                android:hint="Cantidad de vueltas"
+                />
+            <EditText
+                android:id="@+id/mejorVueltaGP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vueltasGP"
+                android:hint="Mejor vuelta"
+                />
+            <EditText
+                android:id="@+id/pistaIdGP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mejorVueltaGP"
+                android:hint="Id Pista"
+                />
+            <EditText
+                android:id="@+id/campeonatoIdGP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pistaIdGP"
+                android:hint="Id Campeonato
+"
+                />
+
+
+            <Button
+                android:id="@+id/agregarGP"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:layout_below="@+id/campeonatoIdGP"
+                android:text="Agregar GP" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EscuderiaPck.EliminarEscuderiaView">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/nombreEscuderia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Digita nombre escuderia"
+                />
+
+            <Button
+                android:id="@+id/btnEliminarEscuderia"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/nombreEscuderia"
+                android:text="Eliminar escuderia" />
+
+            <TextView
+                android:id="@+id/respuestaConsulta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textSize="16dp"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:layout_below="@+id/btnEliminarEscuderia"/>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

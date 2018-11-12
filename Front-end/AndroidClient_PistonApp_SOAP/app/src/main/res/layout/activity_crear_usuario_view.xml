@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UsuarioPck.CrearUsuarioView">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/nomUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Selecciona un nombre de usuario" />
+
+            <EditText
+                android:id="@+id/passUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nomUsuario"
+                android:hint="Digita una contraseña"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/editText_fechaNacimiento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passUsuario"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="Fecha de nacimiento"
+                android:inputType="date" />
+
+            <ImageButton
+                android:id="@+id/imageButton_calendario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passUsuario"
+                android:layout_toRightOf="@+id/editText_fechaNacimiento"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+            <CheckBox
+                android:id="@+id/adminUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editText_fechaNacimiento"
+                android:checked="true"
+                android:text="¿Es usuario administrador?" />
+
+            <ImageView
+                android:id="@+id/imageView_fotoPerfil"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@+id/adminUsuario" />
+
+            <ImageButton
+                android:id="@+id/imageButton_seleccionarImagen"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/adminUsuario"
+                android:layout_toRightOf="@id/imageView_fotoPerfil"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_image_selector" />
+
+            <ImageButton
+                android:id="@+id/imageButton_tomarFoto"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/adminUsuario"
+                android:layout_toRightOf="@id/imageButton_seleccionarImagen"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_camera"/>
+
+
+            <Button
+                android:id="@+id/agregarUsuario"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView_fotoPerfil"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-1dp"
+                android:text="Agregar Usuario" />
+
+
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

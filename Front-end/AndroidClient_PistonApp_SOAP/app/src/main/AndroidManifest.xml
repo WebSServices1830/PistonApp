@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="co.edu.javeriana.sebastianmesa.conexmongo">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".AdminMainActivity" />
+        <activity android:name=".PilotoPck.IndexPilotoView" />
+        <activity android:name=".PilotoPck.CrearPilotoView" />
+        <activity android:name=".PilotoPck.BuscarPilotosView" />
+        <activity android:name=".PilotoPck.ActualizarPilotoView" />
+        <activity android:name=".PilotoPck.EliminarPilotoView" />
+        <activity android:name=".EscuderiaPck.IndexEscuderiaView" />
+        <activity android:name=".EscuderiaPck.ActualizarEscuderiaView" />
+        <activity android:name=".EscuderiaPck.CrearEscuderiaView" />
+        <activity android:name=".EscuderiaPck.EliminarEscuderiaView" />
+        <activity android:name=".EscuderiaPck.VerEscuderiaView" />
+        <activity android:name=".AutoPck.IndexAutoView" />
+        <activity android:name=".AutoPck.CrearAutoView" />
+        <activity android:name=".AutoPck.ActualizarAutoView" />
+        <activity android:name=".AutoPck.VerAutoView" />
+        <activity android:name=".AutoPck.EliminarAutoView" />
+        <activity android:name=".GranPremioPck.IndexGPView" />
+        <activity android:name=".GranPremioPck.ActualizarGPView" />
+        <activity android:name=".GranPremioPck.CrearGPView" />
+        <activity android:name=".GranPremioPck.EliminarGPView" />
+        <activity android:name=".GranPremioPck.VerGPView" />
+        <activity android:name=".UsuarioPck.CrearUsuarioView" />
+        <activity android:name=".UsuarioPck.ActualizarUsuarioView" />
+        <activity android:name=".UsuarioPck.VerUsuarioView" />
+        <activity android:name=".UsuarioPck.EliminarUsuarioView" />
+        <activity android:name=".UsuarioPck.IndexUsuarioView" />
+        <activity android:name=".Login.LoginActivityView">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CampeonatoPck.VerCampeonatoActivity" />
+        <activity android:name=".UserMenuActivity" />
+        <activity
+            android:name=".GranPremioPck.GranPremioAdapter"
+            android:label="@string/title_activity_gran_premio_adapter"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".EstadisticasPck.EstPorPiloto" />
+        <activity android:name=".EstadisticasPck.EstPorEscuderia" />
+        <activity android:name=".PilotoPck.VerPilotoView" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".Apuestas.BetActivity" />
+        <activity android:name=".Apuestas.ConfirmBetActivity"></activity>
+    </application>
+
+</manifest>

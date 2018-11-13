@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
@@ -49,11 +55,16 @@ public class LoginActivityView extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     private TextView _signupLink, _emailText, _passwordText;
     private Button _loginButton;
     private WebMet_ValidarLogin wm_validarLogin = null;
 
     private LinearLayout ll;
+
+    Usuario usuarioLogeado;
 
 
     @Override
@@ -61,6 +72,28 @@ public class LoginActivityView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_view);
         ButterKnife.bind(this);
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    getUsuario(user);
+                    if(!usuarioLogeado.isAdmin()) {
+                        startActivity(new Intent(LoginActivityView.this, UserMenuActivity.class));
+                    } else {
+                        startActivity(new Intent(LoginActivityView.this, AdminMainActivity.class));
+                    }
+                } else {
+                // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
@@ -114,19 +147,48 @@ public class LoginActivityView extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        wm_validarLogin = new WebMet_ValidarLogin();
-        wm_validarLogin.execute();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG,
+                                "signInWithEmail:onComplete:" + task.isSuccessful());
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            _emailText.setText("");
+                            _passwordText.setText("");
+                        }
+                    }
+                });
 
+        /*wm_validarLogin = new WebMet_ValidarLogin();
+        wm_validarLogin.execute();*/
 
         new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+            new Runnable() {
+                public void run() {
+                    // On complete call either onLoginSuccess or onLoginFailed
+                    onLoginSuccess();
+                    // onLoginFailed();
+                    progressDialog.dismiss();
+                }
+            }, 3000);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
 
@@ -198,17 +260,14 @@ public class LoginActivityView extends AppCompatActivity {
         return sb.toString();
     }
 
-    public void getUsuario(){
+    public void getUsuario(FirebaseUser user){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://10.0.2.2:8080/rest/v2/";
-        String path = "currency/jpy";
-        String query = "?fields=name;capital";
-        StringRequest req = new StringRequest(Request.Method.GET, url+path+query,
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "usuario/"+user.getUid();
+        StringRequest req = new StringRequest(Request.Method.GET, url+path,
                 new Response.Listener() {
-
                     public void onResponse(Object response) {
-                        String data = (String)response;
-                        //restResponse.setText(data);
+                        usuarioLogeado = (Usuario)response;
                     }
                 },
                 new Response.ErrorListener() {

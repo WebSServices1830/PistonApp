@@ -3,6 +3,8 @@ package co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Usuario {
 	
@@ -83,6 +85,23 @@ public class Usuario {
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public JSONObject toJSON () {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("_id", getId());
+			obj.put("admin", isAdmin());
+			obj.put("bolsillo", getBolsillo());
+			obj.put("contra", getContra());
+			obj.put("fechaNacimiento", getFechaNacimiento());
+			obj.put("id_str", getId_str());
+			obj.put("nombreUsuario", getNombreUsuario());
+			obj.put("urlFoto", getUrlFoto());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return obj;
 	}
 	
 

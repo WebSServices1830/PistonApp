@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "181750824742",
+    "firebase_url": "https://androidclientpistonapprest.firebaseio.com",
+    "project_id": "androidclientpistonapprest",
+    "storage_bucket": "androidclientpistonapprest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181750824742:android:77948b13a0340495",
+        "android_client_info": {
+          "package_name": "co.edu.javeriana.sebastianmesa.conexmongo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181750824742-fjn646vv66cv00a6h63ee8s80adpr0je.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.edu.javeriana.sebastianmesa.conexmongo",
+            "certificate_hash": "0aec742c2cf251268fe75f420f743363b9a9489f"
+          }
+        },
+        {
+          "client_id": "181750824742-rlqfub18472mlocfetpdjmleivul7vuo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOayvNdagNws4EJ5hKjWNKn3KLLQ-zUq8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181750824742-rlqfub18472mlocfetpdjmleivul7vuo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

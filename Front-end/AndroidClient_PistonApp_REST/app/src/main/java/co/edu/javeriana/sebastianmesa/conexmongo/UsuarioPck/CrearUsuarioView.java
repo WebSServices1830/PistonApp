@@ -28,6 +28,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
@@ -42,9 +55,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
+import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
 
 public class CrearUsuarioView extends AppCompatActivity {
 
@@ -77,11 +95,15 @@ public class CrearUsuarioView extends AppCompatActivity {
     final int dia = calendario.get(Calendar.DAY_OF_MONTH);
     final int anio = calendario.get(Calendar.YEAR);
 
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_usuario_view);
+
+        mAuth = FirebaseAuth.getInstance();
 
         et_nombreUsuario = findViewById(R.id.nomUsuario);
         et_contra = findViewById(R.id.passUsuario);
@@ -98,8 +120,9 @@ public class CrearUsuarioView extends AppCompatActivity {
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 if(camposValidos()){
-                    wm_registrarUsuario = new WebMet_RegistrarUsuario();
-                    wm_registrarUsuario.execute();
+                    /*wm_registrarUsuario = new WebMet_RegistrarUsuario();
+                    wm_registrarUsuario.execute();*/
+                    registrarUsuario(et_nombreUsuario.getText().toString(),et_contra.getText().toString());
                 }
             }
         });
@@ -153,6 +176,63 @@ public class CrearUsuarioView extends AppCompatActivity {
         }
 
         return sonValidos;
+    }
+
+    void registrarUsuario(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if(user!=null){ //Update user Info
+                                UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
+                                user.updateProfile(upcrb.build());
+                                if(checkBox_admin.isSelected()) {
+                                    startActivity(new Intent(CrearUsuarioView.this, AdminMainActivity.class)); //o en el listener
+                                } else {
+                                    startActivity(new Intent(CrearUsuarioView.this, UserMenuActivity.class));
+                                }
+                            }
+                        }
+                        if (!task.isSuccessful()) {
+                            Log.e("TAG", task.getException().getMessage());
+                        }
+                    }
+                });
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "usuario";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url+path,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<>();
+                Usuario usuarioCreado= new Usuario();
+                //params.put("name", usuarioCreado);
+                return params;
+            }
+        };
+        queue.add(postRequest);
     }
 
     private class WebMet_RegistrarUsuario extends AsyncTask<Void, Void, Boolean> {

@@ -263,7 +263,7 @@ public class LoginActivityView extends AppCompatActivity {
     public void getUsuario(FirebaseUser user){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
-        String path = "usuario/"+user.getUid();
+        String path = "usuarios/"+user.getEmail();
         StringRequest req = new StringRequest(Request.Method.GET, url+path,
                 new Response.Listener() {
                     public void onResponse(Object response) {

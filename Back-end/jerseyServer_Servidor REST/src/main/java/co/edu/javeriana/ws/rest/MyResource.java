@@ -1,6 +1,7 @@
 package co.edu.javeriana.ws.rest;
 
 import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import DataManagers.CRUD_Usuario;
 import DataManagers.Simulacion;
@@ -75,7 +79,7 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+        return "Got it bro!";
     }
     
     //http://localhost:8080/myapp/PistonApp/fibonacci/7
@@ -125,12 +129,12 @@ public class MyResource {
  		}
  		return Response.status(404);
  	}
- 	@GET
- 	@Produces({ "application/xml", "application/json" })
- 	@Path("/apuestas")
- 	public List<Apuesta> consultarApuestas() {
- 		return manejadorApuesta.pista_getAll();
- 	}
+// 	@GET
+// 	@Produces({ "application/xml", "application/json" })
+// 	@Path("/apuestas")
+// 	public List<Apuesta> consultarApuestas() {
+// 		return manejadorApuesta.pista_getAll();
+// 	}
  	
  	
  	//USUARIOS---------------------------------------------------------------------
@@ -138,12 +142,23 @@ public class MyResource {
  	@POST
     @Path("/usuarios")
     @Consumes("application/json")
- 	public ResponseBuilder registrarUsuario(Usuario usuario) {
+ 	public ResponseBuilder registrarUsuario(String string) {
+ 		
+ 		/* 
+ 		 *  Transferir los datos y lo que espera consumir el servicio es JSON.
+ 		 *  Así que lo recibo como una cadena y con Gson lo convierto a un objeto.
+ 		 *  
+ 		 */
+ 		
+ 		Gson gson = new Gson();
+    	JsonObject job = gson.fromJson(string, JsonObject.class);
+    	JsonObject ovl = job.getAsJsonObject("user");
+		Usuario data = new Gson().fromJson(ovl, Usuario.class);
 		
-		boolean yaExisteUsuario = manejadorUsuario.existeUsuario(usuario.getNombreUsuario());
+		boolean yaExisteUsuario = manejadorUsuario.existeUsuario(data.getNombreUsuario());
 		
 		if(!yaExisteUsuario) {
-			manejadorUsuario.usuario_create(usuario);
+			manejadorUsuario.usuario_create(data);
 			return Response.status(200);
 		}
 		
@@ -164,6 +179,28 @@ public class MyResource {
 		}
 	    return null;
     }
+    
+    //// PRUEBA ////
+    
+    
+    //http://localhost:8080/myapp/PistonApp/usuarios/prueba
+//    @POST
+//    @Path("/usuarios/prueba")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public ResponseBuilder pruebaMetodos(String string) {
+//    	
+//    	Gson gson = new Gson();
+//    	JsonObject job = gson.fromJson(string, JsonObject.class);
+//    	JsonObject ovl = job.getAsJsonObject("user");
+//		Usuario data = new Gson().fromJson(ovl, Usuario.class);
+//		
+//		System.out.println("Bien?" + data.getNombreUsuario() + data.getNombreUsuario());
+//		
+//		return Response.status(200);
+//    }
+    
+    //// PRUEBA ////
+    
  	 //http://localhost:8080/myapp/PistonApp/usuarios/{insertar nombre usuario}
     @DELETE
     @Path("/usuarios/{nombreUsuario}")

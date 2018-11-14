@@ -28,10 +28,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +43,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
@@ -74,8 +78,8 @@ public class CrearUsuarioView extends AppCompatActivity {
     private CheckBox checkBox_admin;
     private Button btn_agregarUsuario;
 
-    private String resultado="";
-    private WebMet_RegistrarUsuario wm_registrarUsuario = null;
+    private String resultado = "";
+    //    private WebMet_RegistrarUsuario wm_registrarUsuario = null;
     private TextView campo = null;
 
     private final static int STORAGE_PERMISSION = 1;
@@ -119,10 +123,10 @@ public class CrearUsuarioView extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                if(camposValidos()){
+                if (camposValidos()) {
                     /*wm_registrarUsuario = new WebMet_RegistrarUsuario();
                     wm_registrarUsuario.execute();*/
-                    registrarUsuario(et_nombreUsuario.getText().toString(),et_contra.getText().toString());
+                    registrarUsuario(et_nombreUsuario.getText().toString(), et_contra.getText().toString());
                 }
             }
         });
@@ -137,7 +141,7 @@ public class CrearUsuarioView extends AppCompatActivity {
         btn_seleccionarImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestPermission(activityContext, Manifest.permission.READ_EXTERNAL_STORAGE,"Se necesita acceso al almacenamiento",STORAGE_PERMISSION);
+                requestPermission(activityContext, Manifest.permission.READ_EXTERNAL_STORAGE, "Se necesita acceso al almacenamiento", STORAGE_PERMISSION);
             }
         });
 
@@ -149,10 +153,9 @@ public class CrearUsuarioView extends AppCompatActivity {
         });
 
 
-
     }
 
-    private boolean camposValidos(){
+    private boolean camposValidos() {
 
         boolean sonValidos = true;
 
@@ -160,17 +163,17 @@ public class CrearUsuarioView extends AppCompatActivity {
         String contra = et_contra.getText().toString();
         String fechaNacimiento = et_fechaNacimiento.getText().toString();
 
-        if( nombreUsuario.isEmpty()){
+        if (nombreUsuario.isEmpty()) {
             et_nombreUsuario.setError("No puede estar vacío");
             sonValidos = false;
         }
 
-        if( contra.isEmpty() ){
+        if (contra.isEmpty()) {
             et_contra.setError("No puede estar vacío");
             sonValidos = false;
         }
 
-        if( fechaNacimiento.isEmpty() ){
+        if (fechaNacimiento.isEmpty()) {
             et_fechaNacimiento.setError("No puede estar vacío");
             sonValidos = false;
         }
@@ -178,18 +181,19 @@ public class CrearUsuarioView extends AppCompatActivity {
         return sonValidos;
     }
 
-    void registrarUsuario(String email, String password){
+    void registrarUsuario(final String email, final String password) {
+        
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if(user!=null){ //Update user Info
+                            if (user != null) { //Update user Info
                                 UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
                                 user.updateProfile(upcrb.build());
-                                if(checkBox_admin.isSelected()) {
+                                if (checkBox_admin.isSelected()) {
                                     startActivity(new Intent(CrearUsuarioView.this, AdminMainActivity.class)); //o en el listener
                                 } else {
                                     startActivity(new Intent(CrearUsuarioView.this, UserMenuActivity.class));
@@ -202,159 +206,130 @@ public class CrearUsuarioView extends AppCompatActivity {
                     }
                 });
 
+
+
+        //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
+
+        Usuario user = new Usuario(email, password,null, "alguna url", checkBox_admin.isChecked());
+
+        /*
+        //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
+        //  que quiero pasar. Siendo este 'user' de tipo Usuario.
+         */
+        JSONObject js = new JSONObject();
+        try {
+            js.put("user",user.toJSON());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /*
+        //  Formo la petición: método a utilizar, path del servicio, el JSON creado, y un
+        //  listener que está pendiente de la respuesta a la petición
+         */
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
-        String path = "usuario";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url+path,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                        Log.d("Response", response);
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.toString());
-                    }
-                }
-        ) {
+        JsonObjectRequest sr = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://10.0.2.2:8080/myapp/PistonApp/usuarios",
+                js,
+                new Response.Listener<JSONObject>() {
+
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<>();
-                Usuario usuarioCreado= new Usuario();
-                //params.put("name", usuarioCreado);
+            public void onResponse(JSONObject response) {
+                Log.d("Response", response.toString());
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error.Response", "" + error.networkResponse.statusCode);
+            }
+        }){
+
+            /*
+            //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
+            //  parametros según el tipo de dato.
+            */
+
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+
                 return params;
             }
+
+            /*
+            //  Esto (getHeaders) da condiciones a la solicitud con el encabezado de http.
+            //  Como el servidor consume JSON, especifico que ese es el tipo de contenido que
+            //  voy a utilizar. Y utf-8 porque... eso decía internet jaja.. Supongo que es lo
+            //  mas estándar y hace que cosas mas de ASCII no molesten
+            */
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
         };
-        queue.add(postRequest);
+
+        /*
+        //  Agrego lo que armé para hacer la petición con Volley
+        */
+        Volley.newRequestQueue(this).add(sr);
+
+
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+//        String path = "usuarios/";
+//        StringRequest postRequest = new StringRequest(Request.Method.POST, url + path,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        // response
+//                        Log.d("Response", response);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        // error
+//                        Log.d("Error.Response", error.toString());
+//                    }
+//                }
+//        ) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<>();
+//                Usuario usuarioCreado = new Usuario("p1","pppppp",null,"asd",false);
+//                //params.put("name", usuarioCreado);
+//
+//                params.put("usuario", "nom");
+//
+//
+//                return params;
+//            }
+//        };
+//        queue.add(postRequest);
+
+
     }
 
-    private class WebMet_RegistrarUsuario extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/autenticacion?wsdl";
-            final String METHOD_NAME = "registrarUsuario";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/registrarUsuario";
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            Drawable fotoPerfil = previewFoto.getDrawable();
-
-            String urlFoto = null;
-            if(fotoPerfil == null){
-                urlFoto = "";
-            }else{
-                try {
-                    urlFoto = FileUpload.saveImageIntoMongoDB(fotoPerfil, et_nombreUsuario.getText().toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.i("Error: ",e.getMessage());
-                }
-            }
-
-            String contrasenia = et_contra.getText().toString();
-
-            String contra_hash = null;
-            try {
-                contra_hash = computeHash(contrasenia);
-                Log.i("Password:", contra_hash);
-
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-                Log.i("Error: ",e.getMessage());
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                Log.i("Error: ",e.getMessage());
-            }
-
-            GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
-
-            if(contra_hash != null && urlFoto != null){
-                request.addProperty("nombreUsuario", et_nombreUsuario.getText().toString());
-                request.addProperty("contrasenia", contra_hash);
-                request.addProperty("fechaNacimiento", fechaNacimiento.getTime());
-                request.addProperty("urlFoto", urlFoto);
-                request.addProperty("admin", checkBox_admin.isChecked());
-            }else{
-                return false;
-            }
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            //Para que se puedan enviar Date
-            new MarshalDate().register(envelope);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-                ht.call(SOAP_ACTION, envelope);
-
-                Object response = envelope.getResponse();
-
-                if(response != null){
-                    boolean usuarioCreado = Boolean.parseBoolean(response.toString());
-
-                    if(usuarioCreado){
-                        return true;
-                    }
-                }
-                //resultado=response.toString();
-                //Log.i("Resultado: ",resultado);
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-            }
-
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-            }
-            else{
-
-                //campo = (TextView) findViewById(R.id.conexion);
-
-                //campo.setText(resultado);
-
-                Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
-                finish();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void obtenerFecha(){
+    private void obtenerFecha() {
         DatePickerDialog recogerFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendario.set(Calendar.YEAR,year);
-                calendario.set(Calendar.MONTH,month);
-                calendario.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                calendario.set(Calendar.YEAR, year);
+                calendario.set(Calendar.MONTH, month);
+                calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
                 final int mesActual = month + 1;
                 //Formateo el día obtenido: antepone el 0 si son menores de 10
-                String diaFormateado = (dayOfMonth < 10)? CERO + String.valueOf(dayOfMonth):String.valueOf(dayOfMonth);
+                String diaFormateado = (dayOfMonth < 10) ? CERO + String.valueOf(dayOfMonth) : String.valueOf(dayOfMonth);
                 //Formateo el mes obtenido: antepone el 0 si son menores de 10
-                String mesFormateado = (mesActual < 10)? CERO + String.valueOf(mesActual):String.valueOf(mesActual);
+                String mesFormateado = (mesActual < 10) ? CERO + String.valueOf(mesActual) : String.valueOf(mesActual);
                 //Muestro la fecha con el formato deseado
                 et_fechaNacimiento.setText(diaFormateado + BARRA + mesFormateado + BARRA + year);
 
@@ -364,29 +339,29 @@ public class CrearUsuarioView extends AppCompatActivity {
             /**
              *También puede cargar los valores que usted desee
              */
-        },anio, mes, dia);
+        }, anio, mes, dia);
         //Muestro el widget
         recogerFecha.show();
 
     }
 
-    private void requestPermission(Activity context, String permission, String explanation, int requestId ){
-        if (ContextCompat.checkSelfPermission(context,permission)!= PackageManager.PERMISSION_GRANTED) {
+    private void requestPermission(Activity context, String permission, String explanation, int requestId) {
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?   
-            if (ActivityCompat.shouldShowRequestPermissionRationale(context,permission)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
                 Toast.makeText(context, explanation, Toast.LENGTH_SHORT).show();
             }
             ActivityCompat.requestPermissions(context, new String[]{permission}, requestId);
-        }else{
-            switch (requestId){
-                case STORAGE_PERMISSION : {
+        } else {
+            switch (requestId) {
+                case STORAGE_PERMISSION: {
                     Intent pickImage = new Intent(Intent.ACTION_PICK);
                     pickImage.setType("image/*");
-                    startActivityForResult(pickImage,IMAGE_PICKER_REQUEST);
+                    startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
                     break;
 
                 }
-                case CAMERA_PERMISSION : {
+                case CAMERA_PERMISSION: {
                     takePicture();
                     break;
                 }
@@ -397,15 +372,15 @@ public class CrearUsuarioView extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch(requestCode){
-            case STORAGE_PERMISSION : {
+        switch (requestCode) {
+            case STORAGE_PERMISSION: {
                 Intent pickImage = new Intent(Intent.ACTION_PICK);
                 pickImage.setType("image/*");
-                startActivityForResult(pickImage,IMAGE_PICKER_REQUEST);
+                startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
                 break;
 
             }
-            case CAMERA_PERMISSION : {
+            case CAMERA_PERMISSION: {
                 takePicture();
                 break;
             }
@@ -416,29 +391,29 @@ public class CrearUsuarioView extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch(requestCode){
+        switch (requestCode) {
             case IMAGE_PICKER_REQUEST:
-                if(resultCode == RESULT_OK){
-                    try{
+                if (resultCode == RESULT_OK) {
+                    try {
                         final Uri imageUri = data.getData();
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         previewFoto.setImageBitmap(selectedImage);
-                    }catch (FileNotFoundException e){
+                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
                 break;
             case IMAGE_CAPTURE_REQUEST:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Bundle extras = data.getExtras();
-                    Bitmap imageBitmap  = (Bitmap) extras.get("data");
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
                     previewFoto.setImageBitmap(imageBitmap);
                 }
         }
     }
 
-    private void takePicture(){
+    private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST);
@@ -452,7 +427,7 @@ public class CrearUsuarioView extends AppCompatActivity {
         byte[] byteData = digest.digest(input.getBytes("UTF-8"));
         StringBuffer sb = new StringBuffer();
 
-        for (int i = 0; i < byteData.length; i++){
+        for (int i = 0; i < byteData.length; i++) {
             sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
         return sb.toString();

@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -28,7 +30,27 @@ import org.ksoap2.transport.HttpTransportSE;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.Apuestas.BetActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
@@ -41,6 +63,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
@@ -57,7 +80,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private TextView campo = null;
     private ActionBar toolbar;
 
-    private WebMet_InicializarCampeonato wm_inicializarCampeonato = null;
+//    private WebMet_InicializarCampeonato wm_inicializarCampeonato = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +128,105 @@ public class AdminMainActivity extends AppCompatActivity {
     }
 
     public void cargarDatosFragmento (View view){
-        wm_inicializarCampeonato = new WebMet_InicializarCampeonato();
-        wm_inicializarCampeonato.execute();
+        inicializarDatos();
+    }
+
+    void inicializarDatos() {
+
+
+
+        /*
+        //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
+        //  que quiero pasar. Siendo este 'user' de tipo Usuario.
+         */
+//            JSONObject js = new JSONObject();
+//            try {
+//                js.put("user",user.toJSON());
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+
+        /*
+        //  Formo la petición: método a utilizar, path del servicio, el JSON creado, y un
+        //  listener que está pendiente de la respuesta a la petición
+         */
+            RequestQueue queue = Volley.newRequestQueue(this);
+            JsonObjectRequest sr = new JsonObjectRequest(
+                    Request.Method.POST,
+                    "http://10.0.2.2:8080/myapp/PistonApp",
+                    null,
+                    new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            Log.d("ResponseRESTini", "" + response);
+
+                            Toast.makeText(getApplicationContext(), 	"Datos Inicializados", Toast.LENGTH_LONG).show();
+                            //finish();
+
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Error.ResponseRESTini", "" + error.networkResponse.statusCode);
+                    NetworkResponse response = error.networkResponse;
+                    if (error instanceof ServerError && response != null) {
+                        try {
+                            String res = new String(response.data,
+                                    HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                            // Now you can use any deserializer to make sense of data
+                            JSONObject obj = new JSONObject(res);
+                            Log.d("Error.ResponseRESTini", "A: " + obj.toString());
+                        } catch (UnsupportedEncodingException e1) {
+                            // Couldn't properly decode data to string
+                            e1.printStackTrace();
+                            Log.d("Error.ResponseRESTini", "B: " + e1.toString());
+                        } catch (JSONException e2) {
+                            // returned data is not JSONObject?
+                            e2.printStackTrace();
+                            Log.d("Error.ResponseRESTini", "C: " + e2.toString());
+                        }
+                    }
+                }
+            }){
+
+            /*
+            //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
+            //  parametros según el tipo de dato.
+            */
+
+                @Override
+                protected Map<String,String> getParams(){
+                    Map<String,String> params = new HashMap<String, String>();
+
+                    return params;
+                }
+
+            /*
+            //  Esto (getHeaders) da condiciones a la solicitud con el encabezado de http.
+            //  Como el servidor consume JSON, especifico que ese es el tipo de contenido que
+            //  voy a utilizar. Y utf-8 porque... eso decía internet jaja.. Supongo que es lo
+            //  mas estándar y hace que cosas mas de ASCII no molesten
+            */
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    return headers;
+                }
+            };
+
+        /*
+        //  Agrego lo que armé para hacer la petición con Volley
+        */
+            Volley.newRequestQueue(this).add(sr);
+
+
+
+
     }
 
     public void logoutFragmento (View view){
@@ -114,55 +234,57 @@ public class AdminMainActivity extends AppCompatActivity {
         startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 
-    private class WebMet_InicializarCampeonato extends AsyncTask<Void, Void, Boolean> {
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
 
-            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
-            final String METHOD_NAME = "inicializarCampeonato";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/inicializarCampeonato";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-                ht.call(SOAP_ACTION, envelope);
-                Object response = envelope.getResponse();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-
-            }
-
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(getApplicationContext(),"Datos cargados", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            startActivity(new Intent(getBaseContext(), LoginActivityView.class));
-            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
-        }
-    }
+//    private class WebMet_InicializarCampeonato extends AsyncTask<Void, Void, Boolean> {
+//
+//        @Override
+//        protected Boolean doInBackground(Void... params) {
+//            // TODO: attempt authentication against a network service.
+//            //WebService - Opciones
+//            final String NAMESPACE = "http://webservice.javeriana.co/";
+//
+//            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
+//            final String METHOD_NAME = "inicializarCampeonato";
+//            final String SOAP_ACTION = "http://webservice.javeriana.co/inicializarCampeonato";
+//
+//            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+//
+//            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
+//            envelope.setOutputSoapObject(request);
+//
+//            HttpTransportSE ht = new HttpTransportSE(URL);
+//            try {
+//                ht.call(SOAP_ACTION, envelope);
+//                Object response = envelope.getResponse();
+//                return true;
+//            }
+//            catch (Exception e)
+//            {
+//                Log.i("Error: ",e.getMessage());
+//                e.printStackTrace();
+//
+//            }
+//
+//            return false;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(final Boolean success) {
+//            if(success==false){
+//                Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_SHORT).show();
+//            }
+//            else{
+//                Toast.makeText(getApplicationContext(),"Datos cargados", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            startActivity(new Intent(getBaseContext(), LoginActivityView.class));
+//            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
     private void loadFragment(Fragment fragment) {
         // load fragment

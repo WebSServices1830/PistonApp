@@ -63,6 +63,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -218,7 +219,8 @@ public class CrearUsuarioView extends AppCompatActivity {
 
             //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
 
-            GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
+            Date currentTime = Calendar.getInstance().getTime();
+            //GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
 
             Usuario user = new Usuario(email, password,null, "alguna url", checkBox_admin.isChecked());
 

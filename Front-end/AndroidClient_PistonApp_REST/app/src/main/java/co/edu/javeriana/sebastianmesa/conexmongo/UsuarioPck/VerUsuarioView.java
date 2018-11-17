@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -21,6 +38,8 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
 
 import org.bson.types.ObjectId;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -30,8 +49,11 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import bolts.Bolts;
 import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
@@ -41,6 +63,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.ClienteMongo;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class VerUsuarioView extends AppCompatActivity {
 
@@ -48,6 +71,8 @@ public class VerUsuarioView extends AppCompatActivity {
     private ImageView imagenPerfil;
     private TextView tv_nombreUsuario, tv_fechaNacimientoUsuario, tv_bolsilloUsuario;
     private WebMet_ConsultarUsuario wm_agregarPiloto = null;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +84,79 @@ public class VerUsuarioView extends AppCompatActivity {
         tv_fechaNacimientoUsuario = findViewById(R.id.textView_fechaNacimientoUsuario);
         tv_bolsilloUsuario = findViewById(R.id.textView_bolsilloUsuario);
 
-        new WebMet_ConsultarUsuario().execute();
+        //new WebMet_ConsultarUsuario().execute();
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        getUsuario(currentUser);
+
+    }
+
+    public void getUsuario(FirebaseUser user){
+        RequestQueue mRequestQueue;
+        StringRequest mStringRequest;
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/usuarios/";
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        //String Request initialized
+        mStringRequest = new StringRequest(Request.Method.GET, url + user.getEmail(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+
+                JSONObject jsonObject = xmlToJson.toJson();
+
+                try {
+                    JSONObject infoJSON = (JSONObject) jsonObject.get("usuario");
+
+                    String nombreJSON = infoJSON.get("nombreUsuario").toString();
+                    String passJSON   = infoJSON.get("contra").toString();
+                    //Date fechaJSON   = infoJSON.get("fechaNacimiento");
+                    String urlJSON   = infoJSON.get("urlFoto").toString();
+                    Boolean adminJSON  = Boolean.parseBoolean(infoJSON.get("admin").toString());
+                    double bolsilloJSON = Double.parseDouble(infoJSON.get("bolsillo").toString());
+
+                    Log.i("intentoLogin Server",adminJSON.toString() );
+
+                    ManagerUsuario.usuario = new Usuario();
+
+                    ManagerUsuario.usuario.setNombreUsuario(nombreJSON);
+                    ManagerUsuario.usuario.setContra(passJSON);
+                    ManagerUsuario.usuario.setFechaNacimiento(null);
+                    ManagerUsuario.usuario.setUrlFoto(urlJSON);
+                    ManagerUsuario.usuario.setAdmin(adminJSON);
+                    ManagerUsuario.usuario.setBolsillo(bolsilloJSON);
+
+                    tv_nombreUsuario = (TextView) findViewById(R.id.campo_nombreUsuario);
+                    tv_fechaNacimientoUsuario = (TextView) findViewById(R.id.campo_fechaNacimientoUsuario);
+                    tv_bolsilloUsuario = (TextView) findViewById(R.id.campo_bolsilloUsuario);
+
+                    tv_nombreUsuario.setText(ManagerUsuario.usuario.getNombreUsuario());
+                    Date currentTime = Calendar.getInstance().getTime();
+
+                    tv_fechaNacimientoUsuario.setText(currentTime.toString());
+                    tv_bolsilloUsuario.setText("$" + ManagerUsuario.usuario.getBolsillo());
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.i("intentoLogin","Error pero con respuesta");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i("intentoLogin","Error :" + error.toString());
+            }
+        });
+
+        mRequestQueue.add(mStringRequest);
 
     }
 

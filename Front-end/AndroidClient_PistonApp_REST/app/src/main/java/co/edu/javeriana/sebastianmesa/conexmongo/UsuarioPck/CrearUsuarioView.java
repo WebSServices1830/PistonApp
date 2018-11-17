@@ -218,6 +218,8 @@ public class CrearUsuarioView extends AppCompatActivity {
 
             //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
 
+            GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
+
             Usuario user = new Usuario(email, password,null, "alguna url", checkBox_admin.isChecked());
 
         /*

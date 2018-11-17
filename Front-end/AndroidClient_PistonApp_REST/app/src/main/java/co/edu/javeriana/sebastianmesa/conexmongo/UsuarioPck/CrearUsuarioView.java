@@ -66,8 +66,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
+import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
@@ -188,108 +191,103 @@ public class CrearUsuarioView extends AppCompatActivity {
 
     void registrarUsuario(final String email, final String password) {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        mAuth = FirebaseAuth.getInstance();
 
-        myRef.setValue("Hello, World!");
+        if (isEmailValid(email)){
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            if (user != null) { //Update user Info
-                                UserProfileChangeRequest.Builder upcrb = new UserProfileChangeRequest.Builder();
-                                user.updateProfile(upcrb.build());
-                                if (checkBox_admin.isSelected()) {
-                                    startActivity(new Intent(CrearUsuarioView.this, AdminMainActivity.class)); //o en el listener
-                                } else {
-                                    startActivity(new Intent(CrearUsuarioView.this, UserMenuActivity.class));
-                                }
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("TAG", "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("TAG", "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(getBaseContext(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
                             }
+
+                            // ...
                         }
-                        if (!task.isSuccessful()) {
-                            Log.e("TAG", task.getException().getMessage());
-                        }
-                    }
-                });
+                    });
 
 
 
-        //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
+            //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
 
-        Usuario user = new Usuario(email, password,null, "alguna url", checkBox_admin.isChecked());
+            Usuario user = new Usuario(email, password,null, "alguna url", checkBox_admin.isChecked());
 
         /*
         //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
         //  que quiero pasar. Siendo este 'user' de tipo Usuario.
          */
-        JSONObject js = new JSONObject();
-        try {
-            js.put("user",user.toJSON());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            JSONObject js = new JSONObject();
+            try {
+                js.put("user",user.toJSON());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         /*
         //  Formo la petición: método a utilizar, path del servicio, el JSON creado, y un
         //  listener que está pendiente de la respuesta a la petición
          */
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest sr = new JsonObjectRequest(
-                Request.Method.POST,
-                "http://10.0.2.2:8080/myapp/PistonApp/usuarios",
-                js,
-                new Response.Listener<JSONObject>() {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            JsonObjectRequest sr = new JsonObjectRequest(
+                    Request.Method.POST,
+                    "http://10.0.2.2:8080/myapp/PistonApp/usuarios",
+                    js,
+                    new Response.Listener<JSONObject>() {
 
-            @Override
-            public void onResponse(JSONObject response) {
+                        @Override
+                        public void onResponse(JSONObject response) {
 
-                Log.d("ResponseREST", "" + response);
+                            Log.d("ResponseREST", "" + response);
 
-                Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
-                finish();
+                            Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
+                            finish();
 
-            }
+                        }
 
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error.ResponseREST", "" + error.networkResponse.statusCode);
-                NetworkResponse response = error.networkResponse;
-                if (error instanceof ServerError && response != null) {
-                    try {
-                        String res = new String(response.data,
-                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                        // Now you can use any deserializer to make sense of data
-                        JSONObject obj = new JSONObject(res);
-                        Log.d("Error.ResponseREST", "A: " + obj.toString());
-                    } catch (UnsupportedEncodingException e1) {
-                        // Couldn't properly decode data to string
-                        e1.printStackTrace();
-                        Log.d("Error.ResponseREST", "B: " + e1.toString());
-                    } catch (JSONException e2) {
-                        // returned data is not JSONObject?
-                        e2.printStackTrace();
-                        Log.d("Error.ResponseREST", "C: " + e2.toString());
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Error.ResponseREST", "" + error.networkResponse.statusCode);
+                    NetworkResponse response = error.networkResponse;
+                    if (error instanceof ServerError && response != null) {
+                        try {
+                            String res = new String(response.data,
+                                    HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                            // Now you can use any deserializer to make sense of data
+                            JSONObject obj = new JSONObject(res);
+                            Log.d("Error.ResponseREST", "A: " + obj.toString());
+                        } catch (UnsupportedEncodingException e1) {
+                            // Couldn't properly decode data to string
+                            e1.printStackTrace();
+                            Log.d("Error.ResponseREST", "B: " + e1.toString());
+                        } catch (JSONException e2) {
+                            // returned data is not JSONObject?
+                            e2.printStackTrace();
+                            Log.d("Error.ResponseREST", "C: " + e2.toString());
+                        }
                     }
                 }
-            }
-        }){
+            }){
 
             /*
             //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
             //  parametros según el tipo de dato.
             */
 
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+                @Override
+                protected Map<String,String> getParams(){
+                    Map<String,String> params = new HashMap<String, String>();
 
-                return params;
-            }
+                    return params;
+                }
 
             /*
             //  Esto (getHeaders) da condiciones a la solicitud con el encabezado de http.
@@ -298,54 +296,34 @@ public class CrearUsuarioView extends AppCompatActivity {
             //  mas estándar y hace que cosas mas de ASCII no molesten
             */
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                return headers;
-            }
-        };
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    return headers;
+                }
+            };
 
         /*
         //  Agrego lo que armé para hacer la petición con Volley
         */
-        Volley.newRequestQueue(this).add(sr);
+            Volley.newRequestQueue(this).add(sr);
+
+        }else{
+
+            Toast.makeText(getApplicationContext(), "Utiliza un correo valido", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getBaseContext(), CrearUsuarioView.class));
+
+        }
 
 
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
-//        String path = "usuarios/";
-//        StringRequest postRequest = new StringRequest(Request.Method.POST, url + path,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // response
-//                        Log.d("Response", response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // error
-//                        Log.d("Error.Response", error.toString());
-//                    }
-//                }
-//        ) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<>();
-//                Usuario usuarioCreado = new Usuario("p1","pppppp",null,"asd",false);
-//                //params.put("name", usuarioCreado);
-//
-//                params.put("usuario", "nom");
-//
-//
-//                return params;
-//            }
-//        };
-//        queue.add(postRequest);
+    }
 
-
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
 
@@ -464,5 +442,10 @@ public class CrearUsuarioView extends AppCompatActivity {
             sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
         return sb.toString();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 }

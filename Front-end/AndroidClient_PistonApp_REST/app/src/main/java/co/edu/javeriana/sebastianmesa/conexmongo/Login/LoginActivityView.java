@@ -30,6 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.MarshalDate;
 import org.ksoap2.serialization.SoapObject;
@@ -49,6 +51,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class LoginActivityView extends AppCompatActivity {
 
@@ -82,14 +85,11 @@ public class LoginActivityView extends AppCompatActivity {
                 // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     getUsuario(user);
-                    if(!usuarioLogeado.isAdmin()) {
-                        startActivity(new Intent(LoginActivityView.this, UserMenuActivity.class));
-                    } else {
-                        startActivity(new Intent(LoginActivityView.this, AdminMainActivity.class));
-                    }
+
                 } else {
                 // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+
                 }
             }
         };
@@ -160,6 +160,8 @@ public class LoginActivityView extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             _emailText.setText("");
                             _passwordText.setText("");
+                            onLoginFailed();
+                            startActivity(new Intent(LoginActivityView.this, LoginActivityView.class));
                         }
                     }
                 });
@@ -260,14 +262,46 @@ public class LoginActivityView extends AppCompatActivity {
         return sb.toString();
     }
 
-    public void getUsuario(FirebaseUser user){
+    public void getUsuario2(FirebaseUser user){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
         String path = "usuarios/"+user.getEmail();
         StringRequest req = new StringRequest(Request.Method.GET, url+path,
                 new Response.Listener() {
                     public void onResponse(Object response) {
-                        usuarioLogeado = (Usuario)response;
+
+                        Log.i("LoginResponse",response.toString());
+
+                        //usuarioLogeado = (Usuario)response;
+
+                        if (response == null){
+                            Toast.makeText(getApplicationContext(), "Usuario no encontrado", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(LoginActivityView.this, LoginActivityView.class));
+                        }else{
+
+                            XmlToJson xmlToJson = new XmlToJson.Builder(response.toString()).build();
+
+                            JSONObject jsonObject = xmlToJson.toJson();
+
+                            try {
+                                Log.i("intentoLogin",jsonObject.toString());
+                                JSONObject infoJSON = (JSONObject) jsonObject.get("usuario");
+
+                                String nombreJSON = infoJSON.get("admin").toString();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.i("intentoLogin","Error pero con respuesta");
+                            }
+
+                            if(!usuarioLogeado.isAdmin()) {
+                                startActivity(new Intent(LoginActivityView.this, UserMenuActivity.class));
+                            } else {
+                                startActivity(new Intent(LoginActivityView.this, AdminMainActivity.class));
+                            }
+                        }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -278,6 +312,59 @@ public class LoginActivityView extends AppCompatActivity {
                 }
         );
         queue.add(req);
+    }
+
+    public void getUsuario(FirebaseUser user){
+        RequestQueue mRequestQueue;
+        StringRequest mStringRequest;
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/usuarios/";
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        //String Request initialized
+        mStringRequest = new StringRequest(Request.Method.GET, url + user.getEmail(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+
+                JSONObject jsonObject = xmlToJson.toJson();
+
+                try {
+                    JSONObject infoJSON = (JSONObject) jsonObject.get("usuario");
+
+                    String nombreJSON = infoJSON.get("nombreUsuario").toString();
+                    String passJSON   = infoJSON.get("contra").toString();
+
+                    Boolean adminJSON  = Boolean.parseBoolean(infoJSON.get("admin").toString());
+
+                    Log.i("intentoLogin Server",adminJSON.toString() );
+
+                    if(!adminJSON) {
+                        startActivity(new Intent(LoginActivityView.this, UserMenuActivity.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(LoginActivityView.this, AdminMainActivity.class));
+                        finish();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.i("intentoLogin","Error pero con respuesta");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i("intentoLogin","Error :" + error.toString());
+            }
+        });
+
+        mRequestQueue.add(mStringRequest);
+
     }
 
     private class WebMet_ValidarLogin extends AsyncTask<Void, Void, Boolean> {

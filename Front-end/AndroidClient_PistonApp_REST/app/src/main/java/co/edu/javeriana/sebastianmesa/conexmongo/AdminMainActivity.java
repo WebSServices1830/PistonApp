@@ -28,6 +28,8 @@ import org.ksoap2.transport.HttpTransportSE;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import co.edu.javeriana.sebastianmesa.conexmongo.Apuestas.BetActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
@@ -98,6 +100,7 @@ public class AdminMainActivity extends AppCompatActivity {
     }
 
     public void logout (View view){
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 
@@ -107,6 +110,7 @@ public class AdminMainActivity extends AppCompatActivity {
     }
 
     public void logoutFragmento (View view){
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 

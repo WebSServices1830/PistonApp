@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
@@ -114,6 +116,8 @@ public class UserMenuActivity extends AppCompatActivity {
     }
 
     public void logoutFragmento (View view){
+
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getBaseContext(), LoginActivityView.class));
     }
 

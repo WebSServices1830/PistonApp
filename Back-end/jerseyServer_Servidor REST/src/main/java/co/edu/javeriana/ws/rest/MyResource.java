@@ -503,6 +503,23 @@ public class MyResource {
     	return Response.status(200);
     }
     
+    //CAMPEONATO
+    //http://localhost:8080/myapp/PistonApp/campeonato
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/campeonato")
+    public String consultarCampeonato(String nombre) {
+    	return manejadorCampeonato.campeonato_readByName(nombre).getId_str();
+    }
+    //GRAN PREMIO
+    //http://localhost:8080/myapp/PistonApp/granPremios/{id_str}
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/granPremios/{id_campeonato}")
+    public List<GranPremio> consultarGranPremios(@PathParam("id_campeonato") String id_campeonato) {
+    	return manejadorGranPremio.grandesPremios_X_Fecha(id_campeonato);
+    }
+    
     //PISTON APP------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp
     @POST

@@ -13,42 +13,94 @@
     android:orientation="vertical">
 
 
-        <ImageView
-            android:id="@+id/imageView_perfilUsuario"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            />
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_f1"
+        android:id="@+id/imageView_perfilUsuario"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textView_nombreUsuario"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:text="Nombre: "
+            android:text="Perfil: "
             android:textColor="@color/white"
             android:paddingLeft="20dp"
             />
 
         <TextView
-            android:id="@+id/textView_fechaNacimientoUsuario"
+            android:id="@+id/campo_nombreUsuario"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Nombre"
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView_fechaNacimientoUsuario"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:textColor="@color/white"
             android:paddingLeft="30dp"
+            android:textStyle="bold"
             android:text="Fecha de nacimiento: "/>
 
         <TextView
+            android:id="@+id/campo_fechaNacimientoUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:paddingLeft="40dp"
+            android:text="Fecha de nacimiento: "/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
             android:id="@+id/textView_bolsilloUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:paddingLeft="30dp"
+            android:textStyle="bold"
+            android:text="Dinero en bolsillo:"/>
+        <TextView
+            android:id="@+id/campo_bolsilloUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:textColor="@color/white"
             android:paddingLeft="30dp"
-            android:text="Dinero en bolsillo: $"/>
+            android:text="$"/>
 
+    </LinearLayout>
 
 
 

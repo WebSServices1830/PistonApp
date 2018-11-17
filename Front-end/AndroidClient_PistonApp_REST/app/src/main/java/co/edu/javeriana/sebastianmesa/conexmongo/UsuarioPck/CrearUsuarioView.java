@@ -88,7 +88,7 @@ public class CrearUsuarioView extends AppCompatActivity {
     private Button btn_agregarUsuario;
 
     private String resultado = "";
-    //    private WebMet_RegistrarUsuario wm_registrarUsuario = null;
+    private WebMet_RegistrarUsuario wm_registrarUsuario = null;
     private TextView campo = null;
 
     private final static int STORAGE_PERMISSION = 1;
@@ -109,6 +109,9 @@ public class CrearUsuarioView extends AppCompatActivity {
     final int anio = calendario.get(Calendar.YEAR);
 
     private FirebaseAuth mAuth;
+
+    public String emailGlobal = null;
+    public String passGlobal = null;
 
 
     @Override
@@ -193,6 +196,8 @@ public class CrearUsuarioView extends AppCompatActivity {
     void registrarUsuario(final String email, final String password) {
 
         mAuth = FirebaseAuth.getInstance();
+        emailGlobal = email;
+        passGlobal  = password;
 
         if (isEmailValid(email)){
 
@@ -215,103 +220,10 @@ public class CrearUsuarioView extends AppCompatActivity {
                         }
                     });
 
+            wm_registrarUsuario = new WebMet_RegistrarUsuario();
+            wm_registrarUsuario.execute();
 
 
-            //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
-
-            Date currentTime = Calendar.getInstance().getTime();
-            //GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
-
-            Usuario user = new Usuario(email, password,null, "alguna url", checkBox_admin.isChecked());
-
-        /*
-        //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
-        //  que quiero pasar. Siendo este 'user' de tipo Usuario.
-         */
-            JSONObject js = new JSONObject();
-            try {
-                js.put("user",user.toJSON());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        /*
-        //  Formo la petición: método a utilizar, path del servicio, el JSON creado, y un
-        //  listener que está pendiente de la respuesta a la petición
-         */
-            RequestQueue queue = Volley.newRequestQueue(this);
-            JsonObjectRequest sr = new JsonObjectRequest(
-                    Request.Method.POST,
-                    "http://10.0.2.2:8080/myapp/PistonApp/usuarios",
-                    js,
-                    new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-
-                            Log.d("ResponseREST", "" + response);
-
-                            Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
-                            finish();
-
-                        }
-
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("Error.ResponseREST", "" + error.networkResponse.statusCode);
-                    NetworkResponse response = error.networkResponse;
-                    if (error instanceof ServerError && response != null) {
-                        try {
-                            String res = new String(response.data,
-                                    HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                            // Now you can use any deserializer to make sense of data
-                            JSONObject obj = new JSONObject(res);
-                            Log.d("Error.ResponseREST", "A: " + obj.toString());
-                        } catch (UnsupportedEncodingException e1) {
-                            // Couldn't properly decode data to string
-                            e1.printStackTrace();
-                            Log.d("Error.ResponseREST", "B: " + e1.toString());
-                        } catch (JSONException e2) {
-                            // returned data is not JSONObject?
-                            e2.printStackTrace();
-                            Log.d("Error.ResponseREST", "C: " + e2.toString());
-                        }
-                    }
-                }
-            }){
-
-            /*
-            //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
-            //  parametros según el tipo de dato.
-            */
-
-                @Override
-                protected Map<String,String> getParams(){
-                    Map<String,String> params = new HashMap<String, String>();
-
-                    return params;
-                }
-
-            /*
-            //  Esto (getHeaders) da condiciones a la solicitud con el encabezado de http.
-            //  Como el servidor consume JSON, especifico que ese es el tipo de contenido que
-            //  voy a utilizar. Y utf-8 porque... eso decía internet jaja.. Supongo que es lo
-            //  mas estándar y hace que cosas mas de ASCII no molesten
-            */
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
-                    return headers;
-                }
-            };
-
-        /*
-        //  Agrego lo que armé para hacer la petición con Volley
-        */
-            Volley.newRequestQueue(this).add(sr);
 
         }else{
 
@@ -321,6 +233,152 @@ public class CrearUsuarioView extends AppCompatActivity {
         }
 
 
+    }
+
+    private class WebMet_RegistrarUsuario extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+
+            Drawable fotoPerfil = previewFoto.getDrawable();
+
+            String urlFoto = null;
+            if(fotoPerfil == null){
+                urlFoto = "";
+            }else{
+                try {
+
+                    urlFoto = FileUpload.saveImageIntoMongoDB(fotoPerfil, et_nombreUsuario.getText().toString());
+
+                    completarRegistro(urlFoto);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.i("Error: ",e.getMessage());
+                }
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if(success==false){
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            }
+            else{
+
+                //campo = (TextView) findViewById(R.id.conexion);
+
+                //campo.setText(resultado);
+
+                Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void completarRegistro (String fechaPath){
+        //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
+
+        Date currentTime = Calendar.getInstance().getTime();
+        //GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
+
+        Usuario user = new Usuario(emailGlobal, passGlobal,null, fechaPath, checkBox_admin.isChecked());
+
+        /*
+        //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
+        //  que quiero pasar. Siendo este 'user' de tipo Usuario.
+         */
+        JSONObject js = new JSONObject();
+        try {
+            js.put("user",user.toJSON());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /*
+        //  Formo la petición: método a utilizar, path del servicio, el JSON creado, y un
+        //  listener que está pendiente de la respuesta a la petición
+         */
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest sr = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://10.0.2.2:8080/myapp/PistonApp/usuarios",
+                js,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("ResponseREST", "" + response);
+
+                        Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
+                        finish();
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error.ResponseREST", "" + error.networkResponse.statusCode);
+                NetworkResponse response = error.networkResponse;
+                if (error instanceof ServerError && response != null) {
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        JSONObject obj = new JSONObject(res);
+                        Log.d("Error.ResponseREST", "A: " + obj.toString());
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                        Log.d("Error.ResponseREST", "B: " + e1.toString());
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                        Log.d("Error.ResponseREST", "C: " + e2.toString());
+                    }
+                }
+            }
+        }){
+
+            /*
+            //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
+            //  parametros según el tipo de dato.
+            */
+
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+            /*
+            //  Esto (getHeaders) da condiciones a la solicitud con el encabezado de http.
+            //  Como el servidor consume JSON, especifico que ese es el tipo de contenido que
+            //  voy a utilizar. Y utf-8 porque... eso decía internet jaja.. Supongo que es lo
+            //  mas estándar y hace que cosas mas de ASCII no molesten
+            */
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+        };
+
+        /*
+        //  Agrego lo que armé para hacer la petición con Volley
+        */
+        Volley.newRequestQueue(this).add(sr);
     }
 
     public static boolean isEmailValid(String email) {

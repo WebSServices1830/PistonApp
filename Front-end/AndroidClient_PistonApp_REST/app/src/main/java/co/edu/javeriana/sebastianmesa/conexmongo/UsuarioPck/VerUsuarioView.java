@@ -141,6 +141,9 @@ public class VerUsuarioView extends AppCompatActivity {
                     tv_fechaNacimientoUsuario.setText(currentTime.toString());
                     tv_bolsilloUsuario.setText("$" + ManagerUsuario.usuario.getBolsillo());
 
+                    if(!ManagerUsuario.usuario.getUrlFoto().equals("")){
+                        new DownloadImageTask().execute(ManagerUsuario.usuario.getUrlFoto());
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -16,10 +16,9 @@
     <ImageView
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/ic_f1"
         android:id="@+id/imageView_perfilUsuario"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
+        android:layout_width="190dp"
+        android:layout_height="270dp"
         android:layout_gravity="center_horizontal"
         />
 

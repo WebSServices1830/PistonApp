@@ -84,7 +84,7 @@ public class MyResource {
     
     //http://localhost:8080/myapp/PistonApp/fibonacci/7
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/fibonacci/{numero}")
     public List<SerieFibonacci> getString(@PathParam("numero") String numero) {
     	
@@ -167,7 +167,7 @@ public class MyResource {
 	}
  	//http://localhost:8080/myapp/PistonApp/usuarios/{insertar nombre usuario}
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/usuarios/{nombreUsuario}")
     public Usuario obteneUsuarioPorNombre(@PathParam("nombreUsuario") String nombreUsuario) {
 	    try {
@@ -232,7 +232,7 @@ public class MyResource {
     //PILOTOS---------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/pilotos
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/pilotos")
     public List<Piloto> consultarPilotos() {
     	return manejadorPiloto.piloto_getAll();
@@ -278,7 +278,7 @@ public class MyResource {
     //ESCUDERIA------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/escuderias
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/escuderias")
     public List<Escuderia> consultarEscuderias() {
     	return manejadorEscuderia.escuderia_getAll();
@@ -326,7 +326,7 @@ public class MyResource {
   //AUTOS---------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/autos
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/autos")
     public List<Auto> consultarAutos() {
     	return manejadorAuto.auto_getAll();
@@ -371,7 +371,7 @@ public class MyResource {
     //PISTAS---------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/pistas
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/pistas")
     public List<Pista> consultarPistas() {
     	return manejadorPista.pista_getAll();
@@ -416,7 +416,7 @@ public class MyResource {
     //CLASIFICACION_CARRERA---------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/clasificacionesCarrera
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/clasificacionesCarrera")
     public List<ClasificacionCarrera> consultarClasificacionCarrera() {
     	return manejadorClasificacion_Carrera.clasificacionCarrera_getAll();
@@ -461,7 +461,7 @@ public class MyResource {
     //CLASIFICACION_CAMPEONATO---------------------------------------------------------------------
     //http://localhost:8080/myapp/PistonApp/clasificacionesCarrera
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/clasificacionesCampeonato")
     public List<ClasificacionCampeonato> consultarClasificacionCampeonato() {
     	return manejadorClasificacion_Campeonato.clasificacionCampeonato_getAll();
@@ -504,17 +504,17 @@ public class MyResource {
     }
     
     //CAMPEONATO
-    //http://localhost:8080/myapp/PistonApp/campeonato
+    //http://localhost:8080/myapp/PistonApp/campeonatos
     @GET
-    @Produces({"application/xml", "application/json"})
-    @Path("/campeonato")
-    public String consultarCampeonato(String nombre) {
-    	return manejadorCampeonato.campeonato_readByName(nombre).getId_str();
+    @Produces("application/json")
+    @Path("/campeonatos")
+    public List<Campeonato> consultarCampeonato() {
+    	return manejadorCampeonato.campeonato_readAll();
     }
     //GRAN PREMIO
     //http://localhost:8080/myapp/PistonApp/granPremios/{id_str}
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces("application/json")
     @Path("/granPremios/{id_campeonato}")
     public List<GranPremio> consultarGranPremios(@PathParam("id_campeonato") String id_campeonato) {
     	return manejadorGranPremio.grandesPremios_X_Fecha(id_campeonato);

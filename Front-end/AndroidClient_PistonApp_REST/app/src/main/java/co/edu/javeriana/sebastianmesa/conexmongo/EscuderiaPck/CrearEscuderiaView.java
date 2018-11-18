@@ -30,6 +30,7 @@ import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Escuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearEscuderiaView extends AppCompatActivity {
@@ -134,20 +135,7 @@ public class CrearEscuderiaView extends AppCompatActivity {
         }
     }
     public void consumeRESTVolleyCrearEscuderia(){
-        RequestQueue queue = Volley.newRequestQueue(CrearEscuderiaView.this);
-        StringRequest sr = new StringRequest(Request.Method.POST,"http://10.0.2.2:8080/myapp/PistonApp/escuderias", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //mPostCommentResponse.requestCompleted();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //mPostCommentResponse.requestEndedWithError(error);
-            }
-        }){
-            @Override
-            protected Map<String,String> getParams(){
+
                 nombre = (EditText) findViewById(R.id.nomEscuderia);
                 lugarBase = (EditText) findViewById(R.id.nomBase);
                 jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
@@ -157,29 +145,9 @@ public class CrearEscuderiaView extends AppCompatActivity {
                 cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
                 cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
 
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("nombre", nombre.getText().toString());
-                params.put("lugarBase", lugarBase.getText().toString());
-                params.put("jefeEquipo", jefeEquipo.getText().toString());
-                params.put("jefeTecnico", jefeTecnico.getText().toString());
-                params.put("chasis", chasis.getText().toString());
-                params.put("cant_vecesEnPodio", Integer.parseInt(cant_vecesEnPodio.getText().toString()));
-                params.put("cant_TitulosCampeonato", Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
-                params.put("fotoEscudo_ref", fotoEscudo_ref.getText().toString());
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
-                return params;
-            }
-        };
-        queue.add(sr);
-    }
-
-}
+                Escuderia escuderia = new Escuderia(nombre.getText().toString(),lugarBase.getText().toString(),jefeTecnico.getText().toString()
+                        ,jefeEquipo.getText().toString(),chasis.getText().toString(),Integer.parseInt(cant_vecesEnPodio.getText().toString()),
+                        Integer.parseInt(cant_TitulosCampeonato.getText().toString()),  fotoEscudo_ref.getText().toString());
+                
 
 }

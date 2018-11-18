@@ -50,6 +50,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.GranPremioAdapter;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.VerGPView;
@@ -294,13 +296,14 @@ public class CalendarioFragment extends Fragment {
 
                                 GranPremio granPremioObjeto= new GranPremio();
                                 granPremioObjeto.setId_str(obj.getString("id_str"));
-                                granPremioObjeto.setFecha(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(obj.get("fecha").toString()));
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                granPremioObjeto.setFecha(simpleDateFormat.parse(obj.getString("fecha")));
                                 Log.i(TAG,"fecha");
                                 granPremioObjeto.setPista(obj.getString("pista"));
                                 Log.i(TAG,"pista");
                                 granPremioObjeto.setCantVueltas(obj.getInt("cantVueltas"));
                                 Log.i(TAG,"cantVueltas");
-                                granPremioObjeto.setMejorVuelta(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(obj.getString("mejorVuelta")));
+                                granPremioObjeto.setMejorVuelta(simpleDateFormat.parse(obj.getString("mejorVuelta")));
                                 Log.i(TAG,"mejorVuelta");
 
 

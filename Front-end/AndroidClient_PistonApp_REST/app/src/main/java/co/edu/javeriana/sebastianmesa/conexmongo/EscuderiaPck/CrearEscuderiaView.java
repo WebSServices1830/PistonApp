@@ -163,8 +163,8 @@ public class CrearEscuderiaView extends AppCompatActivity {
                 params.put("jefeEquipo", jefeEquipo.getText().toString());
                 params.put("jefeTecnico", jefeTecnico.getText().toString());
                 params.put("chasis", chasis.getText().toString());
-                params.put("cant_vecesEnPodio", Integer.parseInt(cant_vecesEnPodio.getText().toString()));
-                params.put("cant_TitulosCampeonato", Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
+                //params.put("cant_vecesEnPodio", Integer.parseInt(cant_vecesEnPodio.getText().toString()));
+                //params.put("cant_TitulosCampeonato", Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
                 params.put("fotoEscudo_ref", fotoEscudo_ref.getText().toString());
 
                 return params;
@@ -179,7 +179,5 @@ public class CrearEscuderiaView extends AppCompatActivity {
         };
         queue.add(sr);
     }
-
-}
 
 }

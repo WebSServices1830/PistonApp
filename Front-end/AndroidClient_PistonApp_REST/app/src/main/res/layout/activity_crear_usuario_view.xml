@@ -75,39 +75,21 @@
                 app:met_underlineColor="#fff"
                 app:met_singleLineEllipsis="true" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/editText_fechaNacimiento"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/imageButton_calendario"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_below="@+id/passUsuario"
-                    android:layout_toRightOf="@+id/editText_fechaNacimiento"
-                    android:tint="@color/white"
-                    app:met_iconLeft="@drawable/ic_lock_white_48dp"
-                    android:background="@color/fbutton_color_transparent"
-                    android:src="@drawable/ic_calendar" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/editText_fechaNacimiento"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/passUsuario"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:hint="Fecha de nacimiento"
-                    android:inputType="date"
-                    android:layout_marginLeft="10dp"
-                    app:met_baseColor="@android:color/white"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/white"
-                    app:met_underlineColor="#fff"
-                    app:met_singleLineEllipsis="true" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passUsuario"
+                android:ems="10"
+                android:hint="Fecha de nacimiento"
+                android:inputType="none"
+                android:focusable="false"
+                app:met_iconLeft="@drawable/ic_calendar_image"
+                app:met_baseColor="@android:color/white"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/white"
+                app:met_underlineColor="#fff"
+                app:met_singleLineEllipsis="true" />
 
             <CheckBox
                 android:gravity="center"

@@ -92,7 +92,7 @@ public class CrearUsuarioView extends AppCompatActivity {
     private Activity activityContext = this;
 
     private EditText et_nombreUsuario, et_contra, et_fechaNacimiento;
-    private ImageButton btn_calendario, btn_seleccionarImagen, btn_tomarFoto;
+    private ImageButton btn_seleccionarImagen, btn_tomarFoto;
     private ImageView previewFoto;
     private CheckBox checkBox_admin;
     private Button btn_agregarUsuario;
@@ -135,7 +135,6 @@ public class CrearUsuarioView extends AppCompatActivity {
         et_nombreUsuario = findViewById(R.id.nomUsuario);
         et_contra = findViewById(R.id.passUsuario);
         et_fechaNacimiento = findViewById(R.id.editText_fechaNacimiento);
-        btn_calendario = findViewById(R.id.imageButton_calendario);
         checkBox_admin = findViewById(R.id.adminUsuario);
         btn_seleccionarImagen = findViewById(R.id.imageButton_seleccionarImagen);
         btn_tomarFoto = findViewById(R.id.imageButton_tomarFoto);
@@ -154,7 +153,7 @@ public class CrearUsuarioView extends AppCompatActivity {
             }
         });
 
-        btn_calendario.setOnClickListener(new View.OnClickListener() {
+        et_fechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 obtenerFecha();

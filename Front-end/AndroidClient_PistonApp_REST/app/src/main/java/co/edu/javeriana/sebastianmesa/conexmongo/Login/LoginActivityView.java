@@ -2,6 +2,7 @@ package co.edu.javeriana.sebastianmesa.conexmongo.Login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -66,6 +67,7 @@ public class LoginActivityView extends AppCompatActivity {
     private WebMet_ValidarLogin wm_validarLogin = null;
 
     private LinearLayout ll;
+    private TextView titulo;
 
     Usuario usuarioLogeado;
 
@@ -123,6 +125,13 @@ public class LoginActivityView extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
+
+        titulo = (TextView) findViewById(R.id.titulo);
+//
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Cheetah Kick.otf");
+        titulo.setTypeface(type);
+        titulo.setTextSize(60);
+
     }
 
     public void login() {

@@ -234,6 +234,7 @@ public class VerGPView extends AppCompatActivity {
                                     downloadImageTask = new VerGPView.DownloadImageTask();
                                     downloadImageTask.execute(foto_ref);
 
+
                                     a= jsonArray.length();
                                 }
                             }

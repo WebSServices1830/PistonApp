@@ -142,7 +142,7 @@ public class MyResource {
 	@POST
 	@Path("/usuarios")
 	@Consumes("application/json")
-	public ResponseBuilder registrarUsuario(String string) {
+	public ResponseBuilder registrarUsuario(String jsonAsString) {
 
 		/*
 		 * Transferir los datos y lo que espera consumir el servicio es JSON. Así que lo
@@ -150,15 +150,13 @@ public class MyResource {
 		 * 
 		 */
 
-		System.out.println(string);
-
-		//Gson gson = new Gson();
+		System.out.println(jsonAsString);
+		
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Gson gson = gsonBuilder.create();
-		JsonObject job = gson.fromJson(string, JsonObject.class);
-		JsonObject ovl = job.getAsJsonObject("user");
-		Usuario data = new Gson().fromJson(ovl, Usuario.class);
+		JsonObject job = gson.fromJson(jsonAsString, JsonObject.class);
+		Usuario data = gson.fromJson(job, Usuario.class);
 
 		System.out.println("Objeto:"+data.getNombreUsuario()+","+data.getFechaNacimiento().toString());
 

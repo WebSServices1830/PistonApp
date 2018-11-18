@@ -52,6 +52,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -315,17 +317,18 @@ public class CrearUsuarioView extends AppCompatActivity {
         et_fechaNacimiento.setText( calendario.get(Calendar.DAY_OF_MONTH) + BARRA + calendario.get(Calendar.MONTH) + BARRA + calendario.get(Calendar.YEAR));
         Usuario user = new Usuario(emailGlobal, passGlobal,calendario.getTime(), urlFoto, checkBox_admin.isChecked());
 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String result = gson.toJson(user);
 
-        /*
-        //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
-        //  que quiero pasar. Siendo este 'user' de tipo Usuario.
-         */
-        JSONObject js = new JSONObject();
+        JSONObject js_2 = null;
         try {
-            js.put("user",user.toJSON());
+            js_2 = new JSONObject(result);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d(TAG,"JSONException",e);
+
+            Toast.makeText(this,"Error creando el objeto JSON",Toast.LENGTH_SHORT).show();
+            return;
         }
 
         /*
@@ -336,13 +339,13 @@ public class CrearUsuarioView extends AppCompatActivity {
         JsonObjectRequest sr = new JsonObjectRequest(
                 Request.Method.POST,
                 "http://10.0.2.2:8080/myapp/PistonApp/usuarios",
-                js,
+                js_2,
                 new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        Log.d("ResponseREST", "" + response.toString());
+                        Log.d(TAG, "" + response.toString());
 
                         Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
                         finish();
@@ -352,7 +355,7 @@ public class CrearUsuarioView extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Error.ResponseREST", "" + error.networkResponse.statusCode);
+                Log.d(TAG, "Error.ResponseREST " + error.networkResponse.statusCode);
                 NetworkResponse response = error.networkResponse;
                 if (error instanceof ServerError && response != null) {
                     try {
@@ -360,15 +363,15 @@ public class CrearUsuarioView extends AppCompatActivity {
                                 HttpHeaderParser.parseCharset(response.headers, "utf-8"));
                         // Now you can use any deserializer to make sense of data
                         JSONObject obj = new JSONObject(res);
-                        Log.d("Error.ResponseREST", "A: " + obj.toString());
+                        Log.d(TAG, "Error.ResponseREST A: " + obj.toString());
                     } catch (UnsupportedEncodingException e1) {
                         // Couldn't properly decode data to string
                         e1.printStackTrace();
-                        Log.d("Error.ResponseREST", "B: " + e1.toString());
+                        Log.d(TAG, "Error.ResponseREST B: " + e1.toString());
                     } catch (JSONException e2) {
                         // returned data is not JSONObject?
                         e2.printStackTrace();
-                        Log.d("Error.ResponseREST", "C: " + e2.toString());
+                        Log.d(TAG, "Error.ResponseREST C: " + e2.toString());
                     }
                 }
             }

@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.VerGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
@@ -146,8 +147,12 @@ public class EliminarPilotoView extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
     }
+
     /*
     public void consumeRESTVolleyEliminarPiloto ()  {
+
+        VerPilotoView getPiloto= new VerPilotoView();
+        getPiloto.
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest sr = new StringRequest(

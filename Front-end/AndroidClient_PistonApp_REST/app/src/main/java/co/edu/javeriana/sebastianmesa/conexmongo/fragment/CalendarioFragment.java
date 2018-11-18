@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,9 +27,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +42,8 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +59,8 @@ import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 
 public class CalendarioFragment extends Fragment {
+
+    private static final String TAG = "Log_CalendarioFragment";
 
     private Spinner spinner;
     private List<GranPremio> listagranPremios = new ArrayList<>();
@@ -100,12 +107,11 @@ public class CalendarioFragment extends Fragment {
                 //Log.i("calendarioSeleccionado",calendarioSeleccionado);
                 /*wm_verCampeonatoString= new WebMet_verCampeonatoString();
                 wm_verCampeonatoString.execute();*/
-                consumeRESTVolleyVerCampeonatoString();
+                consumeRESTVolleyVerCampeonatoString(calendarioSeleccionado);
                 //Log.i("idCampeonato",idCalendarioCampeonato);
 
                 /*wm_granPremiosOrdenadoPorFecha = new WebMet_GranPremiosOrdenadoPorFecha();
                 wm_granPremiosOrdenadoPorFecha.execute();*/
-                consumeRESTVolleyGranPremiosOrdenadosPorFecha();
                 listaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -234,28 +240,40 @@ public class CalendarioFragment extends Fragment {
                     return true;
                 }
             } catch (Exception e) {
-                Log.i("Error", e.getMessage());
+                Log.i(TAG, e.getMessage());
                 e.printStackTrace();
             }
             return false;
         }
     }
 
-    public void consumeRESTVolleyVerCampeonatoString(){
+    public void consumeRESTVolleyVerCampeonatoString(final String nombre){
         RequestQueue queue = Volley.newRequestQueue(this.getContext());
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
-        String path = "campeonato";
-        StringRequest req = new StringRequest(Request.Method.GET, url+path,
-                new Response.Listener() {
+        String path = "campeonatos";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(Object response) {
-                        idCalendarioCampeonato = (String)response;
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject obj = jsonArray.getJSONObject(a);
+
+                                if(obj.getString("nombre").equals(nombre)) {
+                                    idCalendarioCampeonato = obj.getString("id_str");
+                                    Log.i(TAG,idCalendarioCampeonato);
+                                    consumeRESTVolleyGranPremiosOrdenadosPorFecha();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.i("TAG", "Error handling rest invocation"+error.getCause());
+                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
                     }
                 }
         );
@@ -264,42 +282,46 @@ public class CalendarioFragment extends Fragment {
 
     public void consumeRESTVolleyGranPremiosOrdenadosPorFecha(){
         RequestQueue queue = Volley.newRequestQueue(this.getContext());
-        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String url = "http://10.0.2.2:8080/myapp/PistonApp";
         String path = "/granPremios/"+idCalendarioCampeonato;
-        StringRequest req = new StringRequest(Request.Method.GET, url+path,
-                new Response.Listener() {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(Object response) {
-                        String stringResponse= (String)response;
-                        JSONArray jsonArray= null;
+                    public void onResponse(JSONArray jsonArray) {
                         try {
-                            jsonArray = new JSONArray(stringResponse);
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject obj = jsonArray.getJSONObject(a);
-                                System.out.println("Object Value " + a + " " + obj.toString());
 
                                 GranPremio granPremioObjeto= new GranPremio();
-                                granPremioObjeto.setId_str(obj.getString("id_string"));
-                                granPremioObjeto.setFecha(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(obj.getString("fecha")));
-                                granPremioObjeto.setPista(obj.getString("idPista"));
+                                granPremioObjeto.setId_str(obj.getString("id_str"));
+                                granPremioObjeto.setFecha(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(obj.get("fecha").toString()));
+                                Log.i(TAG,"fecha");
+                                granPremioObjeto.setPista(obj.getString("pista"));
+                                Log.i(TAG,"pista");
                                 granPremioObjeto.setCantVueltas(obj.getInt("cantVueltas"));
-                                granPremioObjeto.setMejorVuelta(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(obj.getString("mejorVuelta")));
+                                Log.i(TAG,"cantVueltas");
+                                granPremioObjeto.setMejorVuelta(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(obj.getString("mejorVuelta")));
+                                Log.i(TAG,"mejorVuelta");
+
 
                                 // adding movie to movies array
+                                Log.i("granPremiosOrdenados","add");
                                 listagranPremios.add(granPremioObjeto);
                             }
                             gpAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "consumeRESTVolleyGranPremiosOrdenadosPorFecha: JSONException ", e);
                         } catch (ParseException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "consumeRESTVolleyGranPremiosOrdenadosPorFecha: ParseException ", e);
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.i("TAG", "Error handling rest invocation"+error.getCause());
+                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
                     }
                 }
         );

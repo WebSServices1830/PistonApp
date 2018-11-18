@@ -23,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,7 +57,7 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class LoginActivityView extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "Log_LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
     private FirebaseAuth mAuth;
@@ -171,6 +172,8 @@ public class LoginActivityView extends AppCompatActivity {
                             _passwordText.setText("");
                             onLoginFailed();
                             startActivity(new Intent(LoginActivityView.this, LoginActivityView.class));
+                        }else{
+                            startActivity(new Intent(LoginActivityView.this, LoginActivityView.class));
                         }
                     }
                 });
@@ -279,7 +282,7 @@ public class LoginActivityView extends AppCompatActivity {
                 new Response.Listener() {
                     public void onResponse(Object response) {
 
-                        Log.i("LoginResponse",response.toString());
+                        Log.i(TAG,response.toString());
 
                         //usuarioLogeado = (Usuario)response;
 
@@ -293,7 +296,7 @@ public class LoginActivityView extends AppCompatActivity {
                             JSONObject jsonObject = xmlToJson.toJson();
 
                             try {
-                                Log.i("intentoLogin",jsonObject.toString());
+                                Log.i(TAG,jsonObject.toString());
                                 JSONObject infoJSON = (JSONObject) jsonObject.get("usuario");
 
                                 String nombreJSON = infoJSON.get("admin").toString();
@@ -301,7 +304,7 @@ public class LoginActivityView extends AppCompatActivity {
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Log.i("intentoLogin","Error pero con respuesta");
+                                Log.i(TAG,"Error pero con respuesta", e);
                             }
 
                             if(!usuarioLogeado.isAdmin()) {
@@ -316,7 +319,7 @@ public class LoginActivityView extends AppCompatActivity {
                 new Response.ErrorListener() {
 
                     public void onErrorResponse(VolleyError error) {
-                        Log.i("TAG", "Error handling rest invocation"+error.getCause());
+                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
                     }
                 }
         );
@@ -325,30 +328,24 @@ public class LoginActivityView extends AppCompatActivity {
 
     public void getUsuario(FirebaseUser user){
         RequestQueue mRequestQueue;
-        StringRequest mStringRequest;
         String url = "http://10.0.2.2:8080/myapp/PistonApp/usuarios/";
 
         //RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(this);
 
         //String Request initialized
-        mStringRequest = new StringRequest(Request.Method.GET, url + user.getEmail(), new Response.Listener<String>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url + user.getEmail(), null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {
-
-                XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
-
-                JSONObject jsonObject = xmlToJson.toJson();
+            public void onResponse(JSONObject response) {
 
                 try {
-                    JSONObject infoJSON = (JSONObject) jsonObject.get("usuario");
 
-                    String nombreJSON = infoJSON.get("nombreUsuario").toString();
-                    String passJSON   = infoJSON.get("contra").toString();
+                    String nombreJSON = response.get("nombreUsuario").toString();
+                    String passJSON   = response.get("contra").toString();
 
-                    Boolean adminJSON  = Boolean.parseBoolean(infoJSON.get("admin").toString());
+                    Boolean adminJSON  = Boolean.parseBoolean(response.get("admin").toString());
 
-                    Log.i("intentoLogin Server",adminJSON.toString() );
+                    Log.i(TAG,"Es admin:" + adminJSON.toString() );
 
                     if(!adminJSON) {
                         startActivity(new Intent(LoginActivityView.this, UserMenuActivity.class));
@@ -360,7 +357,7 @@ public class LoginActivityView extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.i("intentoLogin","Error pero con respuesta");
+                    Log.i(TAG,"Error pero con respuesta",e);
                 }
 
             }
@@ -368,11 +365,11 @@ public class LoginActivityView extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.i("intentoLogin","Error :" + error.toString());
+                Log.i(TAG,"Error :" + error.toString());
             }
         });
 
-        mRequestQueue.add(mStringRequest);
+        mRequestQueue.add(jsonObjectRequest);
 
     }
 
@@ -395,10 +392,10 @@ public class LoginActivityView extends AppCompatActivity {
                 contra_hash = computeHash(password);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-                Log.i("Error: ", e.getMessage());
+                Log.i(TAG, e.getMessage());
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                Log.i("Error: ", e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
 
             if (contra_hash == null) {
@@ -410,7 +407,7 @@ public class LoginActivityView extends AppCompatActivity {
             request.addProperty("nombreUsuario", user);
             request.addProperty("contrasenia", contra_hash);
 
-            Log.i("Login", contra_hash);
+            Log.i(TAG, contra_hash);
 
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -454,7 +451,7 @@ public class LoginActivityView extends AppCompatActivity {
 
 
             } catch (Exception e) {
-                Log.i("Error", e.getMessage());
+                Log.i(TAG, e.getMessage());
                 //Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 e.printStackTrace();

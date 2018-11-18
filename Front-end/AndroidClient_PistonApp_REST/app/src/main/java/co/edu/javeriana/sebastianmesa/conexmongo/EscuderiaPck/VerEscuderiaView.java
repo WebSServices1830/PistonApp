@@ -25,6 +25,10 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Escuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class VerEscuderiaView extends AppCompatActivity {
@@ -34,6 +38,7 @@ public class VerEscuderiaView extends AppCompatActivity {
 
     private EditText campoNombre;
     private Button consultaBtn;
+    private List<Escuderia> escuderias = new ArrayList<>();
 
 
     @Override
@@ -59,6 +64,9 @@ public class VerEscuderiaView extends AppCompatActivity {
     }
 
     public void consumeRESTVolleyVerEscuderiaString(){
+        if(!escuderias.isEmpty()){
+            escuderias.clear();
+        }
         RequestQueue queue = Volley.newRequestQueue(VerEscuderiaView.this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
         String path = "escuderias";
@@ -77,7 +85,15 @@ public class VerEscuderiaView extends AppCompatActivity {
                                 String fotoEscudo_ref = escuderia_json.getString("fotoEscudo_ref");
                                 int cant_vecesEnPodio = Integer.parseInt(escuderia_json.getString("cant_vecesEnPodio"));
                                 int cant_TitulosCampeonato = Integer.parseInt(escuderia_json.getString("cant_TitulosCampeonato"));
-
+                                escuderias.add(new Escuderia(
+                                        nombre,
+                                        lugarBase,
+                                        jefeTecnico,
+                                        jefeEquipo,
+                                        chasis,
+                                        cant_vecesEnPodio,
+                                        cant_TitulosCampeonato,
+                                        fotoEscudo_ref));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

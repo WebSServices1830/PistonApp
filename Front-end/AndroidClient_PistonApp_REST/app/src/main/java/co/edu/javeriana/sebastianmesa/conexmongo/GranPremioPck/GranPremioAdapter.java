@@ -11,6 +11,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -51,8 +61,9 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
         granPremioFecha.setText(dateFormat.format(gp.getFecha()));
 
         granPremioPista = (TextView) convertView.findViewById(R.id.granPremioPista);
-        wm_verPista = new WebMet_verPista();
-        wm_verPista.execute();
+        /*wm_verPista = new WebMet_verPista();
+        wm_verPista.execute();*/
+        consumeRESTVolleyVerPista();
 
         return convertView;
     }
@@ -97,6 +108,39 @@ public class GranPremioAdapter extends ArrayAdapter<GranPremio> {
                 granPremioPista.setText(ciudad);
             }
         }
+    }
+
+    public void consumeRESTVolleyVerPista(){
+        RequestQueue queue = Volley.newRequestQueue(this.getContext());
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "pistas";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject obj = jsonArray.getJSONObject(a);
+
+                                if(obj.getString("id_str").equals(gp.getPista())) {
+                                    ciudad = obj.getString("ciudad");
+                                    granPremioPista.setText(ciudad);
+                                    a= jsonArray.length();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Debug_GranPremioAdapter", "Error handling rest invocation"+error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
     }
 
 }

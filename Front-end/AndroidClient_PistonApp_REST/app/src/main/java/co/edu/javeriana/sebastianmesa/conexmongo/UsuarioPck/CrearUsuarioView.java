@@ -52,6 +52,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +84,8 @@ import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
 
 public class CrearUsuarioView extends AppCompatActivity {
+
+    private static final String TAG = "Log_CrearUsuarioView";
 
     private Activity activityContext = this;
 
@@ -304,13 +307,13 @@ public class CrearUsuarioView extends AppCompatActivity {
         }
     }
 
-    public void completarRegistro (String fechaPath){
+    public void completarRegistro (String urlFoto){
         //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
 
         Date currentTime = Calendar.getInstance().getTime();
         //GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
         et_fechaNacimiento.setText( calendario.get(Calendar.DAY_OF_MONTH) + BARRA + calendario.get(Calendar.MONTH) + BARRA + calendario.get(Calendar.YEAR));
-        Usuario user = new Usuario(emailGlobal, passGlobal,calendario.getTime(), fechaPath, checkBox_admin.isChecked());
+        Usuario user = new Usuario(emailGlobal, passGlobal,calendario.getTime(), urlFoto, checkBox_admin.isChecked());
 
 
         /*
@@ -322,6 +325,7 @@ public class CrearUsuarioView extends AppCompatActivity {
             js.put("user",user.toJSON());
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d(TAG,"JSONException",e);
         }
 
         /*
@@ -338,7 +342,7 @@ public class CrearUsuarioView extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        Log.d("ResponseREST", "" + response);
+                        Log.d("ResponseREST", "" + response.toString());
 
                         Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
                         finish();
@@ -395,6 +399,13 @@ public class CrearUsuarioView extends AppCompatActivity {
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
+
+            /*@Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode= response.statusCode;
+                Log.d(TAG,"STATUS CODE: "+mStatusCode);
+                return super.parseNetworkResponse(response.);
+            }*/
         };
 
         /*

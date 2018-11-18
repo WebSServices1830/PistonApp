@@ -298,17 +298,11 @@ public class CalendarioFragment extends Fragment {
                                 granPremioObjeto.setId_str(obj.getString("id_str"));
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 granPremioObjeto.setFecha(simpleDateFormat.parse(obj.getString("fecha")));
-                                Log.i(TAG,"fecha");
                                 granPremioObjeto.setPista(obj.getString("pista"));
-                                Log.i(TAG,"pista");
                                 granPremioObjeto.setCantVueltas(obj.getInt("cantVueltas"));
-                                Log.i(TAG,"cantVueltas");
                                 granPremioObjeto.setMejorVuelta(simpleDateFormat.parse(obj.getString("mejorVuelta")));
-                                Log.i(TAG,"mejorVuelta");
-
 
                                 // adding movie to movies array
-                                Log.i("granPremiosOrdenados","add");
                                 listagranPremios.add(granPremioObjeto);
                             }
                             gpAdapter.notifyDataSetChanged();

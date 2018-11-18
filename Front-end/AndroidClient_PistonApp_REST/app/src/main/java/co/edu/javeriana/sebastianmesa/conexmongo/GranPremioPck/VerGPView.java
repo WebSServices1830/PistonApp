@@ -11,6 +11,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -18,11 +24,15 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
 
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,7 +72,7 @@ public class VerGPView extends AppCompatActivity {
 
 
 
-        wb_verPista= new WebMet_verPista();
+        //wb_verPista= new WebMet_verPista();
 
         imagenViewGP2= findViewById(R.id.imagenViewGP);
         tituloPistaViewGP2= findViewById(R.id.tituloPistaViewGP);
@@ -85,7 +95,8 @@ public class VerGPView extends AppCompatActivity {
         int dia = calendar.get(Calendar.DAY_OF_MONTH);
         fechaCarreraViewGp2.setText("Fecha de la carrera: "+anio+"/"+mes+"/"+dia);
 
-        wb_verPista.execute();
+        //wb_verPista.execute();
+        consumeRESTVolleyVerPista();
 
 
 
@@ -185,6 +196,62 @@ public class VerGPView extends AppCompatActivity {
                 downloadImageTask.execute(foto_ref);
             }
         }
+    }
+
+    public void consumeRESTVolleyVerPista(){
+        RequestQueue queue = Volley.newRequestQueue(VerGPView.this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "pistas";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject obj = jsonArray.getJSONObject(a);
+
+                                if(obj.getString("id_str").equals(gp.getPista())) {
+                                    ciudad = obj.getString("ciudad");
+                                    foto_ref= obj.getString("foto_ref");
+                                    distanciaCarrera_km= Float.parseFloat(obj.getString("distanciaCarrera_km"));
+                                    calificacion= Float.parseFloat(obj.getString("calificacion"));
+                                    JSONObject recordJson= (JSONObject) obj.get("record");
+
+                                    record = new Record();
+
+                                    record.setRecordVuelta_anio( recordJson.getInt("recordVuelta_anio") );
+                                    record.setRecordVuelta_piloto( recordJson.getString("recordVuelta_piloto"));
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                    record.setRecordVuleta_tiempo( simpleDateFormat.parse(recordJson.getString("recordVuleta_tiempo")));
+
+                                    tituloPistaViewGP2.setText(ciudad);
+                                    textViewKMViewGP2.setText(distanciaCarrera_km+"km");
+                                    textViewCalificacionViewGP2.setText(calificacion+" estrellas");
+                                    textViewFechaRecordViewGP2.setText( Integer.toString(record.getRecordVuelta_anio()) );
+                                    textViewNombrePilotoRecordViewGp2.setText( record.getRecordVuelta_piloto() );
+                                    textViewTiempoRecordViewGP2.setText( record.getRecordVuleta_tiempo().toString());
+
+                                    downloadImageTask = new VerGPView.DownloadImageTask();
+                                    downloadImageTask.execute(foto_ref);
+
+                                    a= jsonArray.length();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Debug_GranPremioAdapter", "Error handling rest invocation"+error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
     }
 
 }

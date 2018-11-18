@@ -10,6 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -50,6 +57,8 @@ public class EliminarEscuderiaView extends AppCompatActivity {
         });
 
     }
+
+
 
     private class WebMet_EliminarEscuderia extends AsyncTask<Void, Void, Boolean> {
 
@@ -109,5 +118,27 @@ public class EliminarEscuderiaView extends AppCompatActivity {
         protected void onCancelled() {
             Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
+    }
+    public void consumeRESTVolleyEliminarEscuderiaPorNombre(String nombre){
+        RequestQueue queue = Volley.newRequestQueue(EliminarEscuderiaView.this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "escuderias/"+nombre;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
+                        // Display the first 500 characters of the response string.
+                       // mTextView.setText("Response is: "+ response.substring(0,500));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+                //mTextView.setText("That didn't work!");
+            }
+        });
+
     }
 }

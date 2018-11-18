@@ -28,6 +28,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -36,12 +49,17 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearPilotoView extends Activity {
@@ -215,6 +233,114 @@ public class CrearPilotoView extends Activity {
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST);
         }
+    }
+
+    public void completarRegistro (String fechaPath){
+        //CAMBIAR A DATOS REALES-> ..... ......... la fecha .......... la URL  ....................
+
+        Date currentTime = Calendar.getInstance().getTime();
+        //GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
+        et_fechaNacimiento.setText( calendario.get(Calendar.DAY_OF_MONTH) + BARRA + calendario.get(Calendar.MONTH) + BARRA + calendario.get(Calendar.YEAR));
+        Usuario user = new Usuario(emailGlobal, passGlobal,et_fechaNacimiento, fechaPath, checkBox_admin.isChecked());
+
+        String piloto_nombre = editText_nombre.getText().toString();
+        Date piloto_fechaNacimiento = fechaNacimiento_piloto;
+        String piloto_lugarNacimiento = editText_lugar.getText().toString();
+        int piloto_podios = Integer.parseInt( editText_podios.getText().toString() );
+        int piloto_puntos = Integer.parseInt( editText_puntos.getText().toString() );
+        int piloto_participacionesGP = Integer.parseInt( editText_gp.getText().toString() );
+
+
+        Piloto piloto = new Piloto();
+
+        /*
+        //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
+        //  que quiero pasar. Siendo este 'user' de tipo Usuario.
+         */
+        JSONObject js = new JSONObject();
+        try {
+            js.put("user",user.toJSON());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /*
+        //  Formo la petición: método a utilizar, path del servicio, el JSON creado, y un
+        //  listener que está pendiente de la respuesta a la petición
+         */
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest sr = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://10.0.2.2:8080/myapp/PistonApp/pilotos",
+                js,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d("ResponseREST", "" + response);
+
+                        Toast.makeText(getApplicationContext(),"Piloto Creado", Toast.LENGTH_SHORT).show();
+                        finish();
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error.ResponseREST", "" + error.networkResponse.statusCode);
+                NetworkResponse response = error.networkResponse;
+                if (error instanceof ServerError && response != null) {
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        JSONObject obj = new JSONObject(res);
+                        Log.d("Error.ResponseREST", "A: " + obj.toString());
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                        Log.d("Error.ResponseREST", "B: " + e1.toString());
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                        Log.d("Error.ResponseREST", "C: " + e2.toString());
+                    }
+                }
+            }
+        }){
+
+            /*
+            //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
+            //  parametros según el tipo de dato.
+            */
+
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+            /*
+            //  Esto (getHeaders) da condiciones a la solicitud con el encabezado de http.
+            //  Como el servidor consume JSON, especifico que ese es el tipo de contenido que
+            //  voy a utilizar. Y utf-8 porque... eso decía internet jaja.. Supongo que es lo
+            //  mas estándar y hace que cosas mas de ASCII no molesten
+            */
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+        };
+
+        /*
+        //  Agrego lo que armé para hacer la petición con Volley
+        */
+        Volley.newRequestQueue(this).add(sr);
     }
 
     private class WebMet_AgregarPiloto extends AsyncTask<Void, Void, Boolean> {

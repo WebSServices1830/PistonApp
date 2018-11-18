@@ -312,6 +312,7 @@ public class CrearUsuarioView extends AppCompatActivity {
         et_fechaNacimiento.setText( calendario.get(Calendar.DAY_OF_MONTH) + BARRA + calendario.get(Calendar.MONTH) + BARRA + calendario.get(Calendar.YEAR));
         Usuario user = new Usuario(emailGlobal, passGlobal,calendario.getTime(), fechaPath, checkBox_admin.isChecked());
 
+
         /*
         //  Como el servidor quiere consumir JSON entonces creo un JSON en base al objeto
         //  que quiero pasar. Siendo este 'user' de tipo Usuario.

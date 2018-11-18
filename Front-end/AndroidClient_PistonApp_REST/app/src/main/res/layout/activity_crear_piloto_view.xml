@@ -1,81 +1,109 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PilotoPck.CrearPilotoView">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/textView_crearPiloto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/textView_crearPiloto"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText_nombrePiloto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_crearPiloto"
+            android:hint="Nombre del piloto"
+            android:inputType="text" />
 
-            <EditText
-                android:id="@+id/nomPiloto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre Piloto"
-                />
-            <EditText
-                android:id="@+id/fechaPiloto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nomPiloto"
-                android:hint="Fecha: Por ahora se enviará null"
-                />
-            <EditText
-                android:id="@+id/lugarNacimientoPiloto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fechaPiloto"
-                android:hint="Lugar de nacimiento"
-                />
-            <EditText
-                android:id="@+id/fotoRefPiloto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lugarNacimientoPiloto"
-                android:hint="Ref foto piloto"
-                />
-            <EditText
-                android:id="@+id/podiosTotales"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fotoRefPiloto"
-                android:hint="Cantidad podios"
-                />
-            <EditText
-                android:id="@+id/puntosTotales"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/podiosTotales"
-                android:hint="Cantidad puntos"
-                />
-            <EditText
-                android:id="@+id/gpTotales"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/puntosTotales"
-                android:hint="Cantidad Gran Premios"
-                />
+        <EditText
+            android:id="@+id/editText_fechaPiloto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_nombrePiloto"
+            android:hint="Fecha: Por ahora se enviará null"
+            android:inputType="none"
+            android:focusable="false"/>
 
-            <Button
-                android:id="@+id/agregarPiloto"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
-                android:layout_below="@+id/gpTotales"
-                android:text="Agregar Piloto" />
+        <EditText
+            android:id="@+id/editText_lugarNacimientoPiloto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_fechaPiloto"
+            android:hint="Lugar de nacimiento"
+            android:inputType="text" />
 
-        </RelativeLayout>
+        <EditText
+            android:id="@+id/editText_podiosTotales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_lugarNacimientoPiloto"
+            android:hint="Cantidad podios"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editText_puntosTotales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_podiosTotales"
+            android:hint="Cantidad puntos"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editText_ingresosGPTotales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_puntosTotales"
+            android:hint="Cantidad de ingresos a Gran Premios"
+            android:inputType="number" />
+
+        <ImageView
+            android:id="@+id/imageView_fotoPiloto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/editText_ingresosGPTotales" />
+
+        <ImageButton
+            android:id="@+id/imageButton_seleccionarImagen_piloto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/editText_ingresosGPTotales"
+            android:layout_toRightOf="@id/imageView_fotoPiloto"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_image_selector" />
+
+        <ImageButton
+            android:id="@+id/imageButton_tomarFoto_piloto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/editText_ingresosGPTotales"
+            android:layout_toRightOf="@id/imageButton_seleccionarImagen_piloto"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_camera"/>
+
+        <Button
+            android:id="@+id/agregarPiloto"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView_fotoPiloto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/button_agregar" />
+
+    </RelativeLayout>
 
 
-    </ScrollView>
-
-
-
-</RelativeLayout>
+</ScrollView>

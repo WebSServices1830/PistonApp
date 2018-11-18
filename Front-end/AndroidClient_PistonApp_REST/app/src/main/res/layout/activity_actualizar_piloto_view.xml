@@ -14,51 +14,51 @@
 
 
             <EditText
-                android:id="@+id/nomPiloto"
+                android:id="@+id/editText_nombrePiloto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre Piloto"
                 />
             <EditText
-                android:id="@+id/fechaPiloto"
+                android:id="@+id/editText_fechaPiloto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nomPiloto"
+                android:layout_below="@+id/editText_nombrePiloto"
                 android:hint="Fecha: Por ahora se enviará null"
                 />
             <EditText
-                android:id="@+id/lugarNacimientoPiloto"
+                android:id="@+id/editText_lugarNacimientoPiloto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fechaPiloto"
+                android:layout_below="@+id/editText_fechaPiloto"
                 android:hint="Lugar de nacimiento"
                 />
             <EditText
                 android:id="@+id/fotoRefPiloto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lugarNacimientoPiloto"
+                android:layout_below="@+id/editText_lugarNacimientoPiloto"
                 android:hint="Ref foto piloto"
                 />
             <EditText
-                android:id="@+id/podiosTotales"
+                android:id="@+id/editText_podiosTotales"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/fotoRefPiloto"
                 android:hint="Cantidad podios"
                 />
             <EditText
-                android:id="@+id/puntosTotales"
+                android:id="@+id/editText_puntosTotales"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/podiosTotales"
+                android:layout_below="@+id/editText_podiosTotales"
                 android:hint="Cantidad puntos"
                 />
             <EditText
-                android:id="@+id/gpTotales"
+                android:id="@+id/editText_ingresosGPTotales"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/puntosTotales"
+                android:layout_below="@+id/editText_puntosTotales"
                 android:hint="Cantidad Gran Premios"
                 />
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
-                android:layout_below="@+id/gpTotales"
+                android:layout_below="@+id/editText_ingresosGPTotales"
                 android:text="Actualizar Piloto" />
 
         </RelativeLayout>

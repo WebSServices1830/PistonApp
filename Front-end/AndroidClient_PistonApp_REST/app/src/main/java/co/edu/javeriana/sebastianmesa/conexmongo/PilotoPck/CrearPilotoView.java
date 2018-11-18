@@ -1,12 +1,30 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,22 +34,40 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.text.DateFormat;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearPilotoView extends Activity {
 
-    private EditText nombre, fecha, lugar, foto, podios, puntos, gp;
-    private Button agregarP, consultaP, accionesPiloto;
+    private Activity activityContext = this;
+
+    private final static String TAG = "Log_CrearPiloto";
+
+    private final static int STORAGE_PERMISSION = 1;
+    private final static int CAMERA_PERMISSION = 2;
+
+    static final int IMAGE_PICKER_REQUEST = 10;
+    static final int IMAGE_CAPTURE_REQUEST = 20;
+
+    private EditText editText_nombre, editText_fecha, editText_lugar, editText_podios, editText_puntos, editText_gp;
+    private ImageView previewFoto;
+    private ImageButton btn_seleccionarImagen, btn_tomarFoto;
+    private Button agregarP;
+
+    private Date fechaNacimiento_piloto = null;
+
     private String resultado="";
     private CrearPilotoView.WebMet_AgregarPiloto wm_agregarPiloto = null;
     private TextView campo = null;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
 
     @Override
@@ -39,7 +75,62 @@ public class CrearPilotoView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_piloto_view);
 
+        editText_nombre = (EditText) findViewById(R.id.editText_nombrePiloto);
+        editText_lugar = (EditText) findViewById(R.id.editText_lugarNacimientoPiloto);
+        editText_fecha = findViewById(R.id.editText_fechaPiloto);
+        editText_podios   = (EditText) findViewById(R.id.editText_podiosTotales);
+        editText_puntos = (EditText) findViewById(R.id.editText_puntosTotales);
+        editText_gp = (EditText) findViewById(R.id.editText_ingresosGPTotales);
+
+        btn_seleccionarImagen = findViewById(R.id.imageButton_seleccionarImagen_piloto);
+        btn_tomarFoto = findViewById(R.id.imageButton_tomarFoto_piloto);
+
+        previewFoto = findViewById(R.id.imageView_fotoPiloto);
+
         agregarP =(Button) findViewById(R.id.agregarPiloto);
+
+        editText_fecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(CrearPilotoView.this,
+                        AlertDialog.THEME_HOLO_DARK,mDateSetListener,year,month,day);
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                fechaNacimiento_piloto = new GregorianCalendar(year, month, dayOfMonth).getTime();
+
+                month += 1;
+                Log.d(TAG, "onDateSet: date:"+dayOfMonth+"/"+month+"/"+year);
+
+                editText_fecha.setText(dayOfMonth+"/"+month+"/"+year);
+            }
+        };
+
+        btn_seleccionarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission(activityContext, Manifest.permission.READ_EXTERNAL_STORAGE, "Se necesita acceso al almacenamiento", STORAGE_PERMISSION);
+            }
+        });
+
+        btn_tomarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission(activityContext, Manifest.permission.CAMERA, "Se necesita acceso a la cámara", CAMERA_PERMISSION);
+            }
+        });
+
         agregarP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -49,6 +140,81 @@ public class CrearPilotoView extends Activity {
             }
         });
 
+    }
+
+    private void requestPermission(Activity context, String permission, String explanation, int requestId) {
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?   
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
+                Toast.makeText(context, explanation, Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(context, new String[]{permission}, requestId);
+        } else {
+            switch (requestId) {
+                case STORAGE_PERMISSION: {
+                    Intent pickImage = new Intent(Intent.ACTION_PICK);
+                    pickImage.setType("image/*");
+                    startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
+                    break;
+
+                }
+                case CAMERA_PERMISSION: {
+                    takePicture();
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case STORAGE_PERMISSION: {
+                Intent pickImage = new Intent(Intent.ACTION_PICK);
+                pickImage.setType("image/*");
+                startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
+                break;
+
+            }
+            case CAMERA_PERMISSION: {
+                takePicture();
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case IMAGE_PICKER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    try {
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        previewFoto.setImageBitmap(selectedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case IMAGE_CAPTURE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    previewFoto.setImageBitmap(imageBitmap);
+                }
+        }
+    }
+
+    private void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST);
+        }
     }
 
     private class WebMet_AgregarPiloto extends AsyncTask<Void, Void, Boolean> {
@@ -68,23 +234,15 @@ public class CrearPilotoView extends Activity {
             XMLGregorianCalendar fecha= null;
 
 
-            nombre = (EditText) findViewById(R.id.nomPiloto);
-            lugar = (EditText) findViewById(R.id.lugarNacimientoPiloto);
-            foto = (EditText) findViewById(R.id.fotoRefPiloto);
-            podios   = (EditText) findViewById(R.id.podiosTotales);
-            puntos = (EditText) findViewById(R.id.puntosTotales);
-            gp = (EditText) findViewById(R.id.gpTotales);
-
             GregorianCalendar fechaNacimiento = new GregorianCalendar();
             fechaNacimiento.getTime();
 
-            request.addProperty("nombreCompleto", nombre.getText().toString());
+            request.addProperty("nombreCompleto", editText_nombre.getText().toString());
             request.addProperty("fecha_Nacimiento", null);
-            request.addProperty("lugarNacimiento", lugar.getText().toString());
-            request.addProperty("foto_ref", foto.getText().toString());
-            request.addProperty("cant_podiosTotales", Integer.parseInt(podios.getText().toString()));
-            request.addProperty("cant_puntosTotales", Integer.parseInt(puntos.getText().toString()));
-            request.addProperty("cant_granPremiosIngresado", Integer.parseInt(gp.getText().toString()));
+            request.addProperty("lugarNacimiento", editText_lugar.getText().toString());
+            request.addProperty("cant_podiosTotales", Integer.parseInt(editText_podios.getText().toString()));
+            request.addProperty("cant_puntosTotales", Integer.parseInt(editText_puntos.getText().toString()));
+            request.addProperty("cant_granPremiosIngresado", Integer.parseInt(editText_gp.getText().toString()));
 
 
             SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);

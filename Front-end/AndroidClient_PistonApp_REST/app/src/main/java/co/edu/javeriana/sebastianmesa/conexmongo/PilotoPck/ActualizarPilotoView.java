@@ -16,10 +16,6 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
@@ -66,12 +62,12 @@ public class ActualizarPilotoView extends AppCompatActivity {
 
             XMLGregorianCalendar fecha= null;
 
-            nombre = (EditText) findViewById(R.id.nomPiloto);
-            lugar = (EditText) findViewById(R.id.lugarNacimientoPiloto);
+            nombre = (EditText) findViewById(R.id.editText_nombrePiloto);
+            lugar = (EditText) findViewById(R.id.editText_lugarNacimientoPiloto);
             foto = (EditText) findViewById(R.id.fotoRefPiloto);
-            podios   = (EditText) findViewById(R.id.podiosTotales);
-            puntos = (EditText) findViewById(R.id.puntosTotales);
-            gp = (EditText) findViewById(R.id.gpTotales);
+            podios   = (EditText) findViewById(R.id.editText_podiosTotales);
+            puntos = (EditText) findViewById(R.id.editText_puntosTotales);
+            gp = (EditText) findViewById(R.id.editText_ingresosGPTotales);
 
 
             //request.addProperty("id", "5bba54b01c08ef0495bc5676");

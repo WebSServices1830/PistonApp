@@ -53,9 +53,11 @@ import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
+import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
-public class LoginActivityView extends AppCompatActivity {
+public class
+LoginActivityView extends AppCompatActivity {
 
     private static final String TAG = "Log_LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
@@ -88,11 +90,9 @@ public class LoginActivityView extends AppCompatActivity {
                 // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     getUsuario(user);
-
                 } else {
                 // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-
                 }
             }
         };
@@ -172,8 +172,7 @@ public class LoginActivityView extends AppCompatActivity {
                             _passwordText.setText("");
                             onLoginFailed();
                             startActivity(new Intent(LoginActivityView.this, LoginActivityView.class));
-                        }else{
-                            startActivity(new Intent(LoginActivityView.this, LoginActivityView.class));
+                            finish();
                         }
                     }
                 });
@@ -272,58 +271,6 @@ public class LoginActivityView extends AppCompatActivity {
             sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
         return sb.toString();
-    }
-
-    public void getUsuario2(FirebaseUser user){
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
-        String path = "usuarios/"+user.getEmail();
-        StringRequest req = new StringRequest(Request.Method.GET, url+path,
-                new Response.Listener() {
-                    public void onResponse(Object response) {
-
-                        Log.i(TAG,response.toString());
-
-                        //usuarioLogeado = (Usuario)response;
-
-                        if (response == null){
-                            Toast.makeText(getApplicationContext(), "Usuario no encontrado", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(LoginActivityView.this, LoginActivityView.class));
-                        }else{
-
-                            XmlToJson xmlToJson = new XmlToJson.Builder(response.toString()).build();
-
-                            JSONObject jsonObject = xmlToJson.toJson();
-
-                            try {
-                                Log.i(TAG,jsonObject.toString());
-                                JSONObject infoJSON = (JSONObject) jsonObject.get("usuario");
-
-                                String nombreJSON = infoJSON.get("admin").toString();
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.i(TAG,"Error pero con respuesta", e);
-                            }
-
-                            if(!usuarioLogeado.isAdmin()) {
-                                startActivity(new Intent(LoginActivityView.this, UserMenuActivity.class));
-                            } else {
-                                startActivity(new Intent(LoginActivityView.this, AdminMainActivity.class));
-                            }
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
-                    }
-                }
-        );
-        queue.add(req);
     }
 
     public void getUsuario(FirebaseUser user){

@@ -51,8 +51,10 @@ public class EliminarEscuderiaView extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                wm_agregarPiloto = new WebMet_EliminarEscuderia();
-                wm_agregarPiloto.execute();
+               // wm_agregarPiloto = new WebMet_EliminarEscuderia();
+               // wm_agregarPiloto.execute();
+                campoId = (EditText) findViewById(R.id.nombreEscuderia);
+                consumeRESTVolleyEliminarEscuderiaPorNombre(campoId.getText().toString());
             }
         });
 

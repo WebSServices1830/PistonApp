@@ -258,6 +258,14 @@ public class MyResource {
 	public List<Piloto> consultarPilotos() {
 		return manejadorPiloto.piloto_getAll();
 	}
+	
+	// http://localhost:8080/myapp/PistonApp/pilotos
+	@GET
+	@Produces("application/json")
+	@Path("/pilotos/{nombrePiloto}")
+	public List<Piloto> consultarPilotosNombre(@PathParam("nombrePiloto") String nombre) {
+		return manejadorPiloto.piloto_getAllBySearchParameter(nombre);
+	}
 
 	// http://localhost:8080/myapp/PistonApp/pilotos/5bd7288b7cb2bc1e3c10d43e
 	@DELETE

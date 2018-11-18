@@ -44,7 +44,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearEscuderiaView extends AppCompatActivity {
 
-    private final static String TAG = "Log_CRearEscuderia";
+    private final static String TAG = "Log_CrearEscuderia";
 
     private EditText nombre, lugarBase, jefeEquipo, jefeTecnico, chasis, fotoEscudo_ref, cant_vecesEnPodio,
             cant_TitulosCampeonato;
@@ -62,9 +62,9 @@ public class CrearEscuderiaView extends AppCompatActivity {
         agregarP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                wm_agregarPiloto = new WebMet_AgregarEscuderia();
-                wm_agregarPiloto.execute();
+                //wm_agregarPiloto = new WebMet_AgregarEscuderia();
+                //wm_agregarPiloto.execute();
+                consumeRESTVolleyCrearEscuderia();
             }
         });
 
@@ -182,7 +182,7 @@ public class CrearEscuderiaView extends AppCompatActivity {
 
                         Log.d(TAG, "" + response.toString());
 
-                        Toast.makeText(getApplicationContext(), 	"Escuderia creada ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), 	"escuderia creada", Toast.LENGTH_LONG).show();
                         finish();
 
                     }
@@ -250,7 +250,7 @@ public class CrearEscuderiaView extends AppCompatActivity {
         //  Agrego lo que armé para hacer la petición con Volley
         */
         Volley.newRequestQueue(this).add(sr);
-        queue.add(sr);
+        //queue.add(sr);
     }
 
 }

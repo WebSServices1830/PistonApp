@@ -28,6 +28,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import co.edu.javeriana.sebastianmesa.conexmongo.Apuestas.BetActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorEscuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
+import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorResultados;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
@@ -177,6 +178,10 @@ public class UserMenuActivity extends AppCompatActivity {
 
     public void verTablaPilotos(View view){
         startActivity(new Intent(getBaseContext(), EstPorPiloto.class));
+    }
+
+    public void verTablaResultados(View view){
+        startActivity(new Intent(getBaseContext(), EstPorResultados.class));
     }
 
     public void verTablaConstructores(View view){

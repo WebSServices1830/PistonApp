@@ -13,58 +13,58 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/nomEscuderia"
+                android:id="@+id/editText_escuderia_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre Escuderia"
                 />
             <EditText
-                android:id="@+id/nomBase"
+                android:id="@+id/editText_escuderia_ubicacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nomEscuderia"
+                android:layout_below="@+id/editText_escuderia_nombre"
                 android:hint="Ubicación escuderia"
                 />
             <EditText
-                android:id="@+id/nomJEquipo"
+                android:id="@+id/editText_escuderia_nombreJefeEquipo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nomBase"
+                android:layout_below="@+id/editText_escuderia_ubicacion"
                 android:hint="Nombre jefe de equipo"
                 />
             <EditText
-                android:id="@+id/nomJTecnico"
+                android:id="@+id/editText_escuderia_nombreJefeTecnico"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nomJEquipo"
+                android:layout_below="@+id/editText_escuderia_nombreJefeEquipo"
                 android:hint="Nombre jefe técnico"
                 />
             <EditText
-                android:id="@+id/nomChasis"
+                android:id="@+id/editText_escuderia_nombreChasis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nomJTecnico"
+                android:layout_below="@+id/editText_escuderia_nombreJefeTecnico"
                 android:hint="Nombre de chasis"
                 />
             <EditText
-                android:id="@+id/numPodios"
+                android:id="@+id/editText_escuderia_cantPodios"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nomChasis"
+                android:layout_below="@+id/editText_escuderia_nombreChasis"
                 android:hint="Cantidad podios"
                 />
             <EditText
-                android:id="@+id/numTitulos"
+                android:id="@+id/editText_escuderia_cantTitulos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/numPodios"
+                android:layout_below="@+id/editText_escuderia_cantPodios"
                 android:hint="Cantidad titulos"
                 />
             <EditText
                 android:id="@+id/refImagen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/numTitulos"
+                android:layout_below="@+id/editText_escuderia_cantTitulos"
                 android:hint="Referencia imagen"
                 />
 

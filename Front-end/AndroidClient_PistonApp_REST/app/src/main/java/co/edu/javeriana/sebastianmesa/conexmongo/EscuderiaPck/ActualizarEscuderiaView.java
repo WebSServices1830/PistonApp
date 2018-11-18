@@ -85,14 +85,14 @@ public class ActualizarEscuderiaView extends AppCompatActivity {
 
             XMLGregorianCalendar fecha= null;
 
-            nombre = (EditText) findViewById(R.id.nomEscuderia);
-            lugarBase = (EditText) findViewById(R.id.nomBase);
-            jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
-            jefeTecnico   = (EditText) findViewById(R.id.nomJTecnico);
-            chasis = (EditText) findViewById(R.id.nomChasis);
+            nombre = (EditText) findViewById(R.id.editText_escuderia_nombre);
+            lugarBase = (EditText) findViewById(R.id.editText_escuderia_ubicacion);
+            jefeEquipo = (EditText) findViewById(R.id.editText_escuderia_nombreJefeEquipo);
+            jefeTecnico   = (EditText) findViewById(R.id.editText_escuderia_nombreJefeTecnico);
+            chasis = (EditText) findViewById(R.id.editText_escuderia_nombreChasis);
             fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
-            cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
-            cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
+            cant_vecesEnPodio = (EditText) findViewById(R.id.editText_escuderia_cantPodios);
+            cant_TitulosCampeonato = (EditText) findViewById(R.id.editText_escuderia_cantTitulos);
 
 
             request.addProperty("nombre", nombre.getText().toString());
@@ -147,14 +147,14 @@ public class ActualizarEscuderiaView extends AppCompatActivity {
     }
 
     public void consumeRESTVolleyActualizarEscuderia(String id){
-        nombre = (EditText) findViewById(R.id.nomEscuderia);
-        lugarBase = (EditText) findViewById(R.id.nomBase);
-        jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
-        jefeTecnico = (EditText) findViewById(R.id.nomJTecnico);
-        chasis = (EditText) findViewById(R.id.nomChasis);
+        nombre = (EditText) findViewById(R.id.editText_escuderia_nombre);
+        lugarBase = (EditText) findViewById(R.id.editText_escuderia_ubicacion);
+        jefeEquipo = (EditText) findViewById(R.id.editText_escuderia_nombreJefeEquipo);
+        jefeTecnico = (EditText) findViewById(R.id.editText_escuderia_nombreJefeTecnico);
+        chasis = (EditText) findViewById(R.id.editText_escuderia_nombreChasis);
         fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
-        cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
-        cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
+        cant_vecesEnPodio = (EditText) findViewById(R.id.editText_escuderia_cantPodios);
+        cant_TitulosCampeonato = (EditText) findViewById(R.id.editText_escuderia_cantTitulos);
 
         Escuderia escuderia = new Escuderia(nombre.getText().toString(), lugarBase.getText().toString(),
                 jefeTecnico.getText().toString(), jefeEquipo.getText().toString(), chasis.getText().toString(),

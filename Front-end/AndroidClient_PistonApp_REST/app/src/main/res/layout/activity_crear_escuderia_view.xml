@@ -1,88 +1,116 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EscuderiaPck.CrearEscuderiaView">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/textView_crearEscuderia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/textView_crearEscuderia"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText_escuderia_nombre"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_crearEscuderia"
+            android:hint="Nombre de la escudería"
+            android:inputType="text" />
 
-            <EditText
-                android:id="@+id/nomEscuderia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre Escuderia"
-                />
-            <EditText
-                android:id="@+id/nomBase"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nomEscuderia"
-                android:hint="Ubicación escuderia"
-                />
-            <EditText
-                android:id="@+id/nomJEquipo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nomBase"
-                android:hint="Nombre jefe de equipo"
-                />
-            <EditText
-                android:id="@+id/nomJTecnico"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nomJEquipo"
-                android:hint="Nombre jefe técnico"
-                />
-            <EditText
-                android:id="@+id/nomChasis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nomJTecnico"
-                android:hint="Nombre de chasis"
-                />
-            <EditText
-                android:id="@+id/numPodios"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nomChasis"
-                android:hint="Cantidad podios"
-                />
-            <EditText
-                android:id="@+id/numTitulos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/numPodios"
-                android:hint="Cantidad titulos"
-                />
-            <EditText
-                android:id="@+id/refImagen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/numTitulos"
-                android:hint="Referencia imagen"
-                />
+        <EditText
+            android:id="@+id/editText_escuderia_ubicacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_escuderia_nombre"
+            android:hint="Ubicación de la escudería"
+            android:inputType="text" />
 
-            <Button
-                android:id="@+id/agregarEscuderia"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
-                android:layout_below="@+id/refImagen"
-                android:text="Agregar Escuderia" />
+        <EditText
+            android:id="@+id/editText_escuderia_nombreJefeEquipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_escuderia_ubicacion"
+            android:hint="Nombre del jefe de equipo"
+            android:inputType="text" />
 
-        </RelativeLayout>
+        <EditText
+            android:id="@+id/editText_escuderia_nombreJefeTecnico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_escuderia_nombreJefeEquipo"
+            android:hint="Nombre del jefe técnico"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editText_escuderia_nombreChasis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_escuderia_nombreJefeTecnico"
+            android:hint="Nombre de chasis"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editText_escuderia_cantPodios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_escuderia_nombreChasis"
+            android:hint="Cantidad de podios"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editText_escuderia_cantTitulos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_escuderia_cantPodios"
+            android:hint="Cantidad de títulos"
+            android:inputType="number" />
+
+        <ImageView
+            android:id="@+id/imageView_fotoEscuderia"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/editText_escuderia_cantTitulos" />
+
+        <ImageButton
+            android:id="@+id/imageButton_seleccionarImagen_escuderia"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/editText_escuderia_cantTitulos"
+            android:layout_toRightOf="@id/imageView_fotoEscuderia"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_image_selector" />
+
+        <ImageButton
+            android:id="@+id/imageButton_tomarFoto_escuderia"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/editText_escuderia_cantTitulos"
+            android:layout_toRightOf="@id/imageButton_seleccionarImagen_escuderia"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_camera"/>
+
+        <Button
+            android:id="@+id/agregarEscuderia"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView_fotoEscuderia"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/button_agregar" />
+
+    </RelativeLayout>
 
 
-    </ScrollView>
-
-
-
-</RelativeLayout>
+</ScrollView>

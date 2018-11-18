@@ -34,79 +34,14 @@ public class VerEscuderiaView extends AppCompatActivity {
 
     private EditText campoNombre;
     private Button consultaBtn;
-    private String nombre, lugarBase, jefeEquipo, jefeTecnico, chasis, fotoEscudo_ref;
-    private int cant_vecesEnPodio, cant_TitulosCampeonato;
-    private WebMet_ConsultarEscuderia wm_agregarPiloto = null;
-    private TextView campoRespuesta = null;
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getLugarBase() {
-        return lugarBase;
-    }
-
-    public void setLugarBase(String lugarBase) {
-        this.lugarBase = lugarBase;
-    }
-
-    public String getJefeEquipo() {
-        return jefeEquipo;
-    }
-
-    public void setJefeEquipo(String jefeEquipo) {
-        this.jefeEquipo = jefeEquipo;
-    }
-
-    public String getJefeTecnico() {
-        return jefeTecnico;
-    }
-
-    public void setJefeTecnico(String jefeTecnico) {
-        this.jefeTecnico = jefeTecnico;
-    }
-
-    public String getChasis() {
-        return chasis;
-    }
-
-    public void setChasis(String chasis) {
-        this.chasis = chasis;
-    }
-
-    public String getFotoEscudo_ref() {
-        return fotoEscudo_ref;
-    }
-
-    public void setFotoEscudo_ref(String fotoEscudo_ref) {
-        this.fotoEscudo_ref = fotoEscudo_ref;
-    }
-
-    public int getCant_vecesEnPodio() {
-        return cant_vecesEnPodio;
-    }
-
-    public void setCant_vecesEnPodio(int cant_vecesEnPodio) {
-        this.cant_vecesEnPodio = cant_vecesEnPodio;
-    }
-
-    public int getCant_TitulosCampeonato() {
-        return cant_TitulosCampeonato;
-    }
-
-    public void setCant_TitulosCampeonato(int cant_TitulosCampeonato) {
-        this.cant_TitulosCampeonato = cant_TitulosCampeonato;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_escuderia_view);
+
+        campoNombre = findViewById(R.id.nombreEscuderia);
 
         consultaBtn =(Button) findViewById(R.id.btnVerEscuderia);
         consultaBtn.setOnClickListener(new View.OnClickListener() {
@@ -123,105 +58,6 @@ public class VerEscuderiaView extends AppCompatActivity {
 
     }
 
-
-
-    private class WebMet_ConsultarEscuderia extends AsyncTask<Void, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_escuderia?wsdl";
-            final String METHOD_NAME = "escuderia_readByName";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/escuderia_readByName";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            campoNombre = (EditText) findViewById(R.id.nombreEscuderia);
-            request.addProperty("nombre", campoNombre.getText().toString());
-
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                campoRespuesta.setText("");
-
-                ht.call(SOAP_ACTION, envelope);
-                SoapObject response = (SoapObject)envelope.getResponse();
-
-                if (response != null) {
-
-
-                    setNombre(response.getPrimitivePropertyAsString("nombre"));
-                    setLugarBase(response.getPrimitivePropertyAsString("lugarBase"));
-                    setJefeEquipo(response.getPrimitivePropertyAsString("jefeEquipo"));
-                    setJefeTecnico(response.getPrimitivePropertyAsString("jefeTecnico"));
-                    setChasis(response.getPrimitivePropertyAsString("chasis"));
-                    setFotoEscudo_ref(response.getPrimitivePropertyAsString("fotoEscudo_ref"));
-                    setCant_vecesEnPodio(Integer.parseInt(response.getPrimitivePropertyAsString("cant_vecesEnPodio")));
-                    setCant_TitulosCampeonato(Integer.parseInt(response.getPrimitivePropertyAsString("cant_TitulosCampeonato")));
-
-                    //campoRespuesta.setText(responseCode);
-
-                }else{
-                    campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                    campoRespuesta.setText("Escuderia no encontrada");
-                }
-
-
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-            }
-            else{
-
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-
-                if (getNombre() == null){
-                    campoRespuesta.setText("Escuderia no encontrada");
-                    Toast.makeText(getApplicationContext(), "Prueba otro nombre", Toast.LENGTH_LONG).show();
-                }else{
-                    campoRespuesta.setText(
-                            "Nombre: "+getNombre()+"\n"+
-                            "Lugar base: "+getLugarBase()+"\n"+
-                            "Jefe equipo: "+getJefeEquipo()+"\n"+
-                            "Jefe técnico: "+getJefeTecnico()+"\n"+
-                            "chasis: "+getChasis()+"\n"+
-                            "Podios: "+getCant_vecesEnPodio()+"\n"+
-                            "Titulos: "+getCant_TitulosCampeonato()+"\n"+
-                            "Ref fot: "+getFotoEscudo_ref()
-                    );
-
-                    Toast.makeText(getApplicationContext(), "Viendo Escuderia", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-        }
-    }
-
     public void consumeRESTVolleyVerEscuderiaString(){
         RequestQueue queue = Volley.newRequestQueue(VerEscuderiaView.this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
@@ -232,15 +68,15 @@ public class VerEscuderiaView extends AppCompatActivity {
                     public void onResponse(JSONArray jsonArray) {
                         try {
                             for (int a = 0; a < jsonArray.length(); a++) {
-                                JSONObject obj = jsonArray.getJSONObject(a);
-                                setNombre(obj.getString("nombre"));
-                                setLugarBase(obj.getString("lugarBase"));
-                                setJefeEquipo(obj.getString("jefeEquipo"));
-                                setJefeTecnico(obj.getString("jefeTecnico"));
-                                setChasis(obj.getString("chasis"));
-                                setFotoEscudo_ref(obj.getString("fotoEscudo_ref"));
-                                setCant_vecesEnPodio(Integer.parseInt(obj.getString("cant_vecesEnPodio")));
-                                setCant_TitulosCampeonato(Integer.parseInt(obj.getString("cant_TitulosCampeonato")));
+                                JSONObject escuderia_json = jsonArray.getJSONObject(a);
+                                String nombre = escuderia_json.getString("nombre");
+                                String lugarBase = escuderia_json.getString("lugarBase");
+                                String jefeEquipo = escuderia_json.getString("jefeEquipo");
+                                String jefeTecnico = escuderia_json.getString("jefeTecnico");
+                                String chasis = escuderia_json.getString("chasis");
+                                String fotoEscudo_ref = escuderia_json.getString("fotoEscudo_ref");
+                                int cant_vecesEnPodio = Integer.parseInt(escuderia_json.getString("cant_vecesEnPodio"));
+                                int cant_TitulosCampeonato = Integer.parseInt(escuderia_json.getString("cant_TitulosCampeonato"));
 
                             }
                         } catch (JSONException e) {

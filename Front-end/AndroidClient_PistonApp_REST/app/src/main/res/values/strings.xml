@@ -115,5 +115,6 @@
     <string name="title_activity_gran_premio_adapter">GranPremioAdapter</string>
     <string name="textView_crearPiloto">Agregar Piloto</string>
     <string name="button_agregar">Agregar</string>
+    <string name="textView_crearEscuderia">Agregar Escudería</string>
 
 </resources>

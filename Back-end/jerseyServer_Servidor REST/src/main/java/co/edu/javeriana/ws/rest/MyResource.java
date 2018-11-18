@@ -310,7 +310,7 @@ public class MyResource {
 	@Path("/escuderias/{idEscuderia}")
 	public ResponseBuilder eliminarEscuderia(@PathParam("idEscuderia") String idEscuderia) {
 		try {
-			manejadorEscuderia.escuderia_delete(idEscuderia);
+			manejadorEscuderia.escuderia_deleteByName(idEscuderia);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);

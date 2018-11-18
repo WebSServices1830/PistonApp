@@ -1,5 +1,6 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +11,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -121,4 +133,53 @@ public class CrearEscuderiaView extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
     }
+    public void consumeRESTVolleyCrearEscuderia(){
+        RequestQueue queue = Volley.newRequestQueue(CrearEscuderiaView.this);
+        StringRequest sr = new StringRequest(Request.Method.POST,"http://10.0.2.2:8080/myapp/PistonApp/escuderias", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //mPostCommentResponse.requestCompleted();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //mPostCommentResponse.requestEndedWithError(error);
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                nombre = (EditText) findViewById(R.id.nomEscuderia);
+                lugarBase = (EditText) findViewById(R.id.nomBase);
+                jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
+                jefeTecnico   = (EditText) findViewById(R.id.nomJTecnico);
+                chasis = (EditText) findViewById(R.id.nomChasis);
+                fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
+                cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
+                cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
+
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("nombre", nombre.getText().toString());
+                params.put("lugarBase", lugarBase.getText().toString());
+                params.put("jefeEquipo", jefeEquipo.getText().toString());
+                params.put("jefeTecnico", jefeTecnico.getText().toString());
+                params.put("chasis", chasis.getText().toString());
+                params.put("cant_vecesEnPodio", Integer.parseInt(cant_vecesEnPodio.getText().toString()));
+                params.put("cant_TitulosCampeonato", Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
+                params.put("fotoEscudo_ref", fotoEscudo_ref.getText().toString());
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+    }
+
+}
+
 }

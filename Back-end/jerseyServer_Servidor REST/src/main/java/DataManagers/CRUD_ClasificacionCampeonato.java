@@ -37,7 +37,7 @@ MongoClient mongoClient = ClienteMongo.getInstancia();
     MongoDatabase database = mongoClient.getDatabase("PistonAppDB").withCodecRegistry(pojoCodecRegistry);
     
     // get a handle to the "people" collection
-    MongoCollection<ClasificacionCampeonato> collection = database.getCollection("clasificacioncampeonato", ClasificacionCampeonato.class);
+    MongoCollection<ClasificacionCampeonato> collection = database.getCollection("clasificacionescampeonato", ClasificacionCampeonato.class);
 	
     public void clasificacionCampeonato_create(ClasificacionCampeonato clasificacionCampeonato) {
     	collection.insertOne(clasificacionCampeonato);

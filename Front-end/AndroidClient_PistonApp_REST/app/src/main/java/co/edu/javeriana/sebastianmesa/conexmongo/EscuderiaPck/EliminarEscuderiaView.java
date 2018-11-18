@@ -120,11 +120,11 @@ public class EliminarEscuderiaView extends AppCompatActivity {
         }
     }
     public void consumeRESTVolleyEliminarEscuderiaPorNombre(String nombre){
-        RequestQueue queue = Volley.newRequestQueue(EliminarEscuderiaView.this);
+
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
         String path = "escuderias/"+nombre;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url+path,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

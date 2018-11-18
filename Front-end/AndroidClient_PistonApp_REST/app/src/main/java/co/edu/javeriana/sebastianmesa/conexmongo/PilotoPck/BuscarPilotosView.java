@@ -65,7 +65,7 @@ public class BuscarPilotosView extends AppCompatActivity {
         consultaBtn =findViewById(R.id.agregarPiloto);
         listView_pilotos = findViewById(R.id.listView_pilotos);
 
-        consumeRESTVolleyGetPilotos();
+        consumeRESTVolleyGetPilotos(campo_nombrePiloto.getText().toString());
 
         /*wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
         wm_verPilotosPorNombre.execute();*/
@@ -91,7 +91,7 @@ public class BuscarPilotosView extends AppCompatActivity {
 
                 /*wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
                 wm_verPilotosPorNombre.execute();*/
-                consumeRESTVolleyGetPilotos();
+                consumeRESTVolleyGetPilotos(campo_nombrePiloto.getText().toString());
             }
         });
 
@@ -185,10 +185,10 @@ public class BuscarPilotosView extends AppCompatActivity {
         }
     }
 
-    public void consumeRESTVolleyGetPilotos(){
+    public void consumeRESTVolleyGetPilotos(String campoNombrePiloto){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp";
-        String path = "/pilotos/"+campo_nombrePiloto.getText().toString();
+        String path = "/pilotos/"+campoNombrePiloto;
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
                 new Response.Listener<JSONArray>() {
                     @Override

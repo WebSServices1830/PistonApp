@@ -14,6 +14,24 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
@@ -28,7 +46,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
@@ -77,11 +97,124 @@ public class EstPorPiloto extends AppCompatActivity {
         });
 
 
+        obtenerDatos();
 
-        wm_validarLogin = new WebMet_ObtenerPiloto();
-        wm_validarLogin.execute();
+//        wm_validarLogin = new WebMet_ObtenerPiloto();
+//        wm_validarLogin.execute();
 
     }
+
+
+    public void obtenerDatos (){
+
+        RequestQueue mRequestQueue;
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/pilotos";
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        //String Request initialized
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                try {
+
+                    for (int l = 0; l < response.length(); l++) {
+
+                        JSONObject piloto = response.getJSONObject(l);
+
+
+                        String nombrePiloto = piloto.getString("nombreCompleto");
+                        int puntosTotales = piloto.getInt("cant_puntosTotales");
+                        String id_str = piloto.getString("id_str");
+                        //Date fecha_Nacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(piloto.getString("fecha_Nacimiento"));
+                        Date fecha_Nacimiento = null;
+                        String lugarNacimiento = piloto.getString("lugarNacimiento");
+                        String foto_ref = piloto.getString("foto_ref");
+                        int cant_podiosTotales = piloto.getInt("cant_podiosTotales");
+                        int cant_granPremiosIngresado = piloto.getInt("cant_granPremiosIngresado");
+                        float calificacion = piloto.getInt("calificacion");
+
+
+                        Piloto pilotoObjeto= new Piloto();
+
+                        pilotoObjeto.setId_str(id_str);
+                        pilotoObjeto.setNombreCompleto(nombrePiloto);
+                        pilotoObjeto.setFecha_Nacimiento(fecha_Nacimiento);
+                        pilotoObjeto.setLugarNacimiento(lugarNacimiento);
+                        pilotoObjeto.setFoto_ref(foto_ref);
+                        pilotoObjeto.setCant_podiosTotales(cant_podiosTotales);
+                        pilotoObjeto.setCant_puntosTotales(puntosTotales);
+                        pilotoObjeto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
+                        pilotoObjeto.setCalificacion(calificacion);
+
+                        listaPilotos.add(pilotoObjeto);
+
+                        String[][] datos = new String[listaPilotos.size()][4];
+
+                        for (int i = 0 ; i < listaPilotos.size() ; i++){
+                            for (int j = 0 ; j < 4 ; j++){
+                                switch (j) {
+                                    case 0:
+                                        datos[i][j] = Integer.toString(i+1);
+                                        break;
+                                    case 1:
+                                        datos[i][j] = listaPilotos.get(i).getNombreCompleto();
+                                        break;
+                                    case 2:
+                                        datos[i][j] = "equipo";
+                                        break;
+                                    case 3:
+//                                        Random rand = new Random();
+//                                        int  n = rand.nextInt(199) + 101;
+                                        datos[i][j] = Integer.toString(listaPilotos.get(i).getCant_puntosTotales());
+                                        break;
+
+                                }
+                            }
+
+                        }
+
+                        Arrays.sort(datos, new Comparator() {
+                            public int compare(Object o1, Object o2) {
+                                String[] elt1 = (String[])o2;
+                                String[] elt2 = (String[])o1;
+                                return elt1[3].compareTo(elt2[3]);
+                            }
+                        });
+
+                        tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
+                        Toast.makeText(getBaseContext(),"Bien. Tam: " + listaPilotos.size(), Toast.LENGTH_SHORT).show();
+
+                        Log.i("ViendoPilotos",nombrePiloto + " con " + puntosTotales);
+
+                    }
+
+//                    String nombreJSON = response.get("nombreUsuario").toString();
+//                    String passJSON   = response.get("contra").toString();
+//
+//                    Boolean adminJSON  = Boolean.parseBoolean(response.get("admin").toString());
+
+                    //Log.i(TAG,"Es admin:" + adminJSON.toString() );
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //Log.i(TAG,"Error pero con respuesta",e);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //Log.i(TAG,"Error :" + error.toString());
+            }
+        });
+
+        mRequestQueue.add(jsonArrayRequest);
+    }
+
 
 
     private class WebMet_ObtenerPiloto extends AsyncTask<Void, Piloto, Boolean> {

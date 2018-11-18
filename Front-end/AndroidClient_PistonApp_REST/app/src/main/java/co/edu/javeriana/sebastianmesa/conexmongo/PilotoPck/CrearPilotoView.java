@@ -92,6 +92,7 @@ public class CrearPilotoView extends Activity {
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+    private boolean fotoCargada= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,6 +224,7 @@ public class CrearPilotoView extends Activity {
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         previewFoto.setImageBitmap(selectedImage);
+                        fotoCargada= true;
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -233,6 +235,7 @@ public class CrearPilotoView extends Activity {
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     previewFoto.setImageBitmap(imageBitmap);
+                    fotoCargada= true;
                 }
         }
     }
@@ -389,7 +392,7 @@ public class CrearPilotoView extends Activity {
 
                         Log.d(TAG, "" + response.toString());
 
-                        Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), 	"Piloto Creado", Toast.LENGTH_LONG).show();
                         finish();
 
                     }
@@ -490,6 +493,11 @@ public class CrearPilotoView extends Activity {
 
         if (editText_gp.getText().toString().isEmpty()) {
             editText_gp.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if(fotoCargada == false){
+            Toast.makeText(this,"Por favor cargue una imagen",Toast.LENGTH_LONG);
             sonValidos = false;
         }
 

@@ -10,17 +10,39 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class EliminarPilotoView extends AppCompatActivity {
+
+    private final static String TAG = "Log_EliminarPiloto";
 
     private EditText campoId;
     private Button consultaBtn;
@@ -124,4 +146,50 @@ public class EliminarPilotoView extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
     }
+    /*
+    public void consumeRESTVolleyEliminarPiloto ()  {
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest sr = new StringRequest(
+                Request.Method.DELETE,
+                "http://10.0.2.2:8080/myapp/PistonApp/pilotos/"+editt,
+                new Response.Listener<StringRequest>() {
+
+                    @Override
+                    public void onResponse(StringRequest response) {
+
+                        Log.d(TAG, "" + response.toString());
+
+                        Toast.makeText(getApplicationContext(), 	"Usuario Eliminado", Toast.LENGTH_LONG).show();
+                        finish();
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error.ResponseREST " + error.networkResponse.statusCode);
+                NetworkResponse response = error.networkResponse;
+                if (error instanceof ServerError && response != null) {
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        JSONObject obj = new JSONObject(res);
+                        Log.d(TAG, "Error.ResponseREST A: " + obj.toString());
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                        Log.d(TAG, "Error.ResponseREST B: " + e1.toString());
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                        Log.d(TAG, "Error.ResponseREST C: " + e2.toString());
+                    }
+                }
+            }
+        });
+        Volley.newRequestQueue(this).add(sr);
+    }*/
+
 }

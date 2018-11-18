@@ -1,5 +1,6 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -31,6 +33,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.JsonObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -38,6 +41,7 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
 
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
@@ -48,6 +52,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,6 +72,7 @@ import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 public class VerUsuarioView extends AppCompatActivity {
 
+    private final static String TAG = "Log_VerUsuario";
 
     private ImageView imagenPerfil;
     private TextView tv_nombreUsuario, tv_fechaNacimientoUsuario, tv_bolsilloUsuario;
@@ -95,71 +101,55 @@ public class VerUsuarioView extends AppCompatActivity {
 
     public void getUsuario(FirebaseUser user){
         RequestQueue mRequestQueue;
-        StringRequest mStringRequest;
         String url = "http://10.0.2.2:8080/myapp/PistonApp/usuarios/";
+        String path= user.getEmail();
 
         //RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(this);
 
-        //String Request initialized
-        mStringRequest = new StringRequest(Request.Method.GET, url + user.getEmail(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
 
-                XmlToJson xmlToJson = new XmlToJson.Builder(response).build();
+                            String nombreJSON = jsonObject.getString("nombreUsuario");
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            Date fechaJSON = simpleDateFormat.parse(jsonObject.getString("fechaNacimiento"));
+                            Log.d(TAG, "fechaNacimiento");
+                            String urlJSON = jsonObject.getString("urlFoto");
+                            double bolsilloJSON = jsonObject.getDouble("bolsillo");
 
-                JSONObject jsonObject = xmlToJson.toJson();
+                            tv_nombreUsuario = (TextView) findViewById(R.id.campo_nombreUsuario);
+                            tv_fechaNacimientoUsuario = (TextView) findViewById(R.id.campo_fechaNacimientoUsuario);
+                            tv_bolsilloUsuario = (TextView) findViewById(R.id.campo_bolsilloUsuario);
 
-                try {
-                    JSONObject infoJSON = (JSONObject) jsonObject.get("usuario");
+                            tv_nombreUsuario.setText(nombreJSON);
+                            tv_fechaNacimientoUsuario.setText(fechaJSON.toString());
+                            tv_bolsilloUsuario.setText("$" + bolsilloJSON);
 
-                    String nombreJSON = infoJSON.get("nombreUsuario").toString();
-                    String passJSON   = infoJSON.get("contra").toString();
-                    //Date fechaJSON   = infoJSON.get("fechaNacimiento");
-                    String urlJSON   = infoJSON.get("urlFoto").toString();
-                    Boolean adminJSON  = Boolean.parseBoolean(infoJSON.get("admin").toString());
-                    double bolsilloJSON = Double.parseDouble(infoJSON.get("bolsillo").toString());
+                            if(!urlJSON.equals("")){
+                                new DownloadImageTask().execute(urlJSON);
+                            }
 
-                    Log.i("intentoLogin Server",adminJSON.toString() );
-
-                    ManagerUsuario.usuario = new Usuario();
-
-                    ManagerUsuario.usuario.setNombreUsuario(nombreJSON);
-                    ManagerUsuario.usuario.setContra(passJSON);
-                    ManagerUsuario.usuario.setFechaNacimiento(null);
-                    ManagerUsuario.usuario.setUrlFoto(urlJSON);
-                    ManagerUsuario.usuario.setAdmin(adminJSON);
-                    ManagerUsuario.usuario.setBolsillo(bolsilloJSON);
-
-                    tv_nombreUsuario = (TextView) findViewById(R.id.campo_nombreUsuario);
-                    tv_fechaNacimientoUsuario = (TextView) findViewById(R.id.campo_fechaNacimientoUsuario);
-                    tv_bolsilloUsuario = (TextView) findViewById(R.id.campo_bolsilloUsuario);
-
-                    tv_nombreUsuario.setText(ManagerUsuario.usuario.getNombreUsuario());
-                    Date currentTime = Calendar.getInstance().getTime();
-
-                    tv_fechaNacimientoUsuario.setText(currentTime.toString());
-                    tv_bolsilloUsuario.setText("$" + ManagerUsuario.usuario.getBolsillo());
-
-                    if(!ManagerUsuario.usuario.getUrlFoto().equals("")){
-                        new DownloadImageTask().execute(ManagerUsuario.usuario.getUrlFoto());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "Error JSONException"+e.getCause());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "Error ParseException"+e.getCause());
+                        }
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.i("intentoLogin","Error pero con respuesta");
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "Error handling rest invocation"+error.getCause());
+                    }
                 }
+        );
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.i("intentoLogin","Error :" + error.toString());
-            }
-        });
-
-        mRequestQueue.add(mStringRequest);
+        mRequestQueue.add(req);
 
     }
 

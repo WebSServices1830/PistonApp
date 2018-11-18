@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +51,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -60,6 +64,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
+import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearPilotoView extends Activity {
@@ -153,8 +158,12 @@ public class CrearPilotoView extends Activity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                wm_agregarPiloto = new CrearPilotoView.WebMet_AgregarPiloto();
-                wm_agregarPiloto.execute();
+                /*wm_agregarPiloto = new CrearPilotoView.WebMet_AgregarPiloto();
+                wm_agregarPiloto.execute();*/
+                if(camposValidos()){
+                    CrearPilotoAsync crearPilotoAsync = new CrearPilotoAsync();
+                    crearPilotoAsync.execute();
+                }
             }
         });
 
@@ -303,4 +312,188 @@ public class CrearPilotoView extends Activity {
             Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
     }
+
+    private class CrearPilotoAsync extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            Drawable fotoPiloto = previewFoto.getDrawable();
+
+            String urlFoto = null;
+            if(fotoPiloto == null){
+                urlFoto = "";
+            }else{
+                try {
+
+                    urlFoto = FileUpload.saveImageIntoMongoDB(fotoPiloto, editText_nombre.getText().toString());
+                    consumeRESTVolleyCrearPiloto(urlFoto);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("Error_FileUpload: ",e.getMessage());
+                }
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if(success==false){
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Piloto Creado", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void consumeRESTVolleyCrearPiloto (String urlFoto)  {
+
+        Piloto piloto= new Piloto(editText_nombre.getText().toString(), fechaNacimiento_piloto, editText_lugar.getText().toString(), urlFoto,
+                Integer.parseInt(editText_podios.getText().toString()), Integer.parseInt(editText_puntos.getText().toString()), Integer.parseInt(editText_gp.getText().toString()));
+
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String result = gson.toJson(piloto);
+
+        JSONObject js = null;
+        try {
+            js = new JSONObject(result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG,"JSONException",e);
+
+            Toast.makeText(this,"Error creando el objeto JSON",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        /*
+        //  Formo la petición: método a utilizar, path del servicio, el JSON creado, y un
+        //  listener que está pendiente de la respuesta a la petición
+         */
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest sr = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://10.0.2.2:8080/myapp/PistonApp/pilotos",
+                js,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, "" + response.toString());
+
+                        Toast.makeText(getApplicationContext(), 	"Usuario Creado", Toast.LENGTH_LONG).show();
+                        finish();
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error.ResponseREST " + error.networkResponse.statusCode);
+                NetworkResponse response = error.networkResponse;
+                if (error instanceof ServerError && response != null) {
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        JSONObject obj = new JSONObject(res);
+                        Log.d(TAG, "Error.ResponseREST A: " + obj.toString());
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                        Log.d(TAG, "Error.ResponseREST B: " + e1.toString());
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                        Log.d(TAG, "Error.ResponseREST C: " + e2.toString());
+                    }
+                }
+            }
+        }){
+
+            /*
+            //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
+            //  parametros según el tipo de dato.
+            */
+
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+            /*
+            //  Esto (getHeaders) da condiciones a la solicitud con el encabezado de http.
+            //  Como el servidor consume JSON, especifico que ese es el tipo de contenido que
+            //  voy a utilizar. Y utf-8 porque... eso decía internet jaja.. Supongo que es lo
+            //  mas estándar y hace que cosas mas de ASCII no molesten
+            */
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+
+            /*@Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int mStatusCode= response.statusCode;
+                Log.d(TAG,"STATUS CODE: "+mStatusCode);
+                return super.parseNetworkResponse(response.);
+            }*/
+        };
+
+        /*
+        //  Agrego lo que armé para hacer la petición con Volley
+        */
+        Volley.newRequestQueue(this).add(sr);
+    }
+
+    private boolean camposValidos() {
+
+        boolean sonValidos = true;
+
+        if (editText_nombre.getText().toString().isEmpty()) {
+            editText_nombre.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_lugar.getText().toString().isEmpty()) {
+            editText_lugar.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_fecha.toString().isEmpty()) {
+            editText_fecha.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_podios.getText().toString().isEmpty()) {
+            editText_podios.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_puntos.getText().toString().isEmpty()) {
+            editText_puntos.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_gp.getText().toString().isEmpty()) {
+            editText_gp.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        return sonValidos;
+    }
+
 }

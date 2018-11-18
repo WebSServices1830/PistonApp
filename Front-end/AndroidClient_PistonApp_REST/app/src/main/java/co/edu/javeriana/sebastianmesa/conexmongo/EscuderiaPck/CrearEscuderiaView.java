@@ -35,19 +35,19 @@ import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearEscuderiaView extends AppCompatActivity {
 
-    private EditText nombre, lugarBase, jefeEquipo, jefeTecnico, chasis, fotoEscudo_ref, cant_vecesEnPodio, cant_TitulosCampeonato;
+    private EditText nombre, lugarBase, jefeEquipo, jefeTecnico, chasis, fotoEscudo_ref, cant_vecesEnPodio,
+            cant_TitulosCampeonato;
     private Button agregarP;
-    private String resultado="";
+    private String resultado = "";
     private WebMet_AgregarEscuderia wm_agregarPiloto = null;
     private TextView campo = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_escuderia_view);
 
-        agregarP =(Button) findViewById(R.id.agregarEscuderia);
+        agregarP = (Button) findViewById(R.id.agregarEscuderia);
         agregarP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -63,26 +63,24 @@ public class CrearEscuderiaView extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            //WebService - Opciones
+            // WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/admin?wsdl";
+            final String URL = "http://10.0.2.2:8080/WS/admin?wsdl";
             final String METHOD_NAME = "registrarEscuderia";
             final String SOAP_ACTION = "http://webservice.javeriana.co/registrarEscuderia";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            XMLGregorianCalendar fecha= null;
-
+            XMLGregorianCalendar fecha = null;
 
             nombre = (EditText) findViewById(R.id.nomEscuderia);
             lugarBase = (EditText) findViewById(R.id.nomBase);
             jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
-            jefeTecnico   = (EditText) findViewById(R.id.nomJTecnico);
+            jefeTecnico = (EditText) findViewById(R.id.nomJTecnico);
             chasis = (EditText) findViewById(R.id.nomChasis);
             fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
             cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
             cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
-
 
             request.addProperty("nombre", nombre.getText().toString());
             request.addProperty("lugarBase", lugarBase.getText().toString());
@@ -90,23 +88,21 @@ public class CrearEscuderiaView extends AppCompatActivity {
             request.addProperty("jefeTecnico", jefeTecnico.getText().toString());
             request.addProperty("chasis", chasis.getText().toString());
             request.addProperty("cant_vecesEnPodio", Integer.parseInt(cant_vecesEnPodio.getText().toString()));
-            request.addProperty("cant_TitulosCampeonato", Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
+            request.addProperty("cant_TitulosCampeonato",
+                    Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
             request.addProperty("fotoEscudo_ref", fotoEscudo_ref.getText().toString());
 
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
 
             HttpTransportSE ht = new HttpTransportSE(URL);
             try {
                 ht.call(SOAP_ACTION, envelope);
-                SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                //resultado=response.toString();
-                //Log.i("Resultado: ",resultado);
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
+                SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                // resultado=response.toString();
+                // Log.i("Resultado: ",resultado);
+            } catch (Exception e) {
+                Log.i("Error: ", e.getMessage());
                 e.printStackTrace();
                 return false;
             }
@@ -116,38 +112,41 @@ public class CrearEscuderiaView extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-            }
-            else{
+            if (success == false) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            } else {
 
-                //campo = (TextView) findViewById(R.id.conexion);
+                // campo = (TextView) findViewById(R.id.conexion);
 
-                //campo.setText(resultado);
+                // campo.setText(resultado);
 
-                Toast.makeText(getApplicationContext(), 	"Escuderia Creada", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Escuderia Creada", Toast.LENGTH_LONG).show();
             }
         }
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
         }
     }
-    public void consumeRESTVolleyCrearEscuderia(){
 
-                nombre = (EditText) findViewById(R.id.nomEscuderia);
-                lugarBase = (EditText) findViewById(R.id.nomBase);
-                jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
-                jefeTecnico   = (EditText) findViewById(R.id.nomJTecnico);
-                chasis = (EditText) findViewById(R.id.nomChasis);
-                fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
-                cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
-                cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
+    public void consumeRESTVolleyCrearEscuderia() {
 
-                Escuderia escuderia = new Escuderia(nombre.getText().toString(),lugarBase.getText().toString(),jefeTecnico.getText().toString()
-                        ,jefeEquipo.getText().toString(),chasis.getText().toString(),Integer.parseInt(cant_vecesEnPodio.getText().toString()),
-                        Integer.parseInt(cant_TitulosCampeonato.getText().toString()),  fotoEscudo_ref.getText().toString());
-                
+        nombre = (EditText) findViewById(R.id.nomEscuderia);
+        lugarBase = (EditText) findViewById(R.id.nomBase);
+        jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
+        jefeTecnico = (EditText) findViewById(R.id.nomJTecnico);
+        chasis = (EditText) findViewById(R.id.nomChasis);
+        fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
+        cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
+        cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
+
+        Escuderia escuderia = new Escuderia(nombre.getText().toString(), lugarBase.getText().toString(),
+                jefeTecnico.getText().toString(), jefeEquipo.getText().toString(), chasis.getText().toString(),
+                Integer.parseInt(cant_vecesEnPodio.getText().toString()),
+                Integer.parseInt(cant_TitulosCampeonato.getText().toString()), fotoEscudo_ref.getText().toString());
+
+        queue.add(sr);
+    }
 
 }

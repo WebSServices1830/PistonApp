@@ -12,14 +12,23 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +41,8 @@ import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.VerPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class BetActivity extends AppCompatActivity {
+
+    private static final String TAG = "Log_BetActivity";
 
     private ListView listView_pilotos;
     private List<Piloto> listaPilotos = new ArrayList<>();
@@ -51,8 +62,9 @@ public class BetActivity extends AppCompatActivity {
         consultaBtn =findViewById(R.id.agregarPiloto);
         listView_pilotos = findViewById(R.id.listView_pilotos);
 
-        wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
-        wm_verPilotosPorNombre.execute();
+        //wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
+        //wm_verPilotosPorNombre.execute();
+        consumeRESTVolleyBetActivity ();
 
         pilotoAdapter = new PilotoAdapter(this, listaPilotos);
         listView_pilotos.setAdapter(pilotoAdapter);
@@ -169,5 +181,66 @@ public class BetActivity extends AppCompatActivity {
         protected void onCancelled() {
             Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
         }
+    }
+    public void consumeRESTVolleyBetActivity (){
+        if(!listaPilotos.isEmpty()) {
+            listaPilotos.clear();
+        }
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp";
+        String path = "/pilotos";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject obj = jsonArray.getJSONObject(a);
+
+                                String id_str = obj.getString("id_str");
+                                String nombreCompleto = obj.getString("nombreCompleto");
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                Date fechaNacimiento= simpleDateFormat.parse(obj.getString("fecha_Nacimiento"));
+                                String lugarNacimiento = obj.getString("lugarNacimiento");
+                                String foto_ref = obj.getString("foto_ref");
+                                int cant_podiosTotales = obj.getInt("cant_podiosTotales") ;
+                                int cant_puntosTotales = obj.getInt("cant_puntosTotales") ;
+                                int cant_granPremiosIngresado = obj.getInt("cant_granPremiosIngresado");
+                                float calificacion = Float.parseFloat( obj.getString("calificacion") );
+
+                                Piloto piloto = new Piloto();
+                                piloto.setId_str(id_str);
+                                piloto.setNombreCompleto(nombreCompleto);
+                                piloto.setFecha_Nacimiento(fechaNacimiento);
+                                piloto.setLugarNacimiento(lugarNacimiento);
+                                piloto.setFoto_ref(foto_ref);
+                                piloto.setCant_podiosTotales(cant_podiosTotales);
+                                piloto.setCant_puntosTotales(cant_puntosTotales);
+                                piloto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
+                                piloto.setCalificacion(calificacion);
+
+                                // adding movie to movies array
+                                listaPilotos.add(piloto);
+                            }
+                            pilotoAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "consumeRESTVolleyBetActivity: JSONException ", e);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "consumeRESTVolleyBetActivity: ParseException ", e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+
     }
 }

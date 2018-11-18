@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -112,6 +117,7 @@ public class CrearUsuarioView extends AppCompatActivity {
 
     public String emailGlobal = null;
     public String passGlobal = null;
+    private TextView titulo;
 
 
     @Override
@@ -164,7 +170,22 @@ public class CrearUsuarioView extends AppCompatActivity {
             }
         });
 
+        setStatusBarTranslucent(true);
 
+        titulo = (TextView) findViewById(R.id.titulo);
+//
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Cheetah Kick.otf");
+        titulo.setTypeface(type);
+        titulo.setTextSize(60);
+
+    }
+
+    protected void setStatusBarTranslucent(boolean makeTranslucent) {
+        if (makeTranslucent) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     private boolean camposValidos() {

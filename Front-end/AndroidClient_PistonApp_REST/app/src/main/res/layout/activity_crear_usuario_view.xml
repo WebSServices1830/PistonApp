@@ -1,90 +1,168 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UsuarioPck.CrearUsuarioView">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+        android:background="@drawable/fondocielo"
+        android:scaleType="matrix" />
+
+    <RelativeLayout
+        android:id="@+id/transparentOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="#99000000">
+    </RelativeLayout>
+
     <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="10dp"
+            android:paddingRight="30dp"
+            android:paddingLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
+            <TextView
+                android:layout_marginTop="45dp"
+                android:id="@+id/titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Piston App"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="40dp"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_marginTop="30dp"
                 android:id="@+id/nomUsuario"
                 android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Selecciona un nombre de usuario" />
+                android:hint="Selecciona un nombre de usuario"
+                app:met_iconLeft="@drawable/ic_person_white_48dp"
+                app:met_baseColor="@android:color/white"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/white"
+                app:met_underlineColor="#fff"
+                app:met_singleLineEllipsis="true" />
 
-            <EditText
+            <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/passUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nomUsuario"
                 android:hint="Digita una contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                app:met_iconLeft="@drawable/ic_lock_white_48dp"
+                app:met_baseColor="@android:color/white"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/white"
+                app:met_underlineColor="#fff"
+                app:met_singleLineEllipsis="true" />
 
-            <EditText
-                android:id="@+id/editText_fechaNacimiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/passUsuario"
-                android:ems="10"
-                android:enabled="false"
-                android:hint="Fecha de nacimiento"
-                android:inputType="date" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/imageButton_calendario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/passUsuario"
-                android:layout_toRightOf="@+id/editText_fechaNacimiento"
-                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+                <ImageButton
+                    android:id="@+id/imageButton_calendario"
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:layout_below="@+id/passUsuario"
+                    android:layout_toRightOf="@+id/editText_fechaNacimiento"
+                    android:tint="@color/white"
+                    app:met_iconLeft="@drawable/ic_lock_white_48dp"
+                    android:background="@color/fbutton_color_transparent"
+                    android:src="@drawable/ic_calendar" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/editText_fechaNacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/passUsuario"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:hint="Fecha de nacimiento"
+                    android:inputType="date"
+                    android:layout_marginLeft="10dp"
+                    app:met_baseColor="@android:color/white"
+                    app:met_floatingLabel="highlight"
+                    app:met_primaryColor="@color/white"
+                    app:met_underlineColor="#fff"
+                    app:met_singleLineEllipsis="true" />
+
+            </LinearLayout>
 
             <CheckBox
+                android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:id="@+id/adminUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editText_fechaNacimiento"
                 android:checked="true"
+                android:textColor="@color/white"
                 android:text="¿Es usuario administrador?" />
 
-            <ImageView
-                android:id="@+id/imageView_fotoPerfil"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_below="@+id/adminUsuario" />
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/imageButton_seleccionarImagen"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_below="@id/adminUsuario"
-                android:layout_toRightOf="@id/imageView_fotoPerfil"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_image_selector" />
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/imageView_fotoPerfil"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/adminUsuario" />
 
-            <ImageButton
-                android:id="@+id/imageButton_tomarFoto"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_below="@id/adminUsuario"
-                android:layout_toRightOf="@id/imageButton_seleccionarImagen"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_camera"/>
+                <ImageButton
+                    android:id="@+id/imageButton_seleccionarImagen"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_below="@id/adminUsuario"
+                    android:layout_toRightOf="@id/imageView_fotoPerfil"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_image_selector" />
+
+                <ImageButton
+                    android:id="@+id/imageButton_tomarFoto"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_below="@id/adminUsuario"
+                    android:layout_toRightOf="@id/imageButton_seleccionarImagen"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_camera"/>
+
+            </LinearLayout>
+
+
 
 
             <Button
+                android:layout_gravity="center"
                 android:id="@+id/agregarUsuario"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
@@ -97,11 +175,11 @@
 
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </ScrollView>
 
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

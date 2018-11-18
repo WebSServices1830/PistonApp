@@ -1,14 +1,27 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -20,102 +33,186 @@ import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Escuderia;
+import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
+import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.CrearPilotoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class CrearEscuderiaView extends AppCompatActivity {
 
-    private final static String TAG = "Log_CRearEscuderia";
+    private Activity activityContext = this;
 
-    private EditText nombre, lugarBase, jefeEquipo, jefeTecnico, chasis, fotoEscudo_ref, cant_vecesEnPodio,
-            cant_TitulosCampeonato;
-    private Button agregarP;
-    private String resultado = "";
-    private WebMet_AgregarEscuderia wm_agregarPiloto = null;
-    private TextView campo = null;
+    private final static String TAG = "Log_CrearEscuderia";
+
+    private final static int STORAGE_PERMISSION = 1;
+    private final static int CAMERA_PERMISSION = 2;
+
+    static final int IMAGE_PICKER_REQUEST = 10;
+    static final int IMAGE_CAPTURE_REQUEST = 20;
+
+    private EditText editText_nombre, editText_lugarBase, editText_jefeEquipo, editText_jefeTecnico, editText_chasis, editText_cant_vecesEnPodio,
+            editText_cant_TitulosCampeonato;
+    private ImageView previewFoto;
+    private ImageButton btn_seleccionarImagen, btn_tomarFoto;
+    private Button button_agregarEscuderia;
+
+    private boolean fotoCargada= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_escuderia_view);
 
-        agregarP = (Button) findViewById(R.id.agregarEscuderia);
-        agregarP.setOnClickListener(new View.OnClickListener() {
+        editText_nombre = findViewById(R.id.editText_escuderia_nombre);
+        editText_lugarBase = findViewById(R.id.editText_escuderia_ubicacion);
+        editText_jefeEquipo = findViewById(R.id.editText_escuderia_nombreJefeEquipo);
+        editText_jefeTecnico = findViewById(R.id.editText_escuderia_nombreJefeTecnico);
+        editText_chasis = findViewById(R.id.editText_escuderia_nombreChasis);
+        editText_cant_vecesEnPodio = findViewById(R.id.editText_escuderia_cantPodios);
+        editText_cant_TitulosCampeonato = findViewById(R.id.editText_escuderia_cantTitulos);
+
+        previewFoto = findViewById(R.id.imageView_fotoEscuderia);
+
+        btn_seleccionarImagen = findViewById(R.id.imageButton_seleccionarImagen_escuderia);
+        btn_tomarFoto = findViewById(R.id.imageButton_tomarFoto_escuderia);
+
+        btn_seleccionarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission(activityContext, Manifest.permission.READ_EXTERNAL_STORAGE, "Se necesita acceso al almacenamiento", STORAGE_PERMISSION);
+            }
+        });
+
+        btn_tomarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission(activityContext, Manifest.permission.CAMERA, "Se necesita acceso a la cámara", CAMERA_PERMISSION);
+            }
+        });
+
+        button_agregarEscuderia = (Button) findViewById(R.id.agregarEscuderia);
+        button_agregarEscuderia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                wm_agregarPiloto = new WebMet_AgregarEscuderia();
-                wm_agregarPiloto.execute();
+                if(camposValidos()){
+                    CrearEscuderiaAsync crearEscuderiaAsync = new CrearEscuderiaAsync();
+                    crearEscuderiaAsync.execute();
+                }
             }
         });
 
     }
 
-    private class WebMet_AgregarEscuderia extends AsyncTask<Void, Void, Boolean> {
+    private void requestPermission(Activity context, String permission, String explanation, int requestId) {
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?   
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
+                Toast.makeText(context, explanation, Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(context, new String[]{permission}, requestId);
+        } else {
+            switch (requestId) {
+                case STORAGE_PERMISSION: {
+                    Intent pickImage = new Intent(Intent.ACTION_PICK);
+                    pickImage.setType("image/*");
+                    startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
+                    break;
+
+                }
+                case CAMERA_PERMISSION: {
+                    takePicture();
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case STORAGE_PERMISSION: {
+                Intent pickImage = new Intent(Intent.ACTION_PICK);
+                pickImage.setType("image/*");
+                startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
+                break;
+
+            }
+            case CAMERA_PERMISSION: {
+                takePicture();
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case IMAGE_PICKER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    try {
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        previewFoto.setImageBitmap(selectedImage);
+                        fotoCargada= true;
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case IMAGE_CAPTURE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    previewFoto.setImageBitmap(imageBitmap);
+                    fotoCargada= true;
+                }
+        }
+    }
+
+    private void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST);
+        }
+    }
+
+    private class CrearEscuderiaAsync extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            // WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL = "http://10.0.2.2:8080/WS/admin?wsdl";
-            final String METHOD_NAME = "registrarEscuderia";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/registrarEscuderia";
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            Drawable fotoEscuderia = previewFoto.getDrawable();
 
-            XMLGregorianCalendar fecha = null;
+            String urlFoto = null;
+            if(fotoEscuderia == null){
+                urlFoto = "";
+            }else{
+                try {
 
-            nombre = (EditText) findViewById(R.id.nomEscuderia);
-            lugarBase = (EditText) findViewById(R.id.nomBase);
-            jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
-            jefeTecnico = (EditText) findViewById(R.id.nomJTecnico);
-            chasis = (EditText) findViewById(R.id.nomChasis);
-            fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
-            cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
-            cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
+                    urlFoto = FileUpload.saveImageIntoMongoDB(fotoEscuderia, editText_nombre.getText().toString());
+                    consumeRESTVolleyCrearEscuderia(urlFoto);
 
-            request.addProperty("nombre", nombre.getText().toString());
-            request.addProperty("lugarBase", lugarBase.getText().toString());
-            request.addProperty("jefeEquipo", jefeEquipo.getText().toString());
-            request.addProperty("jefeTecnico", jefeTecnico.getText().toString());
-            request.addProperty("chasis", chasis.getText().toString());
-            request.addProperty("cant_vecesEnPodio", Integer.parseInt(cant_vecesEnPodio.getText().toString()));
-            request.addProperty("cant_TitulosCampeonato",
-                    Integer.parseInt(cant_TitulosCampeonato.getText().toString()));
-            request.addProperty("fotoEscudo_ref", fotoEscudo_ref.getText().toString());
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-                ht.call(SOAP_ACTION, envelope);
-                SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-                // resultado=response.toString();
-                // Log.i("Resultado: ",resultado);
-            } catch (Exception e) {
-                Log.i("Error: ", e.getMessage());
-                e.printStackTrace();
-                return false;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("Error_FileUpload: ",e.getMessage());
+                }
             }
 
             return true;
@@ -123,39 +220,27 @@ public class CrearEscuderiaView extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if (success == false) {
+            if(success==false){
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-            } else {
-
-                // campo = (TextView) findViewById(R.id.conexion);
-
-                // campo.setText(resultado);
-
-                Toast.makeText(getApplicationContext(), "Escuderia Creada", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Piloto Creado", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
     }
 
-    public void consumeRESTVolleyCrearEscuderia() {
+    public void consumeRESTVolleyCrearEscuderia(String urlFoto) {
 
-        nombre = (EditText) findViewById(R.id.nomEscuderia);
-        lugarBase = (EditText) findViewById(R.id.nomBase);
-        jefeEquipo = (EditText) findViewById(R.id.nomJEquipo);
-        jefeTecnico = (EditText) findViewById(R.id.nomJTecnico);
-        chasis = (EditText) findViewById(R.id.nomChasis);
-        fotoEscudo_ref = (EditText) findViewById(R.id.refImagen);
-        cant_vecesEnPodio = (EditText) findViewById(R.id.numPodios);
-        cant_TitulosCampeonato = (EditText) findViewById(R.id.numTitulos);
-
-        Escuderia escuderia = new Escuderia(nombre.getText().toString(), lugarBase.getText().toString(),
-                jefeTecnico.getText().toString(), jefeEquipo.getText().toString(), chasis.getText().toString(),
-                Integer.parseInt(cant_vecesEnPodio.getText().toString()),
-                Integer.parseInt(cant_TitulosCampeonato.getText().toString()), fotoEscudo_ref.getText().toString());
+        Escuderia escuderia = new Escuderia(editText_nombre.getText().toString(), editText_lugarBase.getText().toString(),
+                editText_jefeTecnico.getText().toString(), editText_jefeEquipo.getText().toString(), editText_chasis.getText().toString(),
+                Integer.parseInt(editText_cant_vecesEnPodio.getText().toString()),
+                Integer.parseInt(editText_cant_TitulosCampeonato.getText().toString()), urlFoto);
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         String result = gson.toJson(escuderia);
@@ -182,7 +267,7 @@ public class CrearEscuderiaView extends AppCompatActivity {
 
                         Log.d(TAG, "" + response.toString());
 
-                        Toast.makeText(getApplicationContext(), 	"Escuderia creada ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), 	"escuderia creada", Toast.LENGTH_LONG).show();
                         finish();
 
                     }
@@ -250,7 +335,54 @@ public class CrearEscuderiaView extends AppCompatActivity {
         //  Agrego lo que armé para hacer la petición con Volley
         */
         Volley.newRequestQueue(this).add(sr);
-        queue.add(sr);
+        //queue.add(sr);
+    }
+
+    private boolean camposValidos() {
+
+        boolean sonValidos = true;
+
+        if (editText_nombre.getText().toString().isEmpty()) {
+            editText_nombre.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_lugarBase.getText().toString().isEmpty()) {
+            editText_lugarBase.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_jefeEquipo.toString().isEmpty()) {
+            editText_jefeEquipo.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_jefeTecnico.getText().toString().isEmpty()) {
+            editText_jefeTecnico.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_chasis.getText().toString().isEmpty()) {
+            editText_chasis.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_cant_vecesEnPodio.getText().toString().isEmpty()) {
+            editText_cant_vecesEnPodio.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if (editText_cant_TitulosCampeonato.getText().toString().isEmpty()) {
+            editText_cant_TitulosCampeonato.setError("No puede estar vacío");
+            sonValidos = false;
+        }
+
+        if(fotoCargada == false){
+            Toast.makeText(this,"Por favor cargue una imagen",Toast.LENGTH_LONG);
+            sonValidos = false;
+        }
+
+        return sonValidos;
     }
 
 }

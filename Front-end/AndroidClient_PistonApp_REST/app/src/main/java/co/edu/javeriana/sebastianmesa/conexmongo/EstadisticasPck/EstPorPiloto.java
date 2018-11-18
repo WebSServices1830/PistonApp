@@ -44,6 +44,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,6 +55,8 @@ import java.util.Random;
 import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Campeonato;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.EstadisticasGeneral;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.GranPremio;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
@@ -67,12 +70,12 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class EstPorPiloto extends AppCompatActivity {
 
-    private String[][] datos = { { "1", "Sebas", "Ferrari", "20" },
-            { "2", "Heikki", "Skyppy", "10" } };
+//    private String[][] datos = { { "1", "Sebas", "Ferrari", "20" },
+//            { "2", "Heikki", "Skyppy", "10" } };
 
-    static String[] encabezado={"#","Nombre","Escuderia","Puntos"};
-    private WebMet_ObtenerPiloto wm_validarLogin = null;
-    private List<Piloto> listaPilotos = new ArrayList<>();
+    static String[] encabezado={"#", "Piloto", "Puntos"};
+//    private WebMet_ObtenerPiloto wm_validarLogin = null;
+    private List<EstadisticasGeneral> listaPilotos = new ArrayList<>();
     public TableView<String[]> tableView;
 
 
@@ -87,7 +90,7 @@ public class EstPorPiloto extends AppCompatActivity {
 
 
         tableView.setHeaderBackgroundColor(Color.parseColor("#2ecc71"));
-        tableView.setColumnCount(4);
+        tableView.setColumnCount(3);
 
         tableView.addDataClickListener(new TableDataClickListener() {
             @Override
@@ -108,7 +111,7 @@ public class EstPorPiloto extends AppCompatActivity {
     public void obtenerDatos (){
 
         RequestQueue mRequestQueue;
-        String url = "http://10.0.2.2:8080/myapp/PistonApp/pilotos";
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/clasificacionesCampeonato";
 
         //RequestQueue initialized
         mRequestQueue = Volley.newRequestQueue(this);
@@ -124,79 +127,21 @@ public class EstPorPiloto extends AppCompatActivity {
 
                         JSONObject piloto = response.getJSONObject(l);
 
+                        int posJSON = piloto.getInt("posicion");
 
-                        String nombrePiloto = piloto.getString("nombreCompleto");
-                        int puntosTotales = piloto.getInt("cant_puntosTotales");
-                        String id_str = piloto.getString("id_str");
-                        //Date fecha_Nacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(piloto.getString("fecha_Nacimiento"));
-                        Date fecha_Nacimiento = null;
-                        String lugarNacimiento = piloto.getString("lugarNacimiento");
-                        String foto_ref = piloto.getString("foto_ref");
-                        int cant_podiosTotales = piloto.getInt("cant_podiosTotales");
-                        int cant_granPremiosIngresado = piloto.getInt("cant_granPremiosIngresado");
-                        float calificacion = piloto.getInt("calificacion");
+                        if(posJSON != 0){
 
+                            int puntajeJSON     = piloto.getInt("puntaje");
+                            String idPilotoJSON = piloto.getString("piloto");
 
-                        Piloto pilotoObjeto= new Piloto();
+                            obtenerInfoPiloto(idPilotoJSON, posJSON, puntajeJSON);
 
-                        pilotoObjeto.setId_str(id_str);
-                        pilotoObjeto.setNombreCompleto(nombrePiloto);
-                        pilotoObjeto.setFecha_Nacimiento(fecha_Nacimiento);
-                        pilotoObjeto.setLugarNacimiento(lugarNacimiento);
-                        pilotoObjeto.setFoto_ref(foto_ref);
-                        pilotoObjeto.setCant_podiosTotales(cant_podiosTotales);
-                        pilotoObjeto.setCant_puntosTotales(puntosTotales);
-                        pilotoObjeto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
-                        pilotoObjeto.setCalificacion(calificacion);
-
-                        listaPilotos.add(pilotoObjeto);
-
-                        String[][] datos = new String[listaPilotos.size()][4];
-
-                        for (int i = 0 ; i < listaPilotos.size() ; i++){
-                            for (int j = 0 ; j < 4 ; j++){
-                                switch (j) {
-                                    case 0:
-                                        datos[i][j] = Integer.toString(i+1);
-                                        break;
-                                    case 1:
-                                        datos[i][j] = listaPilotos.get(i).getNombreCompleto();
-                                        break;
-                                    case 2:
-                                        datos[i][j] = "equipo";
-                                        break;
-                                    case 3:
-//                                        Random rand = new Random();
-//                                        int  n = rand.nextInt(199) + 101;
-                                        datos[i][j] = Integer.toString(listaPilotos.get(i).getCant_puntosTotales());
-                                        break;
-
-                                }
-                            }
-
+                            //Log.i("ViendoPilotos","pos:"+posJSON+" punt:"+puntajeJSON);
                         }
-
-                        Arrays.sort(datos, new Comparator() {
-                            public int compare(Object o1, Object o2) {
-                                String[] elt1 = (String[])o2;
-                                String[] elt2 = (String[])o1;
-                                return elt1[3].compareTo(elt2[3]);
-                            }
-                        });
-
-                        tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
-                        Toast.makeText(getBaseContext(),"Bien. Tam: " + listaPilotos.size(), Toast.LENGTH_SHORT).show();
-
-                        Log.i("ViendoPilotos",nombrePiloto + " con " + puntosTotales);
 
                     }
 
-//                    String nombreJSON = response.get("nombreUsuario").toString();
-//                    String passJSON   = response.get("contra").toString();
-//
-//                    Boolean adminJSON  = Boolean.parseBoolean(response.get("admin").toString());
 
-                    //Log.i(TAG,"Es admin:" + adminJSON.toString() );
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -215,130 +160,211 @@ public class EstPorPiloto extends AppCompatActivity {
         mRequestQueue.add(jsonArrayRequest);
     }
 
+    public void obtenerInfoPiloto(final String id, final int pos, final int punt){
+
+        RequestQueue mRequestQueue;
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/pilotos";
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        //String Request initialized
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
 
 
-    private class WebMet_ObtenerPiloto extends AsyncTask<Void, Piloto, Boolean> {
 
+                try {
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
-            final String METHOD_NAME = "verTodosLosPilotos";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/verTodosLosPilotos";
+                    for (int l = 0; l < response.length(); l++) {
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                        JSONObject piloto = response.getJSONObject(l);
 
-            //request.addProperty("textoBusquedaNombre","Lewis");
+                        String compararJSON = piloto.getString("id_str");
 
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
+                        if(id.equals(compararJSON)){
 
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-                ht.call(SOAP_ACTION, envelope);
+                            String nombreCompletoJSON = piloto.getString("nombreCompleto");
+                            EstadisticasGeneral objEstadistica = new EstadisticasGeneral(compararJSON, pos, punt, nombreCompletoJSON);
 
-                KvmSerializable ks = (KvmSerializable)envelope.bodyIn;
+                            Log.i("ViendoPilotos","nombre piloto:"+nombreCompletoJSON + "pos:"+pos+" punt:"+punt);
 
-
-                for(int i = 0; i < ks.getPropertyCount(); ++i){
-
-                    SoapObject piloto = (SoapObject) ks.getProperty(i);
-
-                    String id_str = piloto.getPrimitivePropertyAsString("id_str");
-                    String nombreCompleto = piloto.getPrimitivePropertyAsString("nombreCompleto");
-                    Date fecha_Nacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(piloto.getPrimitivePropertyAsString("fecha_Nacimiento"));
-                    String lugarNacimiento = piloto.getPrimitivePropertyAsString("lugarNacimiento");;
-                    String foto_ref = piloto.getPrimitivePropertyAsString("foto_ref");;
-                    int cant_podiosTotales = 0;
-                    int cant_puntosTotales = 0;
-                    int cant_granPremiosIngresado = 0;
-                    float calificacion = 10;
-
-                    Piloto pilotoObjeto= new Piloto();
-                    pilotoObjeto.setId_str(id_str);
-                    pilotoObjeto.setNombreCompleto(nombreCompleto);
-                    pilotoObjeto.setFecha_Nacimiento(fecha_Nacimiento);
-                    pilotoObjeto.setLugarNacimiento(lugarNacimiento);
-                    pilotoObjeto.setFoto_ref(foto_ref);
-                    pilotoObjeto.setCant_podiosTotales(cant_podiosTotales);
-                    pilotoObjeto.setCant_puntosTotales(cant_puntosTotales);
-                    pilotoObjeto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
-                    pilotoObjeto.setCalificacion(calificacion);
-
-                    listaPilotos.add(pilotoObjeto);
-
-                    publishProgress();
-
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-
-            }
-
-            return false;
-        }
-
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_SHORT).show();
-            }
-            else{
-
-                String[][] datos = new String[listaPilotos.size()][4];
-
-                for (int i = 0 ; i < listaPilotos.size() ; i++){
-                    for (int j = 0 ; j < 4 ; j++){
-                        switch (j) {
-                            case 0:
-                                datos[i][j] = Integer.toString(i+1);
-                                break;
-                            case 1:
-                                datos[i][j] = listaPilotos.get(i).getNombreCompleto();
-                                break;
-                            case 2:
-                                datos[i][j] = "equipo";
-                                break;
-                            case 3:
-                                Random rand = new Random();
-                                int  n = rand.nextInt(199) + 101;
-                                datos[i][j] = Integer.toString(n);
-                                break;
-
+                            listaPilotos.add(objEstadistica);
                         }
                     }
 
+                    Collections.sort(listaPilotos);
+
+
+                    String[][] datos = new String[listaPilotos.size()][4];
+
+                    for (int i = 0 ; i < listaPilotos.size() ; i++){
+                        for (int j = 0 ; j < 4 ; j++){
+                            switch (j) {
+                                case 0:
+                                    datos[i][j] = Integer.toString(listaPilotos.get(i).getPos());
+                                    break;
+                                case 1:
+                                    datos[i][j] = listaPilotos.get(i).getName();
+                                    break;
+//                                case 2:
+//                                    datos[i][j] = "equipo";
+//                                    break;
+                                case 2:
+                                    datos[i][j] = Integer.toString(listaPilotos.get(i).getPun());
+                                    break;
+
+                            }
+                        }
+
+                    }
+
+
+
+                    tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-                Arrays.sort(datos, new Comparator() {
-                    public int compare(Object o1, Object o2) {
-                        String[] elt1 = (String[])o2;
-                        String[] elt2 = (String[])o1;
-                        return elt1[3].compareTo(elt2[3]);
-                    }
-                });
-
-                tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
-                Toast.makeText(getBaseContext(),"Bien. Tam: " + listaPilotos.size(), Toast.LENGTH_SHORT).show();
-
             }
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-        @Override
-        protected void onCancelled() {
-            startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
-            Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_LONG).show();
-        }
+                //Log.i(TAG,"Error :" + error.toString());
+            }
+        });
+
+        mRequestQueue.add(jsonArrayRequest);
 
     }
+
+//
+//    private class WebMet_ObtenerPiloto extends AsyncTask<Void, Piloto, Boolean> {
+//
+//
+//        @Override
+//        protected Boolean doInBackground(Void... params) {
+//            // TODO: attempt authentication against a network service.
+//            //WebService - Opciones
+//            final String NAMESPACE = "http://webservice.javeriana.co/";
+//            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
+//            final String METHOD_NAME = "verTodosLosPilotos";
+//            final String SOAP_ACTION = "http://webservice.javeriana.co/verTodosLosPilotos";
+//
+//            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+//
+//            //request.addProperty("textoBusquedaNombre","Lewis");
+//
+//            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
+//            envelope.setOutputSoapObject(request);
+//
+//            HttpTransportSE ht = new HttpTransportSE(URL);
+//            try {
+//                ht.call(SOAP_ACTION, envelope);
+//
+//                KvmSerializable ks = (KvmSerializable)envelope.bodyIn;
+//
+//
+//                for(int i = 0; i < ks.getPropertyCount(); ++i){
+//
+//                    SoapObject piloto = (SoapObject) ks.getProperty(i);
+//
+//                    String id_str = piloto.getPrimitivePropertyAsString("id_str");
+//                    String nombreCompleto = piloto.getPrimitivePropertyAsString("nombreCompleto");
+//                    Date fecha_Nacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(piloto.getPrimitivePropertyAsString("fecha_Nacimiento"));
+//                    String lugarNacimiento = piloto.getPrimitivePropertyAsString("lugarNacimiento");;
+//                    String foto_ref = piloto.getPrimitivePropertyAsString("foto_ref");;
+//                    int cant_podiosTotales = 0;
+//                    int cant_puntosTotales = 0;
+//                    int cant_granPremiosIngresado = 0;
+//                    float calificacion = 10;
+//
+//                    Piloto pilotoObjeto= new Piloto();
+//                    pilotoObjeto.setId_str(id_str);
+//                    pilotoObjeto.setNombreCompleto(nombreCompleto);
+//                    pilotoObjeto.setFecha_Nacimiento(fecha_Nacimiento);
+//                    pilotoObjeto.setLugarNacimiento(lugarNacimiento);
+//                    pilotoObjeto.setFoto_ref(foto_ref);
+//                    pilotoObjeto.setCant_podiosTotales(cant_podiosTotales);
+//                    pilotoObjeto.setCant_puntosTotales(cant_puntosTotales);
+//                    pilotoObjeto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
+//                    pilotoObjeto.setCalificacion(calificacion);
+//
+//                    listaPilotos.add(pilotoObjeto);
+//
+//                    publishProgress();
+//
+//                }
+//                return true;
+//            }
+//            catch (Exception e)
+//            {
+//                Log.i("Error: ",e.getMessage());
+//                e.printStackTrace();
+//
+//            }
+//
+//            return false;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(final Boolean success) {
+//            if(success==false){
+//                Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_SHORT).show();
+//            }
+//            else{
+//
+//                String[][] datos = new String[listaPilotos.size()][4];
+//
+//                for (int i = 0 ; i < listaPilotos.size() ; i++){
+//                    for (int j = 0 ; j < 4 ; j++){
+//                        switch (j) {
+//                            case 0:
+//                                datos[i][j] = Integer.toString(i+1);
+//                                break;
+//                            case 1:
+//                                datos[i][j] = listaPilotos.get(i).getNombreCompleto();
+//                                break;
+//                            case 2:
+//                                datos[i][j] = "equipo";
+//                                break;
+//                            case 3:
+//                                Random rand = new Random();
+//                                int  n = rand.nextInt(199) + 101;
+//                                datos[i][j] = Integer.toString(n);
+//                                break;
+//
+//                        }
+//                    }
+//
+//                }
+//
+//                Arrays.sort(datos, new Comparator() {
+//                    public int compare(Object o1, Object o2) {
+//                        String[] elt1 = (String[])o2;
+//                        String[] elt2 = (String[])o1;
+//                        return elt1[3].compareTo(elt2[3]);
+//                    }
+//                });
+//
+//                tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
+//                Toast.makeText(getBaseContext(),"Bien. Tam: " + listaPilotos.size(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            startActivity(new Intent(getBaseContext(), AdminMainActivity.class));
+//            Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_LONG).show();
+//        }
+//
+//    }
 
 
 }

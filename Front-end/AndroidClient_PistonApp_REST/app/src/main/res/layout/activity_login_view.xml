@@ -65,15 +65,17 @@
                 android:outlineAmbientShadowColor="@color/white"
                 android:textColorHint="@color/white"
                 android:layout_marginBottom="8dp">
-                <EditText android:id="@+id/input_email"
-                    android:textColorHighlight="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"
-                    android:textColorLink="@color/white"
+
+                <EditText
+                    android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Correo electrónico"
                     android:inputType="text"
-                    android:hint="Nombre usuario" />
+                    android:textColor="@color/white"
+                    android:textColorHighlight="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textColorLink="@color/white" />
             </android.support.design.widget.TextInputLayout>
 
             <!-- Password Label -->
@@ -86,15 +88,17 @@
                 android:outlineAmbientShadowColor="@color/white"
                 android:textColorHint="@color/white"
                 android:layout_marginBottom="8dp">
-                <EditText android:id="@+id/input_password"
+
+                <EditText
+                    android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Contraseña"
                     android:inputType="textPassword"
+                    android:textColor="@color/white"
                     android:textColorHighlight="@color/white"
                     android:textColorHint="@color/white"
-                    android:textColor="@color/white"
-                    android:textColorLink="@color/white"
-                    android:hint="Pass"/>
+                    android:textColorLink="@color/white" />
             </android.support.design.widget.TextInputLayout>
 
             <!--<android.support.v7.widget.AppCompatButton-->

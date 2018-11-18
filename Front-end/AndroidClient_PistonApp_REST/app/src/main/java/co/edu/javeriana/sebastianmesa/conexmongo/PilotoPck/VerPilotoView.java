@@ -5,10 +5,18 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseUser;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -16,8 +24,12 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
 
 import org.bson.types.ObjectId;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,6 +38,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.ClienteMongo;
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
+import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
 
 public class VerPilotoView extends AppCompatActivity {
 
@@ -53,8 +66,6 @@ public class VerPilotoView extends AppCompatActivity {
         textView_puntosTotales = findViewById(R.id.textView_puntosTotales);
         textView_granPremios = findViewById(R.id.textView_ingresosGranPremios);
         textView_calificacion = findViewById(R.id.textView_calificacion);
-
-
 
         Piloto piloto = (Piloto) getIntent().getSerializableExtra("Piloto");
 
@@ -115,6 +126,5 @@ public class VerPilotoView extends AppCompatActivity {
             }
         }
     }
-
 
 }

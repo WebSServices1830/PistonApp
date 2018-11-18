@@ -258,6 +258,14 @@ public class MyResource {
 	public List<Piloto> consultarPilotos() {
 		return manejadorPiloto.piloto_getAll();
 	}
+	
+	// http://localhost:8080/myapp/PistonApp/pilotos
+	@GET
+	@Produces("application/json")
+	@Path("/pilotos/{nombrePiloto}")
+	public List<Piloto> consultarPilotosNombre(@PathParam("nombrePiloto") String nombre) {
+		return manejadorPiloto.piloto_getAllBySearchParameter(nombre);
+	}
 
 	// http://localhost:8080/myapp/PistonApp/pilotos/5bd7288b7cb2bc1e3c10d43e
 	@DELETE
@@ -594,7 +602,7 @@ public class MyResource {
 				2941, 225);
 		manejadorPiloto.piloto_create(Lewis);
 		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(
-				new ClasificacionCampeonato(0, 0, manejadorPiloto.piloto_getByName("Lewis Hamilton").getId_str()));
+				new ClasificacionCampeonato(383, 1, manejadorPiloto.piloto_getByName("Lewis Hamilton").getId_str()));
 
 		// PILOTO 2
 		GregorianCalendar fechaNacimiento_2 = new GregorianCalendar(1987, 06, 03);
@@ -608,7 +616,7 @@ public class MyResource {
 		Piloto Sebastian = new Piloto("Sebastian Vettel", fechaNacimiento_2.getTime(), "Heppenheim, Germany", fotoRefP2,
 				109, 2689, 216);
 		manejadorPiloto.piloto_create(Sebastian);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(302, 2,
 				manejadorPiloto.piloto_getByName(Sebastian.getNombreCompleto()).getId_str()));
 		// PILOTO 3
 		GregorianCalendar fechaNacimiento_3 = new GregorianCalendar(1989, 07, 28);
@@ -622,7 +630,7 @@ public class MyResource {
 		Piloto Valtteri = new Piloto("Valtteri Bottas", fechaNacimiento_3.getTime(), "Nastola, Finland", fotoRefP3, 30,
 				923, 115);
 		manejadorPiloto.piloto_create(Valtteri);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(327, 4,
 				manejadorPiloto.piloto_getByName(Valtteri.getNombreCompleto()).getId_str()));
 		// PILOTO 4
 		GregorianCalendar fechaNacimiento_4 = new GregorianCalendar(1979, 9, 17);
@@ -636,7 +644,7 @@ public class MyResource {
 		Piloto Kimi = new Piloto("Kimi Raikkonen", fechaNacimiento_4.getTime(), "Espoo, Finland", fotoRefP4, 100, 1761,
 				290);
 		manejadorPiloto.piloto_create(Kimi);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(251, 3,
 				manejadorPiloto.piloto_getByName(Kimi.getNombreCompleto()).getId_str()));
 		// PILOTO 5
 		GregorianCalendar fechaNacimiento_5 = new GregorianCalendar(1997, 8, 30);
@@ -650,7 +658,7 @@ public class MyResource {
 		Piloto Max = new Piloto("Max Verstappen", fechaNacimiento_5.getTime(), "Hasselt, Belgium", fotoRefP5, 18, 594,
 				77);
 		manejadorPiloto.piloto_create(Max);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(234,5,
 				manejadorPiloto.piloto_getByName(Max.getNombreCompleto()).getId_str()));
 
 		// PILOTO 6
@@ -665,7 +673,7 @@ public class MyResource {
 		Piloto Daniel = new Piloto("Daniel Ricciardo", fechaNacimiento_6.getTime(), "Perth, Australia", fotoRefP6, 29,
 				962, 146);
 		manejadorPiloto.piloto_create(Daniel);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(158, 6,
 				manejadorPiloto.piloto_getByName(Daniel.getNombreCompleto()).getId_str()));
 		// PILOTO 7
 		GregorianCalendar fechaNacimiento_7 = new GregorianCalendar(1990, 0, 26);
@@ -680,7 +688,7 @@ public class MyResource {
 				520, 153);
 
 		manejadorPiloto.piloto_create(Sergio);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(58, 8,
 				manejadorPiloto.piloto_getByName(Sergio.getNombreCompleto()).getId_str()));
 		// PILOTO 8
 		GregorianCalendar fechaNacimiento_8 = new GregorianCalendar(1992, 9, 5);
@@ -694,7 +702,7 @@ public class MyResource {
 		Piloto Kevin = new Piloto("Kevin Magnussen", fechaNacimiento_8.getTime(), "Roskilde, Denmark", fotoRefP8, 1,
 				134, 78);
 		manejadorPiloto.piloto_create(Kevin);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(55, 9,
 				manejadorPiloto.piloto_getByName(Kevin.getNombreCompleto()).getId_str()));
 		// PILOTO 9
 		GregorianCalendar fechaNacimiento_9 = new GregorianCalendar(1987, 7, 19);
@@ -708,7 +716,7 @@ public class MyResource {
 		Piloto Nico = new Piloto("Nico Hulkenberg", fechaNacimiento_9.getTime(), "Emmerich am Rhein, Germany",
 				fotoRefP9, 0, 458, 154);
 		manejadorPiloto.piloto_create(Nico);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(69, 7,
 				manejadorPiloto.piloto_getByName(Nico.getNombreCompleto()).getId_str()));
 
 		// PILOTO 10
@@ -723,7 +731,7 @@ public class MyResource {
 		Piloto Fernando = new Piloto("Fernando Alonso", fechaNacimiento_10.getTime(), "Oviedo, Spain", fotoRefP10, 97,
 				1899, 310);
 		manejadorPiloto.piloto_create(Fernando);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(50, 10,
 				manejadorPiloto.piloto_getByName(Fernando.getNombreCompleto()).getId_str()));
 		// PILOTO 11
 		GregorianCalendar fechaNacimiento_11 = new GregorianCalendar(1996, 8, 17);
@@ -737,7 +745,7 @@ public class MyResource {
 		Piloto Esteban = new Piloto("Esteban Ocon", fechaNacimiento_11.getTime(), "ï¿½vreux, Normandy", fotoRefP11, 0,
 				136, 47);
 		manejadorPiloto.piloto_create(Esteban);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(49, 11,
 				manejadorPiloto.piloto_getByName(Esteban.getNombreCompleto()).getId_str()));
 		// PILOTO 12
 		GregorianCalendar fechaNacimiento_12 = new GregorianCalendar(1994, 8, 1);
@@ -751,7 +759,7 @@ public class MyResource {
 		Piloto Carlos = new Piloto("Carlos Sainz", fechaNacimiento_12.getTime(), "Madrid, Spain", fotoRefP12, 0, 157,
 				78);
 		manejadorPiloto.piloto_create(Carlos);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(45, 12,
 				manejadorPiloto.piloto_getByName(Carlos.getNombreCompleto()).getId_str()));
 		// PILOTO 13
 		GregorianCalendar fechaNacimiento_13 = new GregorianCalendar(1986, 3, 17);
@@ -765,7 +773,7 @@ public class MyResource {
 		Piloto Romain = new Piloto("Romain Grosjean", fechaNacimiento_13.getTime(), "Geneva, Switzerland", fotoRefP13,
 				10, 375, 142);
 		manejadorPiloto.piloto_create(Romain);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(35, 13,
 				manejadorPiloto.piloto_getByName(Romain.getNombreCompleto()).getId_str()));
 		// PILOTO 14
 		GregorianCalendar fechaNacimiento_14 = new GregorianCalendar(1996, 1, 7);
@@ -779,7 +787,7 @@ public class MyResource {
 		Piloto Pierre = new Piloto("Pierre Gasly", fechaNacimiento_14.getTime(), "Rouen, France", fotoRefP14, 0, 28,
 				23);
 		manejadorPiloto.piloto_create(Pierre);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(29, 15,
 				manejadorPiloto.piloto_getByName(Pierre.getNombreCompleto()).getId_str()));
 		// PILOTO 15
 		GregorianCalendar fechaNacimiento_15 = new GregorianCalendar(1997, 9, 16);
@@ -793,7 +801,7 @@ public class MyResource {
 		Piloto Charles = new Piloto("Charles Leclerc", fechaNacimiento_15.getTime(), "Monte Carlo, Monaco", fotoRefP15,
 				0, 21, 18);
 		manejadorPiloto.piloto_create(Charles);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(33, 14,
 				manejadorPiloto.piloto_getByName(Charles.getNombreCompleto()).getId_str()));
 		// PILOTO 16
 		GregorianCalendar fechaNacimiento_16 = new GregorianCalendar(1992, 2, 26);
@@ -807,7 +815,7 @@ public class MyResource {
 		Piloto Stoffel = new Piloto("Stoffel Vandoorne", fechaNacimiento_16.getTime(), "Kortrijk, Belgium", fotoRefP16,
 				0, 22, 39);
 		manejadorPiloto.piloto_create(Stoffel);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(12, 16,
 				manejadorPiloto.piloto_getByName(Stoffel.getNombreCompleto()).getId_str()));
 		// PILOTO 17
 		GregorianCalendar fechaNacimiento_17 = new GregorianCalendar(1998, 9, 29);
@@ -821,7 +829,7 @@ public class MyResource {
 		Piloto Lance = new Piloto("Lance Stroll", fechaNacimiento_17.getTime(), "Montreal, Canada", fotoRefP17, 1, 46,
 				38);
 		manejadorPiloto.piloto_create(Lance);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(6, 18,
 				manejadorPiloto.piloto_getByName(Lance.getNombreCompleto()).getId_str()));
 		// PILOTO 18
 		GregorianCalendar fechaNacimiento_18 = new GregorianCalendar(1990, 8, 2);
@@ -835,7 +843,7 @@ public class MyResource {
 		Piloto Marcus = new Piloto("Marcus Ericsson", fechaNacimiento_18.getTime(), "Kumla, Sweden", fotoRefP18, 0, 15,
 				94);
 		manejadorPiloto.piloto_create(Marcus);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(9, 17,
 				manejadorPiloto.piloto_getByName(Marcus.getNombreCompleto()).getId_str()));
 		// PILOTO 19
 		GregorianCalendar fechaNacimiento_19 = new GregorianCalendar(1989, 10, 10);
@@ -849,7 +857,7 @@ public class MyResource {
 		Piloto Brendon = new Piloto("Brendon Hartley", fechaNacimiento_19.getTime(), "Palmerston North, New Zealand",
 				fotoRefP19, 0, 2, 22);
 		manejadorPiloto.piloto_create(Brendon);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(4, 19,
 				manejadorPiloto.piloto_getByName(Brendon.getNombreCompleto()).getId_str()));
 		// PILOTO 20
 		GregorianCalendar fechaNacimiento_20 = new GregorianCalendar(1995, 07, 25);
@@ -863,7 +871,7 @@ public class MyResource {
 		Piloto Sergey = new Piloto("Sergey Sirotkin", fechaNacimiento_20.getTime(), "Moscow, Russia", fotoRefP20, 0, 1,
 				18);
 		manejadorPiloto.piloto_create(Sergey);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(0, 0,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(1, 20,
 				manejadorPiloto.piloto_getByName(Sergey.getNombreCompleto()).getId_str()));
 
 		ClasificacionCarrera CCP1 = new ClasificacionCarrera();

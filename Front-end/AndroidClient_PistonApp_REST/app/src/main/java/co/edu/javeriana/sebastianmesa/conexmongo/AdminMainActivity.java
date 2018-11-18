@@ -2,9 +2,7 @@ package co.edu.javeriana.sebastianmesa.conexmongo;
 
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
@@ -22,13 +20,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -40,15 +31,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,11 +44,8 @@ import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorEscuderia
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.IndexGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
-import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
-import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
-import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.CrearUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
@@ -85,7 +67,7 @@ public class AdminMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_admin_main);
 
         toolbar = getSupportActionBar();
 

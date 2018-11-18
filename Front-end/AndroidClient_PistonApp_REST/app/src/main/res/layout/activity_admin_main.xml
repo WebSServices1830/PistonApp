@@ -105,64 +105,6 @@
             android:gravity="center"
             android:text="Bienvenido Admin!"/>
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/accionesPiloto"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            fbutton:buttonColor="@color/color_concrete"
-            fbutton:shadowColor="@color/black"
-            android:onClick="accionesPiloto"
-            android:text="Acciones Piloto"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            fbutton:shadowEnabled="true"
-            fbutton:shadowHeight="5dp"
-            fbutton:cornerRadius="5dp"
-            />
-        <info.hoang8f.widget.FButton
-            android:id="@+id/accionesEscuderia"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            fbutton:buttonColor="@color/color_concrete"
-            fbutton:shadowColor="@color/black"
-            android:onClick="accionesPiloto"
-            android:text="Acciones Escuderia"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            fbutton:shadowEnabled="true"
-            fbutton:shadowHeight="5dp"
-            fbutton:cornerRadius="5dp"
-            />
-        <info.hoang8f.widget.FButton
-            android:id="@+id/accionesAuto"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            fbutton:buttonColor="@color/color_concrete"
-            fbutton:shadowColor="@color/black"
-            android:onClick="accionesPiloto"
-            android:text="Acciones Auto"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            fbutton:shadowEnabled="true"
-            fbutton:shadowHeight="5dp"
-            fbutton:cornerRadius="5dp"
-            />
-
-        <info.hoang8f.widget.FButton
-            android:id="@+id/button_cargarDatos"
-            android:layout_height="40dp"
-            android:layout_width="match_parent"
-            fbutton:buttonColor="#2d867c"
-            fbutton:shadowColor="@color/black"
-            android:text="Cargar datos iniciales"
-            android:onClick="cargarDatosFragmento"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            fbutton:shadowEnabled="true"
-            fbutton:shadowHeight="5dp"
-            fbutton:cornerRadius="5dp"
-            />
-
 
         <FrameLayout
             android:id="@+id/frame_container"

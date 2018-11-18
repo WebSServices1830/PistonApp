@@ -40,7 +40,7 @@ public class CRUD_Usuario {
     MongoDatabase database = mongoClient.getDatabase("PistonAppDB").withCodecRegistry(pojoCodecRegistry);
     
     // get a handle to the "people" collection
-    MongoCollection<Usuario> collection = database.getCollection("usuario", Usuario.class);
+    MongoCollection<Usuario> collection = database.getCollection("usuarios", Usuario.class);
     
     
     public void usuario_create(Usuario usuario) {

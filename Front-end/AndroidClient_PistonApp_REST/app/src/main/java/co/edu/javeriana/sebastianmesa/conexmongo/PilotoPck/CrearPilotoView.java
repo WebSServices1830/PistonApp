@@ -44,11 +44,6 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -60,10 +55,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
-import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Usuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
@@ -82,13 +74,9 @@ public class CrearPilotoView extends Activity {
     private EditText editText_nombre, editText_fecha, editText_lugar, editText_podios, editText_puntos, editText_gp;
     private ImageView previewFoto;
     private ImageButton btn_seleccionarImagen, btn_tomarFoto;
-    private Button agregarP;
+    private Button button_agregarPiloto;
 
     private Date fechaNacimiento_piloto = null;
-
-    private String resultado="";
-    private CrearPilotoView.WebMet_AgregarPiloto wm_agregarPiloto = null;
-    private TextView campo = null;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -99,19 +87,19 @@ public class CrearPilotoView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_piloto_view);
 
-        editText_nombre = (EditText) findViewById(R.id.editText_nombrePiloto);
-        editText_lugar = (EditText) findViewById(R.id.editText_lugarNacimientoPiloto);
+        editText_nombre = findViewById(R.id.editText_nombrePiloto);
+        editText_lugar = findViewById(R.id.editText_lugarNacimientoPiloto);
         editText_fecha = findViewById(R.id.editText_fechaPiloto);
-        editText_podios   = (EditText) findViewById(R.id.editText_podiosTotales);
-        editText_puntos = (EditText) findViewById(R.id.editText_puntosTotales);
-        editText_gp = (EditText) findViewById(R.id.editText_ingresosGPTotales);
+        editText_podios = findViewById(R.id.editText_podiosTotales);
+        editText_puntos = findViewById(R.id.editText_puntosTotales);
+        editText_gp = findViewById(R.id.editText_ingresosGPTotales);
 
         btn_seleccionarImagen = findViewById(R.id.imageButton_seleccionarImagen_piloto);
         btn_tomarFoto = findViewById(R.id.imageButton_tomarFoto_piloto);
 
         previewFoto = findViewById(R.id.imageView_fotoPiloto);
 
-        agregarP =(Button) findViewById(R.id.agregarPiloto);
+        button_agregarPiloto = findViewById(R.id.agregarPiloto);
 
         editText_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +143,7 @@ public class CrearPilotoView extends Activity {
             }
         });
 
-        agregarP.setOnClickListener(new View.OnClickListener() {
+        button_agregarPiloto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
@@ -244,75 +232,6 @@ public class CrearPilotoView extends Activity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST);
-        }
-    }
-
-    private class WebMet_AgregarPiloto extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
-            final String METHOD_NAME = "agregarPiloto";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/agregarPiloto";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-            //request.addProperty("Hola", nro1.getText().toString());
-            //request.addProperty("nro2", nro2.getText().toString());
-
-            XMLGregorianCalendar fecha= null;
-
-
-            GregorianCalendar fechaNacimiento = new GregorianCalendar();
-            fechaNacimiento.getTime();
-
-            request.addProperty("nombreCompleto", editText_nombre.getText().toString());
-            request.addProperty("fecha_Nacimiento", null);
-            request.addProperty("lugarNacimiento", editText_lugar.getText().toString());
-            request.addProperty("cant_podiosTotales", Integer.parseInt(editText_podios.getText().toString()));
-            request.addProperty("cant_puntosTotales", Integer.parseInt(editText_puntos.getText().toString()));
-            request.addProperty("cant_granPremiosIngresado", Integer.parseInt(editText_gp.getText().toString()));
-
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-                ht.call(SOAP_ACTION, envelope);
-                SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                //resultado=response.toString();
-                //Log.i("Resultado: ",resultado);
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-            }
-            else{
-
-                //campo = (TextView) findViewById(R.id.conexion);
-
-                //campo.setText(resultado);
-
-                Toast.makeText(getApplicationContext(), 	"Piloto Creado", Toast.LENGTH_LONG).show();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
     }
 

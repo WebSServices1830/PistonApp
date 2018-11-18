@@ -23,8 +23,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.Movie;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
+import co.edu.javeriana.sebastianmesa.conexmongo.UserMenuActivity;
 import info.hoang8f.widget.FButton;
 
 public class IndexFragment extends Fragment {
@@ -59,6 +61,13 @@ public class IndexFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_index, container, false);
+
+        if(getActivity() instanceof AdminMainActivity){
+            view.findViewById(R.id.accionesPiloto).setVisibility( View.VISIBLE );
+            view.findViewById(R.id.accionesEscuderia).setVisibility( View.VISIBLE );
+            view.findViewById(R.id.accionesAuto).setVisibility( View.VISIBLE );
+            view.findViewById(R.id.button_cargarDatos).setVisibility( View.VISIBLE );
+        }
 
         String nombreActividad = getActivity().toString();
         Log.i("dondeestoy", "Estoy en: " + nombreActividad);

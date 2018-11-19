@@ -409,9 +409,20 @@ public class MyResource {
 	// http://localhost:8080/myapp/PistonApp/autos
 	@POST
 	@Consumes("application/json")
-	@Path("/autos")
-	public ResponseBuilder crearAuto(Auto auto) {
-		manejadorAuto.auto_create(auto);
+	@Path("/escuderias/{idEscuderia}/autos")
+	public ResponseBuilder crearAuto(Auto auto, @PathParam("idEscuderia") String idEscuderia) {
+		
+		try {
+			manejadorAuto.auto_create(auto);
+			Escuderia escuderiaAsociada = manejadorEscuderia.escuderia_get(idEscuderia);
+			System.out.println(escuderiaAsociada.toString());
+			escuderiaAsociada.getAutos().add(auto.getId_str());
+			manejadorEscuderia.escuderia_update(escuderiaAsociada, escuderiaAsociada.getId_str());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500);
+		}
+		
 		return Response.status(200);
 	}
 

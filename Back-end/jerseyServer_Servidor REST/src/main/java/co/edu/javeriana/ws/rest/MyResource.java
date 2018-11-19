@@ -946,7 +946,6 @@ public class MyResource {
 			Vuelta_P1.set(Calendar.SECOND, 33);
 			Vuelta_P1.set(Calendar.MILLISECOND, 283);
 			CCP1 = new ClasificacionCarrera(25, Vuelta_P1.getTime(), Sebastian.getId_str());
-			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
 
 			Vuelta_P2.set(Calendar.HOUR, 1);
 			Vuelta_P2.set(Calendar.MINUTE, 29);
@@ -4712,6 +4711,30 @@ public class MyResource {
 		escuderia7.setAutos(autosForce_India);
 
 		manejadorEscuderia.escuderia_create(escuderia7);
+		// Escuderia 9
+
+				String fotoRefEsc9 = null;
+				try {
+					fotoRefEsc9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sauber.jpg", "Sauber");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Escuderia escuderia9 = new Escuderia("Alfa Romeo Sauber F1 Team", "Hinwil, Switzerland", "Simone Resta",
+						"Frï¿½dï¿½ric Vasseur", "42", 1, 0, fotoRefEsc9);
+				// Agrega pilotos escuderia 9
+				List<String> pilotosSauber = new ArrayList<String>();
+				pilotosSauber.add(Charles.getId_str());
+				pilotosSauber.add(Marcus.getId_str());
+
+				escuderia9.setPilotos(pilotosSauber);
+				// Agrega autos escuderia 9
+				List<String> autosSauber = new ArrayList<String>();
+				autosSauber.add(auto7.getId_str());
+				escuderia9.setAutos(autosSauber);
+
+				manejadorEscuderia.escuderia_create(escuderia9);
+		
 		// Escuderia 8
 
 		String fotoRefEsc8 = null;
@@ -4735,29 +4758,7 @@ public class MyResource {
 
 		manejadorEscuderia.escuderia_create(escuderia8);
 
-		// Escuderia 9
-
-		String fotoRefEsc9 = null;
-		try {
-			fotoRefEsc9 = ManejadorImagenes.saveImageIntoMongoDB("fotos/Sauber.jpg", "Sauber");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Escuderia escuderia9 = new Escuderia("Alfa Romeo Sauber F1 Team", "Hinwil, Switzerland", "Simone Resta",
-				"Frï¿½dï¿½ric Vasseur", "42", 1, 0, fotoRefEsc9);
-		// Agrega pilotos escuderia 9
-		List<String> pilotosSauber = new ArrayList<String>();
-		pilotosSauber.add(Charles.getId_str());
-		pilotosSauber.add(Marcus.getId_str());
-
-		escuderia9.setPilotos(pilotosSauber);
-		// Agrega autos escuderia 9
-		List<String> autosSauber = new ArrayList<String>();
-		autosSauber.add(auto7.getId_str());
-		escuderia9.setAutos(autosSauber);
-
-		manejadorEscuderia.escuderia_create(escuderia9);
+		
 		// Escuderia 10
 
 		String fotoRefEsc10 = null;

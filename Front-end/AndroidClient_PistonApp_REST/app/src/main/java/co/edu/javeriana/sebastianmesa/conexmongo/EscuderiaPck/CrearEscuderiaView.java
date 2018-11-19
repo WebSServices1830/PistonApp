@@ -224,7 +224,7 @@ public class CrearEscuderiaView extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
             }
             else{
-                Toast.makeText(getApplicationContext(), "Piloto Creado", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Imágen subida", Toast.LENGTH_LONG).show();
                 finish();
             }
         }

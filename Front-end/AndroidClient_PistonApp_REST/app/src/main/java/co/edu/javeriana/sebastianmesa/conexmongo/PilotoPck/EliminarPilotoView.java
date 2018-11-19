@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,11 +54,6 @@ public class EliminarPilotoView extends AppCompatActivity {
 
     private EditText campoId;
     private Button consultaBtn;
-    private String Nombre, lugar, foto;
-    private Date fecha;
-    private int podios, puntos, premios;
-    private EliminarPilotoView.WebMet_EliminarPiloto wm_agregarPiloto = null;
-    private TextView campoRespuesta = null;
     private boolean completado = false;
     private List<Piloto> listaPilotos= new ArrayList<Piloto>();
 
@@ -81,80 +77,6 @@ public class EliminarPilotoView extends AppCompatActivity {
             }
         });
 
-    }
-
-    private class WebMet_EliminarPiloto extends AsyncTask<Void, Void, Boolean> {
-
-
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_piloto?wsdl";
-            final String METHOD_NAME = "piloto_deleteByName";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/piloto_deleteByName";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            campoId = (EditText) findViewById(R.id.idPiloto);
-            request.addProperty("id", campoId.getText().toString());
-
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                campoRespuesta.setText("");
-
-                ht.call(SOAP_ACTION, envelope);
-                SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-
-                boolean resp = new Boolean(response.toString());
-
-                if ( resp ) {
-
-                    completado = true;
-                    campoRespuesta.setText("Piloto encontrado");
-                    //Toast.makeText(getApplicationContext(), "Piloto NO eliminado", Toast.LENGTH_LONG).show();
-
-                }else{
-                    campoRespuesta.setText("No encontrado");
-                    //Toast.makeText(getApplicationContext(), "Piloto eliminado", Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-            }
-            else{
-
-                campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-        }
     }
 
     public void consumeRESTVolleyGetPilotos(String campoNombrePiloto){
@@ -181,6 +103,7 @@ public class EliminarPilotoView extends AppCompatActivity {
                                 float calificacion = Float.parseFloat( obj.getString("calificacion") );
 
                                 Piloto piloto = new Piloto();
+                                piloto.setId(new ObjectId(id_str));
                                 piloto.setId_str(id_str);
                                 piloto.setNombreCompleto(nombreCompleto);
                                 piloto.setFecha_Nacimiento(fechaNacimiento);

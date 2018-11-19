@@ -19,10 +19,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\JUAN PABLO\Desktop\calendar.png" />
-                                      <entry key="outputName" value="ic_calendar_image" />
+                                      <entry key="imageAsset" value="D:\Desktop\car-of-formula-1.png" />
+                                      <entry key="outputName" value="ic_f1_car" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="f8ffe5" />
+                                      <entry key="themeColor" value="c01a0a" />
                                     </map>
                                   </option>
                                 </PersistentState>

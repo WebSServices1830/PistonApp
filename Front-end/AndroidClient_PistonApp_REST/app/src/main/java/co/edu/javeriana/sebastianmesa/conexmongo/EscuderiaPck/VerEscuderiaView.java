@@ -1,14 +1,12 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,13 +15,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +33,9 @@ public class VerEscuderiaView extends AppCompatActivity {
 
     private EditText campoNombre;
     private Button consultaBtn;
+
+    private ListView listView_escuderias;
+    private EscuderiaAdapter adapterEscuderia;
     private List<Escuderia> escuderias = new ArrayList<>();
 
 
@@ -47,29 +45,34 @@ public class VerEscuderiaView extends AppCompatActivity {
         setContentView(R.layout.activity_ver_escuderia_view);
 
         campoNombre = findViewById(R.id.nombreEscuderia);
+        consultaBtn = findViewById(R.id.btnVerEscuderia);
+        listView_escuderias = findViewById(R.id.listView_escuderias);
 
-        consultaBtn =(Button) findViewById(R.id.btnVerEscuderia);
+        getEscuderias(campoNombre.getText().toString());
+
+        adapterEscuderia = new EscuderiaAdapter(this, escuderias);
+        listView_escuderias.setAdapter(adapterEscuderia);
+
         consultaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                /*
-                wm_agregarPiloto = new WebMet_ConsultarEscuderia();
-                wm_agregarPiloto.execute();
-                */
-                consumeRESTVolleyVerEscuderiaString();
+                escuderias.clear();
+                adapterEscuderia.notifyDataSetChanged();
+
+                getEscuderias(campoNombre.getText().toString());
             }
         });
 
     }
 
-    public void consumeRESTVolleyVerEscuderiaString(){
+    public void getEscuderias(String textoFiltro_nombreEscuderia){
         if(!escuderias.isEmpty()){
             escuderias.clear();
         }
         RequestQueue queue = Volley.newRequestQueue(VerEscuderiaView.this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
-        String path = "escuderias";
+        String path = "escuderias/"+textoFiltro_nombreEscuderia;
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -77,6 +80,7 @@ public class VerEscuderiaView extends AppCompatActivity {
                         try {
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject escuderia_json = jsonArray.getJSONObject(a);
+                                String id_str = escuderia_json.getString("id_str");
                                 String nombre = escuderia_json.getString("nombre");
                                 String lugarBase = escuderia_json.getString("lugarBase");
                                 String jefeEquipo = escuderia_json.getString("jefeEquipo");
@@ -86,18 +90,25 @@ public class VerEscuderiaView extends AppCompatActivity {
                                 int cant_vecesEnPodio = Integer.parseInt(escuderia_json.getString("cant_vecesEnPodio"));
                                 int cant_TitulosCampeonato = Integer.parseInt(escuderia_json.getString("cant_TitulosCampeonato"));
 
-                                escuderias.add(new Escuderia(
-                                        nombre,
-                                        lugarBase,
-                                        jefeTecnico,
-                                        jefeEquipo,
-                                        chasis,
-                                        cant_vecesEnPodio,
-                                        cant_TitulosCampeonato,
-                                        fotoEscudo_ref));
+                                Escuderia escuderia = new Escuderia();
+
+                                escuderia.setId(new ObjectId(id_str));
+                                escuderia.setId_str(id_str);
+                                escuderia.setNombre(nombre);
+                                escuderia.setLugarBase(lugarBase);
+                                escuderia.setJefeEquipo(jefeEquipo);
+                                escuderia.setJefeTecnico(jefeTecnico);
+                                escuderia.setChasis(chasis);
+                                escuderia.setFotoEscudo_ref(fotoEscudo_ref);
+                                escuderia.setCant_vecesEnPodio(cant_vecesEnPodio);
+                                escuderia.setCant_TitulosCampeonato(cant_TitulosCampeonato);
+
+                                escuderias.add( escuderia );
                             }
+                            adapterEscuderia.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.d(TAG, "JSONException ", e);
                         }
                     }
                 },

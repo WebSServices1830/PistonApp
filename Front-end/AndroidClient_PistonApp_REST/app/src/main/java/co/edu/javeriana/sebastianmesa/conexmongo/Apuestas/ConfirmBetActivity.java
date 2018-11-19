@@ -14,6 +14,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.SoapObject;
@@ -26,14 +36,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.VerEscuderiaView;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.VerGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Escuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.GranPremio;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
 
 public class ConfirmBetActivity extends AppCompatActivity {
+
+    private static final String TAG = "Log_ConfirmBetActivity";
 
     Spinner spinner_granPremios;
     Button button_apostar;
@@ -62,13 +76,12 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
         button_apostar.setEnabled(false);
 
-        adapter = new ArrayAdapter<GranPremio>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, listagranPremios);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        adapter = new ArrayAdapter<GranPremio>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listagranPremios);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_granPremios.setAdapter(adapter);
 
-        WebMet_verCampeonatoString wm_verCampeonatoString = new WebMet_verCampeonatoString();
-        wm_verCampeonatoString.execute();
+        this.consumeRESTVolleyVerCampeonatoString();
         //Log.i("idCampeonato",idCalendarioCampeonato);
 
         WebMet_GranPremiosOrdenadoPorFecha wm_granPremiosOrdenadoPorFecha = new WebMet_GranPremiosOrdenadoPorFecha();
@@ -94,6 +107,53 @@ public class ConfirmBetActivity extends AppCompatActivity {
         });
     }
 
+    public void consumeRESTVolleyGranPremiosOrdenadoPorFecha() {
+        if (!listagranPremios.isEmpty()) {
+            listagranPremios.clear();
+        }
+        RequestQueue queue = Volley.newRequestQueue(ConfirmBetActivity.this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/granPremios";
+        String path = this.idCalendarioCampeonato;
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject granpremio_json = jsonArray.getJSONObject(a);
+                                GranPremio g = new GranPremio();
+
+                                String id_str = granpremio_json.getString("id_str");
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                Date fecha = simpleDateFormat.parse(granpremio_json.getString("fecha"));
+                                int cantVueltas = granpremio_json.getInt("cantVueltas");
+                                Date mejorVuelta =simpleDateFormat.parse(granpremio_json.getString("mejorVuelta"));
+                                String pista= granpremio_json.getString("pista");
+                                String id_campeonato= granpremio_json.getString("id_campeonato");
+
+                                GranPremio granPremio= new GranPremio(id_str,fecha,cantVueltas,mejorVuelta,pista,id_campeonato);
+
+                                listagranPremios.add(granPremio);
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+    }
+
+
     private class WebMet_GranPremiosOrdenadoPorFecha extends AsyncTask<Void, GranPremio, Boolean> {
 
 
@@ -102,38 +162,38 @@ public class ConfirmBetActivity extends AppCompatActivity {
             // TODO: attempt authentication against a network service.
             //WebService - Opciones
             final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
+            final String URL = "http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
             final String METHOD_NAME = "granPremiosOrdenadoPorFecha";
             final String SOAP_ACTION = "http://webservice.javeriana.co/granPremiosOrdenadoPorFecha";
 
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            request.addProperty("id_campeonato",idCalendarioCampeonato);
+            request.addProperty("id_campeonato", idCalendarioCampeonato);
 
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.setOutputSoapObject(request);
 
             HttpTransportSE ht = new HttpTransportSE(URL);
             try {
                 ht.call(SOAP_ACTION, envelope);
 
-                KvmSerializable ks = (KvmSerializable)envelope.bodyIn;
-                for(int i = 0; i < ks.getPropertyCount(); ++i){
+                KvmSerializable ks = (KvmSerializable) envelope.bodyIn;
+                for (int i = 0; i < ks.getPropertyCount(); ++i) {
                     SoapObject granPremio = (SoapObject) ks.getProperty(i);
 
                     String id_string = granPremio.getPrimitivePropertyAsString("id_str");
-                    Date fecha= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(granPremio.getPrimitivePropertyAsString("fecha"));
-                    String idPista= granPremio.getPrimitivePropertyAsString("pista");
-                    int cantVueltas= Integer.parseInt(granPremio.getPrimitivePropertyAsString("cantVueltas"));
-                    Date mejorVuelta= null;
+                    Date fecha = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(granPremio.getPrimitivePropertyAsString("fecha"));
+                    String idPista = granPremio.getPrimitivePropertyAsString("pista");
+                    int cantVueltas = Integer.parseInt(granPremio.getPrimitivePropertyAsString("cantVueltas"));
+                    Date mejorVuelta = null;
                     try {
                         mejorVuelta = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
-                    }catch (ParseException e){
+                    } catch (ParseException e) {
                         mejorVuelta = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(granPremio.getPrimitivePropertyAsString("mejorVuelta"));
                     }
                     //List<String> id_clasificaciones= Collections.singletonList(granPremio.getPrimitivePropertyAsString("clasificaciones"));
 
-                    GranPremio granPremioObjeto= new GranPremio();
+                    GranPremio granPremioObjeto = new GranPremio();
                     granPremioObjeto.setId_str(id_string);
                     granPremioObjeto.setFecha(fecha);
                     granPremioObjeto.setPista(idPista);
@@ -143,10 +203,8 @@ public class ConfirmBetActivity extends AppCompatActivity {
                     publishProgress(granPremioObjeto);
                 }
                 return true;
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
+            } catch (Exception e) {
+                Log.i("Error: ", e.getMessage());
                 e.printStackTrace();
 
             }
@@ -161,52 +219,49 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            if (success == false) {
+                Toast.makeText(getBaseContext(), "Error", Toast.LENGTH_SHORT).show();
+            } else {
                 adapter.notifyDataSetChanged();
             }
         }
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getBaseContext(),"Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Error", Toast.LENGTH_LONG).show();
         }
+
     }
 
-    private class WebMet_verCampeonatoString extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL = "http://10.0.2.2:8080/WS/infoCampeonato?wsdl";
-            final String METHOD_NAME = "verCampeonato";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/verCampeonato";
+    public void consumeRESTVolleyVerCampeonatoString() {
+        RequestQueue queue = Volley.newRequestQueue(ConfirmBetActivity.this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp";
+        String path = "/campeonatos";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            JSONObject obj = jsonArray.getJSONObject(0);
+                            idCalendarioCampeonato = obj.getString("id_str");
 
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("nombre", "Campeonato 2018");
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-
-            try {
-                ht.call(SOAP_ACTION, envelope);
-                SoapObject response = (SoapObject) envelope.getResponse();
-
-                if (response != null) {
-                    idCalendarioCampeonato = response.getPrimitivePropertyAsString("id_str");
-                    return true;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "consumeRESTVolleyVerCampeonatoString: JSONException ", e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation" + error.getCause());
+                    }
                 }
-            } catch (Exception e) {
-                Log.i("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return false;
-        }
+        );
+        queue.add(req);
     }
 }
+
+
+
+

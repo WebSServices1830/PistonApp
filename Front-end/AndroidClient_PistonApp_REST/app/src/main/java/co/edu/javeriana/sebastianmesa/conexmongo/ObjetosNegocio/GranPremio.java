@@ -22,6 +22,19 @@ public class GranPremio implements Serializable {
 
     }
 
+    public GranPremio( String id_str,Date fecha, int cantVueltas, Date mejorVuelta, String pista,
+                       String id_campeonato) {
+        super();
+        this.id = new ObjectId();
+        this.fecha = fecha;
+        this.cantVueltas = cantVueltas;
+        this.mejorVuelta = mejorVuelta;
+        this.pista = pista;
+        this.id_campeonato = id_campeonato;
+        this.id_clasificaciones = new ArrayList<>();
+        this.id_str= id_str;
+    }
+
     public GranPremio( Date fecha, int cantVueltas, Date mejorVuelta, String pista,
                        String id_campeonato) {
         super();

@@ -189,21 +189,13 @@ public class IndexAutoView extends AppCompatActivity {
      */
     private void prepareAlbums() {
         int[] covers = new int[]{
-                R.drawable.ic_auto,
-                R.drawable.ic_auto,
-                R.drawable.ic_auto,
+                R.drawable.f1_car_build,
                 R.drawable.ic_auto};
 
-        CartaMenu a = new CartaMenu("Crear Auto", "Crea un nuevo auto", covers[0]);
+        CartaMenu a = new CartaMenu("Crear automóvil", "Crea un nuevo automóvil", covers[0]);
         cartaMenuList.add(a);
 
-        a = new CartaMenu("Ver Auto", "Mira un auto", covers[1]);
-        cartaMenuList.add(a);
-
-        a = new CartaMenu("Actualizar Auto", "Actualiza la información de un auto", covers[2]);
-        cartaMenuList.add(a);
-
-        a = new CartaMenu("Eliminar Auto", "Elimina un Auto del sistema", covers[3]);
+        a = new CartaMenu("Manejar automóviles", "Visualiza, edita y elimina los automóviles actuales", covers[1]);
         cartaMenuList.add(a);
 
 

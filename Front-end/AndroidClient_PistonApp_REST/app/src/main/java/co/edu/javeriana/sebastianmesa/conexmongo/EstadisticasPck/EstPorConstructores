@@ -67,8 +67,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class EstPorConstructores extends AppCompatActivity {
 
-    private String[][] datos = { { "1", "Sebas", "Ferrari", "20" },
-            { "2", "Heikki", "Skyppy", "10" } };
+    private String[][] datos = { };
 
     static String[] encabezado={"#","Nombre","Campeonatos","veces Podio","Lugar Base","Jefe Tecnico","Jefe Equipo","Chasis"};
    // private ObtenerDatos wm_validarLogin = null;
@@ -151,10 +150,10 @@ public class EstPorConstructores extends AppCompatActivity {
 
                         listaEscuderias.add(escuderiaObjeto);
 
-                        String[][] datos = new String[listaEscuderias.size()][4];
+                        String[][] datos = new String[listaEscuderias.size()][7];
 
                         for (int i = 0 ; i < listaEscuderias.size() ; i++){
-                            for (int j = 0 ; j < 4 ; j++){
+                            for (int j = 0 ; j < 7 ; j++){
                                 switch (j) {
                                     case 0:
                                         datos[i][j] = Integer.toString(i+1);

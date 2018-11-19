@@ -1,3 +1,5 @@
+
+
 package co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck;
 
 import android.content.Intent;
@@ -73,12 +75,10 @@ import de.codecrafters.tableview.model.TableColumnPxWidthModel;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
-public class EstPorResultados extends AppCompatActivity {
+public class EstGPEspecifico extends AppCompatActivity {
 
-//    private String[][] datos = { { "1", "Sebas", "Ferrari", "20" },
-//            { "2", "Heikki", "Skyppy", "10" } };
 
-    static String[] encabezado={"Fecha", "Lugar", "Ganador"};
+    static String[] encabezado={"Pos", "Nombre", "Tiempo"};
     //    private WebMet_ObtenerPiloto wm_validarLogin = null;
     private List<EstadisticasGeneral> listaPilotos = new ArrayList<>();
     public TableView<String[]> tableView;
@@ -87,13 +87,26 @@ public class EstPorResultados extends AppCompatActivity {
     private List<GranPremio> listagranPremios = new ArrayList<>();
     private List<EstadisticasResultados> listaResultados = new ArrayList<>();
     private HashMap<String, String> relacionPista = new HashMap<>();
+    private TextView campoNombre;
+
+    private String codigoGlob;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_est_por_resultados);
+        setContentView(R.layout.activity_est_gpespecifico);
 
+        Intent intent = getIntent();
+        String codRecibido = intent.getStringExtra("cod");
+        String nomRecibido = intent.getStringExtra("nom");
+
+        campoNombre = (TextView) findViewById(R.id.nombrePista);
+        campoNombre.setText(nomRecibido);
+
+        codigoGlob = codRecibido;
+
+        Toast.makeText(EstGPEspecifico.this, codRecibido, Toast.LENGTH_SHORT).show();
 
         tableView = (TableView<String[]>) findViewById(R.id.tableView);
         tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(this,encabezado));
@@ -106,9 +119,6 @@ public class EstPorResultados extends AppCompatActivity {
             @Override
             public void onDataClicked(int rowIndex, Object clickedData) {
                 String cod = relacionPista.get(((String[])clickedData)[1]);
-                String nom = ((String[])clickedData)[1];
-
-                abrirDetalles(cod, nom);
 
 //                Toast.makeText(EstPorResultados.this, cod, Toast.LENGTH_SHORT).show();
             }
@@ -119,12 +129,6 @@ public class EstPorResultados extends AppCompatActivity {
 
     }
 
-    public void abrirDetalles(String cod, String nom){
-        Intent intent = new Intent(EstPorResultados.this, EstGPEspecifico.class);
-        intent.putExtra("cod", cod);
-        intent.putExtra("nom", nom);
-        startActivity(intent);
-    }
 
     public void consumeRESTVolleyVerCampeonatoString(final String nombre){
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -179,6 +183,20 @@ public class EstPorResultados extends AppCompatActivity {
                                 granPremioObjeto.setCantVueltas(obj.getInt("cantVueltas"));
                                 granPremioObjeto.setMejorVuelta(simpleDateFormat.parse(obj.getString("mejorVuelta")));
 
+                                JSONArray clasificacion = obj.getJSONArray("id_clasificaciones");
+
+                                ArrayList<String> listClas = new ArrayList<String>();
+                                if (clasificacion != null) {
+                                    int len = clasificacion.length();
+                                    for (int i=0;i<len;i++){
+                                        listClas.add(clasificacion.get(i).toString());
+                                    }
+                                }
+
+                                Log.i("clasificacionVerlo", listClas.toString() + " " + clasificacion.toString());
+
+                                granPremioObjeto.setId_clasificaciones(listClas);
+
                                 // adding movie to movies array
                                 listagranPremios.add(granPremioObjeto);
                             }
@@ -188,32 +206,32 @@ public class EstPorResultados extends AppCompatActivity {
 
                             consumeRESTVolleyGranPremiosEnDetalle(listagranPremios);
 
-    //                            String[][] datos = new String[listagranPremios.size()][4];
-    //
-    //                            for (int i = 0 ; i < listagranPremios.size() ; i++){
-    //                                for (int j = 0 ; j < 4 ; j++){
-    //                                    switch (j) {
-    //                                        case 0:
-    //                                            datos[i][j] = listagranPremios.get(i).getFecha().toString();
-    //                                            break;
-    //                                        case 1:
-    //                                            datos[i][j] = listagranPremios.get(i).getPista();
-    //                                            break;
-    ////                                case 2:
-    ////                                    datos[i][j] = "equipo";
-    ////                                    break;
-    //                                        case 2:
-    //                                            datos[i][j] = listagranPremios.get(i).getPista();
-    //                                            break;
-    //
-    //                                    }
-    //                                }
-    //
-    //                            }
-    //
-    //
-    //
-    //                            tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
+                            //                            String[][] datos = new String[listagranPremios.size()][4];
+                            //
+                            //                            for (int i = 0 ; i < listagranPremios.size() ; i++){
+                            //                                for (int j = 0 ; j < 4 ; j++){
+                            //                                    switch (j) {
+                            //                                        case 0:
+                            //                                            datos[i][j] = listagranPremios.get(i).getFecha().toString();
+                            //                                            break;
+                            //                                        case 1:
+                            //                                            datos[i][j] = listagranPremios.get(i).getPista();
+                            //                                            break;
+                            ////                                case 2:
+                            ////                                    datos[i][j] = "equipo";
+                            ////                                    break;
+                            //                                        case 2:
+                            //                                            datos[i][j] = listagranPremios.get(i).getPista();
+                            //                                            break;
+                            //
+                            //                                    }
+                            //                                }
+                            //
+                            //                            }
+                            //
+                            //
+                            //
+                            //                            tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
 
 
                         } catch (JSONException e) {
@@ -257,19 +275,24 @@ public class EstPorResultados extends AppCompatActivity {
 
 //                                    Log.i("RevEstPorResiltados -",listagranPremios.get(i).getId_str() + " y: " + codeJSON);
 
-                                    if(codeJSON.equals(listagranPremios.get(i).getPista())){
+                                    for (int j=0; j<listagranPremios.get(i).getId_clasificaciones().size(); j++){
 
-//                                        Log.i("RevEstPorResiltadoss",listagranPremios.get(i).getId_str() + " y: " + codeJSON);
+                                        if(codigoGlob.equals(listagranPremios.get(i).getId_clasificaciones().get(j))){
 
-                                        EstadisticasResultados e = new EstadisticasResultados(
-                                                codeJSON,
-                                                listagranPremios.get(i).getFecha(),
-                                                obj.getString("ciudad"),
-                                                obj.getString("nombreUltimoGanador"));
+                                        Log.i("verPistaDetalle",listagranPremios.get(i).getId_clasificaciones().get(j));
 
-                                        listaResultados.add(e);
 
-                                        relacionPista.put(obj.getString("ciudad"),codeJSON );
+//                                            EstadisticasResultados e = new EstadisticasResultados(
+//                                                    codeJSON,
+//                                                    listagranPremios.get(i).getFecha(),
+//                                                    obj.getString("ciudad"),
+//                                                    obj.getString("nombreUltimoGanador"));
+//
+//                                            listaResultados.add(e);
+//
+//                                            relacionPista.put(obj.getString("ciudad"),codeJSON );
+
+                                        }
 
                                     }
 
@@ -365,3 +388,5 @@ public class EstPorResultados extends AppCompatActivity {
 
 
 }
+
+

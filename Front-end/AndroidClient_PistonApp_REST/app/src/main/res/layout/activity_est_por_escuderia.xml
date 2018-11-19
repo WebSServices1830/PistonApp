@@ -11,7 +11,7 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        table:tableView_columnCount="4" />
+        table:tableView_columnCount="3" />
 
 
 

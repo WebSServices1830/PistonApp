@@ -86,7 +86,7 @@ public class VerEscuderiaView extends AppCompatActivity {
                                 int cant_vecesEnPodio = Integer.parseInt(escuderia_json.getString("cant_vecesEnPodio"));
                                 int cant_TitulosCampeonato = Integer.parseInt(escuderia_json.getString("cant_TitulosCampeonato"));
 
-                                Escuderia e =new Escuderia(
+                                Escuderia e = new Escuderia(
                                         nombre,
                                         lugarBase,
                                         jefeTecnico,

@@ -1,6 +1,5 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.Apuestas;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,12 +13,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,30 +37,31 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.VerEscuderiaView;
-import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.VerGPView;
-import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Apuesta;
-import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Escuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.GranPremio;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
-import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
 
 public class ConfirmBetActivity extends AppCompatActivity {
 
     private static final String TAG = "Log_ConfirmBetActivity";
 
+    private String id_usuarioActual = "";
+
     Spinner spinner_granPremios;
     Button button_apostar;
     EditText editText_montoApostar;
     TextView textView_conductor;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser actualUser;
 
     private String idCalendarioCampeonato = "";
 
@@ -61,17 +69,23 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
     ArrayAdapter<GranPremio> adapter = null;
 
+    private Piloto piloto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_bet);
+
+        mAuth = FirebaseAuth.getInstance();
+        actualUser = mAuth.getCurrentUser();
+        getUsuario(actualUser);
 
         spinner_granPremios = findViewById(R.id.spinner_granPremios);
         editText_montoApostar = findViewById(R.id.editText_montoApuesta);
         textView_conductor = findViewById(R.id.textView_pilotoApostar);
         button_apostar = findViewById(R.id.button_apostar);
 
-        Piloto piloto = (Piloto) getIntent().getSerializableExtra("Piloto");
+        piloto = (Piloto) getIntent().getSerializableExtra("Piloto");
 
         textView_conductor.setText(textView_conductor.getText() + piloto.getNombreCompleto());
 
@@ -102,13 +116,126 @@ public class ConfirmBetActivity extends AppCompatActivity {
         button_apostar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Apuesta a =new Apuesta( String usuario,
-                                        String piloto,
-                                        String granpremio,
-                                        double monto2);*/
+                if (comprobarCampos()) {
+                    GranPremio granPremio_seleccionado = (GranPremio) spinner_granPremios.getSelectedItem();
+                    double monto = Double.parseDouble(editText_montoApostar.getText().toString());
 
+                    Apuesta apuesta = new Apuesta(id_usuarioActual,
+                            piloto.getId_str(),
+                            granPremio_seleccionado.getId_str(),
+                            monto);
+                }
             }
         });
+    }
+
+
+    private boolean comprobarCampos(){
+        boolean esValido = true;
+
+        if(id_usuarioActual.isEmpty()){
+            Toast.makeText(this,"No se ha cargado el usuario actual",Toast.LENGTH_SHORT).show();
+            esValido = false;
+        }
+        if(piloto == null){
+            Toast.makeText(this,"No se ha cargado el usuario actual",Toast.LENGTH_SHORT).show();
+            esValido = false;
+        }
+        if(editText_montoApostar.getText().toString().isEmpty()){
+            editText_montoApostar.setError("Campo necesario");
+            esValido = false;
+        }
+
+        return esValido;
+    }
+
+    public void apostar(Apuesta apuesta){
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String result = gson.toJson(apuesta);
+
+        JSONObject js_2 = null;
+        try {
+            js_2 = new JSONObject(result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG,"JSONException",e);
+
+            return;
+        }
+        RequestQueue queue = Volley.newRequestQueue(ConfirmBetActivity.this);
+        JsonObjectRequest sr = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://10.0.2.2:8080/myapp/PistonApp/casino",
+                js_2,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.d(TAG, "" + response.toString());
+
+                        Toast.makeText(getApplicationContext(), 	"apuesta creada", Toast.LENGTH_LONG).show();
+                        finish();
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "Error.ResponseREST " + error.networkResponse.statusCode);
+                NetworkResponse response = error.networkResponse;
+                if (error instanceof ServerError && response != null) {
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        JSONObject obj = new JSONObject(res);
+                        Log.d(TAG, "Error.ResponseREST A: " + obj.toString());
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                        Log.d(TAG, "Error.ResponseREST B: " + e1.toString());
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                        Log.d(TAG, "Error.ResponseREST C: " + e2.toString());
+                    }
+                }
+            }
+        });
+    }
+
+    public void getUsuario(FirebaseUser user){
+        RequestQueue mRequestQueue;
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/usuarios/";
+        String path= user.getEmail();
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+
+                            id_usuarioActual = jsonObject.getString("id_str");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "Error JSONException"+e.getCause());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "Error handling rest invocation"+error.getCause());
+                    }
+                }
+        );
+
+        mRequestQueue.add(req);
+
     }
 
     public void consumeRESTVolleyGranPremiosOrdenadoPorFecha() {
@@ -137,7 +264,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
                                 GranPremio granPremio= new GranPremio(id_str,fecha,cantVueltas,mejorVuelta,pista,id_campeonato);
 
-                                
+
 
                                 listagranPremios.add(granPremio);
 

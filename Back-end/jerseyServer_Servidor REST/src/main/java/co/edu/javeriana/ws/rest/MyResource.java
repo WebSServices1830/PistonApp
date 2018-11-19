@@ -4192,7 +4192,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia1 = new Escuderia("Mercedes", "Brackley, United Kingdom", "James Allison", "Toto Wolff",
-				"W09", 90, 4, fotoRefEsc1);
+				"620", 90, 4, fotoRefEsc1);
 		// Agrega pilotos escuderia 1
 		List<String> pilotosMercedes = new ArrayList<String>();
 		pilotosMercedes.add(Lewis.getId_str());
@@ -4213,7 +4213,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia2 = new Escuderia("Ferrari", "Maranello, Italy", "Mattia Binotto", "Maurizio Arrivabene",
-				"SF71H", 215, 16, fotoRefEsc2);
+				"553", 215, 16, fotoRefEsc2);
 		// Agrega pilotos escuderia 2
 		List<String> pilotosFerrari = new ArrayList<String>();
 		pilotosFerrari.add(Sebastian.getId_str());
@@ -4235,7 +4235,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia3 = new Escuderia("Red Bull", "Milton Keynes, United Kingdom", "Pierre Wachï¿½",
-				"Christian Horner", "RB14", 59, 4, fotoRefEsc3);
+				"Christian Horner", "392", 59, 4, fotoRefEsc3);
 		// Agrega pilotos escuderia 3
 		List<String> pilotosRed_Bull = new ArrayList<String>();
 		pilotosRed_Bull.add(Max.getId_str());
@@ -4257,7 +4257,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia4 = new Escuderia("Renault", "Enstone, United Kingdom", "Bob Bell", "Cyril Abiteboul",
-				"R.S.18", 20, 2, fotoRefEsc4);
+				"114", 20, 2, fotoRefEsc4);
 		// Agrega pilotos escuderia 4
 		List<String> pilotosRenault = new ArrayList<String>();
 		pilotosRenault.add(Nico.getId_str());
@@ -4279,7 +4279,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia5 = new Escuderia("Haas", "Kannapolis, United States", "Rob Taylor", "Guenther Steiner",
-				"VF-18", 0, 0, fotoRefEsc5);
+				"90", 0, 0, fotoRefEsc5);
 		// Agrega pilotos escuderia 5
 		List<String> pilotosHaas = new ArrayList<String>();
 		pilotosHaas.add(Kevin.getId_str());
@@ -4301,7 +4301,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		// Agrega pilotos escuderia 6
-		Escuderia escuderia6 = new Escuderia("McLaren", "Woking, United Kingdom", "Matt Morris", "Zak Brown", "MCL33",
+		Escuderia escuderia6 = new Escuderia("McLaren", "Woking, United Kingdom", "Matt Morris", "Zak Brown", "62",
 				155, 8, fotoRefEsc6);
 		List<String> pilotosMcLaren = new ArrayList<String>();
 		pilotosMcLaren.add(Fernando.getId_str());
@@ -4323,7 +4323,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia7 = new Escuderia("Force India", "Silverstone, United Kingdom", "Andrew Green",
-				"Otmar Szafnauer", "VJM11", 0, 0, fotoRefEsc7);
+				"Otmar Szafnauer", "48", 0, 0, fotoRefEsc7);
 		// Agrega pilotos escuderia 7
 		List<String> pilotosForce_India = new ArrayList<String>();
 		pilotosForce_India.add(Sergio.getId_str());
@@ -4344,7 +4344,7 @@ public class MyResource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Escuderia escuderia8 = new Escuderia("Toro Rosso", "Faenza, Italy", "James Key", "Franz Tost", "STR13", 1, 0,
+		Escuderia escuderia8 = new Escuderia("Toro Rosso", "Faenza, Italy", "James Key", "Franz Tost", "33", 1, 0,
 				fotoRefEsc8);
 		// Agrega pilotos escuderia 8
 		List<String> pilotosToro_Rosso = new ArrayList<String>();
@@ -4368,7 +4368,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia9 = new Escuderia("Alfa Romeo Sauber F1 Team", "Hinwil, Switzerland", "Simone Resta",
-				"Frï¿½dï¿½ric Vasseur", "C37", 1, 0, fotoRefEsc9);
+				"Frï¿½dï¿½ric Vasseur", "42", 1, 0, fotoRefEsc9);
 		// Agrega pilotos escuderia 9
 		List<String> pilotosSauber = new ArrayList<String>();
 		pilotosSauber.add(Charles.getId_str());
@@ -4391,7 +4391,7 @@ public class MyResource {
 			e.printStackTrace();
 		}
 		Escuderia escuderia10 = new Escuderia("Williams Martini Racing", "Grove, United Kingdom", "Paddy Lowe",
-				"Frank Williams", "FW41", 129, 9, fotoRefEsc10);
+				"Frank Williams", "7", 129, 9, fotoRefEsc10);
 		// Agrega pilotos escuderia 10
 		List<String> pilotosWilliams = new ArrayList<String>();
 		pilotosWilliams.add(Lance.getId_str());

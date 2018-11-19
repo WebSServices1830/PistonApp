@@ -113,6 +113,7 @@ public class ActualizarPilotoView extends AppCompatActivity {
         buttonGaleria = (ImageButton) findViewById(R.id.imageButtonActualizarPilotoGaleria);
         nombre = (EditText) findViewById(R.id.editText_nombrePiloto);
         lugar = (EditText) findViewById(R.id.editText_lugarNacimientoPiloto);
+        foto = null;
         podios   = (EditText) findViewById(R.id.editText_podiosTotales);
         puntos = (EditText) findViewById(R.id.editText_puntosTotales);
         gp = (EditText) findViewById(R.id.editText_ingresosGPTotales);

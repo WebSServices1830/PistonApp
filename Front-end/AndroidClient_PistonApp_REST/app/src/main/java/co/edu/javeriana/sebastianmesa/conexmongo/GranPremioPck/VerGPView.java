@@ -7,7 +7,9 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +66,7 @@ public class VerGPView extends AppCompatActivity {
     float calificacion= 0;
     Record record;
     WebMet_verPista wb_verPista= null;
+    Button buttonComentarioPista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class VerGPView extends AppCompatActivity {
         textViewKMViewGP2= findViewById(R.id.textViewKMViewGP);
         textViewCalificacionViewGP2= findViewById(R.id.textViewCalificacionViewGP);
         textViewVueltasViewGP2= findViewById(R.id.textViewVueltasViewGP);
+        buttonComentarioPista= findViewById(R.id.buttonComentarioPista);
 
         gp = (GranPremio) getIntent().getSerializableExtra("GranPremio");
 
@@ -98,7 +102,12 @@ public class VerGPView extends AppCompatActivity {
         //wb_verPista.execute();
         consumeRESTVolleyVerPista();
 
+        buttonComentarioPista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
     }
 

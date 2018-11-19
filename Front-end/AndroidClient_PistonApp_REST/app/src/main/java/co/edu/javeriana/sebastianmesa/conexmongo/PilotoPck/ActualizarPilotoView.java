@@ -2,10 +2,14 @@ package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -19,6 +23,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -61,7 +66,9 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,22 +92,27 @@ public class ActualizarPilotoView extends AppCompatActivity {
     private ImageView previewFoto;
     private ImageButton buttonCamara, buttonGaleria;
 
-    private EditText nombre, fecha, lugar, foto, podios, puntos, gp;
+    private EditText nombre, fecha, lugar, podios, puntos, gp;
     private Button updateP;
-    private Piloto pilotoIntent= (Piloto) getIntent().getSerializableExtra("Piloto");
+    private Piloto pilotoIntent = null;
     DownloadImageTask downloadImageTask;
+
+    private Date fechaNacimiento_piloto = null;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualizar_piloto_view);
 
+        pilotoIntent = (Piloto) getIntent().getSerializableExtra("Piloto");
+
         previewFoto= (ImageView) findViewById(R.id.imageViewActualizarPilotoImage);
         buttonCamara = (ImageButton) findViewById(R.id.imageButtonActualizarPilotoCamara);
         buttonGaleria = (ImageButton) findViewById(R.id.imageButtonActualizarPilotoGaleria);
         nombre = (EditText) findViewById(R.id.editText_nombrePiloto);
         lugar = (EditText) findViewById(R.id.editText_lugarNacimientoPiloto);
-        foto = (EditText) findViewById(R.id.fotoRefPiloto);
         podios   = (EditText) findViewById(R.id.editText_podiosTotales);
         puntos = (EditText) findViewById(R.id.editText_puntosTotales);
         gp = (EditText) findViewById(R.id.editText_ingresosGPTotales);
@@ -110,15 +122,46 @@ public class ActualizarPilotoView extends AppCompatActivity {
         downloadImageTask.execute(pilotoIntent.getFoto_ref());
         nombre.setText(pilotoIntent.getNombreCompleto());
         lugar.setText(pilotoIntent.getLugarNacimiento());
-        podios.setText(pilotoIntent.getCant_podiosTotales());
-        puntos.setText(pilotoIntent.getCant_puntosTotales());
-        gp.setText(pilotoIntent.getCant_granPremiosIngresado());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        try {
-            fecha.setText(simpleDateFormat.parse(pilotoIntent.getFecha_Nacimiento().toString()).toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        podios.setText(Integer.toString( pilotoIntent.getCant_podiosTotales() ));
+        puntos.setText(Integer.toString( pilotoIntent.getCant_puntosTotales() ));
+        gp.setText(Integer.toString( pilotoIntent.getCant_granPremiosIngresado() ));
+
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(pilotoIntent.getFecha_Nacimiento());
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        fecha.setText(dia+"/"+mes+"/"+anio);
+
+        fecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(ActualizarPilotoView.this,
+                        AlertDialog.THEME_HOLO_DARK, mDateSetListener, year, month, day);
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                fechaNacimiento_piloto = new GregorianCalendar(year, month, dayOfMonth).getTime();
+
+                month += 1;
+                Log.d(TAG, "onDateSet: date:" + dayOfMonth + "/" + month + "/" + year);
+
+                fecha.setText(dayOfMonth + "/" + month + "/" + year);
+            }
+        };
 
         buttonGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,73 +222,6 @@ public class ActualizarPilotoView extends AppCompatActivity {
             if(bitmap != null){
                 previewFoto.setImageBitmap(bitmap);
             }
-        }
-    }
-
-    private class WebMet_ActualizarPiloto extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8081/WS/crud_piloto?wsdl";
-            final String METHOD_NAME = "piloto_update";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/piloto_update";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-            //request.addProperty("Hola", nro1.getText().toString());
-            //request.addProperty("nro2", nro2.getText().toString());
-
-            XMLGregorianCalendar fecha= null;
-
-            //request.addProperty("id", "5bba54b01c08ef0495bc5676");
-            request.addProperty("nombreCompleto", nombre.getText().toString());
-            request.addProperty("fecha_Nacimiento", null);
-            request.addProperty("lugarNacimiento", lugar.getText().toString());
-            request.addProperty("foto_ref", foto.getText().toString());
-            request.addProperty("cant_podiosTotales", Integer.parseInt(podios.getText().toString()));
-            request.addProperty("cant_puntosTotales", Integer.parseInt(puntos.getText().toString()));
-            request.addProperty("cant_granPremiosIngresado", Integer.parseInt(gp.getText().toString()));
-
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-                ht.call(SOAP_ACTION, envelope);
-                SoapPrimitive response = (SoapPrimitive)envelope.getResponse();
-                //resultado=response.toString();
-                //Log.i("Resultado: ",resultado);
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-            }
-            else{
-
-                //campo = (TextView) findViewById(R.id.conexion);
-
-                //campo.setText(resultado);
-
-                Toast.makeText(getApplicationContext(), 	"Piloto Actualizado", Toast.LENGTH_LONG).show();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -355,8 +331,7 @@ public class ActualizarPilotoView extends AppCompatActivity {
             if (success == false) {
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(getApplicationContext(), "Piloto Actualizado", Toast.LENGTH_LONG).show();
-                finish();
+                Log.d(TAG,"Foto subida");
             }
         }
 
@@ -368,9 +343,11 @@ public class ActualizarPilotoView extends AppCompatActivity {
 
     public void consumeRESTVolleyActualizarPiloto (String urlFoto, Piloto piloto) throws ParseException {
 
+        Log.d(TAG,"Consume");
         piloto.setNombreCompleto(nombre.getText().toString());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        piloto.setFecha_Nacimiento(simpleDateFormat.parse(fecha.getText().toString()));
+        if(fechaNacimiento_piloto != null){
+            piloto.setFecha_Nacimiento(fechaNacimiento_piloto);
+        }
         piloto.setLugarNacimiento(lugar.getText().toString());
         piloto.setCant_podiosTotales(Integer.parseInt(podios.getText().toString()));
         piloto.setCant_puntosTotales(Integer.parseInt(puntos.getText().toString()));
@@ -379,6 +356,7 @@ public class ActualizarPilotoView extends AppCompatActivity {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         String result = gson.toJson(piloto);
+        Log.d(TAG,result);
 
         JSONObject js = null;
         try {
@@ -408,7 +386,9 @@ public class ActualizarPilotoView extends AppCompatActivity {
                         Log.d(TAG, "" + response.toString());
 
                         Toast.makeText(getApplicationContext(), 	"Piloto Actualizado", Toast.LENGTH_LONG).show();
-                        finish();
+                        Intent intent = new Intent(ActualizarPilotoView.this, BuscarPilotosView.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
 
                     }
 

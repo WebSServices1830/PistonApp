@@ -1,6 +1,7 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
@@ -23,10 +24,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.CartaMenu;
+import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class IndexPilotoView extends AppCompatActivity {
@@ -138,7 +142,8 @@ public class IndexPilotoView extends AppCompatActivity {
                 break;
 
             case R.id.menuLogout:
-                //logout();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 break;
 
         }
@@ -184,20 +189,12 @@ public class IndexPilotoView extends AppCompatActivity {
     private void prepareAlbums() {
         int[] covers = new int[]{
                 R.drawable.ic_f1,
-                R.drawable.ic_f1,
-                R.drawable.ic_f1,
-                R.drawable.ic_f1};
+                R.drawable.f1_pilotos};
 
-        CartaMenu a = new CartaMenu("Crear Piloto", "Crea un nuevo piloto", covers[0]);
+        CartaMenu a = new CartaMenu("Crear piloto", "Crea un nuevo piloto", covers[0]);
         cartaMenuList.add(a);
 
-        a = new CartaMenu("Ver Piloto", "Mira los pilotos actuales", covers[1]);
-        cartaMenuList.add(a);
-
-        a = new CartaMenu("Actualizar Piloto", "Actualiza la información de un piloto", covers[2]);
-        cartaMenuList.add(a);
-
-        a = new CartaMenu("Eliminar Piloto", "Elimina un piloto del sistema", covers[3]);
+        a = new CartaMenu("Manejar pilotos", "Visualiza, edita y elimina los pilotos actuales", covers[1]);
         cartaMenuList.add(a);
 
 

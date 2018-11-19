@@ -20,13 +20,15 @@
                 android:layout_height="wrap_content"
                 android:hint="Nombre Piloto"
                 />
+
             <EditText
                 android:id="@+id/editText_fechaPiloto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editText_nombrePiloto"
-                android:hint="Fecha: Por ahora se enviará null"
-                />
+                android:hint="Fecha de nacimiento"
+                android:inputType="none"
+                android:focusable="false"/>
             <EditText
                 android:id="@+id/editText_lugarNacimientoPiloto"
                 android:layout_width="match_parent"
@@ -90,8 +92,8 @@
 
             <ImageButton
                 android:id="@+id/imageButtonActualizarPilotoGaleria"
-                android:layout_width="83dp"
-                android:layout_height="96dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_above="@+id/actPiloto"
                 android:layout_below="@+id/editText_ingresosGPTotales"
                 android:layout_marginStart="-91dp"
@@ -109,8 +111,8 @@
 
             <ImageButton
                 android:id="@+id/imageButtonActualizarPilotoCamara"
-                android:layout_width="78dp"
-                android:layout_height="96dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_above="@+id/actPiloto"
                 android:layout_below="@+id/editText_ingresosGPTotales"
                 android:layout_alignParentEnd="true"

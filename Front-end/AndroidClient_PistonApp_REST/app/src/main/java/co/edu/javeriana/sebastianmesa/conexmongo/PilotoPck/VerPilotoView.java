@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
@@ -52,6 +54,10 @@ import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
 public class VerPilotoView extends AppCompatActivity {
 
     private final static String TAG = "Log_VerPiloto";
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseActualUser;
+
     private ImageView imageView_fotoPiloto;
     TextView textView_nombreCompleto;
     TextView textView_fechaNacimiento;
@@ -62,12 +68,19 @@ public class VerPilotoView extends AppCompatActivity {
     TextView textView_calificacion;
     Button botonEditar, botonEliminar;
 
+    LinearLayout botonesAdmin;
+
     DownloadImageTask downloadImageTask;
+
+    boolean userIsAdmin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_piloto_view);
+
+        mAuth = FirebaseAuth.getInstance();
+        firebaseActualUser = mAuth.getCurrentUser();
 
         botonEditar= findViewById(R.id.buttonVerPiloto_Editar);
         botonEliminar= findViewById(R.id.buttonVerPiloto_Eliminar);
@@ -79,6 +92,10 @@ public class VerPilotoView extends AppCompatActivity {
         textView_puntosTotales = findViewById(R.id.textView_puntosTotales);
         textView_granPremios = findViewById(R.id.textView_ingresosGranPremios);
         textView_calificacion = findViewById(R.id.textView_calificacion);
+
+        botonesAdmin = findViewById(R.id.botones_pilotos_admin);
+
+        updateUserIsAdmin(firebaseActualUser);
 
         final Piloto piloto = (Piloto) getIntent().getSerializableExtra("Piloto");
 
@@ -120,6 +137,43 @@ public class VerPilotoView extends AppCompatActivity {
                 consumeRESTVolleyEliminarPiloto(piloto.getId_str());
             }
         });
+
+    }
+
+    public void updateUserIsAdmin(FirebaseUser user){
+        RequestQueue mRequestQueue;
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/usuarios/";
+        String path= user.getEmail();
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+
+                            userIsAdmin = jsonObject.getBoolean("admin");
+
+                            if(userIsAdmin){
+                                botonesAdmin.setVisibility(View.VISIBLE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG, "Error JSONException"+e.getCause());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "Error handling rest invocation"+error.getCause());
+                    }
+                }
+        );
+
+        mRequestQueue.add(req);
 
     }
 
@@ -171,7 +225,9 @@ public class VerPilotoView extends AppCompatActivity {
                         Log.d(TAG, "" + response.toString());
 
                         Toast.makeText(getApplicationContext(), 	"Piloto Eliminado", Toast.LENGTH_LONG).show();
-                        finish();
+                        Intent intent = new Intent(VerPilotoView.this, BuscarPilotosView.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
 
                     }
 

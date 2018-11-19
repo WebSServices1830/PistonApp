@@ -1,6 +1,7 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
@@ -23,10 +24,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.CartaMenu;
+import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class IndexEscuderiaView extends AppCompatActivity {
@@ -137,7 +141,8 @@ public class IndexEscuderiaView extends AppCompatActivity {
                 break;
 
             case R.id.menuLogout:
-                //logout();
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getBaseContext(), LoginActivityView.class));
                 break;
 
         }

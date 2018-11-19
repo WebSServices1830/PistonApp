@@ -56,6 +56,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -76,7 +77,6 @@ public class VerUsuarioView extends AppCompatActivity {
 
     private ImageView imagenPerfil;
     private TextView tv_nombreUsuario, tv_fechaNacimientoUsuario, tv_bolsilloUsuario;
-    private WebMet_ConsultarUsuario wm_agregarPiloto = null;
 
     private FirebaseAuth mAuth;
 
@@ -125,7 +125,15 @@ public class VerUsuarioView extends AppCompatActivity {
                             tv_bolsilloUsuario = (TextView) findViewById(R.id.campo_bolsilloUsuario);
 
                             tv_nombreUsuario.setText(nombreJSON);
-                            tv_fechaNacimientoUsuario.setText(fechaJSON.toString());
+
+                            Calendar calendar = new GregorianCalendar();
+                            calendar.setTime(fechaJSON);
+
+                            int anio = calendar.get(Calendar.YEAR);
+                            int mes = calendar.get(Calendar.MONTH) + 1;
+                            int dia = calendar.get(Calendar.DAY_OF_MONTH);
+                            tv_fechaNacimientoUsuario.setText(dia+"/"+mes+"/"+anio);
+
                             tv_bolsilloUsuario.setText("$" + bolsilloJSON);
 
                             if(!urlJSON.equals("")){
@@ -151,94 +159,6 @@ public class VerUsuarioView extends AppCompatActivity {
 
         mRequestQueue.add(req);
 
-    }
-
-    private class WebMet_ConsultarUsuario extends AsyncTask<Void, Void, Boolean> {
-
-
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final String URL="http://10.0.2.2:8080/WS/autenticacion?wsdl";
-            final String METHOD_NAME = "validarLogin";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/validarLogin";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("nombreUsuario", ManagerUsuario.usuario.getNombreUsuario());
-            request.addProperty("contrasenia", ManagerUsuario.usuario.getContra());
-
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-
-                //campoRespuesta = (TextView) findViewById(R.id.respuestaConsulta);
-                //campoRespuesta.setText("");
-
-                ht.call(SOAP_ACTION, envelope);
-                SoapObject response = (SoapObject) envelope.getResponse();
-
-                if (response != null) {
-
-                    String nombreUsuario = response.getPrimitivePropertyAsString("nombreUsuario");
-                    String contrasenia = response.getPrimitivePropertyAsString("contra");
-                    Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(response.getPrimitivePropertyAsString("fechaNacimiento"));
-                    String urlFoto = response.getPrimitivePropertyAsString("urlFoto");
-                    boolean admin = Boolean.parseBoolean(response.getPrimitivePropertyAsString("admin"));
-                    double bolsillo = Double.parseDouble(response.getPrimitivePropertyAsString("bolsillo"));
-
-                    ManagerUsuario.usuario = new Usuario();
-
-                    ManagerUsuario.usuario.setNombreUsuario(nombreUsuario);
-                    ManagerUsuario.usuario.setContra(contrasenia);
-                    ManagerUsuario.usuario.setFechaNacimiento(fechaNacimiento);
-                    ManagerUsuario.usuario.setUrlFoto(urlFoto);
-                    ManagerUsuario.usuario.setAdmin(admin);
-                    ManagerUsuario.usuario.setBolsillo(bolsillo);
-
-                    return true;
-                }
-
-
-            }
-            catch (Exception e)
-            {
-                Log.i("Error",e.getMessage());
-                //Toast.makeText(getApplicationContext(), "No encontrado", Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-
-            }
-
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-            }
-            else{
-
-                tv_nombreUsuario.setText(tv_nombreUsuario.getText() + ManagerUsuario.usuario.getNombreUsuario());
-                tv_fechaNacimientoUsuario.setText(tv_fechaNacimientoUsuario.getText() + ManagerUsuario.usuario.getFechaNacimiento().toString());
-                tv_bolsilloUsuario.setText(tv_bolsilloUsuario.getText() + Double.toString(ManagerUsuario.usuario.getBolsillo()));
-
-                if(!ManagerUsuario.usuario.getUrlFoto().equals("")){
-                    new DownloadImageTask().execute(ManagerUsuario.usuario.getUrlFoto());
-                }
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
-        }
     }
 
     class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

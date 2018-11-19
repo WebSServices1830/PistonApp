@@ -281,6 +281,7 @@ public class ActualizarEscuderiaView extends AppCompatActivity {
                                         Integer.parseInt(obj.getString("cant_vecesEnPodio")),
                                         Integer.parseInt(obj.getString("cant_TitulosCampeonato")),
                                         obj.getString("fotoEscudo_ref"));
+                                e.setId_str(obj.getString("id_str"));
                                 escuderias.add(e);
                             }
 

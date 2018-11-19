@@ -137,6 +137,8 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
                                 GranPremio granPremio= new GranPremio(id_str,fecha,cantVueltas,mejorVuelta,pista,id_campeonato);
 
+                                
+
                                 listagranPremios.add(granPremio);
 
                             }

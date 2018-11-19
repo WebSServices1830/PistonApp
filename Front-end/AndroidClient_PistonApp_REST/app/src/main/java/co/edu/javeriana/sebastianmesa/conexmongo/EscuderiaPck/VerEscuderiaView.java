@@ -86,7 +86,7 @@ public class VerEscuderiaView extends AppCompatActivity {
                                 int cant_vecesEnPodio = Integer.parseInt(escuderia_json.getString("cant_vecesEnPodio"));
                                 int cant_TitulosCampeonato = Integer.parseInt(escuderia_json.getString("cant_TitulosCampeonato"));
 
-                                escuderias.add(new Escuderia(
+                                Escuderia e =new Escuderia(
                                         nombre,
                                         lugarBase,
                                         jefeTecnico,
@@ -94,7 +94,9 @@ public class VerEscuderiaView extends AppCompatActivity {
                                         chasis,
                                         cant_vecesEnPodio,
                                         cant_TitulosCampeonato,
-                                        fotoEscudo_ref));
+                                        fotoEscudo_ref);
+                                e.setId_str(escuderia_json.getString("id_str"));
+                                escuderias.add(e);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

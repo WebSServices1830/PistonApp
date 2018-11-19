@@ -39,6 +39,7 @@ import java.util.List;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.VerEscuderiaView;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.VerGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Apuesta;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Escuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.GranPremio;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
@@ -84,8 +85,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
         this.consumeRESTVolleyVerCampeonatoString();
         //Log.i("idCampeonato",idCalendarioCampeonato);
 
-        WebMet_GranPremiosOrdenadoPorFecha wm_granPremiosOrdenadoPorFecha = new WebMet_GranPremiosOrdenadoPorFecha();
-        wm_granPremiosOrdenadoPorFecha.execute();
+        consumeRESTVolleyGranPremiosOrdenadoPorFecha();
 
         spinner_granPremios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -102,6 +102,10 @@ public class ConfirmBetActivity extends AppCompatActivity {
         button_apostar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*Apuesta a =new Apuesta( String usuario,
+                                        String piloto,
+                                        String granpremio,
+                                        double monto2);*/
 
             }
         });

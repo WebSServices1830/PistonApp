@@ -267,8 +267,8 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
 
                                 listagranPremios.add(granPremio);
-
                             }
+                            adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {

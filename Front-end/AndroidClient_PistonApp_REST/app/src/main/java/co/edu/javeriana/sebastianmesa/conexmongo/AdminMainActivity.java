@@ -47,6 +47,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.IndexGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.IndexPilotoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.Simulacion.GPSimulationActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.IndexUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck.VerUsuarioView;
 import co.edu.javeriana.sebastianmesa.conexmongo.fragment.CalendarioFragment;
@@ -83,6 +84,10 @@ public class AdminMainActivity extends AppCompatActivity {
         //toolbar.setTitle("Index");
         loadFragment(new IndexFragment());
 
+    }
+
+    public void simularGranPremio(View view){
+        startActivity(new Intent(getBaseContext(), GPSimulationActivity.class));
     }
 
     public void accionesPiloto (View view){

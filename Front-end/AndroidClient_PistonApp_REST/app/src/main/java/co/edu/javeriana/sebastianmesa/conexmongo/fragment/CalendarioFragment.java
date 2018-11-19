@@ -294,7 +294,7 @@ public class CalendarioFragment extends Fragment {
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject obj = jsonArray.getJSONObject(a);
 
-                                GranPremio granPremioObjeto= new GranPremio();
+                                GranPremio granPremioObjeto = new GranPremio();
                                 granPremioObjeto.setId_str(obj.getString("id_str"));
                                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                                 granPremioObjeto.setFecha(simpleDateFormat.parse(obj.getString("fecha")));

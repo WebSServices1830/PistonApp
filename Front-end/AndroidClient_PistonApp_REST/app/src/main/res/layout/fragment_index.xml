@@ -95,6 +95,22 @@
             />
 
         <info.hoang8f.widget.FButton
+            android:id="@+id/button_simularGranPremio"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            fbutton:buttonColor="#2d867c"
+            fbutton:shadowColor="@color/black"
+            android:text="Simular Gran Premio"
+            android:onClick="simularGranPremio"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="5dp"
+            android:visibility="gone"
+            />
+
+        <info.hoang8f.widget.FButton
             android:layout_marginTop="40dp"
             android:id="@+id/button_verPerfil"
             android:layout_width="150dp"

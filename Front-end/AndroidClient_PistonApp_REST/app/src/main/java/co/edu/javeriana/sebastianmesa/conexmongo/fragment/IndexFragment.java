@@ -67,6 +67,7 @@ public class IndexFragment extends Fragment {
             view.findViewById(R.id.accionesEscuderia).setVisibility( View.VISIBLE );
             view.findViewById(R.id.accionesAuto).setVisibility( View.VISIBLE );
             view.findViewById(R.id.button_cargarDatos).setVisibility( View.VISIBLE );
+            view.findViewById(R.id.button_simularGranPremio).setVisibility( View.VISIBLE );
         }
 
         String nombreActividad = getActivity().toString();

@@ -187,21 +187,13 @@ public class IndexEscuderiaView extends AppCompatActivity {
      */
     private void prepareAlbums() {
         int[] covers = new int[]{
-                R.drawable.ic_escuderias,
-                R.drawable.ic_escuderias,
-                R.drawable.ic_escuderias,
+                R.drawable.f1_team,
                 R.drawable.ic_escuderias};
 
-        CartaMenu a = new CartaMenu("Crear Escuderia", "Crea una nueva escuderia", covers[0]);
+        CartaMenu a = new CartaMenu("Crear escudería", "Crea una nueva escudería", covers[0]);
         cartaMenuList.add(a);
 
-        a = new CartaMenu("Ver Escuderia", "Mira una escuderia", covers[1]);
-        cartaMenuList.add(a);
-
-        a = new CartaMenu("Actualizar Escuderia", "Actualiza la información de una Escuderia", covers[2]);
-        cartaMenuList.add(a);
-
-        a = new CartaMenu("Eliminar Escuderia", "Elimina una Escuderia sistema", covers[3]);
+        a = new CartaMenu("Manejar escuderías", "Visualiza, edita y elimina las escuderías actuales", covers[1]);
         cartaMenuList.add(a);
 
 

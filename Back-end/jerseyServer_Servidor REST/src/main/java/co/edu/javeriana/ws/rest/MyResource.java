@@ -108,7 +108,6 @@ public class MyResource {
 	// http://localhost:8080/myapp/PistonApp/granPremio/5be0cc5e8f2dfa4c6467b6fe/simulacion
 	@POST
 	@Path("/granPremio/{idGranpremio}/simulacion")
-	@Consumes("application/json")
 	public ResponseBuilder simulacion(@PathParam("idGranpremio") String idGranpremio) {
 		manejadorSimulacion.simularGranPremio(idGranpremio);
 		return Response.status(200);

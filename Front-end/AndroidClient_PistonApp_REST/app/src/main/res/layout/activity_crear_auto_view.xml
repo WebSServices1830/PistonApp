@@ -1,95 +1,116 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AutoPck.CrearAutoView">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/textView_crearAuto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/textView_crearAuto"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/nomAuto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_crearAuto"
+            android:hint="@string/textView_crearAuto" />
 
-            <EditText
-                android:id="@+id/nomAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre Auto"
-                />
-            <EditText
-                android:id="@+id/pesoEnKgAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nomAuto"
-                android:hint="Peso en Kg"
-                />
-            <EditText
-                android:id="@+id/ruedasAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/pesoEnKgAuto"
-                android:hint="Nombre ruedas"
-                />
-            <EditText
-                android:id="@+id/combustibleAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ruedasAuto"
-                android:hint="Nombre combustible"
-                />
-            <EditText
-                android:id="@+id/foto_refAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/combustibleAuto"
-                android:hint="Referencia foto"
-                />
-            <EditText
-                android:id="@+id/motor_referenciaAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/foto_refAuto"
-                android:hint="Referencia del motor"
-                />
-            <EditText
-                android:id="@+id/motor_cilindrajeAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/motor_referenciaAuto"
-                android:hint="Cilindraje del motor"
-                />
-            <EditText
-                android:id="@+id/motor_configuracionAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/motor_cilindrajeAuto"
-                android:hint="Configuracion del motor"
-                />
-            <CheckBox
-                android:id="@+id/motor_turboAuto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tiene motor turbo?"
-                android:layout_below="@+id/motor_configuracionAuto"
-                />
+        <EditText
+            android:id="@+id/pesoEnKgAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nomAuto"
+            android:hint="Peso en Kg" />
 
-            <Button
-                android:id="@+id/agregarAuto"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
-                android:layout_below="@+id/motor_turboAuto"
-                android:text="Agregar Auto" />
+        <EditText
+            android:id="@+id/ruedasAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pesoEnKgAuto"
+            android:hint="Nombre ruedas" />
 
-        </RelativeLayout>
+        <EditText
+            android:id="@+id/combustibleAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ruedasAuto"
+            android:hint="Nombre combustible" />
+
+        <EditText
+            android:id="@+id/motor_referenciaAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/combustibleAuto"
+            android:hint="Referencia del motor" />
+
+        <EditText
+            android:id="@+id/motor_cilindrajeAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/motor_referenciaAuto"
+            android:hint="Cilindraje del motor" />
+
+        <EditText
+            android:id="@+id/motor_configuracionAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/motor_cilindrajeAuto"
+            android:hint="Configuracion del motor" />
+
+        <CheckBox
+            android:id="@+id/motor_turboAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/motor_configuracionAuto"
+            android:text="Tiene motor turbo?" />
+
+        <ImageView
+            android:id="@+id/imageView_fotoAuto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/motor_turboAuto" />
+
+        <ImageButton
+            android:id="@+id/imageButton_seleccionarImagen_auto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/motor_turboAuto"
+            android:layout_toRightOf="@id/imageView_fotoAuto"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_image_selector" />
+
+        <ImageButton
+            android:id="@+id/imageButton_tomarFoto_auto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/motor_turboAuto"
+            android:layout_toRightOf="@id/imageButton_seleccionarImagen_auto"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_camera" />
+
+        <Button
+            android:id="@+id/agregarAuto"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView_fotoAuto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="@string/button_agregar" />
+
+    </RelativeLayout>
 
 
-    </ScrollView>
-
-
-
-</RelativeLayout>
+</ScrollView>

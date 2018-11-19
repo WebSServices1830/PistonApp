@@ -65,7 +65,8 @@
         <activity android:name=".Apuestas.ConfirmBetActivity" />
         <activity android:name=".EstadisticasPck.EstPorResultados" />
         <activity android:name=".EstadisticasPck.EstGPEspecifico" />
-        <activity android:name=".Simulacion.GPSimulationActivity"></activity>
+        <activity android:name=".Simulacion.GPSimulationActivity" />
+        <activity android:name=".EscuderiaPck.BuscarEscuderiasView"></activity>
     </application>
 
 </manifest>

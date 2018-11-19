@@ -39,6 +39,7 @@ import java.util.Map;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.Apuestas.BetActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
+import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.BuscarEscuderiasView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorEscuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
@@ -329,6 +330,10 @@ public class AdminMainActivity extends AppCompatActivity {
 
     public void verPilotos(View view){
         startActivity(new Intent(getBaseContext(), BuscarPilotosView.class));
+    }
+
+    public void verEscuderias(View view){
+        startActivity(new Intent(getBaseContext(), BuscarEscuderiasView.class));
     }
 
     public void hacerApuesta(View view){

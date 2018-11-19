@@ -1,11 +1,12 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 
-public class Escuderia {
+public class Escuderia implements Serializable {
 	
 	private String id_str;
 	private ObjectId id;

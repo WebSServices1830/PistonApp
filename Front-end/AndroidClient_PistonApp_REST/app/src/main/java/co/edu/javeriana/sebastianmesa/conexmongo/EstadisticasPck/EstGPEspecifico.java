@@ -170,7 +170,7 @@ public class EstGPEspecifico extends AppCompatActivity {
     public void consumeRESTVolleyGranPremiosOrdenadosPorFecha(){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp";
-        String path = "/granPremios/"+idCalendarioCampeonato;
+        String path = "/campeonatos/"+idCalendarioCampeonato+"/granPremios";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
                 new Response.Listener<JSONArray>() {
                     @Override

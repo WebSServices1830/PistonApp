@@ -18,11 +18,18 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <Spinner
+            android:id="@+id/spinner_escuderias_crearPiloto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_crearPiloto">
+        </Spinner>
+
         <EditText
             android:id="@+id/editText_nombrePiloto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView_crearPiloto"
+            android:layout_below="@id/spinner_escuderias_crearPiloto"
             android:hint="Nombre del piloto"
             android:inputType="text" />
 
@@ -31,9 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editText_nombrePiloto"
-            android:hint="Fecha: Por ahora se enviará null"
-            android:inputType="none"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:hint="Fecha de nacimiento"
+            android:inputType="none" />
 
         <EditText
             android:id="@+id/editText_lugarNacimientoPiloto"
@@ -101,7 +108,8 @@
             android:layout_below="@+id/imageView_fotoPiloto"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="@string/button_agregar" />
+            android:text="@string/button_agregar"
+            android:enabled="false"/>
 
     </RelativeLayout>
 

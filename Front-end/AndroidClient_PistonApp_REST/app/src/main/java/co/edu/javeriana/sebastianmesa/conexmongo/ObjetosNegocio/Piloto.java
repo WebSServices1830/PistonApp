@@ -25,13 +25,16 @@ public class Piloto implements Serializable {
 	private int cant_puntosTotales;
 	private int cant_granPremiosIngresado;
 	private float calificacion;
+	private String id_escuderia;
 
 	public Piloto() {
-
+		this.id = new ObjectId();
+		this.id_str= this.id.toString();
+		this.calificacion=0;
 	}
 
 	public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
-				  int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado) {
+				  int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado, String id_escuderia) {
 		this.id = new ObjectId();
 		this.nombreCompleto = nombreCompleto;
 		this.fecha_Nacimiento = fecha_Nacimiento;
@@ -42,6 +45,7 @@ public class Piloto implements Serializable {
 		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
 		this.id_str= this.id.toString();
 		this.calificacion=0;
+		this.id_escuderia = id_escuderia;
 	}
 
 	public float getCalificacion() {
@@ -122,6 +126,14 @@ public class Piloto implements Serializable {
 
 	public void setId_str(String id_str) {
 		this.id_str = id_str;
+	}
+
+	public String getId_escuderia() {
+		return id_escuderia;
+	}
+
+	public void setId_escuderia(String id_escuderia) {
+		this.id_escuderia = id_escuderia;
 	}
 
 }

@@ -21,6 +21,8 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import com.mongodb.Block;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
+import com.mongodb.MongoWriteConcernException;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -47,12 +49,12 @@ public class CRUD_Escuderia {
     // get a handle to the "people" collection
     MongoCollection<co.edu.javeriana.ws.rest.clases.Escuderia> collection = database.getCollection("escuderias", Escuderia.class);
     
-    public void escuderia_create(Escuderia escuderia) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+    public void escuderia_create(Escuderia escuderia) throws MongoWriteException, MongoWriteConcernException, MongoException{
     	collection.insertOne(escuderia);
     }
     
     public Escuderia escuderia_get(String id) {
-    	Escuderia escuderia = collection.find(eq("id", id)).first();
+    	Escuderia escuderia = collection.find(eq("id_str", id)).first();
     	return escuderia;
     }
    	
@@ -87,9 +89,9 @@ public class CRUD_Escuderia {
 		
 	}
 
-   	public void escuderia_update(Escuderia escuderia, String idEscuderia) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+   	public void escuderia_update(Escuderia escuderia, String id_escuderia) throws MongoWriteException, MongoWriteConcernException, MongoException{
    		collection.updateOne(
-   				eq("id", idEscuderia) , 
+   				eq("id_str", id_escuderia) , 
    				combine(
    						set("nombre",escuderia.getNombre()), 
 						set("lugarBase",escuderia.getLugarBase()), 
@@ -105,11 +107,11 @@ public class CRUD_Escuderia {
    				);
    	}
    	
-	public void escuderia_delete(String id) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+	public void escuderia_delete(String id) throws MongoWriteException, MongoWriteConcernException, MongoException{
 		collection.deleteOne(eq("id", id));
 	}
 	
-	public void escuderia_deleteByName(String nombre) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+	public void escuderia_deleteByName(String nombre) throws MongoWriteException, MongoWriteConcernException, MongoException{
 		collection.deleteOne(eq("nombre",nombre));
 		
 	}

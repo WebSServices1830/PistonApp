@@ -242,7 +242,7 @@ public class MyResource {
 	@Consumes("application/json")
 	public ResponseBuilder actualizarUsuario(@PathParam("idUsuario") String idUsuario, Usuario usuario) {
 		try {
-			manejadorUsuario.usuario_update(usuario);
+			manejadorUsuario.usuario_update(usuario, idUsuario);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);
@@ -299,7 +299,17 @@ public class MyResource {
 	@Path("/pilotos")
 	@Consumes("application/json")
 	public ResponseBuilder crearPiloto(Piloto piloto) {
-		manejadorPiloto.piloto_create(piloto);
+		try {
+			manejadorPiloto.piloto_create(piloto);
+			Escuderia escuderiaAsociada = manejadorEscuderia.escuderia_get(piloto.getId_escuderia());
+			System.out.println(escuderiaAsociada.toString());
+			escuderiaAsociada.getPilotos().add(piloto.getId_str());
+			manejadorEscuderia.escuderia_update(escuderiaAsociada, escuderiaAsociada.getId_str());
+		}catch(Exception e){
+			e.printStackTrace();
+			return Response.status(500);
+		}
+		
 		return Response.status(200);
 
 	}
@@ -332,7 +342,7 @@ public class MyResource {
 	@Consumes("application/json")
 	public ResponseBuilder actualizarEscuderia(@PathParam("idEscuderia") String idEscuderia, Escuderia escuderia) {
 		try {
-			manejadorEscuderia.escuderia_update(escuderia, idEscuderia);
+			manejadorEscuderia.escuderia_update(escuderia,idEscuderia);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);

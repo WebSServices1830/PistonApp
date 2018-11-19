@@ -31,8 +31,8 @@ public class Piloto {
     
     public Piloto() {
     	this.id = new ObjectId();
-    	this.id_str= this.id.toString();
-    	this.calificacion=0;
+    	this.id_str = this.id.toString();
+    	this.calificacion = 0;
     }
     
     public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
@@ -45,8 +45,23 @@ public class Piloto {
 		this.cant_podiosTotales = cant_podiosTotales;
 		this.cant_puntosTotales = cant_puntosTotales;
 		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
-		this.id_str= this.id.toString();
-		this.calificacion=0;
+		this.id_str = this.id.toString();
+		this.calificacion = 0;
+	}
+    
+    public Piloto(String nombreCompleto, Date fecha_Nacimiento, String lugarNacimiento, String foto_ref,
+			int cant_podiosTotales, int cant_puntosTotales, int cant_granPremiosIngresado, String id_escuderia) {
+    	this.id = new ObjectId();
+		this.nombreCompleto = nombreCompleto;
+		this.fecha_Nacimiento = fecha_Nacimiento;
+		this.lugarNacimiento = lugarNacimiento;
+		this.foto_ref = foto_ref;
+		this.cant_podiosTotales = cant_podiosTotales;
+		this.cant_puntosTotales = cant_puntosTotales;
+		this.cant_granPremiosIngresado = cant_granPremiosIngresado;
+		this.id_str = this.id.toString();
+		this.calificacion = 0;
+		this.id_escuderia = id_escuderia;
 	}
     
 	public float getCalificacion() {

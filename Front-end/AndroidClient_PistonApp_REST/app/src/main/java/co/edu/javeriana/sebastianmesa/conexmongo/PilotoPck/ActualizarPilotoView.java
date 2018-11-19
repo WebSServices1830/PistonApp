@@ -1,12 +1,27 @@
 package co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +38,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
+import com.mongodb.client.gridfs.GridFSDownloadStream;
 
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +54,9 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,24 +69,35 @@ import java.util.Map;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
+import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.ClienteMongo;
+import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
 
 public class ActualizarPilotoView extends AppCompatActivity {
 
     private final static String TAG = "Log_ActualizarPiloto";
+    private final static int STORAGE_PERMISSION = 1;
+    private final static int CAMERA_PERMISSION = 2;
+
+    static final int IMAGE_PICKER_REQUEST = 10;
+    static final int IMAGE_CAPTURE_REQUEST = 20;
+
+    private ImageView previewFoto;
+    private ImageButton buttonCamara, buttonGaleria;
 
     private EditText nombre, fecha, lugar, foto, podios, puntos, gp;
     private Button updateP;
-    private String resultado="";
-    private WebMet_ActualizarPiloto wm_actualizarPiloto = null;
-    private TextView campo = null;
-    private List<Piloto> listaPilotos= new ArrayList<Piloto>();
+    private Piloto pilotoIntent= (Piloto) getIntent().getSerializableExtra("Piloto");
+    DownloadImageTask downloadImageTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualizar_piloto_view);
 
+        previewFoto= (ImageView) findViewById(R.id.imageViewActualizarPilotoImage);
+        buttonCamara = (ImageButton) findViewById(R.id.imageButtonActualizarPilotoCamara);
+        buttonGaleria = (ImageButton) findViewById(R.id.imageButtonActualizarPilotoGaleria);
         nombre = (EditText) findViewById(R.id.editText_nombrePiloto);
         lugar = (EditText) findViewById(R.id.editText_lugarNacimientoPiloto);
         foto = (EditText) findViewById(R.id.fotoRefPiloto);
@@ -71,6 +106,34 @@ public class ActualizarPilotoView extends AppCompatActivity {
         gp = (EditText) findViewById(R.id.editText_ingresosGPTotales);
         fecha = (EditText) findViewById(R.id.editText_fechaPiloto);
 
+        downloadImageTask = new DownloadImageTask();
+        downloadImageTask.execute(pilotoIntent.getFoto_ref());
+        nombre.setText(pilotoIntent.getNombreCompleto());
+        lugar.setText(pilotoIntent.getLugarNacimiento());
+        podios.setText(pilotoIntent.getCant_podiosTotales());
+        puntos.setText(pilotoIntent.getCant_puntosTotales());
+        gp.setText(pilotoIntent.getCant_granPremiosIngresado());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            fecha.setText(simpleDateFormat.parse(pilotoIntent.getFecha_Nacimiento().toString()).toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        buttonGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission(ActualizarPilotoView.this, Manifest.permission.READ_EXTERNAL_STORAGE, "Se necesita acceso al almacenamiento", STORAGE_PERMISSION);
+            }
+        });
+
+        buttonCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPermission(ActualizarPilotoView.this, Manifest.permission.CAMERA, "Se necesita acceso a la cámara", CAMERA_PERMISSION);
+            }
+        });
+
         updateP =(Button) findViewById(R.id.actPiloto);
         updateP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,10 +141,45 @@ public class ActualizarPilotoView extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 /*wm_actualizarPiloto = new WebMet_ActualizarPiloto();
                 wm_actualizarPiloto.execute();*/
-                consumeRESTVolleyGetPilotos(nombre.getText().toString());
+                ActualizarPilotoAsync actualizarPilotoAsync= new ActualizarPilotoAsync();
+                actualizarPilotoAsync.execute();
             }
         });
 
+    }
+
+    class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+        MongoClient mongoClient = ClienteMongo.getInstancia();
+
+        // get handle to "PistonAppDB" database
+        MongoDatabase database = mongoClient.getDatabase("PistonAppDB");
+
+        // Create a gridFSBucket with a custom bucket name "files"
+        GridFSBucket gridFSFilesBucket = GridFSBuckets.create(database, "almacenamiento");
+
+        private Exception exception;
+
+        protected Bitmap doInBackground(String... ids) {
+            ObjectId fileId = new ObjectId(ids[0]); //The id of a file uploaded to GridFS, initialize to valid file id
+
+            GridFSDownloadStream downloadStream = gridFSFilesBucket.openDownloadStream(fileId);
+            int fileLength = (int) downloadStream.getGridFSFile().getLength();
+            byte[] bytesToWriteTo = new byte[fileLength];
+            downloadStream.read(bytesToWriteTo);
+            downloadStream.close();
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytesToWriteTo, 0, bytesToWriteTo.length);
+
+
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap bitmap) {
+            if(bitmap != null){
+                previewFoto.setImageBitmap(bitmap);
+            }
+        }
     }
 
     private class WebMet_ActualizarPiloto extends AsyncTask<Void, Void, Boolean> {
@@ -151,80 +249,133 @@ public class ActualizarPilotoView extends AppCompatActivity {
         }
     }
 
-    public void consumeRESTVolleyGetPilotos(String campoNombrePiloto){
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://10.0.2.2:8080/myapp/PistonApp";
-        String path = "/pilotos/"+campoNombrePiloto;
-        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray jsonArray) {
-                        try {
-                            for (int a = 0; a < jsonArray.length(); a++) {
-                                JSONObject obj = jsonArray.getJSONObject(a);
+    private void requestPermission(Activity context, String permission, String explanation, int requestId) {
+        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?   
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
+                Toast.makeText(context, explanation, Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(context, new String[]{permission}, requestId);
+        } else {
+            switch (requestId) {
+                case STORAGE_PERMISSION: {
+                    Intent pickImage = new Intent(Intent.ACTION_PICK);
+                    pickImage.setType("image/*");
+                    startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
+                    break;
 
-                                String id_str = obj.getString("id_str");
-                                String nombreCompleto = obj.getString("nombreCompleto");
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                                Date fechaNacimiento= simpleDateFormat.parse(obj.getString("fecha_Nacimiento"));
-                                String lugarNacimiento = obj.getString("lugarNacimiento");
-                                String foto_ref = obj.getString("foto_ref");
-                                int cant_podiosTotales = obj.getInt("cant_podiosTotales") ;
-                                int cant_puntosTotales = obj.getInt("cant_puntosTotales") ;
-                                int cant_granPremiosIngresado = obj.getInt("cant_granPremiosIngresado");
-                                float calificacion = Float.parseFloat( obj.getString("calificacion") );
-
-                                Piloto piloto = new Piloto();
-                                piloto.setId_str(id_str);
-                                piloto.setNombreCompleto(nombreCompleto);
-                                piloto.setFecha_Nacimiento(fechaNacimiento);
-                                piloto.setLugarNacimiento(lugarNacimiento);
-                                piloto.setFoto_ref(foto_ref);
-                                piloto.setCant_podiosTotales(cant_podiosTotales);
-                                piloto.setCant_puntosTotales(cant_puntosTotales);
-                                piloto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
-                                piloto.setCalificacion(calificacion);
-
-                                // adding movie to movies array
-                                listaPilotos.add(piloto);
-                            }
-                            Log.d(TAG,listaPilotos.get(0).getNombreCompleto());
-                            consumeRESTVolleyActualizarPiloto(listaPilotos.get(0));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.d(TAG, "consumeRESTVolleyGranPremiosOrdenadosPorFecha: JSONException ", e);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                            Log.d(TAG, "consumeRESTVolleyGranPremiosOrdenadosPorFecha: ParseException ", e);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
-                    }
                 }
-        );
-        queue.add(req);
+                case CAMERA_PERMISSION: {
+                    takePicture();
+                    break;
+                }
+            }
+        }
     }
 
-    public void consumeRESTVolleyActualizarPiloto (Piloto piloto) throws ParseException {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case STORAGE_PERMISSION: {
+                Intent pickImage = new Intent(Intent.ACTION_PICK);
+                pickImage.setType("image/*");
+                startActivityForResult(pickImage, IMAGE_PICKER_REQUEST);
+                break;
 
-        if(nombre.getText().toString().length() > 0)
-            piloto.setNombreCompleto(nombre.getText().toString());
-        if(fecha.getText().toString().length() > 0) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            piloto.setFecha_Nacimiento(simpleDateFormat.parse(fecha.getText().toString()));
+            }
+            case CAMERA_PERMISSION: {
+                takePicture();
+                break;
+            }
         }
-        if(lugar.getText().toString().length() > 0)
-            piloto.setLugarNacimiento(lugar.getText().toString());
-        if(podios.getText().toString().length() > 0)
-            piloto.setCant_podiosTotales(Integer.parseInt(podios.getText().toString()));
-        if(puntos.getText().toString().length() > 0)
-            piloto.setCant_puntosTotales(Integer.parseInt(puntos.getText().toString()));
-        if(gp.getText().toString().length() > 0)
-            piloto.setCant_granPremiosIngresado(Integer.parseInt(gp.getText().toString()));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case IMAGE_PICKER_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    try {
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        previewFoto.setImageBitmap(selectedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case IMAGE_CAPTURE_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    previewFoto.setImageBitmap(imageBitmap);
+                }
+        }
+    }
+
+    private void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST);
+        }
+    }
+
+    private class ActualizarPilotoAsync extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            Drawable fotoPiloto = previewFoto.getDrawable();
+
+            String urlFoto = null;
+            if (fotoPiloto == null) {
+                urlFoto = "";
+            } else {
+                try {
+
+                    urlFoto = FileUpload.saveImageIntoMongoDB(fotoPiloto, nombre.getText().toString());
+                    consumeRESTVolleyActualizarPiloto(urlFoto, pilotoIntent);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("Error_FileUpload: ", e.getMessage());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            if (success == false) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Piloto Actualizado", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void consumeRESTVolleyActualizarPiloto (String urlFoto, Piloto piloto) throws ParseException {
+
+        piloto.setNombreCompleto(nombre.getText().toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        piloto.setFecha_Nacimiento(simpleDateFormat.parse(fecha.getText().toString()));
+        piloto.setLugarNacimiento(lugar.getText().toString());
+        piloto.setCant_podiosTotales(Integer.parseInt(podios.getText().toString()));
+        piloto.setCant_puntosTotales(Integer.parseInt(puntos.getText().toString()));
+        piloto.setCant_granPremiosIngresado(Integer.parseInt(gp.getText().toString()));
+        piloto.setFoto_ref(urlFoto);
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         String result = gson.toJson(piloto);

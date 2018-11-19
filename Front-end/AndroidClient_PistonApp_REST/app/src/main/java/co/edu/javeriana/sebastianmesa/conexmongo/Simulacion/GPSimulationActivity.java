@@ -8,12 +8,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.bson.types.ObjectId;
@@ -221,6 +223,28 @@ public class GPSimulationActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i(TAG, "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+    }
+
+    public void consumeREST_Simular(String idGranPremio){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "granPremio/"+idGranPremio+"/simulacion";
+        StringRequest req = new StringRequest(Request.Method.POST, url+path,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        Toast.makeText(GPSimulationActivity.this,"Simulación realizada",Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
                     }
                 }
         );

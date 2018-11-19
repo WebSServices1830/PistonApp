@@ -127,6 +127,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
                             piloto.getId_str(),
                             granPremio_seleccionado.getId_str(),
                             monto);
+                    apostar(apuesta);
                 }
             }
         });
@@ -177,7 +178,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
                         Log.d(TAG, "" + response.toString());
 
-                        Toast.makeText(getApplicationContext(), 	"apuesta creada", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), 	"Apuesta realizada", Toast.LENGTH_LONG).show();
                         finish();
 
                     }

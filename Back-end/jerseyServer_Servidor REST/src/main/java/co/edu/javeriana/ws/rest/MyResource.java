@@ -109,7 +109,7 @@ public class MyResource {
 	@POST
 	@Path("/granPremio/{idGranpremio}/simulacion")
 	@Consumes("application/json")
-	public ResponseBuilder simulacion(@PathParam("idGranpremio") String idGranpremio) { 	
+	public ResponseBuilder simulacion(@PathParam("idGranpremio") String idGranpremio) {
 		manejadorSimulacion.simularGranPremio(idGranpremio);
 		return Response.status(200);
 	}
@@ -150,14 +150,14 @@ public class MyResource {
 		 */
 
 		System.out.println(jsonAsString);
-		
+
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Gson gson = gsonBuilder.create();
 		JsonObject job = gson.fromJson(jsonAsString, JsonObject.class);
 		Usuario data = gson.fromJson(job, Usuario.class);
 
-		System.out.println("Objeto:"+data.getNombreUsuario()+","+data.getFechaNacimiento().toString());
+		System.out.println("Objeto:" + data.getNombreUsuario() + "," + data.getFechaNacimiento().toString());
 
 		boolean yaExisteUsuario = manejadorUsuario.existeUsuario(data.getNombreUsuario());
 
@@ -171,20 +171,20 @@ public class MyResource {
 	}
 
 	// http://localhost:8080/myapp/PistonApp/usuarios
-	/*@POST
-	@Path("/usuarios")
-	@Consumes("application/json")
-	public ResponseBuilder registrarUsuario(Usuario usuario) {
-		System.out.println("USUARIO: " + usuario.toString());
-		boolean yaExisteUsuario = manejadorUsuario.existeUsuario(usuario.getNombreUsuario());
-
-		if (!yaExisteUsuario) {
-			manejadorUsuario.usuario_create(usuario);
-			return Response.status(200);
-		}
-
-		return Response.status(409);
-	}*/
+	/*
+	 * @POST
+	 * 
+	 * @Path("/usuarios")
+	 * 
+	 * @Consumes("application/json") public ResponseBuilder registrarUsuario(Usuario
+	 * usuario) { System.out.println("USUARIO: " + usuario.toString()); boolean
+	 * yaExisteUsuario = manejadorUsuario.existeUsuario(usuario.getNombreUsuario());
+	 * 
+	 * if (!yaExisteUsuario) { manejadorUsuario.usuario_create(usuario); return
+	 * Response.status(200); }
+	 * 
+	 * return Response.status(409); }
+	 */
 
 	// http://localhost:8080/myapp/PistonApp/usuarios/{insertar nombre usuario}
 	@GET
@@ -257,8 +257,8 @@ public class MyResource {
 	public List<Piloto> consultarPilotos() {
 		return manejadorPiloto.piloto_getAll();
 	}
-	
-	// http://localhost:8080/myapp/PistonApp/pilotos
+
+	// http://localhost:8080/myapp/PistonApp/pilotos/<nombrePiloto>
 	@GET
 	@Produces("application/json")
 	@Path("/pilotos/{nombrePiloto}")
@@ -304,13 +304,12 @@ public class MyResource {
 			System.out.println(escuderiaAsociada.toString());
 			escuderiaAsociada.getPilotos().add(piloto.getId_str());
 			manejadorEscuderia.escuderia_update(escuderiaAsociada, escuderiaAsociada.getId_str());
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);
 		}
-		
-		return Response.status(200);
 
+		return Response.status(200);
 	}
 
 	// ESCUDERIA------------------------------------------------------------------
@@ -320,6 +319,14 @@ public class MyResource {
 	@Path("/escuderias")
 	public List<Escuderia> consultarEscuderias() {
 		return manejadorEscuderia.escuderia_getAll();
+	}
+
+	// http://localhost:8080/myapp/PistonApp/escuderias/<nombreEscuderia>
+	@GET
+	@Produces("application/json")
+	@Path("/escuderias/{nombreEscuderia}")
+	public List<Escuderia> consultarEscuderiasNombre(@PathParam("nombreEscuderia") String nombreEscuderia) {
+		return manejadorEscuderia.escuderia_getAllBySearchParameter(nombreEscuderia);
 	}
 
 	// http://localhost:8080/myapp/PistonApp/escuderias/<id-escuderia>
@@ -341,7 +348,7 @@ public class MyResource {
 	@Consumes("application/json")
 	public ResponseBuilder actualizarEscuderia(@PathParam("idEscuderia") String idEscuderia, Escuderia escuderia) {
 		try {
-			manejadorEscuderia.escuderia_update(escuderia,idEscuderia);
+			manejadorEscuderia.escuderia_update(escuderia, idEscuderia);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);
@@ -667,7 +674,7 @@ public class MyResource {
 		Piloto Max = new Piloto("Max Verstappen", fechaNacimiento_5.getTime(), "Hasselt, Belgium", fotoRefP5, 18, 594,
 				77);
 		manejadorPiloto.piloto_create(Max);
-		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(234,5,
+		manejadorClasificacion_Campeonato.clasificacionCampeonato_create(new ClasificacionCampeonato(234, 5,
 				manejadorPiloto.piloto_getByName(Max.getNombreCompleto()).getId_str()));
 
 		// PILOTO 6
@@ -1040,7 +1047,7 @@ public class MyResource {
 			CCGPAustralia.add(CCP15.getId_str());
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_1.getTime(), 58,
-			mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
+					mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_1.getTime(), CCGPAustralia);
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 		}
@@ -1644,7 +1651,7 @@ public class MyResource {
 			CCGPSPAIN.add(CCP14.getId_str());
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_5.getTime(), 66,
-			mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
+					mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_5.getTime(), CCGPSPAIN);
 
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());

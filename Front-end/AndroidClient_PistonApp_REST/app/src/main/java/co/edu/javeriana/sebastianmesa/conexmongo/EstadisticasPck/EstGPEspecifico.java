@@ -62,6 +62,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.AdminMainActivity;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Managers.ManagerUsuario;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Campeonato;
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.EstadisticasDetalladas;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.EstadisticasGeneral;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.EstadisticasResultados;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.GranPremio;
@@ -78,7 +79,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 public class EstGPEspecifico extends AppCompatActivity {
 
 
-    static String[] encabezado={"Pos", "Nombre", "Tiempo"};
+    static String[] encabezado={"Pos", "Nombre", "Puntaje"};
     //    private WebMet_ObtenerPiloto wm_validarLogin = null;
     private List<EstadisticasGeneral> listaPilotos = new ArrayList<>();
     public TableView<String[]> tableView;
@@ -88,14 +89,17 @@ public class EstGPEspecifico extends AppCompatActivity {
     private List<EstadisticasResultados> listaResultados = new ArrayList<>();
     private HashMap<String, String> relacionPista = new HashMap<>();
     private TextView campoNombre;
-
-    private String codigoGlob;
+    private List<EstadisticasDetalladas> listaDatosGP = new ArrayList<>();
+    private String codigoGlob, nombreCompletoGlobalJSON;
+    private HashMap<String, String> relacionPilotos = new HashMap<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_est_gpespecifico);
+
+        obtenerNombreP();
 
         Intent intent = getIntent();
         String codRecibido = intent.getStringExtra("cod");
@@ -195,6 +199,7 @@ public class EstGPEspecifico extends AppCompatActivity {
 
                                 Log.i("clasificacionVerlo", listClas.toString() + " " + clasificacion.toString());
 
+
                                 granPremioObjeto.setId_clasificaciones(listClas);
 
                                 // adding movie to movies array
@@ -257,40 +262,48 @@ public class EstGPEspecifico extends AppCompatActivity {
     public void consumeRESTVolleyGranPremiosEnDetalle(final List<GranPremio> listagranPremios){
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp";
-        String path = "/pistas";
+        String path = "/clasificacionesCarrera";
         Log.i("RevEstPorResiltados","previo");
+
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
                         try {
+
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject obj = jsonArray.getJSONObject(a);
 
                                 String codeJSON = obj.getString("id_str");
+                                String puntajeJSON = obj.getString("puntaje");
+                                String competidorJSON = obj.getString("competidor");
+
 
 //                                Log.i("RevEstPorResiltados",codeJSON);
 
                                 for (int i = 0; i<listagranPremios.size() ; i++){
 
+
 //                                    Log.i("RevEstPorResiltados -",listagranPremios.get(i).getId_str() + " y: " + codeJSON);
 
                                     for (int j=0; j<listagranPremios.get(i).getId_clasificaciones().size(); j++){
 
-                                        if(codigoGlob.equals(listagranPremios.get(i).getId_clasificaciones().get(j))){
 
-                                        Log.i("verPistaDetalle",listagranPremios.get(i).getId_clasificaciones().get(j));
+                                        if(codeJSON.equals(listagranPremios.get(i).getId_clasificaciones().get(j))){
+
+                                            if(codigoGlob.equals(listagranPremios.get(i).getPista())){
+
+//                                                Log.i("verPistaDetalleee",listagranPremios.get(i).getId_clasificaciones().get(j) );
+                                                Log.i("verPistaDetalleee",codeJSON +"-"+ competidorJSON +"-"+ puntajeJSON );
+
+                                                EstadisticasDetalladas e = new EstadisticasDetalladas(codeJSON ,1, competidorJSON, Integer.parseInt(puntajeJSON));
+
+                                                listaDatosGP.add(e);
 
 
-//                                            EstadisticasResultados e = new EstadisticasResultados(
-//                                                    codeJSON,
-//                                                    listagranPremios.get(i).getFecha(),
-//                                                    obj.getString("ciudad"),
-//                                                    obj.getString("nombreUltimoGanador"));
-//
-//                                            listaResultados.add(e);
-//
-//                                            relacionPista.put(obj.getString("ciudad"),codeJSON );
+
+                                            }
+
 
                                         }
 
@@ -299,64 +312,28 @@ public class EstGPEspecifico extends AppCompatActivity {
                                 }
                             }
 
-//                            String[][] datos = new String[EstPorResultados.this.listaResultados.size()][4];
-//
-//                            for (int i = 0; i < EstPorResultados.this.listaResultados.size() ; i++){
-//                                for (int j = 0 ; j < 4 ; j++){
-//                                    switch (j) {
-//                                        case 0:
-//                                            datos[i][j] = EstPorResultados.this.listaResultados.get(i).getFecha();
-//                                            break;
-//                                        case 1:
-//                                            datos[i][j] = EstPorResultados.this.listaResultados.get(i).getLugar();
-//                                            break;
-////                                case 2:
-////                                    datos[i][j] = "equipo";
-////                                    break;
-//                                        case 2:
-//                                            datos[i][j] = EstPorResultados.this.listaResultados.get(i).getUltimoEnGanar();
-//                                            break;
-//
-//                                    }
-//                                }
-//
-//                            }
-//
-//                            tableView.setDataAdapter(new SimpleTableDataAdapter(getBaseContext(), datos));
 
+                            //obtenerNombreP();
 
-                            String[][] datos = new String[listaResultados.size()][4];
+                            String[][] datos = new String[listaDatosGP.size()][4];
 
-                            for (int i = 0 ; i < listaResultados.size() ; i++){
-                                for (int j = 0 ; j < 4 ; j++){
-                                    switch (j) {
+                            for (int ii = 0 ; ii < listaDatosGP.size() ; ii++){
+                                for (int jj = 0 ; jj < 4 ; jj++){
+                                    switch (jj) {
                                         case 0:
 
                                             //DateFormat.getDateInstance().format(listaResultados.get(i).getFecha().toString());
                                             //Log.i("pruebafecha",DateFormat.getDateInstance().format(listaResultados.get(i).getFecha().toString()));
 
-                                            datos[i][j] = DateFormat.getDateInstance().format(listaResultados.get(i).getFecha());;
+                                            datos[ii][jj] = Integer.toString(listaDatosGP.get(ii).getPos() + ii);
                                             break;
                                         case 1:
-                                            datos[i][j] = listaResultados.get(i).getLugar();
+
+                                            //obtenerNombreP(listaDatosGP.get(ii).getNombre());
+                                            datos[ii][jj] = relacionPilotos.get(listaDatosGP.get(ii).getNombre());
                                             break;
-//                                case 2:
-//                                    datos[i][j] = "equipo";
-//                                    break;
                                         case 2:
-
-                                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                            Date date = new Date();
-
-                                            String ganador = null;
-
-                                            if (listaResultados.get(i).getFecha().compareTo(date) > 0){
-                                                ganador = "-";
-                                            }else{
-                                                ganador = listaResultados.get(i).getUltimoEnGanar();
-                                            }
-
-                                            datos[i][j] = ganador;
+                                            datos[ii][jj] = Integer.toString(listaDatosGP.get(ii).getPuntaje());
                                             break;
 
                                     }
@@ -385,6 +362,51 @@ public class EstGPEspecifico extends AppCompatActivity {
     }
 
 
+
+    public void obtenerNombreP (){
+
+        RequestQueue mRequestQueue;
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/pilotos";
+
+        //RequestQueue initialized
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        //String Request initialized
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+
+
+                try {
+
+                    for (int l = 0; l < response.length(); l++) {
+
+                        JSONObject piloto = response.getJSONObject(l);
+
+                        String compararJSON = piloto.getString("id_str");
+                        String nombreJSON = piloto.getString("nombreCompleto");
+
+                        relacionPilotos.put(compararJSON, nombreJSON);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //Log.i(TAG,"Error :" + error.toString());
+            }
+        });
+
+        mRequestQueue.add(jsonArrayRequest);
+
+    }
 
 
 }

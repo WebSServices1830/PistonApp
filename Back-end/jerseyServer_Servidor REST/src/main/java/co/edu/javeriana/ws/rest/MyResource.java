@@ -939,6 +939,7 @@ public class MyResource {
 			Vuelta_P1.set(Calendar.SECOND, 33);
 			Vuelta_P1.set(Calendar.MILLISECOND, 283);
 			CCP1 = new ClasificacionCarrera(25, Vuelta_P1.getTime(), Sebastian.getId_str());
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
 
 			Vuelta_P2.set(Calendar.HOUR, 1);
 			Vuelta_P2.set(Calendar.MINUTE, 29);
@@ -1024,6 +1025,25 @@ public class MyResource {
 			Vuelta_P15.set(Calendar.MILLISECOND, 408);
 			CCP15 = new ClasificacionCarrera(0, Vuelta_P15.getTime(), Brendon.getId_str());
 
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+		
+			
+			
+			
 			List<String> CCGPAustralia = new ArrayList<String>();
 			CCGPAustralia.add(CCP1.getId_str());
 			CCGPAustralia.add(CCP2.getId_str());
@@ -1043,6 +1063,7 @@ public class MyResource {
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_1.getTime(), 58,
 			mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
+			
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_1.getTime(), CCGPAustralia);
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 		}
@@ -1196,9 +1217,28 @@ public class MyResource {
 			CCGPBahrain.add(CCP15.getId_str());
 			CCGPBahrain.add(CCP16.getId_str());
 			CCGPBahrain.add(CCP17.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+	
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_2.getTime(), 57,
-					mejorVuelta_2.getTime(), pista.getId_str(), campeonato.getId_str());
+			mejorVuelta_2.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_2.getTime(), CCGPBahrain);
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 		}
@@ -1373,6 +1413,27 @@ public class MyResource {
 			CCGPShangai.add(CCP18.getId_str());
 			CCGPShangai.add(CCP19.getId_str());
 			CCGPShangai.add(CCP20.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP18);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP19);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP20);
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_3.getTime(), 56,
 					mejorVuelta_3.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -1510,6 +1571,22 @@ public class MyResource {
 			CCGPAZERBAIJAN.add(CCP13.getId_str());
 			CCGPAZERBAIJAN.add(CCP14.getId_str());
 
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+		
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_4.getTime(), 51,
 					mejorVuelta_4.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_4.getTime(), CCGPAZERBAIJAN);
@@ -1644,6 +1721,22 @@ public class MyResource {
 			CCGPSPAIN.add(CCP12.getId_str());
 			CCGPSPAIN.add(CCP13.getId_str());
 			CCGPSPAIN.add(CCP14.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+	
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_5.getTime(), 66,
 			mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -1815,6 +1908,27 @@ public class MyResource {
 			CCGPMONACO.add(CCP17.getId_str());
 			CCGPMONACO.add(CCP18.getId_str());
 			CCGPMONACO.add(CCP19.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP18);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP19);
+	
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_6.getTime(), 78,
 					mejorVuelta_6.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -1972,6 +2086,25 @@ public class MyResource {
 			CCGPCANADA.add(CCP15.getId_str());
 			CCGPCANADA.add(CCP16.getId_str());
 			CCGPCANADA.add(CCP17.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_7.getTime(), 70,
 					mejorVuelta_7.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -2129,11 +2262,29 @@ public class MyResource {
 			CCGPFRANCE.add(CCP15.getId_str());
 			CCGPFRANCE.add(CCP16.getId_str());
 			CCGPFRANCE.add(CCP17.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+		
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_8.getTime(), 53,
 					mejorVuelta_8.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_8.getTime(), CCGPFRANCE);
-
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 		}
 
@@ -2272,6 +2423,23 @@ public class MyResource {
 			CCGPAUSTRIA.add(CCP13.getId_str());
 			CCGPAUSTRIA.add(CCP14.getId_str());
 			CCGPAUSTRIA.add(CCP15.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_9.getTime(), 71,
 					mejorVuelta_9.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -2416,6 +2584,23 @@ public class MyResource {
 			CCGPBRETANIA.add(CCP14.getId_str());
 			CCGPBRETANIA.add(CCP15.getId_str());
 
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+
+			
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_10.getTime(), 52,
 					mejorVuelta_10.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_10.getTime(), CCGPBRETANIA);
@@ -2565,6 +2750,24 @@ public class MyResource {
 			CCGPGERMANY.add(CCP14.getId_str());
 			CCGPGERMANY.add(CCP15.getId_str());
 			CCGPGERMANY.add(CCP16.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+	
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_11.getTime(), 67,
 					mejorVuelta_11.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -2722,6 +2925,25 @@ public class MyResource {
 			CCGPHUNGARY.add(CCP15.getId_str());
 			CCGPHUNGARY.add(CCP16.getId_str());
 			CCGPHUNGARY.add(CCP17.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_12.getTime(), 70,
 					mejorVuelta_12.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -2863,6 +3085,23 @@ public class MyResource {
 			CCGPBELGIAN.add(CCP13.getId_str());
 			CCGPBELGIAN.add(CCP14.getId_str());
 			CCGPBELGIAN.add(CCP15.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_13.getTime(), 44,
 					mejorVuelta_13.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -3012,6 +3251,24 @@ public class MyResource {
 			CCGPITALY.add(CCP14.getId_str());
 			CCGPITALY.add(CCP15.getId_str());
 			CCGPITALY.add(CCP16.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_14.getTime(), 53,
 					mejorVuelta_14.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -3181,6 +3438,27 @@ public class MyResource {
 			CCGPSINGAPORE.add(CCP17.getId_str());
 			CCGPSINGAPORE.add(CCP18.getId_str());
 			CCGPSINGAPORE.add(CCP19.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP18);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP19);
+	
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_15.getTime(), 61,
 					mejorVuelta_15.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -3344,6 +3622,26 @@ public class MyResource {
 			CCGPRUSSIA.add(CCP16.getId_str());
 			CCGPRUSSIA.add(CCP17.getId_str());
 			CCGPRUSSIA.add(CCP18.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP18);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_16.getTime(), 53,
 					mejorVuelta_16.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -3500,6 +3798,25 @@ public class MyResource {
 			CCGPJAPAN.add(CCP15.getId_str());
 			CCGPJAPAN.add(CCP16.getId_str());
 			CCGPJAPAN.add(CCP17.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_17.getTime(), 53,
 					mejorVuelta_17.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -3633,6 +3950,22 @@ public class MyResource {
 			CCGPUNITEDSTATES.add(CCP12.getId_str());
 			CCGPUNITEDSTATES.add(CCP13.getId_str());
 			CCGPUNITEDSTATES.add(CCP14.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_18.getTime(), 56,
 					mejorVuelta_18.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -3782,6 +4115,24 @@ public class MyResource {
 			CCGPMEXICO.add(CCP14.getId_str());
 			CCGPMEXICO.add(CCP15.getId_str());
 			CCGPMEXICO.add(CCP16.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_19.getTime(), 71,
 					mejorVuelta_19.getTime(), pista.getId_str(), campeonato.getId_str());
@@ -3945,6 +4296,26 @@ public class MyResource {
 			CCGPBRASIL.add(CCP16.getId_str());
 			CCGPBRASIL.add(CCP17.getId_str());
 			CCGPBRASIL.add(CCP18.getId_str());
+			
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP2);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP3);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP4);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP5);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP6);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP7);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP8);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP9);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP10);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP11);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP12);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP13);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP14);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP15);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP16);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP17);
+			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP18);
+	
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_20.getTime(), 71,
 					mejorVuelta_20.getTime(), pista.getId_str(), campeonato.getId_str());

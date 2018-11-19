@@ -241,7 +241,7 @@ public class MyResource {
 	@Consumes("application/json")
 	public ResponseBuilder actualizarUsuario(@PathParam("idUsuario") String idUsuario, Usuario usuario) {
 		try {
-			manejadorUsuario.usuario_update(usuario);
+			manejadorUsuario.usuario_update(usuario, idUsuario);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);
@@ -298,7 +298,17 @@ public class MyResource {
 	@Path("/pilotos")
 	@Consumes("application/json")
 	public ResponseBuilder crearPiloto(Piloto piloto) {
-		manejadorPiloto.piloto_create(piloto);
+		try {
+			manejadorPiloto.piloto_create(piloto);
+			Escuderia escuderiaAsociada = manejadorEscuderia.escuderia_get(piloto.getId_escuderia());
+			System.out.println(escuderiaAsociada.toString());
+			escuderiaAsociada.getPilotos().add(piloto.getId_str());
+			manejadorEscuderia.escuderia_update(escuderiaAsociada, escuderiaAsociada.getId_str());
+		}catch(Exception e){
+			e.printStackTrace();
+			return Response.status(500);
+		}
+		
 		return Response.status(200);
 
 	}
@@ -331,7 +341,7 @@ public class MyResource {
 	@Consumes("application/json")
 	public ResponseBuilder actualizarEscuderia(@PathParam("idEscuderia") String idEscuderia, Escuderia escuderia) {
 		try {
-			manejadorEscuderia.escuderia_update(escuderia, idEscuderia);
+			manejadorEscuderia.escuderia_update(escuderia,idEscuderia);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(500);
@@ -1030,7 +1040,7 @@ public class MyResource {
 			CCGPAustralia.add(CCP15.getId_str());
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_1.getTime(), 58,
-					mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
+			mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_1.getTime(), CCGPAustralia);
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 		}
@@ -1634,7 +1644,7 @@ public class MyResource {
 			CCGPSPAIN.add(CCP14.getId_str());
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_5.getTime(), 66,
-					mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
+			mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_5.getTime(), CCGPSPAIN);
 
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());

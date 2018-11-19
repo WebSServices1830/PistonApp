@@ -3,7 +3,7 @@
     package="co.edu.javeriana.sebastianmesa.conexmongo">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -62,7 +62,8 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".Apuestas.BetActivity" />
-        <activity android:name=".Apuestas.ConfirmBetActivity"></activity>
+        <activity android:name=".Apuestas.ConfirmBetActivity" />
+        <activity android:name=".EstadisticasPck.EstPorResultados"></activity>
     </application>
 
 </manifest>

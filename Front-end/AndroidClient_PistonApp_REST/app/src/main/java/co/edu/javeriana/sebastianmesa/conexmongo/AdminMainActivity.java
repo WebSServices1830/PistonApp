@@ -42,6 +42,7 @@ import co.edu.javeriana.sebastianmesa.conexmongo.AutoPck.IndexAutoView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EscuderiaPck.IndexEscuderiaView;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorEscuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorPiloto;
+import co.edu.javeriana.sebastianmesa.conexmongo.EstadisticasPck.EstPorResultados;
 import co.edu.javeriana.sebastianmesa.conexmongo.GranPremioPck.IndexGPView;
 import co.edu.javeriana.sebastianmesa.conexmongo.Login.LoginActivityView;
 import co.edu.javeriana.sebastianmesa.conexmongo.PilotoPck.BuscarPilotosView;
@@ -311,6 +312,10 @@ public class AdminMainActivity extends AppCompatActivity {
 
     public void verTablaPilotos(View view){
         startActivity(new Intent(getBaseContext(), EstPorPiloto.class));
+    }
+
+    public void verTablaResultados(View view){
+        startActivity(new Intent(getBaseContext(), EstPorResultados.class));
     }
 
     public void verTablaConstructores(View view){

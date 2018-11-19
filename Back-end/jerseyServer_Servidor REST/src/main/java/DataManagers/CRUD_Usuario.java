@@ -48,7 +48,7 @@ public class CRUD_Usuario {
     }
     
     public Usuario usuario_get(String id) {
-    	Usuario usuario = collection.find(eq("id", id)).first();
+    	Usuario usuario = collection.find(eq("id_str", id)).first();
     	return usuario;
     }
    	
@@ -83,9 +83,9 @@ public class CRUD_Usuario {
 		
 	}
    	
-   	public void usuario_update(Usuario usuario){
+   	public void usuario_update(Usuario usuario, String id_usuario){
    		collection.updateOne(
-   				eq("id", usuario.getId()) , 
+   				eq("id_str", id_usuario) , 
    				combine(
    						set("nombreUsuario",usuario.getNombreUsuario()), 
    						set("contra",usuario.getContra()), 
@@ -98,9 +98,9 @@ public class CRUD_Usuario {
    	}
   
 
-   	public void usuario_update_bolsillo(String usuario, double valor){
+   	public void usuario_update_bolsillo(String usuario_id, double valor){
    		collection.updateOne(
-   				eq("id_str", usuario) , 
+   				eq("id_str", usuario_id) , 
    				combine(
   
    						set("bolsillo", valor)

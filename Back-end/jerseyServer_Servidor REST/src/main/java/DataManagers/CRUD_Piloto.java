@@ -13,6 +13,8 @@ import com.mongodb.Block;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
+import com.mongodb.MongoWriteConcernException;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -57,7 +59,7 @@ public class CRUD_Piloto {
     // get a handle to the "people" collection
     MongoCollection<Piloto> collection = database.getCollection("pilotos", Piloto.class);
 	
-    public void piloto_create(Piloto piloto) {
+    public void piloto_create(Piloto piloto) throws MongoWriteException, MongoWriteConcernException, MongoException{
     	collection.insertOne(piloto);
     }
     
@@ -111,7 +113,7 @@ public class CRUD_Piloto {
 		return pilotos;
 	}
 
-   	public void piloto_update(Piloto piloto, String idPiloto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+   	public void piloto_update(Piloto piloto, String idPiloto) throws MongoWriteException, MongoWriteConcernException, MongoException{
    		collection.updateOne(
    				eq("id_str", idPiloto) , 
    				combine(
@@ -128,11 +130,11 @@ public class CRUD_Piloto {
    				);
    	}
    	
-	public void piloto_delete(String id) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+	public void piloto_delete(String id) throws MongoWriteException, MongoWriteConcernException, MongoException{
 		collection.deleteOne(eq("id_str", id));
 	}
 	
-	public void piloto_deleteByName(String nombreCompleto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+	public void piloto_deleteByName(String nombreCompleto) throws MongoWriteException, MongoWriteConcernException, MongoException{
 		collection.deleteOne(eq("nombreCompleto",nombreCompleto));
 		
 	}

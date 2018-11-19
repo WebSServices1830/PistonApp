@@ -21,12 +21,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,11 +39,14 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.bson.types.ObjectId;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,12 +54,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Escuderia;
 import co.edu.javeriana.sebastianmesa.conexmongo.ObjetosNegocio.Piloto;
 import co.edu.javeriana.sebastianmesa.conexmongo.Persistencia.FileUpload;
 import co.edu.javeriana.sebastianmesa.conexmongo.R;
@@ -71,21 +79,34 @@ public class CrearPilotoView extends Activity {
     static final int IMAGE_PICKER_REQUEST = 10;
     static final int IMAGE_CAPTURE_REQUEST = 20;
 
+    private Spinner spinner_escuderias;
     private EditText editText_nombre, editText_fecha, editText_lugar, editText_podios, editText_puntos, editText_gp;
     private ImageView previewFoto;
     private ImageButton btn_seleccionarImagen, btn_tomarFoto;
     private Button button_agregarPiloto;
 
+    private List<Escuderia> listaEscuderias = new ArrayList<>();
+    ArrayAdapter<Escuderia> adapter_spinner = null;
+
     private Date fechaNacimiento_piloto = null;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-    private boolean fotoCargada= false;
+    private boolean fotoCargada = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_piloto_view);
+
+        spinner_escuderias = findViewById(R.id.spinner_escuderias_crearPiloto);
+
+        adapter_spinner = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listaEscuderias);
+        adapter_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_escuderias.setAdapter(adapter_spinner);
+
+        cargarEscuderias();
 
         editText_nombre = findViewById(R.id.editText_nombrePiloto);
         editText_lugar = findViewById(R.id.editText_lugarNacimientoPiloto);
@@ -101,6 +122,17 @@ public class CrearPilotoView extends Activity {
 
         button_agregarPiloto = findViewById(R.id.agregarPiloto);
 
+        spinner_escuderias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                button_agregarPiloto.setEnabled(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         editText_fecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +142,7 @@ public class CrearPilotoView extends Activity {
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(CrearPilotoView.this,
-                        AlertDialog.THEME_HOLO_DARK,mDateSetListener,year,month,day);
+                        AlertDialog.THEME_HOLO_DARK, mDateSetListener, year, month, day);
                 dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
@@ -123,9 +155,9 @@ public class CrearPilotoView extends Activity {
                 fechaNacimiento_piloto = new GregorianCalendar(year, month, dayOfMonth).getTime();
 
                 month += 1;
-                Log.d(TAG, "onDateSet: date:"+dayOfMonth+"/"+month+"/"+year);
+                Log.d(TAG, "onDateSet: date:" + dayOfMonth + "/" + month + "/" + year);
 
-                editText_fecha.setText(dayOfMonth+"/"+month+"/"+year);
+                editText_fecha.setText(dayOfMonth + "/" + month + "/" + year);
             }
         };
 
@@ -149,7 +181,7 @@ public class CrearPilotoView extends Activity {
                 // TODO Auto-generated method stub
                 /*wm_agregarPiloto = new CrearPilotoView.WebMet_AgregarPiloto();
                 wm_agregarPiloto.execute();*/
-                if(camposValidos()){
+                if (camposValidos()) {
                     CrearPilotoAsync crearPilotoAsync = new CrearPilotoAsync();
                     crearPilotoAsync.execute();
                 }
@@ -212,7 +244,7 @@ public class CrearPilotoView extends Activity {
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         previewFoto.setImageBitmap(selectedImage);
-                        fotoCargada= true;
+                        fotoCargada = true;
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -223,7 +255,7 @@ public class CrearPilotoView extends Activity {
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     previewFoto.setImageBitmap(imageBitmap);
-                    fotoCargada= true;
+                    fotoCargada = true;
                 }
         }
     }
@@ -242,9 +274,9 @@ public class CrearPilotoView extends Activity {
             Drawable fotoPiloto = previewFoto.getDrawable();
 
             String urlFoto = null;
-            if(fotoPiloto == null){
+            if (fotoPiloto == null) {
                 urlFoto = "";
-            }else{
+            } else {
                 try {
 
                     urlFoto = FileUpload.saveImageIntoMongoDB(fotoPiloto, editText_nombre.getText().toString());
@@ -252,7 +284,7 @@ public class CrearPilotoView extends Activity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.d("Error_FileUpload: ",e.getMessage());
+                    Log.d("Error_FileUpload: ", e.getMessage());
                 }
             }
 
@@ -261,10 +293,9 @@ public class CrearPilotoView extends Activity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if(success==false){
+            if (success == false) {
                 Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), "Piloto Creado", Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -272,14 +303,72 @@ public class CrearPilotoView extends Activity {
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getApplicationContext(), 	"Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
         }
     }
 
-    public void consumeRESTVolleyCrearPiloto (String urlFoto)  {
+    public void cargarEscuderias() {
+        if (!listaEscuderias.isEmpty()) {
+            listaEscuderias.clear();
+        }
+        RequestQueue queue = Volley.newRequestQueue(CrearPilotoView.this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "escuderias";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject escuderia_json = jsonArray.getJSONObject(a);
+                                String id_str = escuderia_json.getString("id_str");
+                                String nombre = escuderia_json.getString("nombre");
+                                String lugarBase = escuderia_json.getString("lugarBase");
+                                String jefeEquipo = escuderia_json.getString("jefeEquipo");
+                                String jefeTecnico = escuderia_json.getString("jefeTecnico");
+                                String chasis = escuderia_json.getString("chasis");
+                                String fotoEscudo_ref = escuderia_json.getString("fotoEscudo_ref");
+                                int cant_vecesEnPodio = Integer.parseInt(escuderia_json.getString("cant_vecesEnPodio"));
+                                int cant_TitulosCampeonato = Integer.parseInt(escuderia_json.getString("cant_TitulosCampeonato"));
 
-        Piloto piloto= new Piloto(editText_nombre.getText().toString(), fechaNacimiento_piloto, editText_lugar.getText().toString(), urlFoto,
-                Integer.parseInt(editText_podios.getText().toString()), Integer.parseInt(editText_puntos.getText().toString()), Integer.parseInt(editText_gp.getText().toString()));
+                                Escuderia escuderia = new Escuderia();
+                                escuderia.setId(new ObjectId(id_str));
+                                escuderia.setId_str(id_str);
+                                escuderia.setNombre(nombre);
+                                escuderia.setLugarBase(lugarBase);
+                                escuderia.setJefeEquipo(jefeEquipo);
+                                escuderia.setJefeTecnico(jefeTecnico);
+                                escuderia.setChasis(chasis);
+                                escuderia.setFotoEscudo_ref(fotoEscudo_ref);
+                                escuderia.setCant_vecesEnPodio(cant_vecesEnPodio);
+                                escuderia.setCant_TitulosCampeonato(cant_TitulosCampeonato);
+
+                                Log.d(TAG,escuderia.toString());
+
+                                listaEscuderias.add(escuderia);
+                            }
+                            adapter_spinner.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG,"JSONException",e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+    }
+
+    public void consumeRESTVolleyCrearPiloto(String urlFoto) {
+
+        Piloto piloto = new Piloto(editText_nombre.getText().toString(), fechaNacimiento_piloto, editText_lugar.getText().toString(), urlFoto,
+                Integer.parseInt(editText_podios.getText().toString()), Integer.parseInt(editText_puntos.getText().toString()),
+                Integer.parseInt(editText_gp.getText().toString()), ((Escuderia) spinner_escuderias.getSelectedItem()).getId_str());
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         String result = gson.toJson(piloto);
@@ -289,9 +378,9 @@ public class CrearPilotoView extends Activity {
             js = new JSONObject(result);
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d(TAG,"JSONException",e);
+            Log.d(TAG, "JSONException", e);
 
-            Toast.makeText(this,"Error creando el objeto JSON",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error creando el objeto JSON", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -311,7 +400,7 @@ public class CrearPilotoView extends Activity {
 
                         Log.d(TAG, "" + response.toString());
 
-                        Toast.makeText(getApplicationContext(), 	"Piloto Creado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Piloto Creado", Toast.LENGTH_LONG).show();
                         finish();
 
                     }
@@ -339,7 +428,7 @@ public class CrearPilotoView extends Activity {
                     }
                 }
             }
-        }){
+        }) {
 
             /*
             //  Esto (getParams) no lo estoy usando como tal pero entiendo que sirve para mapear los
@@ -347,8 +436,8 @@ public class CrearPilotoView extends Activity {
             */
 
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
 
                 return params;
             }
@@ -395,8 +484,8 @@ public class CrearPilotoView extends Activity {
             sonValidos = false;
         }
 
-        if (editText_fecha.toString().isEmpty()) {
-            editText_fecha.setError("No puede estar vacío");
+        if (editText_fecha.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Por favor seleccione una fecha", Toast.LENGTH_SHORT).show();
             sonValidos = false;
         }
 
@@ -415,8 +504,8 @@ public class CrearPilotoView extends Activity {
             sonValidos = false;
         }
 
-        if(fotoCargada == false){
-            Toast.makeText(this,"Por favor cargue una imagen",Toast.LENGTH_LONG);
+        if (fotoCargada == false) {
+            Toast.makeText(this, "Por favor cargue una imagen", Toast.LENGTH_SHORT).show();
             sonValidos = false;
         }
 

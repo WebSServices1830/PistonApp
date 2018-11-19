@@ -21,7 +21,8 @@ public class Escuderia {
 	private List<String> pilotos;
 	
 	public Escuderia(){
-		
+        this.autos = new ArrayList<String>();
+        this.pilotos = new ArrayList<String>();
 	}
 	
 	public Escuderia(String nombre, String lugarBase, String jefeTecnico, String jefeEquipo, String chasis,
@@ -135,6 +136,9 @@ public class Escuderia {
 	public void setId_str(String id_str) {
 		this.id_str = id_str;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return this.nombre;
+	}
 }

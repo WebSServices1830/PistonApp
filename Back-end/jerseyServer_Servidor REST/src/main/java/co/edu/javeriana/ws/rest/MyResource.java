@@ -575,6 +575,8 @@ public class MyResource {
 		return manejadorGranPremio.grandesPremios_X_Fecha(id_campeonato);
 	}
 
+	
+	
 	// PISTON APP------------------------------------------------------------------
 	// http://localhost:8080/myapp/PistonApp
 	@POST
@@ -946,7 +948,7 @@ public class MyResource {
 			Vuelta_P1.set(Calendar.SECOND, 33);
 			Vuelta_P1.set(Calendar.MILLISECOND, 283);
 			CCP1 = new ClasificacionCarrera(25, Vuelta_P1.getTime(), Sebastian.getId_str());
-			manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
+			//manejadorClasificacion_Carrera.clasificacionCarrera_create(CCP1);
 
 			Vuelta_P2.set(Calendar.HOUR, 1);
 			Vuelta_P2.set(Calendar.MINUTE, 29);

@@ -21,6 +21,8 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import com.mongodb.Block;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
+import com.mongodb.MongoWriteConcernException;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -46,12 +48,12 @@ public class CRUD_Auto {
     // get a handle to the "people" collection
     MongoCollection<Auto> collection = database.getCollection("autos", Auto.class);
 	
-    public void auto_create(Auto auto) {
+    public void auto_create(Auto auto) throws MongoWriteException, MongoWriteConcernException, MongoException{
     	collection.insertOne(auto);
     }
     
     public Auto auto_get(String id) {
-    	Auto auto = collection.find(eq("id", id)).first();
+    	Auto auto = collection.find(eq("id_str", id)).first();
     	return auto;
     }
    	
@@ -86,9 +88,9 @@ public class CRUD_Auto {
 		
 	}
 
-   	public void auto_update(Auto auto, String idAuto) throws com.mongodb.MongoWriteException, com.mongodb.MongoWriteConcernException, com.mongodb.MongoException{
+   	public void auto_update(Auto auto, String idAuto) throws MongoWriteException, MongoWriteConcernException, MongoException{
    		collection.updateOne(
-   				eq("id", idAuto) , 
+   				eq("id_str", idAuto) , 
    				combine(
    						set("nombre",auto.getNombre()), 
    						set("pesoEnKg",auto.getPesoEnKg()), 

@@ -48,7 +48,7 @@ public class CRUD_ClasificacionCarrera {
     }
     
     public ClasificacionCarrera clasificacionCarrera_get(String id) {
-    	ClasificacionCarrera clasificacionCarrera = collection.find(eq("id", id)).first();
+    	ClasificacionCarrera clasificacionCarrera = collection.find(eq("id_str", id)).first();
     	return clasificacionCarrera;
     }
 	

@@ -2,6 +2,7 @@ package co.edu.javeriana.sebastianmesa.conexmongo.UsuarioPck;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -313,7 +315,6 @@ public class CrearUsuarioView extends AppCompatActivity {
 
         Date currentTime = Calendar.getInstance().getTime();
         //GregorianCalendar fechaNacimiento = new GregorianCalendar(calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH),calendario.get(Calendar.DAY_OF_MONTH));
-        et_fechaNacimiento.setText( calendario.get(Calendar.DAY_OF_MONTH) + BARRA + calendario.get(Calendar.MONTH) + BARRA + calendario.get(Calendar.YEAR));
         Usuario user = new Usuario(emailGlobal, passGlobal,calendario.getTime(), urlFoto, checkBox_admin.isChecked());
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
@@ -425,7 +426,7 @@ public class CrearUsuarioView extends AppCompatActivity {
 
 
     private void obtenerFecha() {
-        DatePickerDialog recogerFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog recogerFecha = new DatePickerDialog(this, AlertDialog.THEME_HOLO_DARK, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendario.set(Calendar.YEAR, year);
@@ -448,6 +449,7 @@ public class CrearUsuarioView extends AppCompatActivity {
              *También puede cargar los valores que usted desee
              */
         }, anio, mes, dia);
+        recogerFecha.getDatePicker().setMaxDate(System.currentTimeMillis());
         //Muestro el widget
         recogerFecha.show();
 

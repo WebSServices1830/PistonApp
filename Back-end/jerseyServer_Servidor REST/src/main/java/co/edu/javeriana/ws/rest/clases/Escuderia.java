@@ -24,7 +24,8 @@ public class Escuderia {
 	private List<String> pilotos;
 	
 	public Escuderia(){
-		
+		this.autos = new ArrayList<String>();
+		this.pilotos = new ArrayList<String>();
 	}
 	
 	public Escuderia(String nombre, String lugarBase, String jefeTecnico, String jefeEquipo, String chasis,
@@ -139,5 +140,10 @@ public class Escuderia {
 		this.id_str = id_str;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.nombre;
+	}
 	
 }

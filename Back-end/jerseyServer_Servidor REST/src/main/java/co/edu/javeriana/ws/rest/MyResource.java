@@ -1031,7 +1031,7 @@ public class MyResource {
 			CCGPAustralia.add(CCP15.getId_str());
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_1.getTime(), 58,
-					mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
+			mejorVuelta_1.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_1.getTime(), CCGPAustralia);
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());
 		}
@@ -1635,7 +1635,7 @@ public class MyResource {
 			CCGPSPAIN.add(CCP14.getId_str());
 
 			GranPremio granPremio = manejadorGranPremio.granPremio_create(fechaGranPremio_5.getTime(), 66,
-					mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
+			mejorVuelta_5.getTime(), pista.getId_str(), campeonato.getId_str());
 			manejadorGranPremio.granPremio_update_clasificaciones(fechaGranPremio_5.getTime(), CCGPSPAIN);
 
 			manejadorCampeonato.campeonato_addGranPremio(campeonato.getId_str(), granPremio.getId_str());

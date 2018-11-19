@@ -85,6 +85,7 @@ public class VerEscuderiaView extends AppCompatActivity {
                                 String fotoEscudo_ref = escuderia_json.getString("fotoEscudo_ref");
                                 int cant_vecesEnPodio = Integer.parseInt(escuderia_json.getString("cant_vecesEnPodio"));
                                 int cant_TitulosCampeonato = Integer.parseInt(escuderia_json.getString("cant_TitulosCampeonato"));
+
                                 escuderias.add(new Escuderia(
                                         nombre,
                                         lugarBase,

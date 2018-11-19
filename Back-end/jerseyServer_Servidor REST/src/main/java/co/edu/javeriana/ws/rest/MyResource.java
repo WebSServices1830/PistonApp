@@ -570,7 +570,7 @@ public class MyResource {
 	// http://localhost:8080/myapp/PistonApp/granPremios/{id_str}
 	@GET
 	@Produces("application/json")
-	@Path("/granPremios/{id_campeonato}")
+	@Path("campeonatos/{id_campeonato}/granPremios")
 	public List<GranPremio> consultarGranPremios(@PathParam("id_campeonato") String id_campeonato) {
 		return manejadorGranPremio.grandesPremios_X_Fecha(id_campeonato);
 	}

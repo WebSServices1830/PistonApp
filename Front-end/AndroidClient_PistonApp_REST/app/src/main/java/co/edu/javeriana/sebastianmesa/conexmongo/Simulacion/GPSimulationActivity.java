@@ -3,6 +3,8 @@ package co.edu.javeriana.sebastianmesa.conexmongo.Simulacion;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -38,7 +40,12 @@ public class GPSimulationActivity extends AppCompatActivity {
     private Button button_simular;
 
     private List<GranPremio> listaGranPremios = new ArrayList<>();
-    private ArrayAdapter<GranPremio> adapter_spinner = null;
+    private List<String> listaNombres = new ArrayList<>();
+    private ArrayAdapter<String> adapter_spinner = null;
+
+    private String idCalendarioCampeonato = "";
+
+    private int posicionItemSeleccionado = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +56,77 @@ public class GPSimulationActivity extends AppCompatActivity {
 
         button_simular = findViewById(R.id.button_simular);
 
-        adapter_spinner = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listaGranPremios);
+        adapter_spinner = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listaNombres);
         adapter_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_granPremios.setAdapter(adapter_spinner);
 
-        cargarGranPremios();
+        button_simular.setEnabled(false);
+
+        getIdCampeonato("Campeonato 2018");
+
+        spinner_granPremios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                posicionItemSeleccionado = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                button_simular.setEnabled(false);
+            }
+        });
+
+        button_simular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GranPremio granPremioSeleccionado = listaGranPremios.get(posicionItemSeleccionado);
+            }
+        });
+
+
     }
 
-    public void cargarGranPremios() {
+    public void getIdCampeonato(final String nombre){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "campeonatos";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url+path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject obj = jsonArray.getJSONObject(a);
+
+                                if(obj.getString("nombre").equals(nombre)) {
+                                    idCalendarioCampeonato = obj.getString("id_str");
+                                    Log.i(TAG,idCalendarioCampeonato);
+                                    cargarGranPremios(idCalendarioCampeonato);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation"+error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+    }
+
+    public void cargarGranPremios(String id_campeonato) {
         if (!listaGranPremios.isEmpty()) {
             listaGranPremios.clear();
         }
-        RequestQueue queue = Volley.newRequestQueue(GPSimulationActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://10.0.2.2:8080/myapp/PistonApp/";
-        String path = "escuderias";
+        String path = "campeonatos/"+id_campeonato+"/granPremios";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -97,13 +160,60 @@ public class GPSimulationActivity extends AppCompatActivity {
 
                                 listaGranPremios.add(granPremio);
                             }
-                            adapter_spinner.notifyDataSetChanged();
+                            getNombresPistas();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d(TAG,"JSONException",e);
                         } catch (ParseException e) {
                             e.printStackTrace();
                             Log.d(TAG,"ParseException",e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+    }
+
+    public void getNombresPistas(){
+        if (!listaNombres.isEmpty()) {
+            listaNombres.clear();
+        }
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "pistas";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+
+                            for (GranPremio granPremio:
+                                 listaGranPremios) {
+                                for (int a = 0; a < jsonArray.length(); a++) {
+                                    JSONObject pista_json = jsonArray.getJSONObject(a);
+
+                                    Log.d(TAG, pista_json.toString());
+
+                                    String id_str = pista_json.getString("id_str");
+
+                                    if( id_str.equals(granPremio.getPista())){
+                                        String ciudad = pista_json.getString("ciudad");
+                                        listaNombres.add(ciudad);
+                                    }
+                                }
+                            }
+
+                            adapter_spinner.notifyDataSetChanged();
+                            button_simular.setEnabled(true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG,"JSONException",e);
                         }
                     }
                 },

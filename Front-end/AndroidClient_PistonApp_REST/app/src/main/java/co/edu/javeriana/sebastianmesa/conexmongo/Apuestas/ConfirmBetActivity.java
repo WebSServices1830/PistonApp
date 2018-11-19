@@ -66,10 +66,13 @@ public class ConfirmBetActivity extends AppCompatActivity {
     private String idCalendarioCampeonato = "";
 
     private List<GranPremio> listagranPremios = new ArrayList<>();
+    private List<String> listaNombresCiudades = new ArrayList<>();
 
-    ArrayAdapter<GranPremio> adapter = null;
+    ArrayAdapter<String> adapter = null;
 
     private Piloto piloto;
+
+    private int posicion_GranPremioSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
         button_apostar.setEnabled(false);
 
-        adapter = new ArrayAdapter<GranPremio>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listagranPremios);
+        adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listaNombresCiudades);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_granPremios.setAdapter(adapter);
@@ -99,17 +102,17 @@ public class ConfirmBetActivity extends AppCompatActivity {
         this.consumeRESTVolleyVerCampeonatoString();
         //Log.i("idCampeonato",idCalendarioCampeonato);
 
-        consumeRESTVolleyGranPremiosOrdenadoPorFecha();
-
         spinner_granPremios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 button_apostar.setEnabled(true);
+                posicion_GranPremioSeleccionado = position;
+                Log.d(TAG,"GranPremio seleccionado: "+listaNombresCiudades.get(posicion_GranPremioSeleccionado));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                button_apostar.setEnabled(false);
             }
         });
 
@@ -117,7 +120,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (comprobarCampos()) {
-                    GranPremio granPremio_seleccionado = (GranPremio) spinner_granPremios.getSelectedItem();
+                    GranPremio granPremio_seleccionado = listagranPremios.get(posicion_GranPremioSeleccionado);
                     double monto = Double.parseDouble(editText_montoApostar.getText().toString());
 
                     Apuesta apuesta = new Apuesta(id_usuarioActual,
@@ -238,53 +241,7 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
     }
 
-    public void consumeRESTVolleyGranPremiosOrdenadoPorFecha() {
-        if (!listagranPremios.isEmpty()) {
-            listagranPremios.clear();
-        }
-        RequestQueue queue = Volley.newRequestQueue(ConfirmBetActivity.this);
-        String url = "http://10.0.2.2:8080/myapp/PistonApp/granPremios";
-        String path = this.idCalendarioCampeonato;
-        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray jsonArray) {
-                        try {
-                            for (int a = 0; a < jsonArray.length(); a++) {
-                                JSONObject granpremio_json = jsonArray.getJSONObject(a);
-                                GranPremio g = new GranPremio();
 
-                                String id_str = granpremio_json.getString("id_str");
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                                Date fecha = simpleDateFormat.parse(granpremio_json.getString("fecha"));
-                                int cantVueltas = granpremio_json.getInt("cantVueltas");
-                                Date mejorVuelta =simpleDateFormat.parse(granpremio_json.getString("mejorVuelta"));
-                                String pista= granpremio_json.getString("pista");
-                                String id_campeonato= granpremio_json.getString("id_campeonato");
-
-                                GranPremio granPremio= new GranPremio(id_str,fecha,cantVueltas,mejorVuelta,pista,id_campeonato);
-
-
-
-                                listagranPremios.add(granPremio);
-                            }
-                            adapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i(TAG, "Error handling rest invocation" + error.getCause());
-                    }
-                }
-        );
-        queue.add(req);
-    }
 
 
     private class WebMet_GranPremiosOrdenadoPorFecha extends AsyncTask<Void, GranPremio, Boolean> {
@@ -368,19 +325,117 @@ public class ConfirmBetActivity extends AppCompatActivity {
 
     public void consumeRESTVolleyVerCampeonatoString() {
         RequestQueue queue = Volley.newRequestQueue(ConfirmBetActivity.this);
-        String url = "http://10.0.2.2:8080/myapp/PistonApp";
-        String path = "/campeonatos";
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "campeonatos";
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray jsonArray) {
                         try {
-                            JSONObject obj = jsonArray.getJSONObject(0);
+                            JSONObject obj = jsonArray.getJSONObject(jsonArray.length()-1);
                             idCalendarioCampeonato = obj.getString("id_str");
+                            Log.d(TAG,idCalendarioCampeonato);
+
+                            consumeRESTVolleyGranPremiosOrdenadoPorFecha();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d(TAG, "consumeRESTVolleyVerCampeonatoString: JSONException ", e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+    }
+
+    public void consumeRESTVolleyGranPremiosOrdenadoPorFecha() {
+        if (!listagranPremios.isEmpty()) {
+            listagranPremios.clear();
+        }
+        RequestQueue queue = Volley.newRequestQueue(ConfirmBetActivity.this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "campeonatos/"+idCalendarioCampeonato+"/granPremios";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+                            for (int a = 0; a < jsonArray.length(); a++) {
+                                JSONObject granpremio_json = jsonArray.getJSONObject(a);
+                                GranPremio g = new GranPremio();
+
+                                String id_str = granpremio_json.getString("id_str");
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                Date fecha = simpleDateFormat.parse(granpremio_json.getString("fecha"));
+                                int cantVueltas = granpremio_json.getInt("cantVueltas");
+                                Date mejorVuelta =simpleDateFormat.parse(granpremio_json.getString("mejorVuelta"));
+                                String pista= granpremio_json.getString("pista");
+                                String id_campeonato= granpremio_json.getString("id_campeonato");
+
+                                GranPremio granPremio= new GranPremio(id_str,fecha,cantVueltas,mejorVuelta,pista,id_campeonato);
+
+
+
+                                listagranPremios.add(granPremio);
+                            }
+                            getNombresPistas();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i(TAG, "Error handling rest invocation" + error.getCause());
+                    }
+                }
+        );
+        queue.add(req);
+    }
+
+    public void getNombresPistas(){
+        if (!listaNombresCiudades.isEmpty()) {
+            listaNombresCiudades.clear();
+        }
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://10.0.2.2:8080/myapp/PistonApp/";
+        String path = "pistas";
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, url + path, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        try {
+
+                            for (GranPremio granPremio:
+                                    listagranPremios) {
+                                for (int a = 0; a < jsonArray.length(); a++) {
+                                    JSONObject pista_json = jsonArray.getJSONObject(a);
+
+                                    Log.d(TAG, pista_json.toString());
+
+                                    String id_str = pista_json.getString("id_str");
+
+                                    if( id_str.equals(granPremio.getPista())){
+                                        String ciudad = pista_json.getString("ciudad");
+                                        listaNombresCiudades.add(ciudad);
+                                    }
+                                }
+                            }
+
+                            adapter.notifyDataSetChanged();
+                            button_apostar.setEnabled(true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d(TAG,"JSONException",e);
                         }
                     }
                 },

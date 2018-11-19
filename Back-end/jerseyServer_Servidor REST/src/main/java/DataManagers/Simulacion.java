@@ -124,7 +124,7 @@ public class Simulacion {
 		carrera.setId_clasificaciones(id_clasificaciones);
 		manejadorGranPremio.granPremio_update_clasificaciones(carrera.getFecha(), id_clasificaciones);
 		//se ejecutan las apuestas
-		//this.simularApuestas(id_granpremio, resultados.get(0).getId_str());
+		this.simularApuestas(id_granpremio, resultados.get(0).getId_str());
 		Campeonato c = manejadorCampeonato.campeonato_read(manejadorGranPremio.granPremio_read(id_granpremio).getId_campeonato());
 		
 		this.actualizarPosicionCampeonato(id_granpremio);

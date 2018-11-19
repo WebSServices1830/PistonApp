@@ -51,7 +51,7 @@ public class BetActivity extends AppCompatActivity {
     private EditText campo_nombrePiloto;
     private Button consultaBtn;
 
-    private WebMet_VerPilotosPorNombre wm_verPilotosPorNombre = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +85,7 @@ public class BetActivity extends AppCompatActivity {
                 listaPilotos.clear();
                 pilotoAdapter.notifyDataSetChanged();
 
-                wm_verPilotosPorNombre = new WebMet_VerPilotosPorNombre();
-                wm_verPilotosPorNombre.execute();
+               consumeRESTVolleyBetActivity();
             }
         });
 
@@ -94,94 +93,6 @@ public class BetActivity extends AppCompatActivity {
 
     }
 
-    private class WebMet_VerPilotosPorNombre extends AsyncTask<Void, Piloto, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //WebService - Opciones
-            final String NAMESPACE = "http://webservice.javeriana.co/";
-            final RequestQueue queue;
-            final String URL="http://localhost:8080/myapp/PistonApp/";
-            final String path ="apuestas";
-            //final StringRequest req;
-            final String METHOD_NAME = "verPilotosPorNombre";
-            final String SOAP_ACTION = "http://webservice.javeriana.co/v+";
-
-            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-            request.addProperty("textoBusquedaNombre", campo_nombrePiloto.getText().toString());
-
-            SoapSerializationEnvelope envelope =  new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-
-            HttpTransportSE ht = new HttpTransportSE(URL);
-            try {
-
-                ht.call(SOAP_ACTION, envelope);
-
-                KvmSerializable ks = (KvmSerializable)envelope.bodyIn;
-                for(int i = 0; i < ks.getPropertyCount(); ++i){
-                    SoapObject driver = (SoapObject) ks.getProperty(i);
-
-                    String id_str = driver.getPropertyAsString("id_str");
-                    String nombreCompleto = driver.getPrimitivePropertyAsString("nombreCompleto");
-                    Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(driver.getPrimitivePropertyAsString("fecha_Nacimiento"));
-                    String lugarNacimiento = driver.getPrimitivePropertyAsString("lugarNacimiento");
-                    String foto_ref = driver.getPrimitivePropertyAsString("foto_ref");
-                    int cant_podiosTotales = Integer.parseInt( driver.getPrimitivePropertyAsString("cant_podiosTotales") );
-                    int cant_puntosTotales = Integer.parseInt( driver.getPrimitivePropertyAsString("cant_puntosTotales") );
-                    int cant_granPremiosIngresado = Integer.parseInt( driver.getPrimitivePropertyAsString("cant_granPremiosIngresado") );
-                    float calificacion = Float.parseFloat( driver.getPrimitivePropertyAsString("calificacion") );
-
-                    Log.i("Driver",nombreCompleto);
-
-                    Piloto piloto = new Piloto();
-                    piloto.setId_str(id_str);
-                    piloto.setNombreCompleto(nombreCompleto);
-                    piloto.setFecha_Nacimiento(fechaNacimiento);
-                    piloto.setLugarNacimiento(lugarNacimiento);
-                    piloto.setFoto_ref(foto_ref);
-                    piloto.setCant_podiosTotales(cant_podiosTotales);
-                    piloto.setCant_puntosTotales(cant_puntosTotales);
-                    piloto.setCant_granPremiosIngresado(cant_granPremiosIngresado);
-                    piloto.setCalificacion(calificacion);
-
-                    publishProgress(piloto);
-                }
-
-                return true;
-
-            }
-            catch (Exception e)
-            {
-                Log.i("Error: ",e.getMessage());
-                e.printStackTrace();
-            }
-
-            return false;
-        }
-
-        @Override
-        protected void onProgressUpdate(Piloto... values) {
-            listaPilotos.add(values[0]);
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            if(success==false){
-                Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
-            }
-            else{
-                pilotoAdapter.notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
-        }
-    }
     public void consumeRESTVolleyBetActivity (){
         if(!listaPilotos.isEmpty()) {
             listaPilotos.clear();

@@ -113,10 +113,12 @@ public class MyResource {
 		manejadorSimulacion.simularGranPremio(idGranpremio);
 		return Response.status(200);
 	}
-
-	@PUT
-	@Path("/casino/{apuesta}")
-	public ResponseBuilder apostar(@PathParam("apuesta") Apuesta apuesta) {
+	
+	// http://localhost:8080/myapp/PistonApp/casino
+	@POST
+	@Path("/casino")
+	@Consumes("application/json")
+	public ResponseBuilder apostar(Apuesta apuesta) {
 
 		Usuario u = manejadorUsuario.usuario_get(apuesta.getUsuario());
 
